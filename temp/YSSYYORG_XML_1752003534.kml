@@ -21,11 +21,11 @@
       </description>
       <Style>
         <LineStyle>
-          <color>ff00ffe0</color>
+          <color>ffe00080</color>
           <width>4</width>
         </LineStyle>
         <PolyStyle>
-          <color>7f00ffe0</color>
+          <color>7fe00080</color>
         </PolyStyle>
       </Style>
       <LineString>
@@ -60,7 +60,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ffe00080</color>
           <scale>1.5</scale>
         </LabelStyle>
       </Style>
@@ -79,7 +79,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ffe00080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -98,7 +98,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ffe00080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -117,7 +117,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ffe00080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -136,7 +136,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ffe00080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -155,7 +155,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ffe00080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -174,7 +174,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ffe00080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -193,7 +193,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ffe00080</color>
           <scale>1.5</scale>
         </LabelStyle>
       </Style>

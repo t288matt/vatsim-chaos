@@ -391,49 +391,44 @@ def save_flight_data(flight_plan: FlightPlan, base_filename: str):
 
 def main():
     """Main function to process all SimBrief XML files in the directory"""
-    
-    print("🚁 SimBrief XML Flight Plan Extractor")
-    print("=" * 50)
-    
-    # Remove temp directory if it exists
-    temp_dir = "temp"
-    if os.path.exists(temp_dir):
-        import shutil
-        shutil.rmtree(temp_dir)
-        print(f"🗑️  Removed existing temp directory: {temp_dir}")
-    
-    # Find all XML files in the current directory
-    xml_files = [f for f in os.listdir('.') if f.endswith('.xml')]
-    
-    if not xml_files:
-        print("❌ No XML files found in the current directory")
-        return
-    
-    print(f"📁 Found {len(xml_files)} XML files to process:")
-    for xml_file in xml_files:
-        print(f"   • {xml_file}")
-    
-    print("\n" + "=" * 50)
-    
-    # Process each XML file
-    for xml_filename in xml_files:
-        print(f"\n🔄 Processing {xml_filename}...")
-        print("-" * 40)
-        
-        # Extract flight plan
-        flight_plan = extract_flight_plan_from_xml(xml_filename)
-        if not flight_plan:
-            print(f"❌ Failed to extract flight plan from {xml_filename}")
-            continue
-        
-        # Save data
-        base_filename = xml_filename.replace('.xml', '')
-        save_flight_data(flight_plan, base_filename)
-        
-        print(f"✅ Successfully processed {xml_filename}")
-    
-    print(f"\n🎉 Completed processing {len(xml_files)} XML files!")
-    print("📁 All flight data and KML files have been created in temp directory.")
+    try:
+        print("🚁 SimBrief XML Flight Plan Extractor")
+        print("=" * 50)
+        temp_dir = "temp"
+        if os.path.exists(temp_dir):
+            import shutil
+            shutil.rmtree(temp_dir)
+            print(f"🗑️  Removed existing temp directory: {temp_dir}")
+        xml_files = [f for f in os.listdir('.') if f.endswith('.xml')]
+        if not xml_files:
+            print("❌ No XML files found in the current directory")
+            exit(1)
+        print(f"📁 Found {len(xml_files)} XML files to process:")
+        for xml_file in xml_files:
+            print(f"   • {xml_file}")
+        print("\n" + "=" * 50)
+        success_count = 0
+        for xml_filename in xml_files:
+            print(f"\n🔄 Processing {xml_filename}...")
+            print("-" * 40)
+            flight_plan = extract_flight_plan_from_xml(xml_filename)
+            if not flight_plan:
+                print(f"❌ Failed to extract flight plan from {xml_filename}")
+                continue
+            base_filename = xml_filename.replace('.xml', '')
+            save_flight_data(flight_plan, base_filename)
+            print(f"✅ Successfully processed {xml_filename}")
+            success_count += 1
+        if success_count == 0:
+            print("❌ No flight plans were successfully processed. Exiting.")
+            exit(1)
+        print(f"\n🎉 Completed processing {success_count} XML files!")
+        print("📁 All flight data and KML files have been created in temp directory.")
+    except Exception as e:
+        print(f"❌ Fatal error in extraction: {e}")
+        import traceback
+        traceback.print_exc()
+        exit(2)
 
 if __name__ == "__main__":
     main() 

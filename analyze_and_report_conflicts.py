@@ -25,16 +25,11 @@ import logging
 from typing import List, Dict, Tuple, Optional, Any
 from collections import defaultdict
 from dataclasses import dataclass
+from env import LATERAL_SEPARATION_THRESHOLD, VERTICAL_SEPARATION_THRESHOLD, MIN_ALTITUDE_THRESHOLD, DUPLICATE_FILTER_DISTANCE, MIN_DEPARTURE_SEPARATION_MINUTES
 
 # =============================================================================
 # CONFIGURATION CONSTANTS
 # =============================================================================
-
-# Conflict detection parameters
-LATERAL_SEPARATION_THRESHOLD = 3.0  # nautical miles
-VERTICAL_SEPARATION_THRESHOLD = 900  # feet
-MIN_ALTITUDE_THRESHOLD = 2500  # feet
-DUPLICATE_FILTER_DISTANCE = 4.0  # nautical miles
 
 # Route interpolation settings
 INTERPOLATION_POINTS = 10  # points between waypoints
@@ -568,24 +563,18 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
 def optimize_departure_times(flight_plans: List[FlightPlan], crossing_points: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Optimize departure times to maximize conflicts.
-    
-    Args:
-        flight_plans: List of flight plans
-        crossing_points: List of detected conflicts
-    
-    Returns:
-        Dictionary with departure times and conflict scores
+    Enforce: No two flights can depart from the same airport within 2 minutes of each other.
     """
+    from collections import defaultdict
     # Group conflicts by flight pairs
     conflict_groups = defaultdict(list)
     for crossing in crossing_points:
         key = (crossing['flight1_idx'], crossing['flight2_idx'])
         conflict_groups[key].append(crossing)
-    
     # Start with first flight at time 0
     departure_times = {0: 0}
     conflict_scores = defaultdict(int)
-    
+    flight_origin = {i: fp.origin for i, fp in enumerate(flight_plans)}
     # For each flight pair, find the best departure time for the second flight
     for (flight1_idx, flight2_idx), conflicts in conflict_groups.items():
         if flight1_idx == 0:  # First flight is our reference
@@ -594,25 +583,28 @@ def optimize_departure_times(flight_plans: List[FlightPlan], crossing_points: Li
             for conflict in conflicts:
                 time_diff = abs(conflict['time1'] - conflict['time2'])
                 time_diffs.append(time_diff)
-            
             # Use the most common time difference, or average if multiple
             if time_diffs:
                 suggested_time = sum(time_diffs) / len(time_diffs)
-                departure_times[flight2_idx] = int(suggested_time)
-                
+                # Enforce 2-min separation from same-origin flights
+                origin = flight_origin[flight2_idx]
+                candidate_time = int(suggested_time)
+                while any(abs(candidate_time - t) < MIN_DEPARTURE_SEPARATION_MINUTES and flight_origin[idx] == origin for idx, t in departure_times.items() if idx != flight2_idx):
+                    candidate_time += MIN_DEPARTURE_SEPARATION_MINUTES
+                departure_times[flight2_idx] = candidate_time
                 # Count how many conflicts this creates
                 for conflict in conflicts:
                     conflict_scores[flight2_idx] += 1
-    
     # For remaining flights, find best departure times
     remaining_flights = set(range(len(flight_plans))) - set(departure_times.keys())
-    
     for flight_idx in remaining_flights:
         best_time = 0
         best_score = 0
-        
-        # Try different departure times and see which creates most conflicts
+        origin = flight_origin[flight_idx]
         for test_time in range(0, MAX_DEPARTURE_TIME, DEPARTURE_TIME_STEP):
+            # Enforce 2-min separation from same-origin flights
+            if any(abs(test_time - t) < MIN_DEPARTURE_SEPARATION_MINUTES and flight_origin[idx] == origin for idx, t in departure_times.items() if idx != flight_idx):
+                continue
             score = 0
             for crossing in crossing_points:
                 if crossing['flight1_idx'] == flight_idx or crossing['flight2_idx'] == flight_idx:
@@ -621,25 +613,19 @@ def optimize_departure_times(flight_plans: List[FlightPlan], crossing_points: Li
                         other_time = departure_times[other_flight]
                         flight_time = crossing['time1'] if crossing['flight1_idx'] == flight_idx else crossing['time2']
                         other_crossing_time = crossing['time2'] if crossing['flight1_idx'] == flight_idx else crossing['time1']
-                        
-                        # Calculate when this flight should depart to create conflict
                         if crossing['flight1_idx'] == flight_idx:
                             conflict_time = other_time + other_crossing_time
                             suggested_departure = conflict_time - flight_time
                         else:
                             conflict_time = other_time + other_crossing_time
                             suggested_departure = conflict_time - flight_time
-                        
                         if abs(test_time - suggested_departure) < TIME_TOLERANCE:
                             score += 1
-            
             if score > best_score:
                 best_score = score
                 best_time = test_time
-        
         departure_times[flight_idx] = int(best_time)
         conflict_scores[flight_idx] = best_score
-    
     return {
         'departure_times': departure_times,
         'conflict_scores': conflict_scores

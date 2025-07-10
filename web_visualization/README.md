@@ -17,11 +17,28 @@ This directory contains the 3D web visualization for the ATC Conflict Analysis S
   4. Use the timeline controls to play/pause the animation.
   5. Real-time conflict alerts appear when conflicts occur.
 
+## Customization
+
+- **Aircraft Icon Size**: Adjust `minimumPixelSize` and `maximumScale` in the `model` property in `cesium_flight_anim.html`.
+- **Label Position/Size**: Change `pixelOffset` and `font` in the `label` property for each flight entity.
+- **Real-Time Altitude**: Labels update live as aircraft move.
+- **Conflict Alerts**: Red markers and alerts appear when conflicts occur.
+- **Camera Auto-Zoom**: Automatically zooms to fit all flights at start.
+
 ## Data Files
 
 - `animation_data.json` - Complete flight and conflict data for visualization
 - `flight_tracks.json` - Individual flight path data
 - `conflict_points.json` - Conflict location and timing data
+
+## Refreshing Data
+
+- After running `export_animation_data.py`, reload `cesium_flight_anim.html` in your browser to see updated flights/conflicts.
+
+## Troubleshooting
+
+- If no flights appear, ensure `animation_data.json` is present and up to date.
+- For large icons or overlapping labels, adjust `minimumPixelSize`, `maximumScale`, `font`, and `pixelOffset` in the HTML.
 
 ## Features
 

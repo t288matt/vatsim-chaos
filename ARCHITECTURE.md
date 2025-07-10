@@ -68,14 +68,29 @@ The ATC Conflict Analysis System is a Python-based application designed to analy
 - Route pair deduplication
 - Phase-based conflict categorization
 
-### 4. Visualization Layer
-**File**: `merge_kml_flightplans.py`
+### 4. Scheduling Layer
+**File**: `generate_schedule_conflicts.py`
 
 **Responsibilities**:
-- Merge individual KML files into single Google Earth file
-- Organize flight plans in hierarchical folders
-- Maintain color consistency across visualization
-- Enable spatial analysis in Google Earth
+- Generate departure schedules to maximize simultaneous conflicts
+- Output event schedule (`event_schedule.csv`) and ATC briefing (`atc_briefing.txt`)
+
+### 5. Animation Data Export Layer
+**File**: `export_animation_data.py`
+
+**Responsibilities**:
+- Export all analysis and schedule data into animation-ready JSON for web visualization
+- Output: `animation_data.json`, `flight_tracks.json`, `conflict_points.json`
+
+### 6. Visualization Layer
+**Files**: `merge_kml_flightplans.py`, `web_visualization/cesium_flight_anim.html`
+
+**Responsibilities**:
+- Merge KML files for Google Earth
+- Provide interactive 3D web visualization (CesiumJS)
+- Animate aircraft with real-time altitude labels, conflict points, and alerts
+- Timeline controls and camera auto-zoom
+- Dynamic data loading from JSON (no server required)
 
 ## Data Flow
 
@@ -97,6 +112,14 @@ Formatted Conflict List
 [Merge KML Files]
        ↓
 Combined Google Earth File
+       ↓
+[Animation Data Export]
+       ↓
+(animation_data.json, etc.)
+       ↓
+[Web Visualization (Cesium)]
+       ↓
+Animated 3D Globe, Real-Time Conflict Alerts
 ```
 
 ## Data Models
@@ -140,6 +163,24 @@ class Waypoint:
     'is_waypoint': bool       # True for waypoint conflicts
 }
 ```
+
+### Animation Data (animation_data.json)
+```json
+{
+  "metadata": { ... },
+  "flights": [
+    {
+      "flight_id": "YBDG-YSBK",
+      "departure_time": "14:00",
+      "waypoints": [ { "lat": ..., "lon": ..., "altitude": ..., "time_from_departure": ... }, ... ]
+    }, ...
+  ],
+  "conflicts": [ ... ],
+  "timeline": [ ... ]
+}
+```
+- `event_schedule.csv`: Departure times for each flight
+- `atc_briefing.txt`: Human-readable conflict timing
 
 ## File Organization
 

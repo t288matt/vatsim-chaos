@@ -31,6 +31,15 @@ python conflicts_list.py
 
 # 5. Merge KML files for Google Earth viewing
 python merge_kml_flightplans.py
+
+# 6. Generate event schedule for conflicts
+python generate_schedule_conflicts.py --start 14:00 --end 18:00
+
+# 7. Export animation data for web visualization
+python export_animation_data.py
+
+# 8. Open the visualization
+Open web_visualization/cesium_flight_anim.html in your browser
 ```
 
 ### Expected Output
@@ -38,6 +47,12 @@ python merge_kml_flightplans.py
 - `conflict_list.txt` - Formatted conflict list
 - `merged_flightplans.kml` - Combined KML file for Google Earth
 - Individual KML files in `temp/` directory
+- `event_schedule.csv` - Departure schedule
+- `atc_briefing.txt` - ATC conflict briefing
+- `web_visualization/animation_data.json` - Animation data for Cesium
+- `web_visualization/flight_tracks.json` - Flight path data
+- `web_visualization/conflict_points.json` - Conflict location/timing
+- `web_visualization/cesium_flight_anim.html` - 3D web visualization
 
 ## 🔍 Conflict Detection Features
 
@@ -63,13 +78,16 @@ python merge_kml_flightplans.py
 ## 📁 System Components
 
 ### Core Analysis
-- `conflict_analyzer.py` - Main analysis engine with 3D spatial conflict detection
-- `conflicts_list.py` - Conflict listing and reporting with smart formatting
+- `run_analysis.py` - Master workflow script
+- `conflict_analyzer.py` - Main analysis engine
+- `conflicts_list.py` - Conflict listing and reporting
 - `conflict_list.txt` - Formatted conflict output
 
 ### Data Processing
 - `simbrief_xml_flightplan_extractor.py` - Converts SimBrief XML to KML for visualization
 - `merge_kml_flightplans.py` - Merges individual KML files into a single file
+- `generate_schedule_conflicts.py` - Generates event schedule for conflicts
+- `export_animation_data.py` - Exports animation data for web visualization
 
 ### Data Organization
 - `temp/` - Directory containing all generated data files
@@ -79,7 +97,16 @@ python merge_kml_flightplans.py
 
 ### Visualization
 - `merged_flightplans.kml` - Combined KML file for Google Earth viewing
+- `web_visualization/cesium_flight_anim.html` - 3D animated web visualization (CesiumJS)
 - 40 diverse colors for easy route identification
+
+## 🌐 Web Visualization Features
+- 3D animated aircraft with scalable icons
+- Real-time altitude labels (below aircraft)
+- Conflict points and live alerts
+- Timeline controls, camera auto-zoom
+- Toggleable flight labels
+- Loads data from JSON (no server required)
 
 ## 📊 Conflict Types
 
