@@ -21,11 +21,11 @@
       </description>
       <Style>
         <LineStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <width>4</width>
         </LineStyle>
         <PolyStyle>
-          <color>7f00ffff</color>
+          <color>7fff0040</color>
         </PolyStyle>
       </Style>
       <LineString>
@@ -61,7 +61,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <scale>1.5</scale>
         </LabelStyle>
       </Style>
@@ -80,7 +80,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -99,7 +99,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -118,7 +118,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -137,7 +137,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -156,7 +156,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -175,7 +175,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -194,7 +194,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -213,7 +213,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffff</color>
+          <color>ffff0040</color>
           <scale>1.5</scale>
         </LabelStyle>
       </Style>
