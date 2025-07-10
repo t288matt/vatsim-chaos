@@ -1,15 +1,15 @@
 # ATC Conflict Analysis System
 
-A Python-based system for analyzing SimBrief XML flight plans to create air traffic controller training scenarios by identifying potential conflicts between aircraft.
+A Python-based system for generating chaotic, conflicting SimBrief XML flight plans to create challenging air traffic control (ATC) event scenarios. The system is designed to help event organizers create situations where ATC must resolve numerous, simultaneous conflicts during live events.
 
 ## 🎯 Purpose
 
-This system helps air traffic control instructors create realistic training scenarios by:
-- **Parsing SimBrief XML flight plans** from real-world data
-- **Identifying potential conflicts** between aircraft using 3D spatial analysis
-- **Providing detailed conflict analysis** with location, timing, and phase information
-- **Detecting conflicts both at waypoints and between waypoints** for comprehensive coverage
-- **Generating KML files** for Google Earth visualization with diverse color schemes
+This system enables event organizers to:
+- **Parse SimBrief XML flight plans** and analyze multiple routes
+- **Intentionally generate and identify conflicts** between aircraft to maximize ATC workload
+- **Provide detailed conflict analysis** with location, timing, and phase information
+- **Detect conflicts both at waypoints and between waypoints** for comprehensive event realism
+- **Generate KML files** for Google Earth visualization with diverse color schemes
 
 ## 🚀 Quick Start
 
@@ -158,18 +158,17 @@ The system uses 40 diverse colors for route visualization:
    Phase: descent/cruise
 ```
 
-## 🎓 ATC Training Applications
+## 🎪 Event Scenario Applications
 
-This system helps create realistic training scenarios by:
+This system is designed for event scenario creation, enabling organizers to:
 
 ### Scenario Creation
-- **Conflict Density**: Identifying multiple conflicts in a given airspace
-- **Phase Mixing**: Combining conflicts in different flight phases
-- **Complexity**: Mixing waypoint and enroute conflicts
-- **Realism**: Using actual flight plan data and real-world coordinates
+- **Maximize Conflict Density**: Generate as many conflicts as possible in a given airspace
+- **Create Chaotic Situations**: Overlap routes and phases to challenge ATC
+- **Increase Realism and Workload**: Simulate high-traffic, high-stress environments for live events
 
-### Training Materials
-- **Readable Output**: Clear conflict descriptions for training materials
+### Event Execution
+- **Readable Output**: Clear conflict descriptions for event planning and ATC briefings
 - **Visual Analysis**: Google Earth integration for spatial understanding
 - **Structured Data**: JSON format for further analysis and integration
 
@@ -245,7 +244,7 @@ The system is designed for easy extension and modification:
 
 ## 📄 License
 
-This project is designed for educational and training purposes in air traffic control applications.
+This project is designed for event scenario creation and live ATC challenge applications.
 
 ---
 
