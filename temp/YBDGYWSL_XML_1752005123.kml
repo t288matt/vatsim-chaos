@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>YBDGYWSL_XML_1752005123 Flight Plan - YBDG to YWSL</name>
+    <description>Flight plan extracted from SimBrief XML</description>
+    
+    <!-- Flight Information -->
+    <Snippet maxLines="2">YBDG → YWSL</Snippet>
+    
+    <!-- Flight Path Line -->
+    <Placemark>
+      <name>YBDGYWSL_XML_1752005123 Flight Path</name>
+      <description>
+        <![CDATA[
+        <h3>YBDGYWSL_XML_1752005123 Flight Plan</h3>
+        <p><strong>Route:</strong> YBDG → YWSL</p>
+        <p><strong>Route:</strong> DCT MNG W649 ESL DCT</p>
+        <p><strong>Waypoints:</strong> 7</p>
+        <p><strong>Distance:</strong> ~350 nm</p>
+        ]]>
+      </description>
+      <Style>
+        <LineStyle>
+          <color>ff00ff40</color>
+          <width>4</width>
+        </LineStyle>
+        <PolyStyle>
+          <color>7f00ff40</color>
+        </PolyStyle>
+      </Style>
+      <LineString>
+        <extrude>1</extrude>
+        <tessellate>1</tessellate>
+        <altitudeMode>absolute</altitudeMode>
+        <coordinates>
+          144.329722,-36.739167,710
+          144.81775,-36.822833,19000
+          145.194222,-36.885889,19000
+          146.308749,-37.589757,19000
+          147.159556,-38.111333,2900
+          146.965278,-38.091667,2600
+          146.965278,-38.091667,93
+        </coordinates>
+      </LineString>
+    </Placemark>
+    
+    <!-- Waypoints -->
+    <Placemark>
+      <name>YBDG</name>
+      <description>
+        <![CDATA[
+        <h3>YBDG</h3>
+        <p><strong>Coordinates:</strong> -36.739167, 144.329722</p>
+        <p><strong>Altitude:</strong> 710 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff00ff40</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOC</name>
+      <description>
+        <![CDATA[
+        <h3>TOC</h3>
+        <p><strong>Coordinates:</strong> -36.822833, 144.817750</p>
+        <p><strong>Altitude:</strong> 19000 ft</p>
+        <p><strong>Time:</strong> 09:47</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff00ff40</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>MNG</name>
+      <description>
+        <![CDATA[
+        <h3>MNG</h3>
+        <p><strong>Coordinates:</strong> -36.885889, 145.194222</p>
+        <p><strong>Altitude:</strong> 19000 ft</p>
+        <p><strong>Time:</strong> 13:19</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> vor</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff00ff40</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOD</name>
+      <description>
+        <![CDATA[
+        <h3>TOD</h3>
+        <p><strong>Coordinates:</strong> -37.589757, 146.308749</p>
+        <p><strong>Altitude:</strong> 19000 ft</p>
+        <p><strong>Time:</strong> 26:41</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff00ff40</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>ESL</name>
+      <description>
+        <![CDATA[
+        <h3>ESL</h3>
+        <p><strong>Coordinates:</strong> -38.111333, 147.159556</p>
+        <p><strong>Altitude:</strong> 2900 ft</p>
+        <p><strong>Time:</strong> 37:28</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> ndb</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff00ff40</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YWSL</name>
+      <description>
+        <![CDATA[
+        <h3>YWSL</h3>
+        <p><strong>Coordinates:</strong> -38.091667, 146.965278</p>
+        <p><strong>Altitude:</strong> 2600 ft</p>
+        <p><strong>Time:</strong> 41:22</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> apt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff00ff40</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YWSL</name>
+      <description>
+        <![CDATA[
+        <h3>YWSL</h3>
+        <p><strong>Coordinates:</strong> -38.091667, 146.965278</p>
+        <p><strong>Altitude:</strong> 93 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff00ff40</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+  </Document>
+</kml>

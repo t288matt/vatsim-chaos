@@ -1,0 +1,249 @@
+{
+  "origin": "YMES",
+  "destination": "YSRI",
+  "route": "DCT ESL W290 CB W122 AKMIR W713 KADOM W368 RIC DCT",
+  "departure": {
+    "name": "YMES",
+    "lat": -38.098889,
+    "lon": 147.149444,
+    "altitude": 23,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "ESL",
+      "lat": -38.111333,
+      "lon": 147.159556,
+      "altitude": 3000,
+      "elapsed_time": "01:50",
+      "time_seconds": 110,
+      "stage": "CLB",
+      "type": "ndb"
+    },
+    {
+      "name": "TOC",
+      "lat": -37.749312,
+      "lon": 147.532271,
+      "altitude": 19000,
+      "elapsed_time": "06:59",
+      "time_seconds": 419,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "VISER",
+      "lat": -37.46,
+      "lon": 147.826667,
+      "altitude": 19000,
+      "elapsed_time": "10:18",
+      "time_seconds": 618,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "COM",
+      "lat": -36.353786,
+      "lon": 148.957519,
+      "altitude": 19000,
+      "elapsed_time": "23:10",
+      "time_seconds": 1390,
+      "stage": "CRZ",
+      "type": "ndb"
+    },
+    {
+      "name": "CB",
+      "lat": -35.281444,
+      "lon": 149.195731,
+      "altitude": 20000,
+      "elapsed_time": "33:51",
+      "time_seconds": 2031,
+      "stage": "CRZ",
+      "type": "vor"
+    },
+    {
+      "name": "AKMIR",
+      "lat": -34.178556,
+      "lon": 150.10675,
+      "altitude": 19000,
+      "elapsed_time": "46:24",
+      "time_seconds": 2784,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -34.020999,
+      "lon": 150.171964,
+      "altitude": 19000,
+      "elapsed_time": "47:57",
+      "time_seconds": 2877,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "KADOM",
+      "lat": -33.710806,
+      "lon": 150.299611,
+      "altitude": 10600,
+      "elapsed_time": "54:03",
+      "time_seconds": 3243,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "RIC",
+      "lat": -33.596936,
+      "lon": 150.7764,
+      "altitude": 2600,
+      "elapsed_time": "61:41",
+      "time_seconds": 3701,
+      "stage": "DSC",
+      "type": "ndb"
+    },
+    {
+      "name": "YSRI",
+      "lat": -33.600556,
+      "lon": 150.780833,
+      "altitude": 2600,
+      "elapsed_time": "69:41",
+      "time_seconds": 4181,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YSRI",
+    "lat": -33.600556,
+    "lon": 150.780833,
+    "altitude": 67,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YMES",
+      "lat": -38.098889,
+      "lon": 147.149444,
+      "altitude": 23,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "ESL",
+      "lat": -38.111333,
+      "lon": 147.159556,
+      "altitude": 3000,
+      "elapsed_time": "01:50",
+      "time_seconds": 110,
+      "stage": "CLB",
+      "type": "ndb"
+    },
+    {
+      "name": "TOC",
+      "lat": -37.749312,
+      "lon": 147.532271,
+      "altitude": 19000,
+      "elapsed_time": "06:59",
+      "time_seconds": 419,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "VISER",
+      "lat": -37.46,
+      "lon": 147.826667,
+      "altitude": 19000,
+      "elapsed_time": "10:18",
+      "time_seconds": 618,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "COM",
+      "lat": -36.353786,
+      "lon": 148.957519,
+      "altitude": 19000,
+      "elapsed_time": "23:10",
+      "time_seconds": 1390,
+      "stage": "CRZ",
+      "type": "ndb"
+    },
+    {
+      "name": "CB",
+      "lat": -35.281444,
+      "lon": 149.195731,
+      "altitude": 20000,
+      "elapsed_time": "33:51",
+      "time_seconds": 2031,
+      "stage": "CRZ",
+      "type": "vor"
+    },
+    {
+      "name": "AKMIR",
+      "lat": -34.178556,
+      "lon": 150.10675,
+      "altitude": 19000,
+      "elapsed_time": "46:24",
+      "time_seconds": 2784,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -34.020999,
+      "lon": 150.171964,
+      "altitude": 19000,
+      "elapsed_time": "47:57",
+      "time_seconds": 2877,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "KADOM",
+      "lat": -33.710806,
+      "lon": 150.299611,
+      "altitude": 10600,
+      "elapsed_time": "54:03",
+      "time_seconds": 3243,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "RIC",
+      "lat": -33.596936,
+      "lon": 150.7764,
+      "altitude": 2600,
+      "elapsed_time": "61:41",
+      "time_seconds": 3701,
+      "stage": "DSC",
+      "type": "ndb"
+    },
+    {
+      "name": "YSRI",
+      "lat": -33.600556,
+      "lon": 150.780833,
+      "altitude": 2600,
+      "elapsed_time": "69:41",
+      "time_seconds": 4181,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YSRI",
+      "lat": -33.600556,
+      "lon": 150.780833,
+      "altitude": 67,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

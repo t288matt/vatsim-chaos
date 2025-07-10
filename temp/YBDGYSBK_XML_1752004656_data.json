@@ -1,0 +1,309 @@
+{
+  "origin": "YBDG",
+  "destination": "YSBK",
+  "route": "DCT AY W335 IGDEL DCT AKMIR W817 DARGI Y20 BK DCT",
+  "departure": {
+    "name": "YBDG",
+    "lat": -36.739167,
+    "lon": 144.329722,
+    "altitude": 710,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "TOC",
+      "lat": -36.524564,
+      "lon": 145.202903,
+      "altitude": 19000,
+      "elapsed_time": "12:14",
+      "time_seconds": 734,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "AY",
+      "lat": -36.068,
+      "lon": 146.966083,
+      "altitude": 19000,
+      "elapsed_time": "27:21",
+      "time_seconds": 1641,
+      "stage": "CRZ",
+      "type": "vor"
+    },
+    {
+      "name": "COPPA",
+      "lat": -35.781667,
+      "lon": 147.581667,
+      "altitude": 19000,
+      "elapsed_time": "33:19",
+      "time_seconds": 1999,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "WOLBI",
+      "lat": -35.481667,
+      "lon": 148.208333,
+      "altitude": 19000,
+      "elapsed_time": "39:16",
+      "time_seconds": 2356,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "IGDEL",
+      "lat": -35.260475,
+      "lon": 148.667603,
+      "altitude": 19000,
+      "elapsed_time": "43:41",
+      "time_seconds": 2621,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -34.542922,
+      "lon": 149.62876,
+      "altitude": 23000,
+      "elapsed_time": "54:31",
+      "time_seconds": 3271,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "AKMIR",
+      "lat": -34.178556,
+      "lon": 150.10675,
+      "altitude": 14000,
+      "elapsed_time": "60:07",
+      "time_seconds": 3607,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "DARGI",
+      "lat": -33.921667,
+      "lon": 150.42,
+      "altitude": 7900,
+      "elapsed_time": "63:58",
+      "time_seconds": 3838,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "ANPEN",
+      "lat": -33.922611,
+      "lon": 150.487889,
+      "altitude": 7000,
+      "elapsed_time": "64:29",
+      "time_seconds": 3869,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "GOMUB",
+      "lat": -33.925136,
+      "lon": 150.688117,
+      "altitude": 4200,
+      "elapsed_time": "66:14",
+      "time_seconds": 3974,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "NOLEM",
+      "lat": -33.925994,
+      "lon": 150.762494,
+      "altitude": 3100,
+      "elapsed_time": "66:56",
+      "time_seconds": 4016,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "BK",
+      "lat": -33.928328,
+      "lon": 150.988506,
+      "altitude": 2500,
+      "elapsed_time": "68:51",
+      "time_seconds": 4131,
+      "stage": "DSC",
+      "type": "ndb"
+    },
+    {
+      "name": "YSBK",
+      "lat": -33.924444,
+      "lon": 150.988333,
+      "altitude": 2500,
+      "elapsed_time": "71:43",
+      "time_seconds": 4303,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YSBK",
+    "lat": -33.924444,
+    "lon": 150.988333,
+    "altitude": 34,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YBDG",
+      "lat": -36.739167,
+      "lon": 144.329722,
+      "altitude": 710,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "TOC",
+      "lat": -36.524564,
+      "lon": 145.202903,
+      "altitude": 19000,
+      "elapsed_time": "12:14",
+      "time_seconds": 734,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "AY",
+      "lat": -36.068,
+      "lon": 146.966083,
+      "altitude": 19000,
+      "elapsed_time": "27:21",
+      "time_seconds": 1641,
+      "stage": "CRZ",
+      "type": "vor"
+    },
+    {
+      "name": "COPPA",
+      "lat": -35.781667,
+      "lon": 147.581667,
+      "altitude": 19000,
+      "elapsed_time": "33:19",
+      "time_seconds": 1999,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "WOLBI",
+      "lat": -35.481667,
+      "lon": 148.208333,
+      "altitude": 19000,
+      "elapsed_time": "39:16",
+      "time_seconds": 2356,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "IGDEL",
+      "lat": -35.260475,
+      "lon": 148.667603,
+      "altitude": 19000,
+      "elapsed_time": "43:41",
+      "time_seconds": 2621,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -34.542922,
+      "lon": 149.62876,
+      "altitude": 23000,
+      "elapsed_time": "54:31",
+      "time_seconds": 3271,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "AKMIR",
+      "lat": -34.178556,
+      "lon": 150.10675,
+      "altitude": 14000,
+      "elapsed_time": "60:07",
+      "time_seconds": 3607,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "DARGI",
+      "lat": -33.921667,
+      "lon": 150.42,
+      "altitude": 7900,
+      "elapsed_time": "63:58",
+      "time_seconds": 3838,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "ANPEN",
+      "lat": -33.922611,
+      "lon": 150.487889,
+      "altitude": 7000,
+      "elapsed_time": "64:29",
+      "time_seconds": 3869,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "GOMUB",
+      "lat": -33.925136,
+      "lon": 150.688117,
+      "altitude": 4200,
+      "elapsed_time": "66:14",
+      "time_seconds": 3974,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "NOLEM",
+      "lat": -33.925994,
+      "lon": 150.762494,
+      "altitude": 3100,
+      "elapsed_time": "66:56",
+      "time_seconds": 4016,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "BK",
+      "lat": -33.928328,
+      "lon": 150.988506,
+      "altitude": 2500,
+      "elapsed_time": "68:51",
+      "time_seconds": 4131,
+      "stage": "DSC",
+      "type": "ndb"
+    },
+    {
+      "name": "YSBK",
+      "lat": -33.924444,
+      "lon": 150.988333,
+      "altitude": 2500,
+      "elapsed_time": "71:43",
+      "time_seconds": 4303,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YSBK",
+      "lat": -33.924444,
+      "lon": 150.988333,
+      "altitude": 34,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

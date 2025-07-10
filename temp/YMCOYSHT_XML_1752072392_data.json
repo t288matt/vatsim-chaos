@@ -1,0 +1,129 @@
+{
+  "origin": "YMCO",
+  "destination": "YSHT",
+  "route": "DCT OTKED",
+  "departure": {
+    "name": "YMCO",
+    "lat": -37.598889,
+    "lon": 149.720833,
+    "altitude": 102,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "OTKED",
+      "lat": -37.596156,
+      "lon": 149.718322,
+      "altitude": 1600,
+      "elapsed_time": "02:36",
+      "time_seconds": 156,
+      "stage": "CLB",
+      "type": "wpt"
+    },
+    {
+      "name": "TOC",
+      "lat": -37.389557,
+      "lon": 148.897994,
+      "altitude": 24000,
+      "elapsed_time": "14:03",
+      "time_seconds": 843,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "TOD",
+      "lat": -37.034517,
+      "lon": 147.547555,
+      "altitude": 24000,
+      "elapsed_time": "29:16",
+      "time_seconds": 1756,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "YSHT",
+      "lat": -36.428889,
+      "lon": 145.3925,
+      "altitude": 2900,
+      "elapsed_time": "56:14",
+      "time_seconds": 3374,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YSHT",
+    "lat": -36.428889,
+    "lon": 145.3925,
+    "altitude": 375,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YMCO",
+      "lat": -37.598889,
+      "lon": 149.720833,
+      "altitude": 102,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "OTKED",
+      "lat": -37.596156,
+      "lon": 149.718322,
+      "altitude": 1600,
+      "elapsed_time": "02:36",
+      "time_seconds": 156,
+      "stage": "CLB",
+      "type": "wpt"
+    },
+    {
+      "name": "TOC",
+      "lat": -37.389557,
+      "lon": 148.897994,
+      "altitude": 24000,
+      "elapsed_time": "14:03",
+      "time_seconds": 843,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "TOD",
+      "lat": -37.034517,
+      "lon": 147.547555,
+      "altitude": 24000,
+      "elapsed_time": "29:16",
+      "time_seconds": 1756,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "YSHT",
+      "lat": -36.428889,
+      "lon": 145.3925,
+      "altitude": 2900,
+      "elapsed_time": "56:14",
+      "time_seconds": 3374,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YSHT",
+      "lat": -36.428889,
+      "lon": 145.3925,
+      "altitude": 375,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

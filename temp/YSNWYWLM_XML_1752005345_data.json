@@ -1,0 +1,309 @@
+{
+  "origin": "YSNW",
+  "destination": "YWLM",
+  "route": "DCT NWA W144 RIC DCT RIC V665 MAKOR V402 WLM DCT",
+  "departure": {
+    "name": "YSNW",
+    "lat": -34.948889,
+    "lon": 150.536944,
+    "altitude": 399,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "NWA",
+      "lat": -34.951111,
+      "lon": 150.529722,
+      "altitude": 1900,
+      "elapsed_time": "02:18",
+      "time_seconds": 138,
+      "stage": "CLB",
+      "type": "ndb"
+    },
+    {
+      "name": "TOC",
+      "lat": -34.802753,
+      "lon": 150.555854,
+      "altitude": 7000,
+      "elapsed_time": "06:11",
+      "time_seconds": 371,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "TONTO",
+      "lat": -34.292683,
+      "lon": 150.644981,
+      "altitude": 7000,
+      "elapsed_time": "18:50",
+      "time_seconds": 1130,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "RAKSO",
+      "lat": -34.038583,
+      "lon": 150.691583,
+      "altitude": 7000,
+      "elapsed_time": "24:57",
+      "time_seconds": 1497,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "RIC",
+      "lat": -33.607278,
+      "lon": 150.798917,
+      "altitude": 7000,
+      "elapsed_time": "35:29",
+      "time_seconds": 2129,
+      "stage": "CRZ",
+      "type": "vor"
+    },
+    {
+      "name": "RIC",
+      "lat": -33.596936,
+      "lon": 150.7764,
+      "altitude": 7000,
+      "elapsed_time": "35:55",
+      "time_seconds": 2155,
+      "stage": "CRZ",
+      "type": "ndb"
+    },
+    {
+      "name": "CAPER",
+      "lat": -33.379194,
+      "lon": 150.938583,
+      "altitude": 7000,
+      "elapsed_time": "41:34",
+      "time_seconds": 2494,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "MAKOR",
+      "lat": -33.112219,
+      "lon": 151.139294,
+      "altitude": 7000,
+      "elapsed_time": "48:41",
+      "time_seconds": 2921,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "LOWEP",
+      "lat": -33.068783,
+      "lon": 151.229622,
+      "altitude": 7000,
+      "elapsed_time": "50:20",
+      "time_seconds": 3020,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "PUDUT",
+      "lat": -32.961389,
+      "lon": 151.473306,
+      "altitude": 7000,
+      "elapsed_time": "54:56",
+      "time_seconds": 3296,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -32.945848,
+      "lon": 151.508419,
+      "altitude": 7000,
+      "elapsed_time": "55:34",
+      "time_seconds": 3334,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "WLM",
+      "lat": -32.80335,
+      "lon": 151.828775,
+      "altitude": 2500,
+      "elapsed_time": "64:05",
+      "time_seconds": 3845,
+      "stage": "DSC",
+      "type": "ndb"
+    },
+    {
+      "name": "YWLM",
+      "lat": -32.795,
+      "lon": 151.834444,
+      "altitude": 2500,
+      "elapsed_time": "66:58",
+      "time_seconds": 4018,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YWLM",
+    "lat": -32.795,
+    "lon": 151.834444,
+    "altitude": 31,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YSNW",
+      "lat": -34.948889,
+      "lon": 150.536944,
+      "altitude": 399,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "NWA",
+      "lat": -34.951111,
+      "lon": 150.529722,
+      "altitude": 1900,
+      "elapsed_time": "02:18",
+      "time_seconds": 138,
+      "stage": "CLB",
+      "type": "ndb"
+    },
+    {
+      "name": "TOC",
+      "lat": -34.802753,
+      "lon": 150.555854,
+      "altitude": 7000,
+      "elapsed_time": "06:11",
+      "time_seconds": 371,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "TONTO",
+      "lat": -34.292683,
+      "lon": 150.644981,
+      "altitude": 7000,
+      "elapsed_time": "18:50",
+      "time_seconds": 1130,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "RAKSO",
+      "lat": -34.038583,
+      "lon": 150.691583,
+      "altitude": 7000,
+      "elapsed_time": "24:57",
+      "time_seconds": 1497,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "RIC",
+      "lat": -33.607278,
+      "lon": 150.798917,
+      "altitude": 7000,
+      "elapsed_time": "35:29",
+      "time_seconds": 2129,
+      "stage": "CRZ",
+      "type": "vor"
+    },
+    {
+      "name": "RIC",
+      "lat": -33.596936,
+      "lon": 150.7764,
+      "altitude": 7000,
+      "elapsed_time": "35:55",
+      "time_seconds": 2155,
+      "stage": "CRZ",
+      "type": "ndb"
+    },
+    {
+      "name": "CAPER",
+      "lat": -33.379194,
+      "lon": 150.938583,
+      "altitude": 7000,
+      "elapsed_time": "41:34",
+      "time_seconds": 2494,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "MAKOR",
+      "lat": -33.112219,
+      "lon": 151.139294,
+      "altitude": 7000,
+      "elapsed_time": "48:41",
+      "time_seconds": 2921,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "LOWEP",
+      "lat": -33.068783,
+      "lon": 151.229622,
+      "altitude": 7000,
+      "elapsed_time": "50:20",
+      "time_seconds": 3020,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "PUDUT",
+      "lat": -32.961389,
+      "lon": 151.473306,
+      "altitude": 7000,
+      "elapsed_time": "54:56",
+      "time_seconds": 3296,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -32.945848,
+      "lon": 151.508419,
+      "altitude": 7000,
+      "elapsed_time": "55:34",
+      "time_seconds": 3334,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "WLM",
+      "lat": -32.80335,
+      "lon": 151.828775,
+      "altitude": 2500,
+      "elapsed_time": "64:05",
+      "time_seconds": 3845,
+      "stage": "DSC",
+      "type": "ndb"
+    },
+    {
+      "name": "YWLM",
+      "lat": -32.795,
+      "lon": 151.834444,
+      "altitude": 2500,
+      "elapsed_time": "66:58",
+      "time_seconds": 4018,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YWLM",
+      "lat": -32.795,
+      "lon": 151.834444,
+      "altitude": 31,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

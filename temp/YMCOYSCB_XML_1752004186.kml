@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>YMCOYSCB_XML_1752004186 Flight Plan - YMCO to YSCB</name>
+    <description>Flight plan extracted from SimBrief XML</description>
+    
+    <!-- Flight Information -->
+    <Snippet maxLines="2">YMCO → YSCB</Snippet>
+    
+    <!-- Flight Path Line -->
+    <Placemark>
+      <name>YMCOYSCB_XML_1752004186 Flight Path</name>
+      <description>
+        <![CDATA[
+        <h3>YMCOYSCB_XML_1752004186 Flight Plan</h3>
+        <p><strong>Route:</strong> YMCO → YSCB</p>
+        <p><strong>Route:</strong> DCT COM DCT MENZI DCT CB DCT</p>
+        <p><strong>Waypoints:</strong> 8</p>
+        <p><strong>Distance:</strong> ~400 nm</p>
+        ]]>
+      </description>
+      <Style>
+        <LineStyle>
+          <color>ff600080</color>
+          <width>4</width>
+        </LineStyle>
+        <PolyStyle>
+          <color>7f600080</color>
+        </PolyStyle>
+      </Style>
+      <LineString>
+        <extrude>1</extrude>
+        <tessellate>1</tessellate>
+        <altitudeMode>absolute</altitudeMode>
+        <coordinates>
+          149.720833,-37.598889,102
+          149.396832,-37.075956,20000
+          148.957519,-36.353786,20000
+          149.018647,-36.142952,19000
+          149.194422,-35.530161,5900
+          149.195731,-35.281444,4400
+          149.195,-35.306944,4400
+          149.195,-35.306944,1887
+        </coordinates>
+      </LineString>
+    </Placemark>
+    
+    <!-- Waypoints -->
+    <Placemark>
+      <name>YMCO</name>
+      <description>
+        <![CDATA[
+        <h3>YMCO</h3>
+        <p><strong>Coordinates:</strong> -37.598889, 149.720833</p>
+        <p><strong>Altitude:</strong> 102 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff600080</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOC</name>
+      <description>
+        <![CDATA[
+        <h3>TOC</h3>
+        <p><strong>Coordinates:</strong> -37.075956, 149.396832</p>
+        <p><strong>Altitude:</strong> 20000 ft</p>
+        <p><strong>Time:</strong> 11:26</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff600080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>COM</name>
+      <description>
+        <![CDATA[
+        <h3>COM</h3>
+        <p><strong>Coordinates:</strong> -36.353786, 148.957519</p>
+        <p><strong>Altitude:</strong> 20000 ft</p>
+        <p><strong>Time:</strong> 21:23</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ndb</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff600080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOD</name>
+      <description>
+        <![CDATA[
+        <h3>TOD</h3>
+        <p><strong>Coordinates:</strong> -36.142952, 149.018647</p>
+        <p><strong>Altitude:</strong> 19000 ft</p>
+        <p><strong>Time:</strong> 23:51</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff600080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>MENZI</name>
+      <description>
+        <![CDATA[
+        <h3>MENZI</h3>
+        <p><strong>Coordinates:</strong> -35.530161, 149.194422</p>
+        <p><strong>Altitude:</strong> 5900 ft</p>
+        <p><strong>Time:</strong> 31:20</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff600080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>CB</name>
+      <description>
+        <![CDATA[
+        <h3>CB</h3>
+        <p><strong>Coordinates:</strong> -35.281444, 149.195731</p>
+        <p><strong>Altitude:</strong> 4400 ft</p>
+        <p><strong>Time:</strong> 34:17</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> vor</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff600080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YSCB</name>
+      <description>
+        <![CDATA[
+        <h3>YSCB</h3>
+        <p><strong>Coordinates:</strong> -35.306944, 149.195000</p>
+        <p><strong>Altitude:</strong> 4400 ft</p>
+        <p><strong>Time:</strong> 37:48</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> apt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff600080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YSCB</name>
+      <description>
+        <![CDATA[
+        <h3>YSCB</h3>
+        <p><strong>Coordinates:</strong> -35.306944, 149.195000</p>
+        <p><strong>Altitude:</strong> 1887 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff600080</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+  </Document>
+</kml>

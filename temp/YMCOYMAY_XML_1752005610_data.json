@@ -1,0 +1,169 @@
+{
+  "origin": "YMCO",
+  "destination": "YMAY",
+  "route": "DCT OTKED W859 VALDU W795 AY DCT",
+  "departure": {
+    "name": "YMCO",
+    "lat": -37.598889,
+    "lon": 149.720833,
+    "altitude": 102,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "OTKED",
+      "lat": -37.596156,
+      "lon": 149.718322,
+      "altitude": 1600,
+      "elapsed_time": "01:11",
+      "time_seconds": 71,
+      "stage": "CLB",
+      "type": "wpt"
+    },
+    {
+      "name": "TOC",
+      "lat": -37.551164,
+      "lon": 149.494242,
+      "altitude": 8000,
+      "elapsed_time": "06:02",
+      "time_seconds": 362,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "VALDU",
+      "lat": -37.141086,
+      "lon": 147.552169,
+      "altitude": 8000,
+      "elapsed_time": "46:02",
+      "time_seconds": 2762,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -36.744823,
+      "lon": 147.333655,
+      "altitude": 8000,
+      "elapsed_time": "56:05",
+      "time_seconds": 3365,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "AY",
+      "lat": -36.068,
+      "lon": 146.966083,
+      "altitude": 3000,
+      "elapsed_time": "72:05",
+      "time_seconds": 4325,
+      "stage": "DSC",
+      "type": "vor"
+    },
+    {
+      "name": "YMAY",
+      "lat": -36.067778,
+      "lon": 146.958056,
+      "altitude": 3000,
+      "elapsed_time": "73:53",
+      "time_seconds": 4433,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YMAY",
+    "lat": -36.067778,
+    "lon": 146.958056,
+    "altitude": 539,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YMCO",
+      "lat": -37.598889,
+      "lon": 149.720833,
+      "altitude": 102,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "OTKED",
+      "lat": -37.596156,
+      "lon": 149.718322,
+      "altitude": 1600,
+      "elapsed_time": "01:11",
+      "time_seconds": 71,
+      "stage": "CLB",
+      "type": "wpt"
+    },
+    {
+      "name": "TOC",
+      "lat": -37.551164,
+      "lon": 149.494242,
+      "altitude": 8000,
+      "elapsed_time": "06:02",
+      "time_seconds": 362,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "VALDU",
+      "lat": -37.141086,
+      "lon": 147.552169,
+      "altitude": 8000,
+      "elapsed_time": "46:02",
+      "time_seconds": 2762,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -36.744823,
+      "lon": 147.333655,
+      "altitude": 8000,
+      "elapsed_time": "56:05",
+      "time_seconds": 3365,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "AY",
+      "lat": -36.068,
+      "lon": 146.966083,
+      "altitude": 3000,
+      "elapsed_time": "72:05",
+      "time_seconds": 4325,
+      "stage": "DSC",
+      "type": "vor"
+    },
+    {
+      "name": "YMAY",
+      "lat": -36.067778,
+      "lon": 146.958056,
+      "altitude": 3000,
+      "elapsed_time": "73:53",
+      "time_seconds": 4433,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YMAY",
+      "lat": -36.067778,
+      "lon": 146.958056,
+      "altitude": 539,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

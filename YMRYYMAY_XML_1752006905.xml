@@ -1,0 +1,2537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OFP>
+  <params>
+    <request_id>139787707</request_id>
+    <sequence_id>f394107292a8</sequence_id>
+    <static_id/>
+    <user_id>608880</user_id>
+    <time_generated>1752006905</time_generated>
+    <xml_file>https://www.simbrief.com/ofp/flightplans/xml/YMRYYMAY_XML_1752006905.xml</xml_file>
+    <ofp_layout>LIDO</ofp_layout>
+    <airac>2506</airac>
+    <units>kgs</units>
+  </params>
+  <general>
+    <release>1</release>
+    <icao_airline/>
+    <flight_number>N511</flight_number>
+    <is_etops>0</is_etops>
+    <dx_rmk>NONE</dx_rmk>
+    <sys_rmk/>
+    <is_detailed_profile>1</is_detailed_profile>
+    <cruise_profile>600BHP</cruise_profile>
+    <climb_profile>Normal</climb_profile>
+    <descent_profile>500FPM</descent_profile>
+    <alternate_profile>600BHP</alternate_profile>
+    <reserve_profile>400BHP</reserve_profile>
+    <costindex>10</costindex>
+    <cont_rule>15 MIN</cont_rule>
+    <initial_altitude>10000</initial_altitude>
+    <stepclimb_string>YMRY/0100</stepclimb_string>
+    <avg_temp_dev>2</avg_temp_dev>
+    <avg_tropopause>34207</avg_tropopause>
+    <avg_wind_comp>-34</avg_wind_comp>
+    <avg_wind_dir>282</avg_wind_dir>
+    <avg_wind_spd>037</avg_wind_spd>
+    <gc_distance>155</gc_distance>
+    <route_distance>168</route_distance>
+    <air_distance>222</air_distance>
+    <total_burn>374</total_burn>
+    <cruise_tas>141</cruise_tas>
+    <cruise_mach>.22</cruise_mach>
+    <passengers>21</passengers>
+    <route>DCT COM DCT</route>
+    <route_ifps>DCT COM DCT</route_ifps>
+    <route_navigraph>DCT COM DCT</route_navigraph>
+    <sid_ident/>
+    <sid_trans/>
+    <star_ident/>
+    <star_trans/>
+  </general>
+  <origin>
+    <icao_code>YMRY</icao_code>
+    <iata_code>MYA</iata_code>
+    <faa_code/>
+    <icao_region>YM</icao_region>
+    <elevation>19</elevation>
+    <pos_lat>-35.897500</pos_lat>
+    <pos_long>150.145556</pos_long>
+    <name>MORUYA</name>
+    <timezone>10</timezone>
+    <plan_rwy>36</plan_rwy>
+    <trans_alt>10000</trans_alt>
+    <trans_level>11000</trans_level>
+    <metar>YMRY No valid METAR found.</metar>
+    <metar_time/>
+    <metar_category/>
+    <metar_visibility/>
+    <metar_ceiling/>
+    <taf>YMRY No valid TAF found.</taf>
+    <taf_time/>
+    <atis/>
+    <notam/>
+  </origin>
+  <destination>
+    <icao_code>YMAY</icao_code>
+    <iata_code>ABX</iata_code>
+    <faa_code/>
+    <icao_region>YM</icao_region>
+    <elevation>539</elevation>
+    <pos_lat>-36.067778</pos_lat>
+    <pos_long>146.958056</pos_long>
+    <name>ALBURY</name>
+    <timezone>10</timezone>
+    <plan_rwy>25</plan_rwy>
+    <trans_alt>10000</trans_alt>
+    <trans_level>11000</trans_level>
+    <metar>YMAY 140609Z AUTO 23013KT 220V290 8000 // SCT025 SCT035 BKN046 15/15 Q1004 RETS</metar>
+    <metar_time/>
+    <metar_category/>
+    <metar_visibility/>
+    <metar_ceiling/>
+    <taf>YMAY No valid TAF found.</taf>
+    <taf_time/>
+    <atis/>
+    <notam/>
+  </destination>
+  <alternate>
+    <icao_code>YMML</icao_code>
+    <iata_code>MEL</iata_code>
+    <faa_code/>
+    <icao_region>YM</icao_region>
+    <elevation>434</elevation>
+    <pos_lat>-37.673333</pos_lat>
+    <pos_long>144.843333</pos_long>
+    <name>MELBOURNE INTL</name>
+    <timezone>10</timezone>
+    <plan_rwy>34</plan_rwy>
+    <trans_alt>10000</trans_alt>
+    <trans_level>11000</trans_level>
+    <cruise_altitude>10000</cruise_altitude>
+    <distance>160</distance>
+    <gc_distance>140</gc_distance>
+    <air_distance>173</air_distance>
+    <track_true>225</track_true>
+    <track_mag>213</track_mag>
+    <tas>140</tas>
+    <gs>130</gs>
+    <avg_wind_comp>M010</avg_wind_comp>
+    <avg_wind_dir>294</avg_wind_dir>
+    <avg_wind_spd>027</avg_wind_spd>
+    <avg_tropopause>33000</avg_tropopause>
+    <avg_tdv>M03</avg_tdv>
+    <ete>4613</ete>
+    <burn>289</burn>
+    <route>DUGGI1 DUGGI V147 TEMIS V169 BOYSE BOYS9A</route>
+    <route_ifps>DUGGI1 DUGGI V147 TEMIS V169 BOYSE BOYSE9A</route_ifps>
+    <metar>YMML 082000Z 36015KT 9999 FEW040 06/03 Q1005</metar>
+    <metar_time>2025-07-08T20:00:00Z</metar_time>
+    <metar_category>vfr</metar_category>
+    <metar_visibility>9650</metar_visibility>
+    <metar_ceiling>9999</metar_ceiling>
+    <taf>YMML 081707Z 0818/1000 36012KT CAVOK
+FM090100 01015G25KT CAVOK
+FM090900 01020G30KT 9999 -RA SCT025
+FM091400 01014KT 9999 -RA SCT025 BKN040
+FM092000 28012KT 9999 -RA SCT025 BKN040
+INTER 0918/1000 5000 RA BKN015</taf>
+    <taf_time>2025-07-08T17:07:00Z</taf_time>
+    <atis/>
+    <notam/>
+  </alternate>
+  <alternate_navlog>
+    <fix>
+      <ident>DER25</ident>
+      <name>DER25</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>YMAY</region_code>
+      <frequency/>
+      <pos_lat>-36.068075</pos_lat>
+      <pos_long>146.948892</pos_long>
+      <stage>CLB</stage>
+      <via_airway>DUGGI1</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>0</distance>
+      <track_true>267</track_true>
+      <track_mag>255</track_mag>
+      <heading_true>268</heading_true>
+      <heading_mag>256</heading_mag>
+      <altitude_feet>2000</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>183</true_airspeed>
+      <mach>0.28</mach>
+      <mach_thousandths>0.28</mach_thousandths>
+      <wind_component>-6</wind_component>
+      <groundspeed>177</groundspeed>
+      <time_leg>172</time_leg>
+      <time_total>172</time_total>
+      <fuel_flow>433</fuel_flow>
+      <fuel_leg>16</fuel_leg>
+      <fuel_totalused>16</fuel_totalused>
+      <fuel_min_onboard>394</fuel_min_onboard>
+      <fuel_plan_onboard>453</fuel_plan_onboard>
+      <oat>4</oat>
+      <oat_isa_dev>-7</oat_isa_dev>
+      <wind_dir>301</wind_dir>
+      <wind_spd>07</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>33400</tropopause_feet>
+      <ground_height>814</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>SAPAN</ident>
+      <name>SAPAN</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>YMAY</region_code>
+      <frequency/>
+      <pos_lat>-36.083775</pos_lat>
+      <pos_long>146.869789</pos_long>
+      <stage>CLB</stage>
+      <via_airway>DUGGI1</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>4</distance>
+      <track_true>256</track_true>
+      <track_mag>244</track_mag>
+      <heading_true>259</heading_true>
+      <heading_mag>247</heading_mag>
+      <altitude_feet>4200</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>189</true_airspeed>
+      <mach>0.29</mach>
+      <mach_thousandths>0.29</mach_thousandths>
+      <wind_component>-12</wind_component>
+      <groundspeed>177</groundspeed>
+      <time_leg>184</time_leg>
+      <time_total>356</time_total>
+      <fuel_flow>431</fuel_flow>
+      <fuel_leg>17</fuel_leg>
+      <fuel_totalused>33</fuel_totalused>
+      <fuel_min_onboard>377</fuel_min_onboard>
+      <fuel_plan_onboard>436</fuel_plan_onboard>
+      <oat>0</oat>
+      <oat_isa_dev>-7</oat_isa_dev>
+      <wind_dir>297</wind_dir>
+      <wind_spd>15</wind_spd>
+      <shear>1</shear>
+      <tropopause_feet>33400</tropopause_feet>
+      <ground_height>814</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>NIRIL</ident>
+      <name>NIRIL</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>YMAY</region_code>
+      <frequency/>
+      <pos_lat>-36.284011</pos_lat>
+      <pos_long>146.785275</pos_long>
+      <stage>CLB</stage>
+      <via_airway>DUGGI1</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>13</distance>
+      <track_true>198</track_true>
+      <track_mag>186</track_mag>
+      <heading_true>204</heading_true>
+      <heading_mag>192</heading_mag>
+      <altitude_feet>6200</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>195</true_airspeed>
+      <mach>0.3</mach>
+      <mach_thousandths>0.3</mach_thousandths>
+      <wind_component>3</wind_component>
+      <groundspeed>198</groundspeed>
+      <time_leg>167</time_leg>
+      <time_total>523</time_total>
+      <fuel_flow>429</fuel_flow>
+      <fuel_leg>16</fuel_leg>
+      <fuel_totalused>49</fuel_totalused>
+      <fuel_min_onboard>361</fuel_min_onboard>
+      <fuel_plan_onboard>420</fuel_plan_onboard>
+      <oat>-4</oat>
+      <oat_isa_dev>-7</oat_isa_dev>
+      <wind_dir>298</wind_dir>
+      <wind_spd>21</wind_spd>
+      <shear>2</shear>
+      <tropopause_feet>33400</tropopause_feet>
+      <ground_height>814</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>TOC</ident>
+      <name>TOP OF CLIMB</name>
+      <type>ltlg</type>
+      <icao_region/>
+      <region_code/>
+      <frequency/>
+      <pos_lat>-36.434736</pos_lat>
+      <pos_long>146.622288</pos_long>
+      <stage>CLB</stage>
+      <via_airway>DUGGI1</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>12</distance>
+      <track_true>221</track_true>
+      <track_mag>209</track_mag>
+      <heading_true>231</heading_true>
+      <heading_mag>219</heading_mag>
+      <altitude_feet>10000</altitude_feet>
+      <ind_airspeed>149</ind_airspeed>
+      <true_airspeed>173</true_airspeed>
+      <mach>0.27</mach>
+      <mach_thousandths>0.27</mach_thousandths>
+      <wind_component>-14</wind_component>
+      <groundspeed>159</groundspeed>
+      <time_leg>347</time_leg>
+      <time_total>838</time_total>
+      <fuel_flow>431</fuel_flow>
+      <fuel_leg>32</fuel_leg>
+      <fuel_totalused>78</fuel_totalused>
+      <fuel_min_onboard>332</fuel_min_onboard>
+      <fuel_plan_onboard>391</fuel_plan_onboard>
+      <oat>-4</oat>
+      <oat_isa_dev>1</oat_isa_dev>
+      <wind_dir>291</wind_dir>
+      <wind_spd>32</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>33400</tropopause_feet>
+      <ground_height>814</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>DUGGI</ident>
+      <name>DUGGI</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>ENRT</region_code>
+      <frequency/>
+      <pos_lat>-36.595742</pos_lat>
+      <pos_long>146.447214</pos_long>
+      <stage>CRZ</stage>
+      <via_airway>DUGGI1</via_airway>
+      <is_sid_star>0</is_sid_star>
+      <distance>13</distance>
+      <track_true>221</track_true>
+      <track_mag>209</track_mag>
+      <heading_true>232</heading_true>
+      <heading_mag>220</heading_mag>
+      <altitude_feet>10000</altitude_feet>
+      <ind_airspeed>121</ind_airspeed>
+      <true_airspeed>140</true_airspeed>
+      <mach>0.22</mach>
+      <mach_thousandths>0.22</mach_thousandths>
+      <wind_component>-13</wind_component>
+      <groundspeed>127</groundspeed>
+      <time_leg>368</time_leg>
+      <time_total>1206</time_total>
+      <fuel_flow>237</fuel_flow>
+      <fuel_leg>24</fuel_leg>
+      <fuel_totalused>102</fuel_totalused>
+      <fuel_min_onboard>308</fuel_min_onboard>
+      <fuel_plan_onboard>367</fuel_plan_onboard>
+      <oat>-6</oat>
+      <oat_isa_dev>-1</oat_isa_dev>
+      <wind_dir>291</wind_dir>
+      <wind_spd>29</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>33000</tropopause_feet>
+      <ground_height>1406</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>TEMIS</ident>
+      <name>TEMIS</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>ENRT</region_code>
+      <frequency/>
+      <pos_lat>-37.206333</pos_lat>
+      <pos_long>145.835058</pos_long>
+      <stage>CRZ</stage>
+      <via_airway>V147</via_airway>
+      <is_sid_star>0</is_sid_star>
+      <distance>47</distance>
+      <track_true>218</track_true>
+      <track_mag>206</track_mag>
+      <heading_true>229</heading_true>
+      <heading_mag>217</heading_mag>
+      <altitude_feet>10000</altitude_feet>
+      <ind_airspeed>121</ind_airspeed>
+      <true_airspeed>140</true_airspeed>
+      <mach>0.22</mach>
+      <mach_thousandths>0.22</mach_thousandths>
+      <wind_component>-11</wind_component>
+      <groundspeed>129</groundspeed>
+      <time_leg>1311</time_leg>
+      <time_total>2517</time_total>
+      <fuel_flow>237</fuel_flow>
+      <fuel_leg>86</fuel_leg>
+      <fuel_totalused>188</fuel_totalused>
+      <fuel_min_onboard>222</fuel_min_onboard>
+      <fuel_plan_onboard>281</fuel_plan_onboard>
+      <oat>-6</oat>
+      <oat_isa_dev>-1</oat_isa_dev>
+      <wind_dir>291</wind_dir>
+      <wind_spd>29</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>33000</tropopause_feet>
+      <ground_height>1406</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>BOYSE</ident>
+      <name>BOYSE</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>ENRT</region_code>
+      <frequency/>
+      <pos_lat>-37.302556</pos_lat>
+      <pos_long>145.669472</pos_long>
+      <stage>CRZ</stage>
+      <via_airway>V169</via_airway>
+      <is_sid_star>0</is_sid_star>
+      <distance>10</distance>
+      <track_true>233</track_true>
+      <track_mag>221</track_mag>
+      <heading_true>243</heading_true>
+      <heading_mag>231</heading_mag>
+      <altitude_feet>10000</altitude_feet>
+      <ind_airspeed>121</ind_airspeed>
+      <true_airspeed>140</true_airspeed>
+      <mach>0.22</mach>
+      <mach_thousandths>0.22</mach_thousandths>
+      <wind_component>-17</wind_component>
+      <groundspeed>123</groundspeed>
+      <time_leg>292</time_leg>
+      <time_total>2809</time_total>
+      <fuel_flow>237</fuel_flow>
+      <fuel_leg>19</fuel_leg>
+      <fuel_totalused>207</fuel_totalused>
+      <fuel_min_onboard>203</fuel_min_onboard>
+      <fuel_plan_onboard>262</fuel_plan_onboard>
+      <oat>-6</oat>
+      <oat_isa_dev>-1</oat_isa_dev>
+      <wind_dir>292</wind_dir>
+      <wind_spd>29</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>33100</tropopause_feet>
+      <ground_height>1406</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>MAXAL</ident>
+      <name>MAXAL</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>YMML</region_code>
+      <frequency/>
+      <pos_lat>-37.448222</pos_lat>
+      <pos_long>145.417139</pos_long>
+      <stage>CRZ</stage>
+      <via_airway>BOYS9A</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>15</distance>
+      <track_true>233</track_true>
+      <track_mag>221</track_mag>
+      <heading_true>243</heading_true>
+      <heading_mag>231</heading_mag>
+      <altitude_feet>10000</altitude_feet>
+      <ind_airspeed>121</ind_airspeed>
+      <true_airspeed>140</true_airspeed>
+      <mach>0.22</mach>
+      <mach_thousandths>0.22</mach_thousandths>
+      <wind_component>-15</wind_component>
+      <groundspeed>125</groundspeed>
+      <time_leg>432</time_leg>
+      <time_total>3241</time_total>
+      <fuel_flow>237</fuel_flow>
+      <fuel_leg>28</fuel_leg>
+      <fuel_totalused>235</fuel_totalused>
+      <fuel_min_onboard>175</fuel_min_onboard>
+      <fuel_plan_onboard>234</fuel_plan_onboard>
+      <oat>-6</oat>
+      <oat_isa_dev>-1</oat_isa_dev>
+      <wind_dir>295</wind_dir>
+      <wind_spd>27</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>32900</tropopause_feet>
+      <ground_height>727</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>TOD</ident>
+      <name>TOP OF DESCENT</name>
+      <type>ltlg</type>
+      <icao_region/>
+      <region_code/>
+      <frequency/>
+      <pos_lat>-37.498222</pos_lat>
+      <pos_long>145.361662</pos_long>
+      <stage>CRZ</stage>
+      <via_airway>BOYS9A</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>4</distance>
+      <track_true>221</track_true>
+      <track_mag>210</track_mag>
+      <heading_true>232</heading_true>
+      <heading_mag>221</heading_mag>
+      <altitude_feet>10000</altitude_feet>
+      <ind_airspeed>121</ind_airspeed>
+      <true_airspeed>140</true_airspeed>
+      <mach>0.22</mach>
+      <mach_thousandths>0.22</mach_thousandths>
+      <wind_component>-10</wind_component>
+      <groundspeed>130</groundspeed>
+      <time_leg>110</time_leg>
+      <time_total>3351</time_total>
+      <fuel_flow>237</fuel_flow>
+      <fuel_leg>7</fuel_leg>
+      <fuel_totalused>242</fuel_totalused>
+      <fuel_min_onboard>168</fuel_min_onboard>
+      <fuel_plan_onboard>227</fuel_plan_onboard>
+      <oat>-6</oat>
+      <oat_isa_dev>-1</oat_isa_dev>
+      <wind_dir>295</wind_dir>
+      <wind_spd>27</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>32900</tropopause_feet>
+      <ground_height>727</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>OLTUR</ident>
+      <name>OLTUR</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>YMML</region_code>
+      <frequency/>
+      <pos_lat>-37.679194</pos_lat>
+      <pos_long>145.160000</pos_long>
+      <stage>DSC</stage>
+      <via_airway>BOYS9A</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>14</distance>
+      <track_true>221</track_true>
+      <track_mag>209</track_mag>
+      <heading_true>227</heading_true>
+      <heading_mag>215</heading_mag>
+      <altitude_feet>6700</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>196</true_airspeed>
+      <mach>0.3</mach>
+      <mach_thousandths>0.3</mach_thousandths>
+      <wind_component>-6</wind_component>
+      <groundspeed>190</groundspeed>
+      <time_leg>400</time_leg>
+      <time_total>3751</time_total>
+      <fuel_flow>90</fuel_flow>
+      <fuel_leg>15</fuel_leg>
+      <fuel_totalused>257</fuel_totalused>
+      <fuel_min_onboard>153</fuel_min_onboard>
+      <fuel_plan_onboard>212</fuel_plan_onboard>
+      <oat>-6</oat>
+      <oat_isa_dev>-8</oat_isa_dev>
+      <wind_dir>299</wind_dir>
+      <wind_spd>22</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>32500</tropopause_feet>
+      <ground_height>24</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>VENVO</ident>
+      <name>VENVO</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>YMML</region_code>
+      <frequency/>
+      <pos_lat>-37.751222</pos_lat>
+      <pos_long>145.079361</pos_long>
+      <stage>DSC</stage>
+      <via_airway>BOYS9A</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>6</distance>
+      <track_true>221</track_true>
+      <track_mag>209</track_mag>
+      <heading_true>227</heading_true>
+      <heading_mag>215</heading_mag>
+      <altitude_feet>5200</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>192</true_airspeed>
+      <mach>0.29</mach>
+      <mach_thousandths>0.29</mach_thousandths>
+      <wind_component>-6</wind_component>
+      <groundspeed>186</groundspeed>
+      <time_leg>171</time_leg>
+      <time_total>3922</time_total>
+      <fuel_flow>90</fuel_flow>
+      <fuel_leg>6</fuel_leg>
+      <fuel_totalused>263</fuel_totalused>
+      <fuel_min_onboard>147</fuel_min_onboard>
+      <fuel_plan_onboard>206</fuel_plan_onboard>
+      <oat>-3</oat>
+      <oat_isa_dev>-8</oat_isa_dev>
+      <wind_dir>299</wind_dir>
+      <wind_spd>22</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>32500</tropopause_feet>
+      <ground_height>24</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>GOOLA</ident>
+      <name>GOOLA</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>YMML</region_code>
+      <frequency/>
+      <pos_lat>-37.813500</pos_lat>
+      <pos_long>145.009444</pos_long>
+      <stage>DSC</stage>
+      <via_airway>BOYS9A</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>5</distance>
+      <track_true>221</track_true>
+      <track_mag>209</track_mag>
+      <heading_true>228</heading_true>
+      <heading_mag>216</heading_mag>
+      <altitude_feet>4000</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>189</true_airspeed>
+      <mach>0.29</mach>
+      <mach_thousandths>0.29</mach_thousandths>
+      <wind_component>-5</wind_component>
+      <groundspeed>184</groundspeed>
+      <time_leg>142</time_leg>
+      <time_total>4064</time_total>
+      <fuel_flow>91</fuel_flow>
+      <fuel_leg>5</fuel_leg>
+      <fuel_totalused>268</fuel_totalused>
+      <fuel_min_onboard>142</fuel_min_onboard>
+      <fuel_plan_onboard>201</fuel_plan_onboard>
+      <oat>0</oat>
+      <oat_isa_dev>-7</oat_isa_dev>
+      <wind_dir>302</wind_dir>
+      <wind_spd>23</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>32500</tropopause_feet>
+      <ground_height>24</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>BOLTY</ident>
+      <name>BOLTY</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>YMML</region_code>
+      <frequency/>
+      <pos_lat>-37.825139</pos_lat>
+      <pos_long>144.943194</pos_long>
+      <stage>DSC</stage>
+      <via_airway>BOYS9A</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>3</distance>
+      <track_true>257</track_true>
+      <track_mag>245</track_mag>
+      <heading_true>263</heading_true>
+      <heading_mag>251</heading_mag>
+      <altitude_feet>3300</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>187</true_airspeed>
+      <mach>0.28</mach>
+      <mach_thousandths>0.28</mach_thousandths>
+      <wind_component>-17</wind_component>
+      <groundspeed>170</groundspeed>
+      <time_leg>85</time_leg>
+      <time_total>4149</time_total>
+      <fuel_flow>91</fuel_flow>
+      <fuel_leg>3</fuel_leg>
+      <fuel_totalused>271</fuel_totalused>
+      <fuel_min_onboard>139</fuel_min_onboard>
+      <fuel_plan_onboard>198</fuel_plan_onboard>
+      <oat>2</oat>
+      <oat_isa_dev>-6</oat_isa_dev>
+      <wind_dir>306</wind_dir>
+      <wind_spd>24</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>32500</tropopause_feet>
+      <ground_height>24</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>AKDEL</ident>
+      <name>AKDEL</name>
+      <type>wpt</type>
+      <icao_region>YM</icao_region>
+      <region_code>YMML</region_code>
+      <frequency/>
+      <pos_lat>-37.834333</pos_lat>
+      <pos_long>144.868833</pos_long>
+      <stage>DSC</stage>
+      <via_airway>BOYS9A</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>4</distance>
+      <track_true>261</track_true>
+      <track_mag>249</track_mag>
+      <heading_true>267</heading_true>
+      <heading_mag>255</heading_mag>
+      <altitude_feet>2900</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>186</true_airspeed>
+      <mach>0.28</mach>
+      <mach_thousandths>0.28</mach_thousandths>
+      <wind_component>-18</wind_component>
+      <groundspeed>168</groundspeed>
+      <time_leg>114</time_leg>
+      <time_total>4263</time_total>
+      <fuel_flow>91</fuel_flow>
+      <fuel_leg>4</fuel_leg>
+      <fuel_totalused>275</fuel_totalused>
+      <fuel_min_onboard>135</fuel_min_onboard>
+      <fuel_plan_onboard>194</fuel_plan_onboard>
+      <oat>3</oat>
+      <oat_isa_dev>-6</oat_isa_dev>
+      <wind_dir>308</wind_dir>
+      <wind_spd>25</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>32500</tropopause_feet>
+      <ground_height>24</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+    <fix>
+      <ident>YMML</ident>
+      <name>MELBOURNE INTL</name>
+      <type>apt</type>
+      <icao_region>YM</icao_region>
+      <region_code/>
+      <frequency/>
+      <pos_lat>-37.673333</pos_lat>
+      <pos_long>144.843333</pos_long>
+      <stage>DSC</stage>
+      <via_airway>BOYS9A</via_airway>
+      <is_sid_star>1</is_sid_star>
+      <distance>10</distance>
+      <track_true>352</track_true>
+      <track_mag>340</track_mag>
+      <heading_true>347</heading_true>
+      <heading_mag>335</heading_mag>
+      <altitude_feet>2900</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>186</true_airspeed>
+      <mach>0.28</mach>
+      <mach_thousandths>0.28</mach_thousandths>
+      <wind_component>-19</wind_component>
+      <groundspeed>167</groundspeed>
+      <time_leg>350</time_leg>
+      <time_total>4613</time_total>
+      <fuel_flow>91</fuel_flow>
+      <fuel_leg>14</fuel_leg>
+      <fuel_totalused>289</fuel_totalused>
+      <fuel_min_onboard>121</fuel_min_onboard>
+      <fuel_plan_onboard>180</fuel_plan_onboard>
+      <oat>3</oat>
+      <oat_isa_dev>-6</oat_isa_dev>
+      <wind_dir>308</wind_dir>
+      <wind_spd>25</wind_spd>
+      <shear>1</shear>
+      <tropopause_feet>32500</tropopause_feet>
+      <ground_height>24</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+    </fix>
+  </alternate_navlog>
+  <takeoff_altn/>
+  <enroute_altn/>
+  <navlog>
+    <fix>
+      <ident>TOC</ident>
+      <name>TOP OF CLIMB</name>
+      <type>ltlg</type>
+      <icao_region/>
+      <region_code/>
+      <frequency/>
+      <pos_lat>-36.077702</pos_lat>
+      <pos_long>149.681643</pos_long>
+      <stage>CLB</stage>
+      <via_airway>DCT</via_airway>
+      <is_sid_star>0</is_sid_star>
+      <distance>31</distance>
+      <track_true>244</track_true>
+      <track_mag>231</track_mag>
+      <heading_true>250</heading_true>
+      <heading_mag>237</heading_mag>
+      <altitude_feet>10000</altitude_feet>
+      <ind_airspeed>149</ind_airspeed>
+      <true_airspeed>174</true_airspeed>
+      <mach>0.27</mach>
+      <mach_thousandths>0.27</mach_thousandths>
+      <wind_component>-34</wind_component>
+      <groundspeed>140</groundspeed>
+      <time_leg>1112</time_leg>
+      <time_total>1112</time_total>
+      <fuel_flow>467</fuel_flow>
+      <fuel_leg>109</fuel_leg>
+      <fuel_totalused>109</fuel_totalused>
+      <fuel_min_onboard>675</fuel_min_onboard>
+      <fuel_plan_onboard>734</fuel_plan_onboard>
+      <oat>-1</oat>
+      <oat_isa_dev>4</oat_isa_dev>
+      <wind_dir>274</wind_dir>
+      <wind_spd>38</wind_spd>
+      <shear>0</shear>
+      <tropopause_feet>34100</tropopause_feet>
+      <ground_height>546</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+      <mora>5500</mora>
+      <wind_data>
+        <level>
+          <altitude>0</altitude>
+          <wind_dir>313</wind_dir>
+          <wind_spd>2</wind_spd>
+          <oat>10</oat>
+        </level>
+        <level>
+          <altitude>5000</altitude>
+          <wind_dir>271</wind_dir>
+          <wind_spd>21</wind_spd>
+          <oat>1</oat>
+        </level>
+        <level>
+          <altitude>10000</altitude>
+          <wind_dir>275</wind_dir>
+          <wind_spd>37</wind_spd>
+          <oat>-1</oat>
+        </level>
+        <level>
+          <altitude>14000</altitude>
+          <wind_dir>279</wind_dir>
+          <wind_spd>37</wind_spd>
+          <oat>-11</oat>
+        </level>
+        <level>
+          <altitude>18000</altitude>
+          <wind_dir>282</wind_dir>
+          <wind_spd>39</wind_spd>
+          <oat>-20</oat>
+        </level>
+        <level>
+          <altitude>24000</altitude>
+          <wind_dir>284</wind_dir>
+          <wind_spd>51</wind_spd>
+          <oat>-33</oat>
+        </level>
+        <level>
+          <altitude>30000</altitude>
+          <wind_dir>282</wind_dir>
+          <wind_spd>77</wind_spd>
+          <oat>-46</oat>
+        </level>
+        <level>
+          <altitude>34000</altitude>
+          <wind_dir>283</wind_dir>
+          <wind_spd>84</wind_spd>
+          <oat>-53</oat>
+        </level>
+        <level>
+          <altitude>39000</altitude>
+          <wind_dir>280</wind_dir>
+          <wind_spd>87</wind_spd>
+          <oat>-51</oat>
+        </level>
+        <level>
+          <altitude>45000</altitude>
+          <wind_dir>276</wind_dir>
+          <wind_spd>76</wind_spd>
+          <oat>-53</oat>
+        </level>
+      </wind_data>
+      <fir_crossing/>
+    </fix>
+    <fix>
+      <ident>COM</ident>
+      <name>COOMA</name>
+      <type>ndb</type>
+      <icao_region>YM</icao_region>
+      <region_code/>
+      <frequency>293</frequency>
+      <pos_lat>-36.353786</pos_lat>
+      <pos_long>148.957519</pos_long>
+      <stage>CRZ</stage>
+      <via_airway>DCT</via_airway>
+      <is_sid_star>0</is_sid_star>
+      <distance>39</distance>
+      <track_true>244</track_true>
+      <track_mag>232</track_mag>
+      <heading_true>254</heading_true>
+      <heading_mag>241</heading_mag>
+      <altitude_feet>10000</altitude_feet>
+      <ind_airspeed>121</ind_airspeed>
+      <true_airspeed>141</true_airspeed>
+      <mach>0.22</mach>
+      <mach_thousandths>0.22</mach_thousandths>
+      <wind_component>-34</wind_component>
+      <groundspeed>107</groundspeed>
+      <time_leg>1312</time_leg>
+      <time_total>2424</time_total>
+      <fuel_flow>237</fuel_flow>
+      <fuel_leg>86</fuel_leg>
+      <fuel_totalused>195</fuel_totalused>
+      <fuel_min_onboard>589</fuel_min_onboard>
+      <fuel_plan_onboard>648</fuel_plan_onboard>
+      <oat>-2</oat>
+      <oat_isa_dev>3</oat_isa_dev>
+      <wind_dir>281</wind_dir>
+      <wind_spd>40</wind_spd>
+      <shear>1</shear>
+      <tropopause_feet>34600</tropopause_feet>
+      <ground_height>3449</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+      <mora>6200</mora>
+      <wind_data>
+        <level>
+          <altitude>0</altitude>
+          <wind_dir>294</wind_dir>
+          <wind_spd>10</wind_spd>
+          <oat>10</oat>
+        </level>
+        <level>
+          <altitude>5000</altitude>
+          <wind_dir>290</wind_dir>
+          <wind_spd>26</wind_spd>
+          <oat>-0</oat>
+        </level>
+        <level>
+          <altitude>10000</altitude>
+          <wind_dir>281</wind_dir>
+          <wind_spd>39</wind_spd>
+          <oat>-2</oat>
+        </level>
+        <level>
+          <altitude>14000</altitude>
+          <wind_dir>281</wind_dir>
+          <wind_spd>42</wind_spd>
+          <oat>-10</oat>
+        </level>
+        <level>
+          <altitude>18000</altitude>
+          <wind_dir>280</wind_dir>
+          <wind_spd>43</wind_spd>
+          <oat>-19</oat>
+        </level>
+        <level>
+          <altitude>24000</altitude>
+          <wind_dir>278</wind_dir>
+          <wind_spd>50</wind_spd>
+          <oat>-32</oat>
+        </level>
+        <level>
+          <altitude>30000</altitude>
+          <wind_dir>279</wind_dir>
+          <wind_spd>70</wind_spd>
+          <oat>-46</oat>
+        </level>
+        <level>
+          <altitude>34000</altitude>
+          <wind_dir>282</wind_dir>
+          <wind_spd>79</wind_spd>
+          <oat>-54</oat>
+        </level>
+        <level>
+          <altitude>39000</altitude>
+          <wind_dir>282</wind_dir>
+          <wind_spd>86</wind_spd>
+          <oat>-52</oat>
+        </level>
+        <level>
+          <altitude>45000</altitude>
+          <wind_dir>281</wind_dir>
+          <wind_spd>79</wind_spd>
+          <oat>-54</oat>
+        </level>
+      </wind_data>
+      <fir_crossing/>
+    </fix>
+    <fix>
+      <ident>TOD</ident>
+      <name>TOP OF DESCENT</name>
+      <type>ltlg</type>
+      <icao_region/>
+      <region_code/>
+      <frequency/>
+      <pos_lat>-36.189174</pos_lat>
+      <pos_long>147.776838</pos_long>
+      <stage>CRZ</stage>
+      <via_airway>DCT</via_airway>
+      <is_sid_star>0</is_sid_star>
+      <distance>58</distance>
+      <track_true>279</track_true>
+      <track_mag>266</track_mag>
+      <heading_true>281</heading_true>
+      <heading_mag>268</heading_mag>
+      <altitude_feet>10000</altitude_feet>
+      <ind_airspeed>121</ind_airspeed>
+      <true_airspeed>141</true_airspeed>
+      <mach>0.22</mach>
+      <mach_thousandths>0.22</mach_thousandths>
+      <wind_component>-35</wind_component>
+      <groundspeed>106</groundspeed>
+      <time_leg>1969</time_leg>
+      <time_total>4393</time_total>
+      <fuel_flow>237</fuel_flow>
+      <fuel_leg>130</fuel_leg>
+      <fuel_totalused>325</fuel_totalused>
+      <fuel_min_onboard>459</fuel_min_onboard>
+      <fuel_plan_onboard>518</fuel_plan_onboard>
+      <oat>-4</oat>
+      <oat_isa_dev>1</oat_isa_dev>
+      <wind_dir>289</wind_dir>
+      <wind_spd>35</wind_spd>
+      <shear>2</shear>
+      <tropopause_feet>34000</tropopause_feet>
+      <ground_height>1397</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+      <mora>8600</mora>
+      <wind_data>
+        <level>
+          <altitude>0</altitude>
+          <wind_dir>0</wind_dir>
+          <wind_spd>2</wind_spd>
+          <oat>8</oat>
+        </level>
+        <level>
+          <altitude>5000</altitude>
+          <wind_dir>296</wind_dir>
+          <wind_spd>16</wind_spd>
+          <oat>-1</oat>
+        </level>
+        <level>
+          <altitude>10000</altitude>
+          <wind_dir>291</wind_dir>
+          <wind_spd>35</wind_spd>
+          <oat>-3</oat>
+        </level>
+        <level>
+          <altitude>14000</altitude>
+          <wind_dir>287</wind_dir>
+          <wind_spd>43</wind_spd>
+          <oat>-11</oat>
+        </level>
+        <level>
+          <altitude>18000</altitude>
+          <wind_dir>283</wind_dir>
+          <wind_spd>48</wind_spd>
+          <oat>-19</oat>
+        </level>
+        <level>
+          <altitude>24000</altitude>
+          <wind_dir>280</wind_dir>
+          <wind_spd>53</wind_spd>
+          <oat>-32</oat>
+        </level>
+        <level>
+          <altitude>30000</altitude>
+          <wind_dir>279</wind_dir>
+          <wind_spd>73</wind_spd>
+          <oat>-45</oat>
+        </level>
+        <level>
+          <altitude>34000</altitude>
+          <wind_dir>281</wind_dir>
+          <wind_spd>78</wind_spd>
+          <oat>-53</oat>
+        </level>
+        <level>
+          <altitude>39000</altitude>
+          <wind_dir>281</wind_dir>
+          <wind_spd>83</wind_spd>
+          <oat>-52</oat>
+        </level>
+        <level>
+          <altitude>45000</altitude>
+          <wind_dir>281</wind_dir>
+          <wind_spd>74</wind_spd>
+          <oat>-54</oat>
+        </level>
+      </wind_data>
+      <fir_crossing/>
+    </fix>
+    <fix>
+      <ident>YMAY</ident>
+      <name>ALBURY</name>
+      <type>apt</type>
+      <icao_region>YM</icao_region>
+      <region_code/>
+      <frequency/>
+      <pos_lat>-36.067778</pos_lat>
+      <pos_long>146.958056</pos_long>
+      <stage>DSC</stage>
+      <via_airway>DCT</via_airway>
+      <is_sid_star>0</is_sid_star>
+      <distance>40</distance>
+      <track_true>280</track_true>
+      <track_mag>268</track_mag>
+      <heading_true>281</heading_true>
+      <heading_mag>269</heading_mag>
+      <altitude_feet>3000</altitude_feet>
+      <ind_airspeed>180</ind_airspeed>
+      <true_airspeed>186</true_airspeed>
+      <mach>0.28</mach>
+      <mach_thousandths>0.28</mach_thousandths>
+      <wind_component>-9</wind_component>
+      <groundspeed>177</groundspeed>
+      <time_leg>1265</time_leg>
+      <time_total>5658</time_total>
+      <fuel_flow>97</fuel_flow>
+      <fuel_leg>49</fuel_leg>
+      <fuel_totalused>374</fuel_totalused>
+      <fuel_min_onboard>410</fuel_min_onboard>
+      <fuel_plan_onboard>469</fuel_plan_onboard>
+      <oat>2</oat>
+      <oat_isa_dev>-7</oat_isa_dev>
+      <wind_dir>308</wind_dir>
+      <wind_spd>10</wind_spd>
+      <shear>1</shear>
+      <tropopause_feet>33600</tropopause_feet>
+      <ground_height>814</ground_height>
+      <fir>YMMM</fir>
+      <fir_units>N,F</fir_units>
+      <fir_valid_levels>2000,4000,6000,8000,10000,12000,14000,16000,18000,20000,22000,24000,26000,28000,30000,32000,34000,36000,38000,40000,43000,47000,51000,55000,59000,63000,67000</fir_valid_levels>
+      <mora>5200</mora>
+      <wind_data>
+        <level>
+          <altitude>0</altitude>
+          <wind_dir>20</wind_dir>
+          <wind_spd>3</wind_spd>
+          <oat>7</oat>
+        </level>
+        <level>
+          <altitude>5000</altitude>
+          <wind_dir>301</wind_dir>
+          <wind_spd>17</wind_spd>
+          <oat>-1</oat>
+        </level>
+        <level>
+          <altitude>10000</altitude>
+          <wind_dir>295</wind_dir>
+          <wind_spd>30</wind_spd>
+          <oat>-4</oat>
+        </level>
+        <level>
+          <altitude>14000</altitude>
+          <wind_dir>291</wind_dir>
+          <wind_spd>41</wind_spd>
+          <oat>-12</oat>
+        </level>
+        <level>
+          <altitude>18000</altitude>
+          <wind_dir>288</wind_dir>
+          <wind_spd>48</wind_spd>
+          <oat>-20</oat>
+        </level>
+        <level>
+          <altitude>24000</altitude>
+          <wind_dir>285</wind_dir>
+          <wind_spd>55</wind_spd>
+          <oat>-32</oat>
+        </level>
+        <level>
+          <altitude>30000</altitude>
+          <wind_dir>282</wind_dir>
+          <wind_spd>74</wind_spd>
+          <oat>-46</oat>
+        </level>
+        <level>
+          <altitude>34000</altitude>
+          <wind_dir>283</wind_dir>
+          <wind_spd>81</wind_spd>
+          <oat>-53</oat>
+        </level>
+        <level>
+          <altitude>39000</altitude>
+          <wind_dir>282</wind_dir>
+          <wind_spd>83</wind_spd>
+          <oat>-51</oat>
+        </level>
+        <level>
+          <altitude>45000</altitude>
+          <wind_dir>280</wind_dir>
+          <wind_spd>74</wind_spd>
+          <oat>-54</oat>
+        </level>
+      </wind_data>
+      <fir_crossing/>
+    </fix>
+  </navlog>
+  <etops/>
+  <tlr/>
+  <atc>
+    <flightplan_text>(FPL-N511-IS
+-DC3/M-SDF/S
+-YMRY2105
+-N0141F100 DCT COM DCT
+-YMAY0134 YMML
+-DOF/250708 REG/N511 PER/B RMK/TCAS)</flightplan_text>
+    <route>N0141F100 DCT COM DCT</route>
+    <route_ifps>N0141F100 DCT COM DCT</route_ifps>
+    <callsign>N511</callsign>
+    <flight_type>S</flight_type>
+    <flight_rules>I</flight_rules>
+    <initial_spd>0141</initial_spd>
+    <initial_spd_unit>N</initial_spd_unit>
+    <initial_alt>100</initial_alt>
+    <initial_alt_unit>F</initial_alt_unit>
+    <section18>DOF/250708 REG/N511 PER/B RMK/TCAS</section18>
+    <fir_orig>YMMM</fir_orig>
+    <fir_dest>YMMM</fir_dest>
+    <fir_altn>YMMM</fir_altn>
+    <fir_etops/>
+    <fir_enroute/>
+  </atc>
+  <aircraft>
+    <icaocode>DC3</icaocode>
+    <iatacode/>
+    <base_type>DC3</base_type>
+    <icao_code>DC3</icao_code>
+    <iata_code/>
+    <name>DOUGLAS DC-3</name>
+    <reg>N511</reg>
+    <fin>511</fin>
+    <selcal/>
+    <equip>M-SDF/S</equip>
+    <equip_category>M</equip_category>
+    <equip_navigation>SDF</equip_navigation>
+    <equip_transponder>S</equip_transponder>
+    <fuelfact>1</fuelfact>
+    <fuelfactor>1</fuelfactor>
+    <max_passengers>26</max_passengers>
+    <supports_tlr>0</supports_tlr>
+    <internal_id>DC3</internal_id>
+    <is_custom>0</is_custom>
+  </aircraft>
+  <fuel>
+    <taxi>41</taxi>
+    <enroute_burn>374</enroute_burn>
+    <contingency>59</contingency>
+    <alternate_burn>289</alternate_burn>
+    <reserve>121</reserve>
+    <etops>0</etops>
+    <extra>0</extra>
+    <extra_required>0</extra_required>
+    <extra_optional>0</extra_optional>
+    <min_takeoff>843</min_takeoff>
+    <plan_takeoff>843</plan_takeoff>
+    <plan_ramp>884</plan_ramp>
+    <plan_landing>469</plan_landing>
+    <avg_fuel_flow>238</avg_fuel_flow>
+    <max_tanks>2237</max_tanks>
+  </fuel>
+  <fuel_extra>
+    <bucket>
+      <label>MEL</label>
+      <fuel>0</fuel>
+      <time>0</time>
+      <required>1</required>
+    </bucket>
+    <bucket>
+      <label>ATC</label>
+      <fuel>0</fuel>
+      <time>0</time>
+      <required/>
+    </bucket>
+    <bucket>
+      <label>WXX</label>
+      <fuel>0</fuel>
+      <time>0</time>
+      <required/>
+    </bucket>
+    <bucket>
+      <label>EXTRA</label>
+      <fuel>0</fuel>
+      <time>0</time>
+      <required/>
+    </bucket>
+    <bucket>
+      <label>TANKERING</label>
+      <fuel>0</fuel>
+      <time>0</time>
+      <required/>
+    </bucket>
+    <bucket>
+      <label>FOB ADD</label>
+      <fuel>0</fuel>
+      <time>0</time>
+      <required/>
+    </bucket>
+    <bucket>
+      <label>FOD ADD</label>
+      <fuel>0</fuel>
+      <time>0</time>
+      <required/>
+    </bucket>
+  </fuel_extra>
+  <times>
+    <est_time_enroute>5658</est_time_enroute>
+    <sched_time_enroute>3720</sched_time_enroute>
+    <sched_out>1752008700</sched_out>
+    <sched_off>1752009600</sched_off>
+    <sched_on>1752013320</sched_on>
+    <sched_in>1752013800</sched_in>
+    <sched_block>5100</sched_block>
+    <est_out>1752008700</est_out>
+    <est_off>1752009600</est_off>
+    <est_on>1752015258</est_on>
+    <est_in>1752015738</est_in>
+    <est_block>7038</est_block>
+    <orig_timezone>10</orig_timezone>
+    <dest_timezone>10</dest_timezone>
+    <taxi_out>900</taxi_out>
+    <taxi_in>480</taxi_in>
+    <reserve_time>2700</reserve_time>
+    <endurance>13871</endurance>
+    <contfuel_time>900</contfuel_time>
+    <etopsfuel_time>0</etopsfuel_time>
+    <extrafuel_time>0</extrafuel_time>
+  </times>
+  <weights>
+    <oew>7963</oew>
+    <pax_count>21</pax_count>
+    <bag_count>21</bag_count>
+    <pax_count_actual>21</pax_count_actual>
+    <bag_count_actual>21</bag_count_actual>
+    <pax_weight>79.379</pax_weight>
+    <bag_weight>24.948</bag_weight>
+    <freight_added>0</freight_added>
+    <cargo>524</cargo>
+    <payload>2191</payload>
+    <est_zfw>10154</est_zfw>
+    <max_zfw>11793</max_zfw>
+    <est_tow>10997</est_tow>
+    <max_tow>12701</max_tow>
+    <max_tow_struct>12701</max_tow_struct>
+    <tow_limit_code>T</tow_limit_code>
+    <est_ldw>10623</est_ldw>
+    <max_ldw>12701</max_ldw>
+    <est_ramp>11038</est_ramp>
+  </weights>
+  <impacts>
+    <minus_6000ft>
+      <time_enroute>4844</time_enroute>
+      <time_difference>-814</time_difference>
+      <enroute_burn>317</enroute_burn>
+      <burn_difference>-57</burn_difference>
+      <ramp_fuel>827</ramp_fuel>
+      <initial_fl>40</initial_fl>
+      <initial_tas>142</initial_tas>
+      <initial_mach>0.22</initial_mach>
+      <cost_index>10</cost_index>
+    </minus_6000ft>
+    <minus_4000ft>
+      <time_enroute>5215</time_enroute>
+      <time_difference>-443</time_difference>
+      <enroute_burn>341</enroute_burn>
+      <burn_difference>-33</burn_difference>
+      <ramp_fuel>851</ramp_fuel>
+      <initial_fl>60</initial_fl>
+      <initial_tas>141</initial_tas>
+      <initial_mach>0.22</initial_mach>
+      <cost_index>10</cost_index>
+    </minus_4000ft>
+    <minus_2000ft>
+      <time_enroute>5523</time_enroute>
+      <time_difference>-135</time_difference>
+      <enroute_burn>365</enroute_burn>
+      <burn_difference>-9</burn_difference>
+      <ramp_fuel>875</ramp_fuel>
+      <initial_fl>80</initial_fl>
+      <initial_tas>142</initial_tas>
+      <initial_mach>0.22</initial_mach>
+      <cost_index>10</cost_index>
+    </minus_2000ft>
+    <plus_2000ft/>
+    <plus_4000ft/>
+    <plus_6000ft/>
+    <higher_ci/>
+    <lower_ci/>
+    <zfw_plus_1000>
+      <time_enroute>5580</time_enroute>
+      <time_difference>-78</time_difference>
+      <enroute_burn>380</enroute_burn>
+      <burn_difference>6</burn_difference>
+      <ramp_fuel>892</ramp_fuel>
+      <initial_fl>100</initial_fl>
+      <initial_tas>141</initial_tas>
+      <initial_mach>0.22</initial_mach>
+      <cost_index>10</cost_index>
+    </zfw_plus_1000>
+    <zfw_minus_1000>
+      <time_enroute>5687</time_enroute>
+      <time_difference>29</time_difference>
+      <enroute_burn>368</enroute_burn>
+      <burn_difference>-6</burn_difference>
+      <ramp_fuel>877</ramp_fuel>
+      <initial_fl>100</initial_fl>
+      <initial_tas>141</initial_tas>
+      <initial_mach>0.22</initial_mach>
+      <cost_index>10</cost_index>
+    </zfw_minus_1000>
+  </impacts>
+  <crew>
+    <pilot_id>608880</pilot_id>
+    <cpt>Matt Dorahy</cpt>
+    <fo>DARYL BEARD</fo>
+    <dx>NICOLAS SIMPSON</dx>
+    <pu>JEAN BROOKS</pu>
+  </crew>
+  <notams></notams>
+  <weather>
+    <orig_metar>YMRY No valid METAR found.</orig_metar>
+    <orig_taf>YMRY No valid TAF found.</orig_taf>
+    <dest_metar>YMAY 140609Z AUTO 23013KT 220V290 8000 // SCT025 SCT035 BKN046 15/15
+Q1004 RETS</dest_metar>
+    <dest_taf>YMAY No valid TAF found.</dest_taf>
+    <altn_metar>YMML 082000Z 36015KT 9999 FEW040 06/03 Q1005</altn_metar>
+    <altn_taf>YMML 081707Z 0818/1000 36012KT CAVOK
+FM090100 01015G25KT CAVOK
+FM090900 01020G30KT 9999 -RA SCT025
+FM091400 01014KT 9999 -RA SCT025 BKN040
+FM092000 28012KT 9999 -RA SCT025 BKN040
+INTER 0918/1000 5000 RA BKN015</altn_taf>
+    <toaltn_metar/>
+    <toaltn_taf/>
+    <eualtn_metar/>
+    <eualtn_taf/>
+    <etops_metar/>
+    <etops_taf/>
+  </weather>
+  <sigmets>
+    <sigmet>
+      <type>WS</type>
+      <loc>AU21</loc>
+      <address>YMMC</address>
+      <title>WSAU21 YMMC 081609</title>
+      <fir>YMMM</fir>
+      <fir_name>MELBOURNE FIR</fir_name>
+      <id>Z12</id>
+      <hazard>TURB</hazard>
+      <qualifier>SEV</qualifier>
+      <issued>1751990940</issued>
+      <start>1751992800</start>
+      <end>1752007200</end>
+      <text>YMMM SIGMET Z12 VALID 081640/082040 YMMC- YMMM MELBOURNE FIR SEV TURB FCST WI S4520 E14010 - S3950 E15200 - S4200 E15230 - S4550 E14840 - S5000 E13720 - S5000 E13550 FL160/300 MOV ESE 30KT NC=</text>
+    </sigmet>
+    <sigmet>
+      <type>WS</type>
+      <loc>AU21</loc>
+      <address>YBRF</address>
+      <title>WSAU21 YBRF 081602</title>
+      <fir>YMMM</fir>
+      <fir_name>MELBOURNE FIR</fir_name>
+      <id>H09</id>
+      <hazard>TURB</hazard>
+      <qualifier>SEV</qualifier>
+      <issued>1751990520</issued>
+      <start>1751994000</start>
+      <end>1752008400</end>
+      <text>YMMM SIGMET H09 VALID 081700/082100 YMRF- YMMM MELBOURNE FIR SEV TURB FCST WI S3630 E14740 - S3330 E15010 - S3320 E15100 - S3720 E14940 SFC/7000FT STNR WKN=</text>
+    </sigmet>
+    <sigmet>
+      <type>WS</type>
+      <loc>AU21</loc>
+      <address>YMMC</address>
+      <title>WSAU21 YMMC 081615</title>
+      <fir>YMMM</fir>
+      <fir_name>MELBOURNE FIR</fir_name>
+      <id>D02</id>
+      <hazard>TURB</hazard>
+      <qualifier>SEV</qualifier>
+      <issued>1751991300</issued>
+      <start>1751994000</start>
+      <end>1752008400</end>
+      <text>YMMM SIGMET D02 VALID 081700/082100 YMMC- YMMM MELBOURNE FIR SEV TURB FCST WI S4730 E09030 - S5000 E09320 - S5000 E09000 - S4440 E07500 - S4110 E07500 FL180/300 STNR NC=</text>
+    </sigmet>
+    <sigmet>
+      <type>WS</type>
+      <loc>AU21</loc>
+      <address>YMMC</address>
+      <title>WSAU21 YMMC 081637</title>
+      <fir>YMMM</fir>
+      <fir_name>MELBOURNE FIR</fir_name>
+      <id>E02</id>
+      <hazard>ICE</hazard>
+      <qualifier>SEV</qualifier>
+      <issued>1751992620</issued>
+      <start>1751994000</start>
+      <end>1752008400</end>
+      <text>YMMM SIGMET E02 VALID 081700/082100 YMMC- YMMM MELBOURNE FIR SEV ICE FCST WI S3230 E12940 - S3210 E13030 - S3240 E13420 - S3930 E13820 - S3929 E13551 - S3500 E13320 5000FT/FL150 MOV E 35KT INTSF=</text>
+    </sigmet>
+    <sigmet>
+      <type>WS</type>
+      <loc>AU21</loc>
+      <address>YMRF</address>
+      <title>WSAU21 YMRF 081745</title>
+      <fir>YMMM</fir>
+      <fir_name>MELBOURNE FIR</fir_name>
+      <id>F01</id>
+      <hazard>TURB</hazard>
+      <qualifier>SEV</qualifier>
+      <issued>1751996700</issued>
+      <start>1752001200</start>
+      <end>1752015600</end>
+      <text>YMMM SIGMET F01 VALID 081900/082300 YMRF- YMMM MELBOURNE FIR SEV TURB FCST WI S3310 E13750 - S3500 E13600 - S3430 E13520 - S3240 E13720 SFC/3000FT STNR NC=</text>
+    </sigmet>
+    <sigmet>
+      <type>WS</type>
+      <loc>AU21</loc>
+      <address>YMRF</address>
+      <title>WSAU21 YMRF 081748</title>
+      <fir>YMMM</fir>
+      <fir_name>MELBOURNE FIR</fir_name>
+      <id>G01</id>
+      <hazard>TURB</hazard>
+      <qualifier>SEV</qualifier>
+      <issued>1751996880</issued>
+      <start>1752001200</start>
+      <end>1752015600</end>
+      <text>YMMM SIGMET G01 VALID 081900/082300 YMRF- YMMM MELBOURNE FIR SEV TURB FCST WI S3240 E14020 - S3530 E13930 - S3620 E13650 - S3540 E13630 - S3450 E13850 - S3230 E13900 SFC/3000FT STNR NC=</text>
+    </sigmet>
+  </sigmets>
+  <text>
+    <nat_tracks/>
+    <tlr_section/>
+    <plan_html>&lt;div style="line-height:14px;font-size:13px"&gt;&lt;pre&gt;&lt;!--BKMK///OFP///0--&gt;&lt;!--BKMK///Summary and Fuel///1--&gt;&lt;b&gt;[ OFP ]
+--------------------------------------------------------------------&lt;/b&gt;
+N511      08JUL2025    YMRY-YMAY   DC3  N511    RELEASE 2035 08JUL25
+OFP 1                MORUYA-ALBURY
+                         WX PROG 0821 0900 0903   OBS 0812 0812 0812
+	
+  ATC C/S   N511         YMRY/MYA   YMAY/ABX      CRZ SYS     600BHP
+08JUL2025   N511         2105/2120  2254/2302     GND DIST       168
+DOUGLAS DC-3 / P&amp;W R-1830           STA  2230     AIR DIST       222
+                         CTOT:....                G/C DIST       155
+                                                  AVG WIND   282/037
+MAXIMUM    TOW  12701  LAW  12701  ZFW  11793     AVG W/C       M034
+ESTIMATED  TOW  10997  LAW  10623  ZFW  10154     AVG ISA       P002
+                                                  AVG FF KGS/HR  238
+                                                  FUEL BIAS    P00.0
+ALTN YMML                                         TKOF ALTN  .......
+FL STEPS YMRY/0100/
+--------------------------------------------------------------------
+DISP RMKS   NIL
+
+--------------------------------------------------------------------
+         PLANNED FUEL
+---------------------------------
+FUEL           ARPT   FUEL   TIME
+---------------------------------
+TRIP            ABX    374   0134
+CONT 15 MIN             59   0015
+ALTN            MEL    289   0116
+FINRES                 121   0045
+---------------------------------
+MINIMUM T/OFF FUEL     843   0351
+---------------------------------
+EXTRA                    0   0000
+---------------------------------
+T/OFF FUEL             843   0351
+TAXI            MYA     41   0015
+---------------------------------
+BLOCK FUEL      MYA    884
+PIC EXTRA            .....
+TOTAL FUEL           .....
+REASON FOR PIC EXTRA ............
+--------------------------------------------------------------------
+FMC INFO:
+FINRES+ALTN            410
+TRIP+TAXI              415
+--------------------------------------------------------------------
+NO TANKERING RECOMMENDED (P)
+--------------------------------------------------------------------
+I HEREWITH CONFIRM THAT I HAVE PERFORMED A THOROUGH SELF BRIEFING
+ABOUT THE DESTINATION AND ALTERNATE AIRPORTS OF THIS FLIGHT 
+INCLUDING THE APPLICABLE INSTRUMENT APPROACH PROCEDURES, AIRPORT 
+FACILITIES, NOTAMS AND ALL OTHER RELEVANT PARTICULAR INFORMATION.
+
+DISPATCHER: NICOLAS SIMPSON             PIC NAME: DORAHY, MATT
+
+TEL: +1 800 555 0199               PIC SIGNATURE: ...............&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;&lt;!--BKMK///Routing and Impacts///1--&gt;
+ALTERNATE ROUTE TO:                                    FINRES    121
+APT      TRK DST              VIA                 FL  WC  TIME  FUEL
+--------------------------------------------------------------------
+YMML/34  225 160  DUGGI1 DUGGI V147 TEMIS V169   100 M010 0116   289
+                  BOYSE BOYSE9A                                     
+--------------------------------------------------------------------
+
+MEL/CDL ITEMS DESCRIPTION
+------------- -----------
+
+--------------------------------------------------------------------
+
+ROUTING:
+
+ROUTE ID: DEFRTE
+YMRY/36 DCT COM DCT YMAY/25
+
+--------------------------------------------------------------------
+DEPARTURE ATC CLEARANCE:
+.
+.
+.
+--------------------------------------------------------------------
+                         OPERATIONAL IMPACTS
+                         -------------------
+WEIGHT CHANGE UP 1.0          TRIP  P 0006 KGS   TIME M 0001
+WEIGHT CHANGE DN 1.0          TRIP  M 0006 KGS   TIME P 0000
+FL CHANGE     UP FL1                 NOT AVAILABLE
+FL CHANGE     DN FL1          TRIP  M 0009 KGS   TIME M 0002
+FL CHANGE     DN FL2          TRIP  M 0033 KGS   TIME M 0007
+SPD CHANGE    CI 0                   NOT AVAILABLE
+SPD CHANGE    CI 50                  NOT AVAILABLE
+--------------------------------------------------------------------&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;&lt;!--BKMK///Times and Weights///1--&gt;--------------------------------------------------------------------
+ATIS:
+.
+.
+--------- --------- --------- --------- --------- --------- --------
+RVSM: ALT SYS  LEFT:             STBY:             RIGHT:
+
+--------- --------- --------- --------- --------- --------- --------
+--------------------------------------------------------------------
+                                TIMES
+                                -----
+				    
+               ESTIMATED        SKED              ACTUAL
+
+OUT            2105Z/0705L      2105Z/0705L       ......Z
+
+OFF            2120Z/0720L      2120Z/0720L       ......Z
+
+ON             2254Z/0854L      2222Z/0822L       ......Z
+
+IN             2302Z/0902L      2230Z/0830L       ......Z
+
+BLOCK TIME     0157             0125              ......
+
+--------------------------------------------------------------------
+                               WEIGHTS
+                               -------
+
+                EST      MAX     ACTUAL
+
+PAX              21              ......
+
+CARGO           524              ......
+
+PAYLOAD        2191              ......
+
+ZFW           10154    11793     ......
+
+FUEL            884     2237     ......  POSS EXTRA 1353
+
+TOW           10997    12701  TOW......
+
+STAB TRIM                        ......
+
+LAW           10623    12701     ......
+
+--------------------------------------------------------------------
+                       TERRAIN CLEARANCE CHECK
+                       -----------------------
+DD CHECK - TERRAIN CLEARANCE CHECK DISABLED
+
+DP CHECK - TERRAIN CLEARANCE CHECK DISABLED
+--------------------------------------------------------------------&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;&lt;!--BKMK///Flight Log///1--&gt;                             FLIGHT LOG                             
+                             ----------                             
+
+MOST CRITICAL MORA 08600 FEET AT COM///MXSHR 02 AT TOD
+--------------------------------------------------------------------
+AWY                           FL   IMT   MN    WIND  OAT  EFOB  PBRN
+POSITION    LAT      EET ETO MORA  ITT  TAS    COMP  TDV
+IDENT       LONG    TTLT ATO DIS  RDIS   GS     SHR  TRP  AFOB  ABRN
+FREQ
+--------------------------------------------------------------------
+                                   231                     843    41
+MORUYA      S3553.9      ...  55   244         M034     
+YMRY       E15008.7 0000 ...       168  140               ....  ....
+
+DCT                          100   232  .27 274/038  M01   734   150
+T O C       S3604.7 0018 ...  62   244  174    M034  P04
+           E14940.9 0018 ...  31   137  140       0  341  ....  ....
+
+DCT                          100   266  .22 281/040  M02   648   236
+COOMA       S3621.2 0022 ...  86   279  141    M034  P03
+COM        E14857.5 0040 ...  39    98  107       1  346  ....  ....
+293
+
+DCT                          100   268  .22 289/035  M04   518   366
+T O D       S3611.4 0033 ...  52   280  141    M035  P01
+           E14746.6 0113 ...  58    40  106       2  340  ....  ....
+
+DCT                                                        469   415
+ALBURY      S3604.1 0021 ...                            
+YMAY       E14657.5 0134 ...  40                          ....  ....
+
+
+
+&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;&lt;!--BKMK///Wind Information///1--&gt;--------------------------------------------------------------------
+                          WIND INFORMATION                          
+                          ----------------                          
+
+CLIMB            T O C            COM              T O D
+350 283/085 -52  140 279/037 -11  140 281/042 -10  140 287/043 -11
+310 282/079 -47  120 276/037 -06  120 281/040 -06  120 288/039 -07
+200 283/042 -24  100 275/037 -01  100 281/039 -02  100 291/035 -03
+150 280/037 -13  080 273/037 +01  080 284/041 -00  080 295/032 -04
+100 275/037 -01  060 270/030 +01  060 288/031 -03  060 295/023 -03
+
+DESCENT
+350 281/079 -53
+310 279/074 -47
+200 282/045 -23
+150 286/045 -13
+100 291/035 -03
+
+--------------------------------------------------------------------&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;&lt;!--BKMK///ATC Flight Plan///0--&gt;&lt;b&gt;[ ATC Flight Plan ]
+--------------------------------------------------------------------&lt;/b&gt;
+                          ICAO FLIGHT PLAN                           
+                          ----------------                           
+
+FF YMMMZQZX
+082035 CYULSBFP
+(FPL-N511-IS
+-DC3/M-SDF/S
+-YMRY2105
+-N0141F100 DCT COM DCT
+-YMAY0124 YMML
+-DOF/250708 REG/N511 PER/B RMK/TCAS)&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;&lt;!--BKMK///Additional Info///0--&gt;&lt;b&gt;[ Additional Info ]
+--------------------------------------------------------------------&lt;/b&gt;
+D I S P A T C H  B R I E F I N G  I N F O    N511      YMRY/YMAY
+
+
+&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;&lt;!--BKMK///Airport WX List///0--&gt;&lt;b&gt;[ Airport WX List ]
+--------------------------------------------------------------------&lt;/b&gt;
+YMRY --&gt; YMAY        N511 / 08JUL2025
+LIDO/WEATHER SERVICE       DATE : 08Jul2025   TIME : 20:35 UTC
+
+AIRMETs:
+  No Wx data available
+
+SIGMETs:
+YMMM  MELBOURNE FIR
+  WS  SIGMET Z12 VALID 081640/082040 YMMC- YMMM MELBOURNE FIR 
+             SEV TURB FCST WI S4520 E14010 - S3950 E15200 - S4200
+             E15230 - S4550 E14840 - S5000 E13720 - S5000 E13550
+             FL160/300 MOV ESE 30KT NC=
+  WS  SIGMET H09 VALID 081700/082100 YMRF- YMMM MELBOURNE FIR 
+             SEV TURB FCST WI S3630 E14740 - S3330 E15010 - S3320
+             E15100 - S3720 E14940 SFC/7000FT STNR WKN=
+  WS  SIGMET D02 VALID 081700/082100 YMMC- YMMM MELBOURNE FIR 
+             SEV TURB FCST WI S4730 E09030 - S5000 E09320 - S5000
+             E09000 - S4440 E07500 - S4110 E07500 FL180/300 STNR
+             NC=
+  WS  SIGMET E02 VALID 081700/082100 YMMC- YMMM MELBOURNE FIR 
+             SEV ICE FCST WI S3230 E12940 - S3210 E13030 - S3240
+             E13420 - S3930 E13820 - S3929 E13551 - S3500 E13320
+             5000FT/FL150 MOV E 35KT INTSF=
+  WS  SIGMET F01 VALID 081900/082300 YMRF- YMMM MELBOURNE FIR 
+             SEV TURB FCST WI S3310 E13750 - S3500 E13600 - S3430
+             E13520 - S3240 E13720 SFC/3000FT STNR NC=
+  WS  SIGMET G01 VALID 081900/082300 YMRF- YMMM MELBOURNE FIR 
+             SEV TURB FCST WI S3240 E14020 - S3530 E13930 - S3620
+             E13650 - S3540 E13630 - S3450 E13850 - S3230 E13900
+             SFC/3000FT STNR NC=
+
+Tropical Cyclone SIGMETs:
+  No Wx data available
+
+Volcanic Ash SIGMETs:
+  No Wx data available
+
+Departure:
+YMRY/MYA  MORUYA
+  SA          No Wx data available
+  FT          No Wx data available
+
+Destination:
+YMAY/ABX  ALBURY
+  SA  140609  AUTO 23013KT 220V290 8000 // SCT025 SCT035 BKN046
+              15/15 Q1004 RETS
+  FT          No Wx data available
+
+Destination Alternates:
+YMML/MEL  MELBOURNE INTL
+  SA  082000  36015KT 9999 FEW040 06/03 Q1005
+  FT  081707  0818/1000 36012KT CAVOK
+              FM090100 01015G25KT CAVOK
+              FM090900 01020G30KT 9999 -RA SCT025
+              FM091400 01014KT 9999 -RA SCT025 BKN040
+              FM092000 28012KT 9999 -RA SCT025 BKN040
+              INTER 0918/1000 5000 RA BKN015&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;  AIRPORTLIST ENDED&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;&lt;!--BKMK///Company NOTAM///0--&gt;&lt;b&gt;[ Company NOTAM ]
+--------------------------------------------------------------------&lt;/b&gt;
+&lt;b&gt;==========
+CREW ALERT
+==========&lt;/b&gt;
+
+&lt;b&gt;SB007/14   &lt;/b&gt;
+  SUBJECT: AUTO COST INDEXES
+  WHEN PLANNING A COST INDEX, 2 OPTIONS ARE AVAILABLE. PILOTS MAY
+  EITHER SELECT A SPECIFIC COST INDEX NUMBER FROM THE LIST, OR THEY
+  MAY SELECT "AUTO". WHEN PLANNING AN "AUTO" COST INDEX, THE SYSTEM
+  WILL REFERENCE THE SCHEDULED "TIME ENROUTE" OPTION AND ATTEMPT TO
+  CHOOSE A COST INDEX WHICH CLOSELY MATCHES THIS VALUE. NOTE THAT
+  THE "TIME ENROUTE" OPTION IS MEANT AS A GATE TO GATE TIME (AS
+  INDICATED ON AN AIRLINE'S FLIGHT SCHEDULE, FOR EXAMPLE). IF A
+  "TIME ENROUTE" OF 2:30 IS SELECTED, THE SYSTEM WILL SUBTRACT THE
+  TAXI TIMES FROM THIS VALUE TO DETERMINE THE SCHEDULED AIR TIME. IT
+  WILL THEN DETERMINE AND USE THE COST INDEX WHICH MATCHES THIS AIR
+  TIME.
+
+&lt;b&gt;SB003/13   &lt;/b&gt;
+  SUBJECT: FLIGHT RELEASE UNITS
+  ALL FLIGHT CREW: PLEASE PAY SPECIAL ATTENTION TO THE UNITS
+  SELECTION WHEN GENERATING A FLIGHT PLAN. FAILURE TO IDENTIFY THE
+  CORRECT UNITS WHEN REFUELING PRIOR TO FLIGHT CAN RESULT IN
+  DEPARTING WITH INSUFFICIENT FUEL AND/OR AN ERRONEOUS PAYLOAD.
+
+&lt;b&gt;=============
+CREW BULLETIN
+=============&lt;/b&gt;
+
+NIL
+
+
+==================== END OF LIDO-NOTAM-BULLETIN ====================&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;Route
+&lt;a class="ofpmaplink" href="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_ROUTE.gif" target="_blank"&gt;&lt;img src="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_ROUTE.gif" alt="Image no longer available, please regenerate the flightplan." width="600px"&gt;&lt;/a&gt;&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;SigWx 1 of 1
+&lt;a class="ofpmaplink" href="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_SIGWX00.gif" target="_blank"&gt;&lt;img src="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_SIGWX00.gif" alt="Image no longer available, please regenerate the flightplan." width="600px"&gt;&lt;/a&gt;&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;UAD 1 of 3
+&lt;a class="ofpmaplink" href="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_WINDS5000.gif" target="_blank"&gt;&lt;img src="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_WINDS5000.gif" alt="Image no longer available, please regenerate the flightplan." width="600px"&gt;&lt;/a&gt;&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;UAD 2 of 3
+&lt;a class="ofpmaplink" href="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_WINDS10000.gif" target="_blank"&gt;&lt;img src="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_WINDS10000.gif" alt="Image no longer available, please regenerate the flightplan." width="600px"&gt;&lt;/a&gt;&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;UAD 3 of 3
+&lt;a class="ofpmaplink" href="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_WINDS14000.gif" target="_blank"&gt;&lt;img src="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_WINDS14000.gif" alt="Image no longer available, please regenerate the flightplan." width="600px"&gt;&lt;/a&gt;&lt;h2 style="page-break-after: always;"&gt; &lt;/h2&gt;Vertical profile
+&lt;a class="ofpmaplink" href="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_PROFILE.gif" target="_blank"&gt;&lt;img src="https://www.simbrief.com/ofp/uads/YMRYYMAY_UAD_1752006905_PROFILE.gif" alt="Image no longer available, please regenerate the flightplan." width="600px"&gt;&lt;/a&gt;&lt;/pre&gt;&lt;/div&gt;</plan_html>
+  </text>
+  <tracks/>
+  <database_updates>
+    <metar_taf>1752006631</metar_taf>
+    <winds>1751976000</winds>
+    <sigwx>1751999522</sigwx>
+    <sigmet>1752006722</sigmet>
+    <notams>1752006780</notams>
+    <tracks>1752004860</tracks>
+  </database_updates>
+  <files>
+    <directory>https://www.simbrief.com/ofp/flightplans/</directory>
+    <pdf>
+      <name>PDF Document</name>
+      <link>YMRYYMAY_PDF_1752006905.pdf</link>
+    </pdf>
+    <file>
+      <name>Aerosoft Airbus</name>
+      <link>YMRYYMAY_ABX_1752006905.flp</link>
+    </file>
+    <file>
+      <name>Aerosoft Airbus EFB</name>
+      <link>YMRYYMAY_PDF_1752006905.pdf--A3E</link>
+    </file>
+    <file>
+      <name>Aerosoft CRJ</name>
+      <link>YMRYYMAY_CRX_1752006905.flp</link>
+    </file>
+    <file>
+      <name>Aerosoft CRJ (Airways)</name>
+      <link>YMRYYMAY_CRA_1752006905.flp</link>
+    </file>
+    <file>
+      <name>Aerowinx PSX 747</name>
+      <link>YMRYYMAY_PSX_1752006905.route</link>
+    </file>
+    <file>
+      <name>AivlaSoft EFB</name>
+      <link>YMRYYMAY_EFB_1752006905.efbr</link>
+    </file>
+    <file>
+      <name>AivlaSoft EFB v2</name>
+      <link>YMRYYMAY_EF2_1752006905.efbr</link>
+    </file>
+    <file>
+      <name>Black Box Airbus</name>
+      <link>YMRYYMAY_BBS_1752006905.pln</link>
+    </file>
+    <file>
+      <name>Captain Sim (PLN)</name>
+      <link>YMRYYMAY_CSF_1752006905.pln</link>
+    </file>
+    <file>
+      <name>FeelThere</name>
+      <link>YMRYYMAY_FTR_1752006905.fpl</link>
+    </file>
+    <file>
+      <name>Flight1 GTN</name>
+      <link>YMRYYMAY_GTN_1752006905.gfp</link>
+    </file>
+    <file>
+      <name>FlightFactor 757 V2</name>
+      <link>YMRYYMAY_VMX_1752006905.flp--VM5</link>
+    </file>
+    <file>
+      <name>FlightFactor 767-777</name>
+      <link>YMRYYMAY_VMX_1752006905.flp</link>
+    </file>
+    <file>
+      <name>FlightFactor A320</name>
+      <link>YMRYYMAY_FFA_1752006905.in</link>
+    </file>
+    <file>
+      <name>FS Commander</name>
+      <link>YMRYYMAY_FSC_1752006905.pln</link>
+    </file>
+    <file>
+      <name>FS2004</name>
+      <link>YMRYYMAY_FS9_1752006905.pln</link>
+    </file>
+    <file>
+      <name>FS2020</name>
+      <link>YMRYYMAY_MFS_1752006905.pln</link>
+    </file>
+    <file>
+      <name>FS2020 (No SID/STAR)</name>
+      <link>YMRYYMAY_MFN_1752006905.pln</link>
+    </file>
+    <file>
+      <name>FS2024</name>
+      <link>YMRYYMAY_M24_1752006905.pln</link>
+    </file>
+    <file>
+      <name>FSLabs A320</name>
+      <link>YMRYYMAY_FSL_1752006905.txt</link>
+    </file>
+    <file>
+      <name>FSX/P3D</name>
+      <link>YMRYYMAY_FSX_1752006905.pln</link>
+    </file>
+    <file>
+      <name>FSX/P3D (No SID/STAR)</name>
+      <link>YMRYYMAY_FSN_1752006905.pln</link>
+    </file>
+    <file>
+      <name>GeoFS Flight Plan</name>
+      <link>YMRYYMAY_GFS_1752006905.json</link>
+    </file>
+    <file>
+      <name>Google Earth KML</name>
+      <link>YMRYYMAY_KML_1752006905.kml</link>
+    </file>
+    <file>
+      <name>iFly 737NG</name>
+      <link>YMRYYMAY_IFY_1752006905.FLTPLAN</link>
+    </file>
+    <file>
+      <name>iFly 747 V2</name>
+      <link>YMRYYMAY_I74_1752006905.route</link>
+    </file>
+    <file>
+      <name>iFly Jets Advanced Series</name>
+      <link>YMRYYMAY_IFA_1752006905.route</link>
+    </file>
+    <file>
+      <name>iFly Jets Wind Uplink</name>
+      <link>YMRYYMAY_PMW_1752006905.wx--IFW</link>
+    </file>
+    <file>
+      <name>iniBuilds Flightplan</name>
+      <link>YMRYYMAY_INB_1752006905.fpl</link>
+    </file>
+    <file>
+      <name>iniBuilds Flightplan (A350)</name>
+      <link>YMRYYMAY_INA_1752006905.fpl</link>
+    </file>
+    <file>
+      <name>IVAO/IVAP</name>
+      <link>YMRYYMAY_IVO_1752006905.fpl</link>
+    </file>
+    <file>
+      <name>IVAO/IVAP (Default.fpl)</name>
+      <link>YMRYYMAY_XVD_1752006905.fpl</link>
+    </file>
+    <file>
+      <name>IVAO/XIVAP</name>
+      <link>YMRYYMAY_XVP_1752006905.fpl</link>
+    </file>
+    <file>
+      <name>IXEG 737 Classic</name>
+      <link>YMRYYMAY_IXG_1752006905.fpl</link>
+    </file>
+    <file>
+      <name>JARDesign Airbus</name>
+      <link>YMRYYMAY_JAR_1752006905.txt</link>
+    </file>
+    <file>
+      <name>JeeHell A320 FMGS</name>
+      <link>YMRYYMAY_JHE_1752006905.xml</link>
+    </file>
+    <file>
+      <name>Just Flight 146</name>
+      <link>YMRYYMAY_QTY_1752006905.RTE--JFB</link>
+    </file>
+    <file>
+      <name>Leonardo MD80</name>
+      <link>YMRYYMAY_MDR_1752006905.mdr</link>
+    </file>
+    <file>
+      <name>Leonardo MD80 (ACARS)</name>
+      <link>YMRYYMAY_MDA_1752006905.txt</link>
+    </file>
+    <file>
+      <name>Level-D 767</name>
+      <link>YMRYYMAY_LVD_1752006905.rte</link>
+    </file>
+    <file>
+      <name>Majestic Q400 (v1.024)</name>
+      <link>YMRYYMAY_MJC_1752006905.fpr</link>
+    </file>
+    <file>
+      <name>Majestic Q400 (v1.025)</name>
+      <link>YMRYYMAY_MJQ_1752006905.fpr</link>
+    </file>
+    <file>
+      <name>Microsoft ATR 42/72</name>
+      <link>YMRYYMAY_ATM_1752006905.flp</link>
+    </file>
+    <file>
+      <name>Milviz</name>
+      <link>YMRYYMAY_MVZ_1752006905.xml</link>
+    </file>
+    <file>
+      <name>phpVMS ACARS</name>
+      <link>YMRYYMAY_VMS_1752006905.xml</link>
+    </file>
+    <file>
+      <name>PMDG 747-400X (FS2004)</name>
+      <link>YMRYYMAY_PMO_1752006905.rt2</link>
+    </file>
+    <file>
+      <name>PMDG Flightplan</name>
+      <link>YMRYYMAY_PMR_1752006905.rte</link>
+    </file>
+    <file>
+      <name>PMDG Wind Uplink</name>
+      <link>YMRYYMAY_PMW_1752006905.wx</link>
+    </file>
+    <file>
+      <name>PMS50 GTN750</name>
+      <link>YMRYYMAY_MFS_1752006905.pln--PGT</link>
+    </file>
+    <file>
+      <name>Project Magenta</name>
+      <link>YMRYYMAY_MGA_1752006905.sbp</link>
+    </file>
+    <file>
+      <name>ProSim 737</name>
+      <link>YMRYYMAY_PSM_1752006905.xml</link>
+    </file>
+    <file>
+      <name>QualityWings</name>
+      <link>YMRYYMAY_QTY_1752006905.RTE</link>
+    </file>
+    <file>
+      <name>Rotate MD-11</name>
+      <link>YMRYYMAY_JAR_1752006905.txt--RMD</link>
+    </file>
+    <file>
+      <name>Sim-Avionics</name>
+      <link>xml/YMRYYMAY_XML_1752006905.xml--sbr</link>
+    </file>
+    <file>
+      <name>Squawkbox</name>
+      <link>YMRYYMAY_SFP_1752006905.sfp</link>
+    </file>
+    <file>
+      <name>TDS GTNXi</name>
+      <link>YMRYYMAY_GTN_1752006905.gfp--TDG</link>
+    </file>
+    <file>
+      <name>TFDi Design 717</name>
+      <link>YMRYYMAY_TFD_1752006905.xml</link>
+    </file>
+    <file>
+      <name>UFMC - Universal FMC</name>
+      <link>YMRYYMAY_UFC_1752006905.ufmc</link>
+    </file>
+    <file>
+      <name>vasFMC</name>
+      <link>YMRYYMAY_VAS_1752006905.fmc</link>
+    </file>
+    <file>
+      <name>vPilot</name>
+      <link>YMRYYMAY_VFP_1752006905.vfp</link>
+    </file>
+    <file>
+      <name>Wilco Airbus Evo</name>
+      <link>YMRYYMAY_WAE_1752006905.rte</link>
+    </file>
+    <file>
+      <name>X-FMC</name>
+      <link>YMRYYMAY_XFM_1752006905.FPL</link>
+    </file>
+    <file>
+      <name>X-Plane 11/12</name>
+      <link>YMRYYMAY_XPE_1752006905.fms</link>
+    </file>
+    <file>
+      <name>X-Plane 11/12 (No SID/STAR)</name>
+      <link>YMRYYMAY_XPN_1752006905.fms</link>
+    </file>
+    <file>
+      <name>X-Plane 9/10</name>
+      <link>YMRYYMAY_XP9_1752006905.fms</link>
+    </file>
+    <file>
+      <name>Zibo Mod B737</name>
+      <link>xml/YMRYYMAY_XML_1752006905.xml--ZBO</link>
+    </file>
+  </files>
+  <fms_downloads>
+    <directory>https://www.simbrief.com/ofp/flightplans/</directory>
+    <pdf>
+      <name>PDF Document</name>
+      <link>YMRYYMAY_PDF_1752006905.pdf</link>
+    </pdf>
+    <abx>
+      <name>Aerosoft Airbus</name>
+      <link>YMRYYMAY_ABX_1752006905.flp</link>
+    </abx>
+    <a3e>
+      <name>Aerosoft Airbus EFB</name>
+      <link>YMRYYMAY_PDF_1752006905.pdf--A3E</link>
+    </a3e>
+    <crx>
+      <name>Aerosoft CRJ</name>
+      <link>YMRYYMAY_CRX_1752006905.flp</link>
+    </crx>
+    <cra>
+      <name>Aerosoft CRJ (Airways)</name>
+      <link>YMRYYMAY_CRA_1752006905.flp</link>
+    </cra>
+    <psx>
+      <name>Aerowinx PSX 747</name>
+      <link>YMRYYMAY_PSX_1752006905.route</link>
+    </psx>
+    <efb>
+      <name>AivlaSoft EFB</name>
+      <link>YMRYYMAY_EFB_1752006905.efbr</link>
+    </efb>
+    <ef2>
+      <name>AivlaSoft EFB v2</name>
+      <link>YMRYYMAY_EF2_1752006905.efbr</link>
+    </ef2>
+    <bbs>
+      <name>Black Box Airbus</name>
+      <link>YMRYYMAY_BBS_1752006905.pln</link>
+    </bbs>
+    <csf>
+      <name>Captain Sim (PLN)</name>
+      <link>YMRYYMAY_CSF_1752006905.pln</link>
+    </csf>
+    <ftr>
+      <name>FeelThere</name>
+      <link>YMRYYMAY_FTR_1752006905.fpl</link>
+    </ftr>
+    <gtn>
+      <name>Flight1 GTN</name>
+      <link>YMRYYMAY_GTN_1752006905.gfp</link>
+    </gtn>
+    <vm5>
+      <name>FlightFactor 757 V2</name>
+      <link>YMRYYMAY_VMX_1752006905.flp--VM5</link>
+    </vm5>
+    <vmx>
+      <name>FlightFactor 767-777</name>
+      <link>YMRYYMAY_VMX_1752006905.flp</link>
+    </vmx>
+    <ffa>
+      <name>FlightFactor A320</name>
+      <link>YMRYYMAY_FFA_1752006905.in</link>
+    </ffa>
+    <fsc>
+      <name>FS Commander</name>
+      <link>YMRYYMAY_FSC_1752006905.pln</link>
+    </fsc>
+    <fs9>
+      <name>FS2004</name>
+      <link>YMRYYMAY_FS9_1752006905.pln</link>
+    </fs9>
+    <mfs>
+      <name>FS2020</name>
+      <link>YMRYYMAY_MFS_1752006905.pln</link>
+    </mfs>
+    <mfn>
+      <name>FS2020 (No SID/STAR)</name>
+      <link>YMRYYMAY_MFN_1752006905.pln</link>
+    </mfn>
+    <m24>
+      <name>FS2024</name>
+      <link>YMRYYMAY_M24_1752006905.pln</link>
+    </m24>
+    <fsl>
+      <name>FSLabs A320</name>
+      <link>YMRYYMAY_FSL_1752006905.txt</link>
+    </fsl>
+    <fsx>
+      <name>FSX/P3D</name>
+      <link>YMRYYMAY_FSX_1752006905.pln</link>
+    </fsx>
+    <fsn>
+      <name>FSX/P3D (No SID/STAR)</name>
+      <link>YMRYYMAY_FSN_1752006905.pln</link>
+    </fsn>
+    <gfs>
+      <name>GeoFS Flight Plan</name>
+      <link>YMRYYMAY_GFS_1752006905.json</link>
+    </gfs>
+    <kml>
+      <name>Google Earth KML</name>
+      <link>YMRYYMAY_KML_1752006905.kml</link>
+    </kml>
+    <ify>
+      <name>iFly 737NG</name>
+      <link>YMRYYMAY_IFY_1752006905.FLTPLAN</link>
+    </ify>
+    <i74>
+      <name>iFly 747 V2</name>
+      <link>YMRYYMAY_I74_1752006905.route</link>
+    </i74>
+    <ifa>
+      <name>iFly Jets Advanced Series</name>
+      <link>YMRYYMAY_IFA_1752006905.route</link>
+    </ifa>
+    <ifw>
+      <name>iFly Jets Wind Uplink</name>
+      <link>YMRYYMAY_PMW_1752006905.wx--IFW</link>
+    </ifw>
+    <inb>
+      <name>iniBuilds Flightplan</name>
+      <link>YMRYYMAY_INB_1752006905.fpl</link>
+    </inb>
+    <ina>
+      <name>iniBuilds Flightplan (A350)</name>
+      <link>YMRYYMAY_INA_1752006905.fpl</link>
+    </ina>
+    <ivo>
+      <name>IVAO/IVAP</name>
+      <link>YMRYYMAY_IVO_1752006905.fpl</link>
+    </ivo>
+    <xvd>
+      <name>IVAO/IVAP (Default.fpl)</name>
+      <link>YMRYYMAY_XVD_1752006905.fpl</link>
+    </xvd>
+    <xvp>
+      <name>IVAO/XIVAP</name>
+      <link>YMRYYMAY_XVP_1752006905.fpl</link>
+    </xvp>
+    <ixg>
+      <name>IXEG 737 Classic</name>
+      <link>YMRYYMAY_IXG_1752006905.fpl</link>
+    </ixg>
+    <jar>
+      <name>JARDesign Airbus</name>
+      <link>YMRYYMAY_JAR_1752006905.txt</link>
+    </jar>
+    <jhe>
+      <name>JeeHell A320 FMGS</name>
+      <link>YMRYYMAY_JHE_1752006905.xml</link>
+    </jhe>
+    <jfb>
+      <name>Just Flight 146</name>
+      <link>YMRYYMAY_QTY_1752006905.RTE--JFB</link>
+    </jfb>
+    <mdr>
+      <name>Leonardo MD80</name>
+      <link>YMRYYMAY_MDR_1752006905.mdr</link>
+    </mdr>
+    <mda>
+      <name>Leonardo MD80 (ACARS)</name>
+      <link>YMRYYMAY_MDA_1752006905.txt</link>
+    </mda>
+    <lvd>
+      <name>Level-D 767</name>
+      <link>YMRYYMAY_LVD_1752006905.rte</link>
+    </lvd>
+    <mjc>
+      <name>Majestic Q400 (v1.024)</name>
+      <link>YMRYYMAY_MJC_1752006905.fpr</link>
+    </mjc>
+    <mjq>
+      <name>Majestic Q400 (v1.025)</name>
+      <link>YMRYYMAY_MJQ_1752006905.fpr</link>
+    </mjq>
+    <atm>
+      <name>Microsoft ATR 42/72</name>
+      <link>YMRYYMAY_ATM_1752006905.flp</link>
+    </atm>
+    <mvz>
+      <name>Milviz</name>
+      <link>YMRYYMAY_MVZ_1752006905.xml</link>
+    </mvz>
+    <vms>
+      <name>phpVMS ACARS</name>
+      <link>YMRYYMAY_VMS_1752006905.xml</link>
+    </vms>
+    <pmo>
+      <name>PMDG 747-400X (FS2004)</name>
+      <link>YMRYYMAY_PMO_1752006905.rt2</link>
+    </pmo>
+    <pmr>
+      <name>PMDG Flightplan</name>
+      <link>YMRYYMAY_PMR_1752006905.rte</link>
+    </pmr>
+    <pmw>
+      <name>PMDG Wind Uplink</name>
+      <link>YMRYYMAY_PMW_1752006905.wx</link>
+    </pmw>
+    <pgt>
+      <name>PMS50 GTN750</name>
+      <link>YMRYYMAY_MFS_1752006905.pln--PGT</link>
+    </pgt>
+    <mga>
+      <name>Project Magenta</name>
+      <link>YMRYYMAY_MGA_1752006905.sbp</link>
+    </mga>
+    <psm>
+      <name>ProSim 737</name>
+      <link>YMRYYMAY_PSM_1752006905.xml</link>
+    </psm>
+    <qty>
+      <name>QualityWings</name>
+      <link>YMRYYMAY_QTY_1752006905.RTE</link>
+    </qty>
+    <rmd>
+      <name>Rotate MD-11</name>
+      <link>YMRYYMAY_JAR_1752006905.txt--RMD</link>
+    </rmd>
+    <sbr>
+      <name>Sim-Avionics</name>
+      <link>xml/YMRYYMAY_XML_1752006905.xml--sbr</link>
+    </sbr>
+    <sfp>
+      <name>Squawkbox</name>
+      <link>YMRYYMAY_SFP_1752006905.sfp</link>
+    </sfp>
+    <tdg>
+      <name>TDS GTNXi</name>
+      <link>YMRYYMAY_GTN_1752006905.gfp--TDG</link>
+    </tdg>
+    <tfd>
+      <name>TFDi Design 717</name>
+      <link>YMRYYMAY_TFD_1752006905.xml</link>
+    </tfd>
+    <ufc>
+      <name>UFMC - Universal FMC</name>
+      <link>YMRYYMAY_UFC_1752006905.ufmc</link>
+    </ufc>
+    <vas>
+      <name>vasFMC</name>
+      <link>YMRYYMAY_VAS_1752006905.fmc</link>
+    </vas>
+    <vfp>
+      <name>vPilot</name>
+      <link>YMRYYMAY_VFP_1752006905.vfp</link>
+    </vfp>
+    <wae>
+      <name>Wilco Airbus Evo</name>
+      <link>YMRYYMAY_WAE_1752006905.rte</link>
+    </wae>
+    <xfm>
+      <name>X-FMC</name>
+      <link>YMRYYMAY_XFM_1752006905.FPL</link>
+    </xfm>
+    <xpe>
+      <name>X-Plane 11/12</name>
+      <link>YMRYYMAY_XPE_1752006905.fms</link>
+    </xpe>
+    <xpn>
+      <name>X-Plane 11/12 (No SID/STAR)</name>
+      <link>YMRYYMAY_XPN_1752006905.fms</link>
+    </xpn>
+    <xp9>
+      <name>X-Plane 9/10</name>
+      <link>YMRYYMAY_XP9_1752006905.fms</link>
+    </xp9>
+    <zbo>
+      <name>Zibo Mod B737</name>
+      <link>xml/YMRYYMAY_XML_1752006905.xml--ZBO</link>
+    </zbo>
+  </fms_downloads>
+  <images>
+    <directory>https://www.simbrief.com/ofp/uads/</directory>
+    <map>
+      <name>Route</name>
+      <link>YMRYYMAY_UAD_1752006905_ROUTE.gif</link>
+    </map>
+    <map>
+      <name>SigWx 1 of 1</name>
+      <link>YMRYYMAY_UAD_1752006905_SIGWX00.gif</link>
+    </map>
+    <map>
+      <name>UAD 1 of 3</name>
+      <link>YMRYYMAY_UAD_1752006905_WINDS5000.gif</link>
+    </map>
+    <map>
+      <name>UAD 2 of 3</name>
+      <link>YMRYYMAY_UAD_1752006905_WINDS10000.gif</link>
+    </map>
+    <map>
+      <name>UAD 3 of 3</name>
+      <link>YMRYYMAY_UAD_1752006905_WINDS14000.gif</link>
+    </map>
+    <map>
+      <name>Vertical profile</name>
+      <link>YMRYYMAY_UAD_1752006905_PROFILE.gif</link>
+    </map>
+  </images>
+  <links>
+    <skyvector>http://skyvector.com/?fpl=N0141F100 YMRY COM YMAY</skyvector>
+  </links>
+  <prefile>
+    <vatsim>
+      <name>VATSIM</name>
+      <site>my.vatsim.net</site>
+      <link>https://my.vatsim.net/pilots/flightplan?raw=%28FPL-N511-IS+-DC3%2FM-SDF%2FS+-YMRY2105+-N0141F100+COM+-YMAY0134+YMML+-DOF%2F250708+REG%2FN511+PER%2FB+RMK%2FTCAS+SIMBRIEF%29&amp;fuel_time=0351</link>
+      <form>&lt;form method="GET" action="https://my.vatsim.net/pilots/flightplan" target="_blank"&gt; &lt;button type="submit"&gt;Pre-file on VATSIM&lt;/button&gt; &lt;input type="hidden" name="raw" value="(FPL-N511-IS -DC3/M-SDF/S -YMRY2105 -N0141F100 COM -YMAY0134 YMML -DOF/250708 REG/N511 PER/B RMK/TCAS SIMBRIEF)"&gt; &lt;input type="hidden" name="fuel_time" value="0351"&gt; &lt;/form&gt;</form>
+    </vatsim>
+    <ivao>
+      <name>IVAO</name>
+      <site>fpl.ivao.aero</site>
+      <link>https://fpl.ivao.aero/flight-plans/create?flightPlan=eyJjYWxsc2lnbiI6Ik41MTEiLCJmbGlnaHRSdWxlcyI6IkkiLCJmbGlnaHRUeXBlIjoiUyIsImFpcmNyYWZ0TnVtYmVyIjoxLCJhaXJjcmFmdElkIjoiREMzIiwiYWlyY3JhZnRXYWtlVHVyYnVsZW5jZSI6Ik0iLCJhaXJjcmFmdEVxdWlwbWVudHMiOlsiUyIsIkQiLCJGIl0sImFpcmNyYWZ0VHJhbnNwb25kZXJUeXBlcyI6WyJTIl0sImRlcGFydHVyZUlkIjoiWU1SWSIsImRlcGFydHVyZVRpbWUiOjc1OTAwLCJjcnVpc2luZ1NwZWVkVHlwZSI6Ik4iLCJjcnVpc2luZ1NwZWVkIjoxNDEsImFsdGl0dWRlVHlwZSI6IkYiLCJhbHRpdHVkZSI6MTAwLCJyb3V0ZSI6IkRDVCBDT00gRENUIiwiYXJyaXZhbElkIjoiWU1BWSIsImVldCI6NTY0MCwiYWx0ZXJuYXRpdmVJZCI6IllNTUwiLCJhbHRlcm5hdGl2ZTJJZCI6bnVsbCwicmVtYXJrcyI6IkRPRi8yNTA3MDggUkVHL041MTEgUEVSL0IgUk1LL1RDQVMgU0lNQlJJRUYiLCJlbmR1cmFuY2UiOjEzODYwLCJwb2IiOjI0fQ==</link>
+      <form>&lt;form action="https://fpl.ivao.aero/flight-plans/create" method="GET" target="_blank"&gt;
+&lt;button type="submit"&gt;Pre-file on IVAO&lt;/button&gt;
+&lt;input type="hidden" name="flightPlan" value="eyJjYWxsc2lnbiI6Ik41MTEiLCJmbGlnaHRSdWxlcyI6IkkiLCJmbGlnaHRUeXBlIjoiUyIsImFpcmNyYWZ0TnVtYmVyIjoxLCJhaXJjcmFmdElkIjoiREMzIiwiYWlyY3JhZnRXYWtlVHVyYnVsZW5jZSI6Ik0iLCJhaXJjcmFmdEVxdWlwbWVudHMiOlsiUyIsIkQiLCJGIl0sImFpcmNyYWZ0VHJhbnNwb25kZXJUeXBlcyI6WyJTIl0sImRlcGFydHVyZUlkIjoiWU1SWSIsImRlcGFydHVyZVRpbWUiOjc1OTAwLCJjcnVpc2luZ1NwZWVkVHlwZSI6Ik4iLCJjcnVpc2luZ1NwZWVkIjoxNDEsImFsdGl0dWRlVHlwZSI6IkYiLCJhbHRpdHVkZSI6MTAwLCJyb3V0ZSI6IkRDVCBDT00gRENUIiwiYXJyaXZhbElkIjoiWU1BWSIsImVldCI6NTY0MCwiYWx0ZXJuYXRpdmVJZCI6IllNTUwiLCJhbHRlcm5hdGl2ZTJJZCI6bnVsbCwicmVtYXJrcyI6IkRPRi8yNTA3MDggUkVHL041MTEgUEVSL0IgUk1LL1RDQVMgU0lNQlJJRUYiLCJlbmR1cmFuY2UiOjEzODYwLCJwb2IiOjI0fQ=="&gt;
+&lt;/form&gt;</form>
+    </ivao>
+    <pilotedge>
+      <name>PilotEdge</name>
+      <site>www.pilotedge.net</site>
+      <link>https://www.pilotedge.net/pilot_tools/file?flightplan[type]=IFR&amp;flightplan[aircraft_identification]=N511&amp;flightplan[aircraft_type]=DC3&amp;flightplan[aircraft_equipment]=A&amp;flightplan[heavy]=0&amp;flightplan[airspeed]=141&amp;flightplan[departing_airport]=YMRY&amp;flightplan[arriving_airport]=YMAY&amp;flightplan[altitude]=10000&amp;flightplan[alternate_airport]=YMML&amp;flightplan[route]=COM&amp;flightplan[remarks]=RMK/SIMBRIEF</link>
+      <form/>
+    </pilotedge>
+    <poscon>
+      <name>POSCON</name>
+      <site>hq.poscon.net</site>
+      <link>https://hq.poscon.net/flightplan/create?flightRules=I&amp;callsign=N511&amp;isRegistration=Y&amp;flightType=S&amp;numOfAircraft=1&amp;aircraftType=DC3&amp;wakeTurbulence=M&amp;equipmentCode=S%2CD%2CF&amp;ssr=S&amp;departureApt=YMRY&amp;dateOfFlight=250708&amp;depTime=2105&amp;speed=N0141&amp;cruiseAlt=F100&amp;route=DCT+COM+DCT&amp;destinationApt=YMAY&amp;ete=0134&amp;firstAlt=YMML&amp;secondAlt=&amp;status=&amp;pbn=&amp;performanceCat=B&amp;otherInformation=DOF%2F250708+REG%2FN511+PER%2FB+RMK%2FTCAS+SIMBRIEF&amp;endurance=0351&amp;numOnBoard=24&amp;emergencyRadio=&amp;waterEquipment=&amp;remarks=TCAS+SIMBRIEF</link>
+      <form/>
+    </poscon>
+  </prefile>
+  <vatsim_prefile>&lt;form method="GET" action="https://my.vatsim.net/pilots/flightplan" target="_blank"&gt; &lt;button type="submit"&gt;Pre-file on VATSIM&lt;/button&gt; &lt;input type="hidden" name="raw" value="(FPL-N511-IS -DC3/M-SDF/S -YMRY2105 -N0141F100 COM -YMAY0134 YMML -DOF/250708 REG/N511 PER/B RMK/TCAS SIMBRIEF)"&gt; &lt;input type="hidden" name="fuel_time" value="0351"&gt; &lt;/form&gt;</vatsim_prefile>
+  <ivao_prefile>&lt;form action="https://fpl.ivao.aero/flight-plans/create" method="GET" target="_blank"&gt;
+&lt;button type="submit"&gt;Pre-file on IVAO&lt;/button&gt;
+&lt;input type="hidden" name="flightPlan" value="eyJjYWxsc2lnbiI6Ik41MTEiLCJmbGlnaHRSdWxlcyI6IkkiLCJmbGlnaHRUeXBlIjoiUyIsImFpcmNyYWZ0TnVtYmVyIjoxLCJhaXJjcmFmdElkIjoiREMzIiwiYWlyY3JhZnRXYWtlVHVyYnVsZW5jZSI6Ik0iLCJhaXJjcmFmdEVxdWlwbWVudHMiOlsiUyIsIkQiLCJGIl0sImFpcmNyYWZ0VHJhbnNwb25kZXJUeXBlcyI6WyJTIl0sImRlcGFydHVyZUlkIjoiWU1SWSIsImRlcGFydHVyZVRpbWUiOjc1OTAwLCJjcnVpc2luZ1NwZWVkVHlwZSI6Ik4iLCJjcnVpc2luZ1NwZWVkIjoxNDEsImFsdGl0dWRlVHlwZSI6IkYiLCJhbHRpdHVkZSI6MTAwLCJyb3V0ZSI6IkRDVCBDT00gRENUIiwiYXJyaXZhbElkIjoiWU1BWSIsImVldCI6NTY0MCwiYWx0ZXJuYXRpdmVJZCI6IllNTUwiLCJhbHRlcm5hdGl2ZTJJZCI6bnVsbCwicmVtYXJrcyI6IkRPRi8yNTA3MDggUkVHL041MTEgUEVSL0IgUk1LL1RDQVMgU0lNQlJJRUYiLCJlbmR1cmFuY2UiOjEzODYwLCJwb2IiOjI0fQ=="&gt;
+&lt;/form&gt;</ivao_prefile>
+  <pilotedge_prefile>https://www.pilotedge.net/pilot_tools/file?flightplan[type]=IFR&amp;flightplan[aircraft_identification]=N511&amp;flightplan[aircraft_type]=DC3&amp;flightplan[aircraft_equipment]=A&amp;flightplan[heavy]=0&amp;flightplan[airspeed]=141&amp;flightplan[departing_airport]=YMRY&amp;flightplan[arriving_airport]=YMAY&amp;flightplan[altitude]=10000&amp;flightplan[alternate_airport]=YMML&amp;flightplan[route]=COM&amp;flightplan[remarks]=RMK/SIMBRIEF</pilotedge_prefile>
+  <poscon_prefile>https://hq.poscon.net/flightplan/create?flightRules=I&amp;callsign=N511&amp;isRegistration=Y&amp;flightType=S&amp;numOfAircraft=1&amp;aircraftType=DC3&amp;wakeTurbulence=M&amp;equipmentCode=S%2CD%2CF&amp;ssr=S&amp;departureApt=YMRY&amp;dateOfFlight=250708&amp;depTime=2105&amp;speed=N0141&amp;cruiseAlt=F100&amp;route=DCT+COM+DCT&amp;destinationApt=YMAY&amp;ete=0134&amp;firstAlt=YMML&amp;secondAlt=&amp;status=&amp;pbn=&amp;performanceCat=B&amp;otherInformation=DOF%2F250708+REG%2FN511+PER%2FB+RMK%2FTCAS+SIMBRIEF&amp;endurance=0351&amp;numOnBoard=24&amp;emergencyRadio=&amp;waterEquipment=&amp;remarks=TCAS+SIMBRIEF</poscon_prefile>
+  <map_data>https://www.simbrief.com/ofp/flightplans/YMRYYMAY_MJS_1752006905.js</map_data>
+  <api_params>
+    <airline/>
+    <fltnum/>
+    <type>DC3</type>
+    <orig>YMRY</orig>
+    <dest>YMAY</dest>
+    <date>1751932800</date>
+    <dephour>75600</dephour>
+    <depmin>300</depmin>
+    <route>com</route>
+    <stehour>3600</stehour>
+    <stemin>1500</stemin>
+    <reg>N511</reg>
+    <fin>511</fin>
+    <selcal/>
+    <pax>auto</pax>
+    <altn>YMML</altn>
+    <fl/>
+    <cpt>Matt Dorahy</cpt>
+    <pid>608880</pid>
+    <fuelfactor>1</fuelfactor>
+    <manualpayload>auto</manualpayload>
+    <manualzfw>auto</manualzfw>
+    <taxifuel>0</taxifuel>
+    <minfob>0</minfob>
+    <minfob_units>wgt</minfob_units>
+    <minfod>0</minfod>
+    <minfod_units>wgt</minfod_units>
+    <melfuel>0</melfuel>
+    <melfuel_units>wgt</melfuel_units>
+    <atcfuel>0</atcfuel>
+    <atcfuel_units>wgt</atcfuel_units>
+    <wxxfuel>0</wxxfuel>
+    <wxxfuel_units>wgt</wxxfuel_units>
+    <addedfuel>0</addedfuel>
+    <addedfuel_units>wgt</addedfuel_units>
+    <addedfuel_label>extra</addedfuel_label>
+    <tankering>0</tankering>
+    <tankering_units>wgt</tankering_units>
+    <flightrules>i</flightrules>
+    <flighttype>s</flighttype>
+    <contpct>auto</contpct>
+    <resvrule>auto</resvrule>
+    <taxiout>15</taxiout>
+    <taxiin>8</taxiin>
+    <cargo>0</cargo>
+    <origrwy>36</origrwy>
+    <destrwy>25</destrwy>
+    <climb>Normal</climb>
+    <descent>500FPM</descent>
+    <cruisemode>600BHP</cruisemode>
+    <cruisesub>auto</cruisesub>
+    <planformat>lido</planformat>
+    <pounds>0</pounds>
+    <navlog>1</navlog>
+    <etops>1</etops>
+    <stepclimbs>1</stepclimbs>
+    <tlr>1</tlr>
+    <notams_opt>0</notams_opt>
+    <firnot>0</firnot>
+    <maps>1</maps>
+    <turntoflt/>
+    <turntoapt/>
+    <turntotime/>
+    <turnfrflt/>
+    <turnfrapt/>
+    <turnfrtime/>
+    <fuelstats/>
+    <contlabel/>
+    <static_id/>
+    <acdata/>
+    <acdata_parsed/>
+  </api_params>
+</OFP>

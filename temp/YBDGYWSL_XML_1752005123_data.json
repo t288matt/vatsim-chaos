@@ -1,0 +1,149 @@
+{
+  "origin": "YBDG",
+  "destination": "YWSL",
+  "route": "DCT MNG W649 ESL DCT",
+  "departure": {
+    "name": "YBDG",
+    "lat": -36.739167,
+    "lon": 144.329722,
+    "altitude": 710,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "TOC",
+      "lat": -36.822833,
+      "lon": 144.81775,
+      "altitude": 19000,
+      "elapsed_time": "09:47",
+      "time_seconds": 587,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "MNG",
+      "lat": -36.885889,
+      "lon": 145.194222,
+      "altitude": 19000,
+      "elapsed_time": "13:19",
+      "time_seconds": 799,
+      "stage": "CRZ",
+      "type": "vor"
+    },
+    {
+      "name": "TOD",
+      "lat": -37.589757,
+      "lon": 146.308749,
+      "altitude": 19000,
+      "elapsed_time": "26:41",
+      "time_seconds": 1601,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "ESL",
+      "lat": -38.111333,
+      "lon": 147.159556,
+      "altitude": 2900,
+      "elapsed_time": "37:28",
+      "time_seconds": 2248,
+      "stage": "DSC",
+      "type": "ndb"
+    },
+    {
+      "name": "YWSL",
+      "lat": -38.091667,
+      "lon": 146.965278,
+      "altitude": 2600,
+      "elapsed_time": "41:22",
+      "time_seconds": 2482,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YWSL",
+    "lat": -38.091667,
+    "lon": 146.965278,
+    "altitude": 93,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YBDG",
+      "lat": -36.739167,
+      "lon": 144.329722,
+      "altitude": 710,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "TOC",
+      "lat": -36.822833,
+      "lon": 144.81775,
+      "altitude": 19000,
+      "elapsed_time": "09:47",
+      "time_seconds": 587,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "MNG",
+      "lat": -36.885889,
+      "lon": 145.194222,
+      "altitude": 19000,
+      "elapsed_time": "13:19",
+      "time_seconds": 799,
+      "stage": "CRZ",
+      "type": "vor"
+    },
+    {
+      "name": "TOD",
+      "lat": -37.589757,
+      "lon": 146.308749,
+      "altitude": 19000,
+      "elapsed_time": "26:41",
+      "time_seconds": 1601,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "ESL",
+      "lat": -38.111333,
+      "lon": 147.159556,
+      "altitude": 2900,
+      "elapsed_time": "37:28",
+      "time_seconds": 2248,
+      "stage": "DSC",
+      "type": "ndb"
+    },
+    {
+      "name": "YWSL",
+      "lat": -38.091667,
+      "lon": 146.965278,
+      "altitude": 2600,
+      "elapsed_time": "41:22",
+      "time_seconds": 2482,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YWSL",
+      "lat": -38.091667,
+      "lon": 146.965278,
+      "altitude": 93,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>YSNWYWLM_XML_1752005345 Flight Plan - YSNW to YWLM</name>
+    <description>Flight plan extracted from SimBrief XML</description>
+    
+    <!-- Flight Information -->
+    <Snippet maxLines="2">YSNW → YWLM</Snippet>
+    
+    <!-- Flight Path Line -->
+    <Placemark>
+      <name>YSNWYWLM_XML_1752005345 Flight Path</name>
+      <description>
+        <![CDATA[
+        <h3>YSNWYWLM_XML_1752005345 Flight Plan</h3>
+        <p><strong>Route:</strong> YSNW → YWLM</p>
+        <p><strong>Route:</strong> DCT NWA W144 RIC DCT RIC V665 MAKOR V402 WLM DCT</p>
+        <p><strong>Waypoints:</strong> 15</p>
+        <p><strong>Distance:</strong> ~750 nm</p>
+        ]]>
+      </description>
+      <Style>
+        <LineStyle>
+          <color>ffff0020</color>
+          <width>4</width>
+        </LineStyle>
+        <PolyStyle>
+          <color>7fff0020</color>
+        </PolyStyle>
+      </Style>
+      <LineString>
+        <extrude>1</extrude>
+        <tessellate>1</tessellate>
+        <altitudeMode>absolute</altitudeMode>
+        <coordinates>
+          150.536944,-34.948889,399
+          150.529722,-34.951111,1900
+          150.555854,-34.802753,7000
+          150.644981,-34.292683,7000
+          150.691583,-34.038583,7000
+          150.798917,-33.607278,7000
+          150.7764,-33.596936,7000
+          150.938583,-33.379194,7000
+          151.139294,-33.112219,7000
+          151.229622,-33.068783,7000
+          151.473306,-32.961389,7000
+          151.508419,-32.945848,7000
+          151.828775,-32.80335,2500
+          151.834444,-32.795,2500
+          151.834444,-32.795,31
+        </coordinates>
+      </LineString>
+    </Placemark>
+    
+    <!-- Waypoints -->
+    <Placemark>
+      <name>YSNW</name>
+      <description>
+        <![CDATA[
+        <h3>YSNW</h3>
+        <p><strong>Coordinates:</strong> -34.948889, 150.536944</p>
+        <p><strong>Altitude:</strong> 399 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>NWA</name>
+      <description>
+        <![CDATA[
+        <h3>NWA</h3>
+        <p><strong>Coordinates:</strong> -34.951111, 150.529722</p>
+        <p><strong>Altitude:</strong> 1900 ft</p>
+        <p><strong>Time:</strong> 02:18</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> ndb</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOC</name>
+      <description>
+        <![CDATA[
+        <h3>TOC</h3>
+        <p><strong>Coordinates:</strong> -34.802753, 150.555854</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 06:11</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TONTO</name>
+      <description>
+        <![CDATA[
+        <h3>TONTO</h3>
+        <p><strong>Coordinates:</strong> -34.292683, 150.644981</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 18:50</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>RAKSO</name>
+      <description>
+        <![CDATA[
+        <h3>RAKSO</h3>
+        <p><strong>Coordinates:</strong> -34.038583, 150.691583</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 24:57</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>RIC</name>
+      <description>
+        <![CDATA[
+        <h3>RIC</h3>
+        <p><strong>Coordinates:</strong> -33.607278, 150.798917</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 35:29</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> vor</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>RIC</name>
+      <description>
+        <![CDATA[
+        <h3>RIC</h3>
+        <p><strong>Coordinates:</strong> -33.596936, 150.776400</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 35:55</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ndb</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>CAPER</name>
+      <description>
+        <![CDATA[
+        <h3>CAPER</h3>
+        <p><strong>Coordinates:</strong> -33.379194, 150.938583</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 41:34</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>MAKOR</name>
+      <description>
+        <![CDATA[
+        <h3>MAKOR</h3>
+        <p><strong>Coordinates:</strong> -33.112219, 151.139294</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 48:41</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>LOWEP</name>
+      <description>
+        <![CDATA[
+        <h3>LOWEP</h3>
+        <p><strong>Coordinates:</strong> -33.068783, 151.229622</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 50:20</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>PUDUT</name>
+      <description>
+        <![CDATA[
+        <h3>PUDUT</h3>
+        <p><strong>Coordinates:</strong> -32.961389, 151.473306</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 54:56</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOD</name>
+      <description>
+        <![CDATA[
+        <h3>TOD</h3>
+        <p><strong>Coordinates:</strong> -32.945848, 151.508419</p>
+        <p><strong>Altitude:</strong> 7000 ft</p>
+        <p><strong>Time:</strong> 55:34</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>WLM</name>
+      <description>
+        <![CDATA[
+        <h3>WLM</h3>
+        <p><strong>Coordinates:</strong> -32.803350, 151.828775</p>
+        <p><strong>Altitude:</strong> 2500 ft</p>
+        <p><strong>Time:</strong> 64:05</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> ndb</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YWLM</name>
+      <description>
+        <![CDATA[
+        <h3>YWLM</h3>
+        <p><strong>Coordinates:</strong> -32.795000, 151.834444</p>
+        <p><strong>Altitude:</strong> 2500 ft</p>
+        <p><strong>Time:</strong> 66:58</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> apt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YWLM</name>
+      <description>
+        <![CDATA[
+        <h3>YWLM</h3>
+        <p><strong>Coordinates:</strong> -32.795000, 151.834444</p>
+        <p><strong>Altitude:</strong> 31 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0020</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+  </Document>
+</kml>

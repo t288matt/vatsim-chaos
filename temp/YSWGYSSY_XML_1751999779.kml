@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>YSWGYSSY_XML_1751999779 Flight Plan - YSWG to YSSY</name>
+    <description>Flight plan extracted from SimBrief XML</description>
+    
+    <!-- Flight Information -->
+    <Snippet maxLines="2">YSWG → YSSY</Snippet>
+    
+    <!-- Flight Path Line -->
+    <Placemark>
+      <name>YSWGYSSY_XML_1751999779 Flight Path</name>
+      <description>
+        <![CDATA[
+        <h3>YSWGYSSY_XML_1751999779 Flight Plan</h3>
+        <p><strong>Route:</strong> YSWG → YSSY</p>
+        <p><strong>Route:</strong> DCT WG DCT HAPPI DCT AKMIR DCT WELSH DCT ODALE DCT KABLO DCT MITSA DCT ANKUB DCT TESAT DCT</p>
+        <p><strong>Waypoints:</strong> 14</p>
+        <p><strong>Distance:</strong> ~700 nm</p>
+        ]]>
+      </description>
+      <Style>
+        <LineStyle>
+          <color>ff0080ff</color>
+          <width>4</width>
+        </LineStyle>
+        <PolyStyle>
+          <color>7f0080ff</color>
+        </PolyStyle>
+      </Style>
+      <LineString>
+        <extrude>1</extrude>
+        <tessellate>1</tessellate>
+        <altitudeMode>absolute</altitudeMode>
+        <coordinates>
+          147.466389,-35.165278,724
+          147.469094,-35.165739,2200
+          148.026294,-34.963736,14400
+          148.415418,-34.82068,21000
+          149.281404,-34.496051,21000
+          150.10675,-34.178556,11600
+          150.308264,-34.13495,9500
+          150.51775,-34.089222,7100
+          150.601,-34.071333,6300
+          150.783528,-34.031917,4400
+          150.9765,-33.986639,2500
+          151.182583,-33.943806,2500
+          151.177111,-33.946,2500
+          151.177111,-33.946,21
+        </coordinates>
+      </LineString>
+    </Placemark>
+    
+    <!-- Waypoints -->
+    <Placemark>
+      <name>YSWG</name>
+      <description>
+        <![CDATA[
+        <h3>YSWG</h3>
+        <p><strong>Coordinates:</strong> -35.165278, 147.466389</p>
+        <p><strong>Altitude:</strong> 724 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>WG</name>
+      <description>
+        <![CDATA[
+        <h3>WG</h3>
+        <p><strong>Coordinates:</strong> -35.165739, 147.469094</p>
+        <p><strong>Altitude:</strong> 2200 ft</p>
+        <p><strong>Time:</strong> 02:56</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> vor</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>HAPPI</name>
+      <description>
+        <![CDATA[
+        <h3>HAPPI</h3>
+        <p><strong>Coordinates:</strong> -34.963736, 148.026294</p>
+        <p><strong>Altitude:</strong> 14400 ft</p>
+        <p><strong>Time:</strong> 08:14</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOC</name>
+      <description>
+        <![CDATA[
+        <h3>TOC</h3>
+        <p><strong>Coordinates:</strong> -34.820680, 148.415418</p>
+        <p><strong>Altitude:</strong> 21000 ft</p>
+        <p><strong>Time:</strong> 11:59</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOD</name>
+      <description>
+        <![CDATA[
+        <h3>TOD</h3>
+        <p><strong>Coordinates:</strong> -34.496051, 149.281404</p>
+        <p><strong>Altitude:</strong> 21000 ft</p>
+        <p><strong>Time:</strong> 19:37</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>AKMIR</name>
+      <description>
+        <![CDATA[
+        <h3>AKMIR</h3>
+        <p><strong>Coordinates:</strong> -34.178556, 150.106750</p>
+        <p><strong>Altitude:</strong> 11600 ft</p>
+        <p><strong>Time:</strong> 27:43</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>WELSH</name>
+      <description>
+        <![CDATA[
+        <h3>WELSH</h3>
+        <p><strong>Coordinates:</strong> -34.134950, 150.308264</p>
+        <p><strong>Altitude:</strong> 9500 ft</p>
+        <p><strong>Time:</strong> 29:31</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>ODALE</name>
+      <description>
+        <![CDATA[
+        <h3>ODALE</h3>
+        <p><strong>Coordinates:</strong> -34.089222, 150.517750</p>
+        <p><strong>Altitude:</strong> 7100 ft</p>
+        <p><strong>Time:</strong> 31:29</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>KABLO</name>
+      <description>
+        <![CDATA[
+        <h3>KABLO</h3>
+        <p><strong>Coordinates:</strong> -34.071333, 150.601000</p>
+        <p><strong>Altitude:</strong> 6300 ft</p>
+        <p><strong>Time:</strong> 32:12</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>MITSA</name>
+      <description>
+        <![CDATA[
+        <h3>MITSA</h3>
+        <p><strong>Coordinates:</strong> -34.031917, 150.783528</p>
+        <p><strong>Altitude:</strong> 4400 ft</p>
+        <p><strong>Time:</strong> 33:49</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>ANKUB</name>
+      <description>
+        <![CDATA[
+        <h3>ANKUB</h3>
+        <p><strong>Coordinates:</strong> -33.986639, 150.976500</p>
+        <p><strong>Altitude:</strong> 2500 ft</p>
+        <p><strong>Time:</strong> 35:37</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TESAT</name>
+      <description>
+        <![CDATA[
+        <h3>TESAT</h3>
+        <p><strong>Coordinates:</strong> -33.943806, 151.182583</p>
+        <p><strong>Altitude:</strong> 2500 ft</p>
+        <p><strong>Time:</strong> 37:35</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YSSY</name>
+      <description>
+        <![CDATA[
+        <h3>YSSY</h3>
+        <p><strong>Coordinates:</strong> -33.946000, 151.177111</p>
+        <p><strong>Altitude:</strong> 2500 ft</p>
+        <p><strong>Time:</strong> 42:04</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> apt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YSSY</name>
+      <description>
+        <![CDATA[
+        <h3>YSSY</h3>
+        <p><strong>Coordinates:</strong> -33.946000, 151.177111</p>
+        <p><strong>Altitude:</strong> 21 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff0080ff</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+  </Document>
+</kml>

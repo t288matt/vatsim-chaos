@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>YMCOYMAY_XML_1752005610 Flight Plan - YMCO to YMAY</name>
+    <description>Flight plan extracted from SimBrief XML</description>
+    
+    <!-- Flight Information -->
+    <Snippet maxLines="2">YMCO → YMAY</Snippet>
+    
+    <!-- Flight Path Line -->
+    <Placemark>
+      <name>YMCOYMAY_XML_1752005610 Flight Path</name>
+      <description>
+        <![CDATA[
+        <h3>YMCOYMAY_XML_1752005610 Flight Plan</h3>
+        <p><strong>Route:</strong> YMCO → YMAY</p>
+        <p><strong>Route:</strong> DCT OTKED W859 VALDU W795 AY DCT</p>
+        <p><strong>Waypoints:</strong> 8</p>
+        <p><strong>Distance:</strong> ~400 nm</p>
+        ]]>
+      </description>
+      <Style>
+        <LineStyle>
+          <color>ff8000ff</color>
+          <width>4</width>
+        </LineStyle>
+        <PolyStyle>
+          <color>7f8000ff</color>
+        </PolyStyle>
+      </Style>
+      <LineString>
+        <extrude>1</extrude>
+        <tessellate>1</tessellate>
+        <altitudeMode>absolute</altitudeMode>
+        <coordinates>
+          149.720833,-37.598889,102
+          149.718322,-37.596156,1600
+          149.494242,-37.551164,8000
+          147.552169,-37.141086,8000
+          147.333655,-36.744823,8000
+          146.966083,-36.068,3000
+          146.958056,-36.067778,3000
+          146.958056,-36.067778,539
+        </coordinates>
+      </LineString>
+    </Placemark>
+    
+    <!-- Waypoints -->
+    <Placemark>
+      <name>YMCO</name>
+      <description>
+        <![CDATA[
+        <h3>YMCO</h3>
+        <p><strong>Coordinates:</strong> -37.598889, 149.720833</p>
+        <p><strong>Altitude:</strong> 102 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff8000ff</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>OTKED</name>
+      <description>
+        <![CDATA[
+        <h3>OTKED</h3>
+        <p><strong>Coordinates:</strong> -37.596156, 149.718322</p>
+        <p><strong>Altitude:</strong> 1600 ft</p>
+        <p><strong>Time:</strong> 01:11</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff8000ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOC</name>
+      <description>
+        <![CDATA[
+        <h3>TOC</h3>
+        <p><strong>Coordinates:</strong> -37.551164, 149.494242</p>
+        <p><strong>Altitude:</strong> 8000 ft</p>
+        <p><strong>Time:</strong> 06:02</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff8000ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>VALDU</name>
+      <description>
+        <![CDATA[
+        <h3>VALDU</h3>
+        <p><strong>Coordinates:</strong> -37.141086, 147.552169</p>
+        <p><strong>Altitude:</strong> 8000 ft</p>
+        <p><strong>Time:</strong> 46:02</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff8000ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOD</name>
+      <description>
+        <![CDATA[
+        <h3>TOD</h3>
+        <p><strong>Coordinates:</strong> -36.744823, 147.333655</p>
+        <p><strong>Altitude:</strong> 8000 ft</p>
+        <p><strong>Time:</strong> 56:05</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff8000ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>AY</name>
+      <description>
+        <![CDATA[
+        <h3>AY</h3>
+        <p><strong>Coordinates:</strong> -36.068000, 146.966083</p>
+        <p><strong>Altitude:</strong> 3000 ft</p>
+        <p><strong>Time:</strong> 72:05</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> vor</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff8000ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YMAY</name>
+      <description>
+        <![CDATA[
+        <h3>YMAY</h3>
+        <p><strong>Coordinates:</strong> -36.067778, 146.958056</p>
+        <p><strong>Altitude:</strong> 3000 ft</p>
+        <p><strong>Time:</strong> 73:53</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> apt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff8000ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YMAY</name>
+      <description>
+        <![CDATA[
+        <h3>YMAY</h3>
+        <p><strong>Coordinates:</strong> -36.067778, 146.958056</p>
+        <p><strong>Altitude:</strong> 539 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff8000ff</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+  </Document>
+</kml>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>YMCOYSHT_XML_1752072392 Flight Plan - YMCO to YSHT</name>
+    <description>Flight plan extracted from SimBrief XML</description>
+    
+    <!-- Flight Information -->
+    <Snippet maxLines="2">YMCO → YSHT</Snippet>
+    
+    <!-- Flight Path Line -->
+    <Placemark>
+      <name>YMCOYSHT_XML_1752072392 Flight Path</name>
+      <description>
+        <![CDATA[
+        <h3>YMCOYSHT_XML_1752072392 Flight Plan</h3>
+        <p><strong>Route:</strong> YMCO → YSHT</p>
+        <p><strong>Route:</strong> DCT OTKED</p>
+        <p><strong>Waypoints:</strong> 6</p>
+        <p><strong>Distance:</strong> ~300 nm</p>
+        ]]>
+      </description>
+      <Style>
+        <LineStyle>
+          <color>ffff0080</color>
+          <width>4</width>
+        </LineStyle>
+        <PolyStyle>
+          <color>7fff0080</color>
+        </PolyStyle>
+      </Style>
+      <LineString>
+        <extrude>1</extrude>
+        <tessellate>1</tessellate>
+        <altitudeMode>absolute</altitudeMode>
+        <coordinates>
+          149.720833,-37.598889,102
+          149.718322,-37.596156,1600
+          148.897994,-37.389557,24000
+          147.547555,-37.034517,24000
+          145.3925,-36.428889,2900
+          145.3925,-36.428889,375
+        </coordinates>
+      </LineString>
+    </Placemark>
+    
+    <!-- Waypoints -->
+    <Placemark>
+      <name>YMCO</name>
+      <description>
+        <![CDATA[
+        <h3>YMCO</h3>
+        <p><strong>Coordinates:</strong> -37.598889, 149.720833</p>
+        <p><strong>Altitude:</strong> 102 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0080</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>OTKED</name>
+      <description>
+        <![CDATA[
+        <h3>OTKED</h3>
+        <p><strong>Coordinates:</strong> -37.596156, 149.718322</p>
+        <p><strong>Altitude:</strong> 1600 ft</p>
+        <p><strong>Time:</strong> 02:36</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOC</name>
+      <description>
+        <![CDATA[
+        <h3>TOC</h3>
+        <p><strong>Coordinates:</strong> -37.389557, 148.897994</p>
+        <p><strong>Altitude:</strong> 24000 ft</p>
+        <p><strong>Time:</strong> 14:03</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOD</name>
+      <description>
+        <![CDATA[
+        <h3>TOD</h3>
+        <p><strong>Coordinates:</strong> -37.034517, 147.547555</p>
+        <p><strong>Altitude:</strong> 24000 ft</p>
+        <p><strong>Time:</strong> 29:16</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YSHT</name>
+      <description>
+        <![CDATA[
+        <h3>YSHT</h3>
+        <p><strong>Coordinates:</strong> -36.428889, 145.392500</p>
+        <p><strong>Altitude:</strong> 2900 ft</p>
+        <p><strong>Time:</strong> 56:14</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> apt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YSHT</name>
+      <description>
+        <![CDATA[
+        <h3>YSHT</h3>
+        <p><strong>Coordinates:</strong> -36.428889, 145.392500</p>
+        <p><strong>Altitude:</strong> 375 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffff0080</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+  </Document>
+</kml>

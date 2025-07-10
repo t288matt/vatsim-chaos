@@ -1,0 +1,289 @@
+{
+  "origin": "YSWG",
+  "destination": "YSSY",
+  "route": "DCT WG DCT HAPPI DCT AKMIR DCT WELSH DCT ODALE DCT KABLO DCT MITSA DCT ANKUB DCT TESAT DCT",
+  "departure": {
+    "name": "YSWG",
+    "lat": -35.165278,
+    "lon": 147.466389,
+    "altitude": 724,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "WG",
+      "lat": -35.165739,
+      "lon": 147.469094,
+      "altitude": 2200,
+      "elapsed_time": "02:56",
+      "time_seconds": 176,
+      "stage": "CLB",
+      "type": "vor"
+    },
+    {
+      "name": "HAPPI",
+      "lat": -34.963736,
+      "lon": 148.026294,
+      "altitude": 14400,
+      "elapsed_time": "08:14",
+      "time_seconds": 494,
+      "stage": "CLB",
+      "type": "wpt"
+    },
+    {
+      "name": "TOC",
+      "lat": -34.82068,
+      "lon": 148.415418,
+      "altitude": 21000,
+      "elapsed_time": "11:59",
+      "time_seconds": 719,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "TOD",
+      "lat": -34.496051,
+      "lon": 149.281404,
+      "altitude": 21000,
+      "elapsed_time": "19:37",
+      "time_seconds": 1177,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "AKMIR",
+      "lat": -34.178556,
+      "lon": 150.10675,
+      "altitude": 11600,
+      "elapsed_time": "27:43",
+      "time_seconds": 1663,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "WELSH",
+      "lat": -34.13495,
+      "lon": 150.308264,
+      "altitude": 9500,
+      "elapsed_time": "29:31",
+      "time_seconds": 1771,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "ODALE",
+      "lat": -34.089222,
+      "lon": 150.51775,
+      "altitude": 7100,
+      "elapsed_time": "31:29",
+      "time_seconds": 1889,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "KABLO",
+      "lat": -34.071333,
+      "lon": 150.601,
+      "altitude": 6300,
+      "elapsed_time": "32:12",
+      "time_seconds": 1932,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "MITSA",
+      "lat": -34.031917,
+      "lon": 150.783528,
+      "altitude": 4400,
+      "elapsed_time": "33:49",
+      "time_seconds": 2029,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "ANKUB",
+      "lat": -33.986639,
+      "lon": 150.9765,
+      "altitude": 2500,
+      "elapsed_time": "35:37",
+      "time_seconds": 2137,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "TESAT",
+      "lat": -33.943806,
+      "lon": 151.182583,
+      "altitude": 2500,
+      "elapsed_time": "37:35",
+      "time_seconds": 2255,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "YSSY",
+      "lat": -33.946,
+      "lon": 151.177111,
+      "altitude": 2500,
+      "elapsed_time": "42:04",
+      "time_seconds": 2524,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YSSY",
+    "lat": -33.946,
+    "lon": 151.177111,
+    "altitude": 21,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YSWG",
+      "lat": -35.165278,
+      "lon": 147.466389,
+      "altitude": 724,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "WG",
+      "lat": -35.165739,
+      "lon": 147.469094,
+      "altitude": 2200,
+      "elapsed_time": "02:56",
+      "time_seconds": 176,
+      "stage": "CLB",
+      "type": "vor"
+    },
+    {
+      "name": "HAPPI",
+      "lat": -34.963736,
+      "lon": 148.026294,
+      "altitude": 14400,
+      "elapsed_time": "08:14",
+      "time_seconds": 494,
+      "stage": "CLB",
+      "type": "wpt"
+    },
+    {
+      "name": "TOC",
+      "lat": -34.82068,
+      "lon": 148.415418,
+      "altitude": 21000,
+      "elapsed_time": "11:59",
+      "time_seconds": 719,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "TOD",
+      "lat": -34.496051,
+      "lon": 149.281404,
+      "altitude": 21000,
+      "elapsed_time": "19:37",
+      "time_seconds": 1177,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "AKMIR",
+      "lat": -34.178556,
+      "lon": 150.10675,
+      "altitude": 11600,
+      "elapsed_time": "27:43",
+      "time_seconds": 1663,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "WELSH",
+      "lat": -34.13495,
+      "lon": 150.308264,
+      "altitude": 9500,
+      "elapsed_time": "29:31",
+      "time_seconds": 1771,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "ODALE",
+      "lat": -34.089222,
+      "lon": 150.51775,
+      "altitude": 7100,
+      "elapsed_time": "31:29",
+      "time_seconds": 1889,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "KABLO",
+      "lat": -34.071333,
+      "lon": 150.601,
+      "altitude": 6300,
+      "elapsed_time": "32:12",
+      "time_seconds": 1932,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "MITSA",
+      "lat": -34.031917,
+      "lon": 150.783528,
+      "altitude": 4400,
+      "elapsed_time": "33:49",
+      "time_seconds": 2029,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "ANKUB",
+      "lat": -33.986639,
+      "lon": 150.9765,
+      "altitude": 2500,
+      "elapsed_time": "35:37",
+      "time_seconds": 2137,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "TESAT",
+      "lat": -33.943806,
+      "lon": 151.182583,
+      "altitude": 2500,
+      "elapsed_time": "37:35",
+      "time_seconds": 2255,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "YSSY",
+      "lat": -33.946,
+      "lon": 151.177111,
+      "altitude": 2500,
+      "elapsed_time": "42:04",
+      "time_seconds": 2524,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YSSY",
+      "lat": -33.946,
+      "lon": 151.177111,
+      "altitude": 21,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

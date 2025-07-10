@@ -1,0 +1,169 @@
+{
+  "origin": "YSSY",
+  "destination": "YORG",
+  "route": "DCT KADOM W595 VIRUR DCT",
+  "departure": {
+    "name": "YSSY",
+    "lat": -33.946,
+    "lon": 151.177111,
+    "altitude": 21,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "TOC",
+      "lat": -33.854684,
+      "lon": 150.833076,
+      "altitude": 12000,
+      "elapsed_time": "08:11",
+      "time_seconds": 491,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "KADOM",
+      "lat": -33.710806,
+      "lon": 150.299611,
+      "altitude": 12000,
+      "elapsed_time": "14:24",
+      "time_seconds": 864,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "LOWDI",
+      "lat": -33.523333,
+      "lon": 149.613333,
+      "altitude": 12000,
+      "elapsed_time": "22:24",
+      "time_seconds": 1344,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -33.491027,
+      "lon": 149.499919,
+      "altitude": 12000,
+      "elapsed_time": "23:43",
+      "time_seconds": 1423,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "VIRUR",
+      "lat": -33.383144,
+      "lon": 149.124375,
+      "altitude": 5600,
+      "elapsed_time": "27:43",
+      "time_seconds": 1663,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "YORG",
+      "lat": -33.378056,
+      "lon": 149.125556,
+      "altitude": 5600,
+      "elapsed_time": "29:47",
+      "time_seconds": 1787,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YORG",
+    "lat": -33.378056,
+    "lon": 149.125556,
+    "altitude": 3112,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YSSY",
+      "lat": -33.946,
+      "lon": 151.177111,
+      "altitude": 21,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "TOC",
+      "lat": -33.854684,
+      "lon": 150.833076,
+      "altitude": 12000,
+      "elapsed_time": "08:11",
+      "time_seconds": 491,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "KADOM",
+      "lat": -33.710806,
+      "lon": 150.299611,
+      "altitude": 12000,
+      "elapsed_time": "14:24",
+      "time_seconds": 864,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "LOWDI",
+      "lat": -33.523333,
+      "lon": 149.613333,
+      "altitude": 12000,
+      "elapsed_time": "22:24",
+      "time_seconds": 1344,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -33.491027,
+      "lon": 149.499919,
+      "altitude": 12000,
+      "elapsed_time": "23:43",
+      "time_seconds": 1423,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "VIRUR",
+      "lat": -33.383144,
+      "lon": 149.124375,
+      "altitude": 5600,
+      "elapsed_time": "27:43",
+      "time_seconds": 1663,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "YORG",
+      "lat": -33.378056,
+      "lon": 149.125556,
+      "altitude": 5600,
+      "elapsed_time": "29:47",
+      "time_seconds": 1787,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YORG",
+      "lat": -33.378056,
+      "lon": 149.125556,
+      "altitude": 3112,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

@@ -1,0 +1,232 @@
+# ATC Conflict Analysis System - Architecture Document
+
+## System Overview
+
+The ATC Conflict Analysis System is a Python-based application designed to analyze SimBrief XML flight plans and identify potential air traffic conflicts for training purposes. The system processes multiple flight plans simultaneously, detects conflicts using 3D spatial analysis, and generates both detailed reports and visual outputs.
+
+## Architecture Principles
+
+- **Modular Design**: Clear separation between data extraction, analysis, reporting, and visualization
+- **Single Responsibility**: Each component has a focused purpose
+- **Data-Driven**: JSON-based data exchange between components
+- **Visualization-First**: KML output for Google Earth integration
+- **Training-Focused**: Optimized for ATC instructor workflows
+
+## System Components
+
+### 1. Data Extraction Layer
+**File**: `simbrief_xml_flightplan_extractor.py`
+
+**Responsibilities**:
+- Parse SimBrief XML flight plan files
+- Extract waypoints, coordinates, altitudes, and timing
+- Convert to structured data formats (JSON/KML)
+- Handle XML parsing errors gracefully
+
+**Key Classes**:
+- `FlightPlan`: Represents a complete flight plan with origin, destination, and waypoints
+- `Waypoint`: Individual navigation points with coordinates, altitude, and timing
+
+**Outputs**:
+- Individual KML files for each flight plan
+- JSON data files for structured analysis
+- 40-color visualization scheme for route identification
+
+### 2. Conflict Analysis Engine
+**File**: `conflict_analyzer.py`
+
+**Responsibilities**:
+- Perform 3D spatial conflict detection
+- Analyze both waypoint and enroute conflicts
+- Optimize departure times for maximum conflicts
+- Generate comprehensive conflict scenarios
+
+**Core Algorithms**:
+- **Distance Calculation**: Haversine formula for lateral separation
+- **Route Interpolation**: 10-point interpolation between waypoints
+- **Phase Detection**: TOC/TOD-based climb/cruise/descent determination
+- **Conflict Filtering**: Altitude thresholds and duplicate detection
+
+**Conflict Criteria**:
+- Lateral separation < 3 nautical miles
+- Vertical separation < 900 feet
+- Aircraft altitude > 2500 feet
+- Duplicate filtering within 4 NM
+
+### 3. Reporting Layer
+**File**: `conflicts_list.py`
+
+**Responsibilities**:
+- Generate human-readable conflict reports
+- Format location information (waypoint names vs. distance/direction)
+- Filter and deduplicate conflicts
+- Provide phase and timing analysis
+
+**Key Features**:
+- Smart location formatting for enroute conflicts
+- Compass direction calculation
+- Route pair deduplication
+- Phase-based conflict categorization
+
+### 4. Visualization Layer
+**File**: `merge_kml_flightplans.py`
+
+**Responsibilities**:
+- Merge individual KML files into single Google Earth file
+- Organize flight plans in hierarchical folders
+- Maintain color consistency across visualization
+- Enable spatial analysis in Google Earth
+
+## Data Flow
+
+```
+SimBrief XML Files
+       ↓
+[Data Extraction Layer]
+       ↓
+Individual KML/JSON Files
+       ↓
+[Conflict Analysis Engine]
+       ↓
+Conflict Analysis JSON
+       ↓
+[Reporting Layer]
+       ↓
+Formatted Conflict List
+       ↓
+[Merge KML Files]
+       ↓
+Combined Google Earth File
+```
+
+## Data Models
+
+### FlightPlan
+```python
+class FlightPlan:
+    origin: str           # ICAO airport code
+    destination: str      # ICAO airport code
+    route: str           # Route string
+    waypoints: List[Waypoint]
+    departure: Waypoint
+    arrival: Waypoint
+```
+
+### Waypoint
+```python
+class Waypoint:
+    name: str            # Waypoint identifier
+    lat: float          # Latitude
+    lon: float          # Longitude
+    altitude: int       # Altitude in feet
+    time_total: int     # Elapsed time in seconds
+    stage: str          # CLB/CRZ/DES
+    waypoint_type: str  # vor/ndb/wpt/airport
+```
+
+### Conflict
+```python
+{
+    'flight1': str,           # Route identifier
+    'flight2': str,           # Route identifier
+    'lat1/lon1': float,       # Conflict coordinates
+    'lat2/lon2': float,       # Conflict coordinates
+    'alt1/alt2': int,         # Aircraft altitudes
+    'distance': float,         # Lateral separation (NM)
+    'altitude_diff': int,      # Vertical separation (ft)
+    'time1/time2': float,     # Arrival times (minutes)
+    'stage1/stage2': str,     # Flight phases
+    'conflict_type': str,      # 'at waypoint' or 'between waypoints'
+    'is_waypoint': bool       # True for waypoint conflicts
+}
+```
+
+## File Organization
+
+```
+Chaos2/
+├── Core Analysis
+│   ├── conflict_analyzer.py      # Main analysis engine
+│   ├── conflicts_list.py         # Conflict reporting
+│   └── conflict_list.txt         # Formatted output
+├── Data Processing
+│   ├── simbrief_xml_flightplan_extractor.py  # XML extraction
+│   └── merge_kml_flightplans.py             # KML merging
+├── Input Data
+│   └── *.xml                    # SimBrief XML files
+├── Output Data
+│   ├── temp/                    # Generated data files
+│   │   ├── *.kml               # Individual KML files
+│   │   ├── *_data.json         # Flight plan data
+│   │   └── conflict_analysis.json  # Analysis results
+│   └── merged_flightplans.kml  # Combined visualization
+└── Documentation
+    ├── README.md               # User documentation
+    └── ARCHITECTURE.md         # This document
+```
+
+## Key Technical Decisions
+
+### 1. XML Parsing Strategy
+- **Choice**: `xml.etree.ElementTree` (standard library)
+- **Rationale**: No external dependencies, sufficient for SimBrief XML structure
+- **Error Handling**: Graceful degradation with detailed error messages
+
+### 2. Spatial Analysis
+- **Distance Calculation**: Haversine formula for accurate nautical mile calculations
+- **Interpolation**: 10-point linear interpolation for enroute conflict detection
+- **Coordinate System**: WGS84 lat/lon with nautical mile distances
+
+### 3. Data Persistence
+- **Format**: JSON for structured data, KML for visualization
+- **Organization**: `temp/` directory for generated files
+- **Naming**: Consistent with original XML filenames
+
+### 4. Conflict Detection Algorithm
+- **Two-Phase Approach**: Waypoint conflicts + interpolated enroute conflicts
+- **Filtering**: Altitude thresholds and duplicate detection
+- **Optimization**: Departure time optimization for training scenarios
+
+### 5. Visualization Strategy
+- **Platform**: Google Earth via KML format
+- **Color Scheme**: 40 diverse colors for route identification
+- **Organization**: Hierarchical folder structure in merged KML
+
+## Performance Characteristics
+
+- **Scalability**: Linear complexity with number of flight plans
+- **Memory Usage**: Moderate - stores flight plan objects in memory
+- **Processing Time**: Fast for typical scenarios (< 100 flight plans)
+- **Output Size**: KML files scale with number of waypoints
+
+## Error Handling
+
+- **XML Parsing**: Graceful handling of malformed XML
+- **Missing Data**: Default values for optional fields
+- **File I/O**: Clear error messages for missing files
+- **Spatial Calculations**: Validation of coordinate data
+
+## Future Enhancements
+
+1. **Real-time Processing**: WebSocket integration for live flight data
+2. **Advanced Algorithms**: Machine learning for conflict prediction
+3. **Database Integration**: Persistent storage for historical analysis
+4. **API Layer**: RESTful interface for external integrations
+5. **Enhanced Visualization**: 3D rendering and animation capabilities
+
+## Dependencies
+
+- **Python 3.6+**: Core runtime
+- **Standard Library**: xml.etree.ElementTree, json, os, math
+- **No External Dependencies**: Self-contained for easy deployment
+
+## Deployment
+
+The system is designed for local deployment with minimal setup:
+1. Place SimBrief XML files in project directory
+2. Run extraction script: `python simbrief_xml_flightplan_extractor.py`
+3. Run analysis: `python conflict_analyzer.py`
+4. Generate reports: `python conflicts_list.py`
+5. Merge visualization: `python merge_kml_flightplans.py`
+
+This architecture provides a robust foundation for ATC conflict analysis while maintaining simplicity and ease of use for training applications. 

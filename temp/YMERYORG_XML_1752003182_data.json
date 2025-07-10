@@ -1,0 +1,129 @@
+{
+  "origin": "YMER",
+  "destination": "YORG",
+  "route": "DCT MAKKA DCT",
+  "departure": {
+    "name": "YMER",
+    "lat": -36.908611,
+    "lon": 149.901389,
+    "altitude": 8,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "TOC",
+      "lat": -36.483042,
+      "lon": 149.801495,
+      "altitude": 22000,
+      "elapsed_time": "14:09",
+      "time_seconds": 849,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "MAKKA",
+      "lat": -34.430861,
+      "lon": 149.334861,
+      "altitude": 22000,
+      "elapsed_time": "48:42",
+      "time_seconds": 2922,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -34.00364,
+      "lon": 149.249293,
+      "altitude": 22000,
+      "elapsed_time": "55:55",
+      "time_seconds": 3355,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "YORG",
+      "lat": -33.378056,
+      "lon": 149.125556,
+      "altitude": 5600,
+      "elapsed_time": "69:58",
+      "time_seconds": 4198,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YORG",
+    "lat": -33.378056,
+    "lon": 149.125556,
+    "altitude": 3112,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YMER",
+      "lat": -36.908611,
+      "lon": 149.901389,
+      "altitude": 8,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "TOC",
+      "lat": -36.483042,
+      "lon": 149.801495,
+      "altitude": 22000,
+      "elapsed_time": "14:09",
+      "time_seconds": 849,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "MAKKA",
+      "lat": -34.430861,
+      "lon": 149.334861,
+      "altitude": 22000,
+      "elapsed_time": "48:42",
+      "time_seconds": 2922,
+      "stage": "CRZ",
+      "type": "wpt"
+    },
+    {
+      "name": "TOD",
+      "lat": -34.00364,
+      "lon": 149.249293,
+      "altitude": 22000,
+      "elapsed_time": "55:55",
+      "time_seconds": 3355,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "YORG",
+      "lat": -33.378056,
+      "lon": 149.125556,
+      "altitude": 5600,
+      "elapsed_time": "69:58",
+      "time_seconds": 4198,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YORG",
+      "lat": -33.378056,
+      "lon": 149.125556,
+      "altitude": 3112,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

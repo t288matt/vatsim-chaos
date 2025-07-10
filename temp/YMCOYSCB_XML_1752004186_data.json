@@ -1,0 +1,169 @@
+{
+  "origin": "YMCO",
+  "destination": "YSCB",
+  "route": "DCT COM DCT MENZI DCT CB DCT",
+  "departure": {
+    "name": "YMCO",
+    "lat": -37.598889,
+    "lon": 149.720833,
+    "altitude": 102,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "waypoints": [
+    {
+      "name": "TOC",
+      "lat": -37.075956,
+      "lon": 149.396832,
+      "altitude": 20000,
+      "elapsed_time": "11:26",
+      "time_seconds": 686,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "COM",
+      "lat": -36.353786,
+      "lon": 148.957519,
+      "altitude": 20000,
+      "elapsed_time": "21:23",
+      "time_seconds": 1283,
+      "stage": "CRZ",
+      "type": "ndb"
+    },
+    {
+      "name": "TOD",
+      "lat": -36.142952,
+      "lon": 149.018647,
+      "altitude": 19000,
+      "elapsed_time": "23:51",
+      "time_seconds": 1431,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "MENZI",
+      "lat": -35.530161,
+      "lon": 149.194422,
+      "altitude": 5900,
+      "elapsed_time": "31:20",
+      "time_seconds": 1880,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "CB",
+      "lat": -35.281444,
+      "lon": 149.195731,
+      "altitude": 4400,
+      "elapsed_time": "34:17",
+      "time_seconds": 2057,
+      "stage": "DSC",
+      "type": "vor"
+    },
+    {
+      "name": "YSCB",
+      "lat": -35.306944,
+      "lon": 149.195,
+      "altitude": 4400,
+      "elapsed_time": "37:48",
+      "time_seconds": 2268,
+      "stage": "DSC",
+      "type": "apt"
+    }
+  ],
+  "arrival": {
+    "name": "YSCB",
+    "lat": -35.306944,
+    "lon": 149.195,
+    "altitude": 1887,
+    "elapsed_time": "00:00",
+    "time_seconds": 0,
+    "stage": "DEP",
+    "type": "airport"
+  },
+  "all_waypoints": [
+    {
+      "name": "YMCO",
+      "lat": -37.598889,
+      "lon": 149.720833,
+      "altitude": 102,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    },
+    {
+      "name": "TOC",
+      "lat": -37.075956,
+      "lon": 149.396832,
+      "altitude": 20000,
+      "elapsed_time": "11:26",
+      "time_seconds": 686,
+      "stage": "CLB",
+      "type": "ltlg"
+    },
+    {
+      "name": "COM",
+      "lat": -36.353786,
+      "lon": 148.957519,
+      "altitude": 20000,
+      "elapsed_time": "21:23",
+      "time_seconds": 1283,
+      "stage": "CRZ",
+      "type": "ndb"
+    },
+    {
+      "name": "TOD",
+      "lat": -36.142952,
+      "lon": 149.018647,
+      "altitude": 19000,
+      "elapsed_time": "23:51",
+      "time_seconds": 1431,
+      "stage": "CRZ",
+      "type": "ltlg"
+    },
+    {
+      "name": "MENZI",
+      "lat": -35.530161,
+      "lon": 149.194422,
+      "altitude": 5900,
+      "elapsed_time": "31:20",
+      "time_seconds": 1880,
+      "stage": "DSC",
+      "type": "wpt"
+    },
+    {
+      "name": "CB",
+      "lat": -35.281444,
+      "lon": 149.195731,
+      "altitude": 4400,
+      "elapsed_time": "34:17",
+      "time_seconds": 2057,
+      "stage": "DSC",
+      "type": "vor"
+    },
+    {
+      "name": "YSCB",
+      "lat": -35.306944,
+      "lon": 149.195,
+      "altitude": 4400,
+      "elapsed_time": "37:48",
+      "time_seconds": 2268,
+      "stage": "DSC",
+      "type": "apt"
+    },
+    {
+      "name": "YSCB",
+      "lat": -35.306944,
+      "lon": 149.195,
+      "altitude": 1887,
+      "elapsed_time": "00:00",
+      "time_seconds": 0,
+      "stage": "DEP",
+      "type": "airport"
+    }
+  ]
+}

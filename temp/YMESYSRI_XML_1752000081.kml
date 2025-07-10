@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>YMESYSRI_XML_1752000081 Flight Plan - YMES to YSRI</name>
+    <description>Flight plan extracted from SimBrief XML</description>
+    
+    <!-- Flight Information -->
+    <Snippet maxLines="2">YMES → YSRI</Snippet>
+    
+    <!-- Flight Path Line -->
+    <Placemark>
+      <name>YMESYSRI_XML_1752000081 Flight Path</name>
+      <description>
+        <![CDATA[
+        <h3>YMESYSRI_XML_1752000081 Flight Plan</h3>
+        <p><strong>Route:</strong> YMES → YSRI</p>
+        <p><strong>Route:</strong> DCT ESL W290 CB W122 AKMIR W713 KADOM W368 RIC DCT</p>
+        <p><strong>Waypoints:</strong> 12</p>
+        <p><strong>Distance:</strong> ~600 nm</p>
+        ]]>
+      </description>
+      <Style>
+        <LineStyle>
+          <color>ffffe000</color>
+          <width>4</width>
+        </LineStyle>
+        <PolyStyle>
+          <color>7fffe000</color>
+        </PolyStyle>
+      </Style>
+      <LineString>
+        <extrude>1</extrude>
+        <tessellate>1</tessellate>
+        <altitudeMode>absolute</altitudeMode>
+        <coordinates>
+          147.149444,-38.098889,23
+          147.159556,-38.111333,3000
+          147.532271,-37.749312,19000
+          147.826667,-37.46,19000
+          148.957519,-36.353786,19000
+          149.195731,-35.281444,20000
+          150.10675,-34.178556,19000
+          150.171964,-34.020999,19000
+          150.299611,-33.710806,10600
+          150.7764,-33.596936,2600
+          150.780833,-33.600556,2600
+          150.780833,-33.600556,67
+        </coordinates>
+      </LineString>
+    </Placemark>
+    
+    <!-- Waypoints -->
+    <Placemark>
+      <name>YMES</name>
+      <description>
+        <![CDATA[
+        <h3>YMES</h3>
+        <p><strong>Coordinates:</strong> -38.098889, 147.149444</p>
+        <p><strong>Altitude:</strong> 23 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>ESL</name>
+      <description>
+        <![CDATA[
+        <h3>ESL</h3>
+        <p><strong>Coordinates:</strong> -38.111333, 147.159556</p>
+        <p><strong>Altitude:</strong> 3000 ft</p>
+        <p><strong>Time:</strong> 01:50</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> ndb</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOC</name>
+      <description>
+        <![CDATA[
+        <h3>TOC</h3>
+        <p><strong>Coordinates:</strong> -37.749312, 147.532271</p>
+        <p><strong>Altitude:</strong> 19000 ft</p>
+        <p><strong>Time:</strong> 06:59</p>
+        <p><strong>Stage:</strong> CLB</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>VISER</name>
+      <description>
+        <![CDATA[
+        <h3>VISER</h3>
+        <p><strong>Coordinates:</strong> -37.460000, 147.826667</p>
+        <p><strong>Altitude:</strong> 19000 ft</p>
+        <p><strong>Time:</strong> 10:18</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>COM</name>
+      <description>
+        <![CDATA[
+        <h3>COM</h3>
+        <p><strong>Coordinates:</strong> -36.353786, 148.957519</p>
+        <p><strong>Altitude:</strong> 19000 ft</p>
+        <p><strong>Time:</strong> 23:10</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ndb</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>CB</name>
+      <description>
+        <![CDATA[
+        <h3>CB</h3>
+        <p><strong>Coordinates:</strong> -35.281444, 149.195731</p>
+        <p><strong>Altitude:</strong> 20000 ft</p>
+        <p><strong>Time:</strong> 33:51</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> vor</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>AKMIR</name>
+      <description>
+        <![CDATA[
+        <h3>AKMIR</h3>
+        <p><strong>Coordinates:</strong> -34.178556, 150.106750</p>
+        <p><strong>Altitude:</strong> 19000 ft</p>
+        <p><strong>Time:</strong> 46:24</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOD</name>
+      <description>
+        <![CDATA[
+        <h3>TOD</h3>
+        <p><strong>Coordinates:</strong> -34.020999, 150.171964</p>
+        <p><strong>Altitude:</strong> 19000 ft</p>
+        <p><strong>Time:</strong> 47:57</p>
+        <p><strong>Stage:</strong> CRZ</p>
+        <p><strong>Type:</strong> ltlg</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>KADOM</name>
+      <description>
+        <![CDATA[
+        <h3>KADOM</h3>
+        <p><strong>Coordinates:</strong> -33.710806, 150.299611</p>
+        <p><strong>Altitude:</strong> 10600 ft</p>
+        <p><strong>Time:</strong> 54:03</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> wpt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>RIC</name>
+      <description>
+        <![CDATA[
+        <h3>RIC</h3>
+        <p><strong>Coordinates:</strong> -33.596936, 150.776400</p>
+        <p><strong>Altitude:</strong> 2600 ft</p>
+        <p><strong>Time:</strong> 61:41</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> ndb</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YSRI</name>
+      <description>
+        <![CDATA[
+        <h3>YSRI</h3>
+        <p><strong>Coordinates:</strong> -33.600556, 150.780833</p>
+        <p><strong>Altitude:</strong> 2600 ft</p>
+        <p><strong>Time:</strong> 69:41</p>
+        <p><strong>Stage:</strong> DSC</p>
+        <p><strong>Type:</strong> apt</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>YSRI</name>
+      <description>
+        <![CDATA[
+        <h3>YSRI</h3>
+        <p><strong>Coordinates:</strong> -33.600556, 150.780833</p>
+        <p><strong>Altitude:</strong> 67 ft</p>
+        <p><strong>Time:</strong> 00:00</p>
+        <p><strong>Stage:</strong> DEP</p>
+        <p><strong>Type:</strong> airport</p>
+        ]]>
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ffffe000</color>
+          <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+  </Document>
+</kml>
