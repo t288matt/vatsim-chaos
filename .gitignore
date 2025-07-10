@@ -1,6 +1,8 @@
 # Generated output files
 conflict_list.txt
 merged_flightplans.kml
+event_schedule.csv
+atc_briefing.txt
 
 # Temporary data and analysis files
 temp/
@@ -30,4 +32,8 @@ ehthumbs.db
 Thumbs.db
 
 # Log files
-*.log 
+*.log
+
+# Visualization files
+*_visualization.png
+*_chart.png 

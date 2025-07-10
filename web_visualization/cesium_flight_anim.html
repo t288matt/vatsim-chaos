@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATC Conflict Animation - Dynamic Scheduling</title>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <style>
+    html, body, #cesiumContainer { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; }
+    #cesiumContainer { position: absolute; top: 0; left: 0; }
+    #info { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: #fff; padding: 12px; border-radius: 6px; z-index: 10; font-family: Arial, sans-serif; }
+    #info h3 { margin: 0 0 8px 0; color: #00ff88; }
+    #info p { margin: 4px 0; font-size: 12px; }
+    #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: #00ff88; padding: 20px; border-radius: 8px; z-index: 20; }
+    .conflict-alert { background: rgba(255,0,0,0.3); border-left: 3px solid #ff4444; padding: 4px; margin: 2px 0; }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div id="loading">Loading ATC Conflict Animation...</div>
+  <div id="info">
+    <h3>🎯 ATC Conflict Animation</h3>
+    <p><strong>Event:</strong> <span id="event-time">14:00-18:00</span></p>
+    <p><strong>Flights:</strong> <span id="flight-count">0</span> active</p>
+    <p><strong>Conflicts:</strong> <span id="conflict-count">0</span> detected</p>
+    <p><strong>Current Time:</strong> <span id="current-time">14:00</span></p>
+    <div id="conflict-alerts"></div>
+    <button id="toggle-labels">Toggle Flight Labels</button>
+  </div>
+  <script>
+    // Best practice: Set up Cesium viewer and timeline for animation
+    window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/';
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      timeline: true,
+      animation: true,
+      shouldAnimate: true,
+      baseLayerPicker: false
+    });
+    viewer.imageryLayers.removeAll();
+    viewer.imageryLayers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider({
+      url: 'https://a.tile.openstreetmap.org/'
+    }));
+    const flightColors = [
+      Cesium.Color.YELLOW, Cesium.Color.CYAN, Cesium.Color.LIME, Cesium.Color.ORANGE, 
+      Cesium.Color.MAGENTA, Cesium.Color.RED, Cesium.Color.BLUE, Cesium.Color.GREEN,
+      Cesium.Color.GOLD, Cesium.Color.AQUA, Cesium.Color.VIOLET, Cesium.Color.ROSE
+    ];
+    let flights = [];
+    let conflicts = [];
+    let flightEntities = [];
+    let labelVisible = true;
+    let selectedFlightId = null;
+    document.getElementById('toggle-labels').onclick = () => {
+      labelVisible = !labelVisible;
+      flightEntities.forEach(e => {
+        e.label.show = labelVisible;
+      });
+    };
+    function parseTimeToMinutes(timeStr) {
+      const [hours, minutes] = timeStr.split(':').map(Number);
+      const eventStart = 14 * 60;
+      return (hours * 60 + minutes) - eventStart;
+    }
+    function minutesToTimeString(minutes) {
+      const totalMinutes = 14 * 60 + minutes;
+      const hours = Math.floor(totalMinutes / 60);
+      const mins = totalMinutes % 60;
+      return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+    }
+    async function loadAnimationData() {
+      try {
+        const response = await fetch('animation_data.json');
+        if (!response.ok) throw new Error('Animation data not found: ' + response.status + ' ' + response.statusText);
+        const text = await response.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (jsonErr) {
+          document.getElementById('info').innerHTML += '<br>❌ JSON parse error: ' + jsonErr.message;
+          return false;
+        }
+        if (data.flights && Array.isArray(data.flights)) flights = data.flights;
+        if (data.conflicts && Array.isArray(data.conflicts)) conflicts = data.conflicts;
+        return true;
+      } catch (error) {
+        document.getElementById('info').innerHTML += '<br>❌ Data load error: ' + error.message;
+        return false;
+      }
+    }
+    function createScheduledFlights() {
+      viewer.entities.removeAll();
+      flightEntities = [];
+      if (flights.length === 0) return;
+      // Calculate global timeline
+      let minTime = Infinity, maxTime = -Infinity;
+      flights.forEach(flight => {
+        const departureMinutes = parseTimeToMinutes(flight.departure_time || '14:00');
+        flight.waypoints.forEach(wp => {
+          const absoluteTime = departureMinutes + (wp.time_from_departure || 0);
+          if (absoluteTime < minTime) minTime = absoluteTime;
+          if (absoluteTime > maxTime) maxTime = absoluteTime;
+        });
+      });
+      const start = Cesium.JulianDate.fromDate(new Date(Date.now()));
+      const stop = Cesium.JulianDate.addSeconds(start, (maxTime - minTime) * 60, new Cesium.JulianDate());
+      // Set currentTime to the start of the first flight (minTime)
+      viewer.clock.startTime = start.clone();
+      viewer.clock.stopTime = stop.clone();
+      viewer.clock.currentTime = start.clone();
+      viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+      viewer.clock.multiplier = 1;
+      viewer.timeline.zoomTo(start, stop);
+      viewer.clock.shouldAnimate = true;
+      // Create flight entities with animated paths and 3D models
+      flights.forEach((flight, idx) => {
+        const color = flightColors[idx % flightColors.length];
+        const property = new Cesium.SampledPositionProperty();
+        const altitudeProperty = new Cesium.SampledProperty(Number);
+        let entityStart = Infinity, entityStop = -Infinity;
+        const departureMinutes = parseTimeToMinutes(flight.departure_time || '14:00');
+        flight.waypoints.forEach(wp => {
+          const absoluteTime = departureMinutes + (wp.time_from_departure || 0);
+          const t = Cesium.JulianDate.addSeconds(start, absoluteTime * 60, new Cesium.JulianDate());
+          property.addSample(t, Cesium.Cartesian3.fromDegrees(wp.lon, wp.lat, wp.altitude));
+          altitudeProperty.addSample(t, wp.altitude);
+          if (absoluteTime < entityStart) entityStart = absoluteTime;
+          if (absoluteTime > entityStop) entityStop = absoluteTime;
+        });
+        const entityAvailability = new Cesium.TimeIntervalCollection([
+          new Cesium.TimeInterval({
+            start: Cesium.JulianDate.addSeconds(start, entityStart * 60, new Cesium.JulianDate()),
+            stop: Cesium.JulianDate.addSeconds(start, entityStop * 60, new Cesium.JulianDate())
+          })
+        ]);
+        const entity = viewer.entities.add({
+          id: flight.flight_id,
+          availability: entityAvailability,
+          position: property,
+          model: {
+            uri: 'https://cesium.com/downloads/cesiumjs/releases/1.115/Apps/SampleData/models/CesiumAir/Cesium_Air.glb',
+            minimumPixelSize: 512,
+            maximumScale: 1600,
+            color: color.withAlpha(0.8),
+            colorBlendMode: Cesium.ColorBlendMode.MIX
+          },
+          path: {
+            resolution: 1,
+            material: color,
+            width: 2,
+            leadTime: 0,
+            trailTime: 60
+          },
+          label: {
+            text: new Cesium.CallbackProperty(function(time, result) {
+              const alt = altitudeProperty.getValue(time);
+              return `${flight.flight_id}\nAlt: ${alt !== undefined ? Math.round(alt) : 'N/A'} ft`;
+            }, false),
+            font: '3px sans-serif',
+            fillColor: color,
+            outlineColor: Cesium.Color.BLACK,
+            outlineWidth: 2,
+            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+            verticalOrigin: Cesium.VerticalOrigin.CENTER,
+            pixelOffset: new Cesium.Cartesian2(60, 80), // Move label lower below the plane
+            show: labelVisible
+          }
+        });
+        flightEntities.push(entity);
+      });
+      // Add conflict points
+      conflicts.forEach((conflict, idx) => {
+        const color = Cesium.Color.RED.withAlpha(0.7);
+        viewer.entities.add({
+          id: `conflict_${idx}`,
+          position: Cesium.Cartesian3.fromDegrees(conflict.lon, conflict.lat, conflict.altitude),
+          point: {
+            pixelSize: 8,
+            color: color,
+            outlineColor: Cesium.Color.WHITE,
+            outlineWidth: 2
+          },
+          label: {
+            text: `Conflict: ${conflict.flight1} vs ${conflict.flight2}`,
+            font: '12px sans-serif',
+            fillColor: Cesium.Color.RED,
+            outlineColor: Cesium.Color.BLACK,
+            outlineWidth: 1,
+            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+            verticalOrigin: Cesium.VerticalOrigin.TOP,
+            pixelOffset: new Cesium.Cartesian2(0, 10)
+          }
+        });
+      });
+      // Camera auto-zoom with debug output
+      let minLat = 90, maxLat = -90, minLon = 180, maxLon = -180;
+      let allWaypoints = [];
+      flights.forEach(flight => {
+        flight.waypoints.forEach(wp => {
+          allWaypoints.push(wp);
+          if (wp.lat < minLat) minLat = wp.lat;
+          if (wp.lat > maxLat) maxLat = wp.lat;
+          if (wp.lon < minLon) minLon = wp.lon;
+          if (wp.lon > maxLon) maxLon = wp.lon;
+        });
+      });
+      const entityCount = viewer.entities.values.length;
+      const bboxDebug = `Bounding box: lat [${minLat}, ${maxLat}], lon [${minLon}, ${maxLon}], entities: ${entityCount}`;
+      console.log(bboxDebug);
+      document.getElementById('info').innerHTML += `<br>${bboxDebug}`;
+      if (minLat < maxLat && minLon < maxLon && (maxLat - minLat > 0.01) && (maxLon - minLon > 0.01)) {
+        // Use only viewer.zoomTo(viewer.entities) for now
+        viewer.zoomTo(viewer.entities);
+        document.getElementById('info').innerHTML += '<br>Called viewer.zoomTo(viewer.entities)';
+      } else {
+        // Print all waypoints for debugging
+        console.log('All waypoints:', allWaypoints);
+        document.getElementById('info').innerHTML += '<br>Invalid bounding box. Waypoints:<br>' + JSON.stringify(allWaypoints.slice(0, 10), null, 2);
+        // Hardcode a rectangle over Australia as a last resort
+        const ausRect = Cesium.Rectangle.fromDegrees(110, -45, 155, -10);
+        viewer.camera.flyTo({ destination: ausRect, duration: 1.5 });
+        document.getElementById('info').innerHTML += '<br>Flew to hardcoded Australia rectangle.';
+      }
+    }
+    function updateUI() {
+      document.getElementById('flight-count').textContent = flights.length;
+      document.getElementById('conflict-count').textContent = conflicts.length;
+      const currentTime = viewer.clock.currentTime;
+      const seconds = Cesium.JulianDate.secondsDifference(currentTime, viewer.clock.startTime);
+      const minutes = Math.floor(seconds / 60);
+      const timeStr = minutesToTimeString(minutes);
+      document.getElementById('current-time').textContent = timeStr;
+      const activeConflicts = conflicts.filter(conflict => {
+        const conflictTime = conflict.time1 || 0;
+        return Math.abs(minutes - conflictTime) < 2;
+      });
+      const alertsDiv = document.getElementById('conflict-alerts');
+      alertsDiv.innerHTML = '';
+      activeConflicts.forEach(conflict => {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'conflict-alert';
+        alertDiv.innerHTML = `⚠️ ${conflict.flight1} vs ${conflict.flight2} at ${conflict.location}`;
+        alertsDiv.appendChild(alertDiv);
+      });
+    }
+    // Highlight selected flight
+    viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
+      const pickedObject = viewer.scene.pick(movement.position);
+      if (Cesium.defined(pickedObject) && pickedObject.id && pickedObject.id.id) {
+        const flightId = pickedObject.id.id;
+        selectedFlightId = flightId;
+        flightEntities.forEach(e => {
+          if (e.id === flightId) {
+            e.path.material = Cesium.Color.WHITE;
+            e.path.width = 6;
+          } else {
+            e.path.material = flightColors.find(c => c.equals(e.path.material)) || Cesium.Color.YELLOW;
+            e.path.width = 2;
+          }
+        });
+      }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    async function initializeVisualization() {
+      document.getElementById('loading').style.display = 'block';
+      try {
+        const animationLoaded = await loadAnimationData();
+        if (animationLoaded) {
+          createScheduledFlights();
+        } else {
+          flights = [
+            {
+              flight_id: 'Demo Flight 1',
+              departure_time: '14:00',
+              waypoints: [
+                { lon: 151.177, lat: -33.946, altitude: 0, time_from_departure: 0 },
+                { lon: 153.117, lat: -27.384, altitude: 10000, time_from_departure: 10 },
+                { lon: 144.843, lat: -37.673, altitude: 0, time_from_departure: 20 }
+              ]
+            }
+          ];
+          createScheduledFlights();
+        }
+        viewer.clock.onTick.addEventListener(updateUI);
+        updateUI();
+      } catch (error) {
+        document.getElementById('info').innerHTML += '<br>❌ Error loading data';
+      } finally {
+        document.getElementById('loading').style.display = 'none';
+      }
+    }
+    initializeVisualization();
+  </script>
+</body>
+</html> 

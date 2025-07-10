@@ -39,13 +39,16 @@ from typing import List, Optional
 SCRIPTS = {
     'extract': 'simbrief_xml_flightplan_extractor.py',
     'analyze': 'analyze_and_report_conflicts.py',
-    'merge_kml': 'merge_kml_flightplans.py'
+    'merge_kml': 'merge_kml_flightplans.py',
+    'schedule': 'generate_schedule_conflicts.py'  # updated from schedule_conflicts.py
 }
 
 OUTPUT_FILES = {
     'conflict_report': 'conflict_list.txt',
     'merged_kml': 'merged_flightplans.kml',
-    'analysis_data': 'temp/conflict_analysis.json'
+    'analysis_data': 'temp/conflict_analysis.json',
+    'schedule': 'event_schedule.csv',
+    'briefing': 'atc_briefing.txt'
 }
 
 class AnalysisRunner:
@@ -136,6 +139,44 @@ class AnalysisRunner:
             "KML Flight Plan Merge"
         )
     
+    def run_scheduling(self, start_time: Optional[str] = None, end_time: Optional[str] = None) -> bool:
+        """Run the conflict scheduling step."""
+        if not start_time or not end_time:
+            self.log("Scheduling requires --start-time and --end-time parameters", "ERROR")
+            return False
+        
+        # Build command with time parameters
+        cmd = [sys.executable, SCRIPTS['schedule'], '--start', start_time, '--end', end_time]
+        if self.verbose:
+            cmd.append('--verbose')
+        
+        self.log("Starting Conflict Scheduling...")
+        
+        try:
+            result = subprocess.run(
+                cmd,
+                capture_output=not self.verbose,
+                text=True,
+                check=True
+            )
+            
+            if self.verbose and result.stdout:
+                print(result.stdout)
+            
+            self.log("✅ Conflict Scheduling completed successfully")
+            return True
+            
+        except subprocess.CalledProcessError as e:
+            self.log(f"❌ Conflict Scheduling failed with exit code {e.returncode}", "ERROR")
+            if self.verbose and e.stderr:
+                print(f"Error output: {e.stderr}")
+            return False
+        except Exception as e:
+            self.log(f"❌ Conflict Scheduling failed: {e}", "ERROR")
+            return False
+    
+
+    
     def check_outputs(self) -> None:
         """Check and report on generated output files."""
         self.log("Checking generated outputs...")
@@ -144,11 +185,21 @@ class AnalysisRunner:
         outputs_missing = []
         
         for output_name, output_path in OUTPUT_FILES.items():
-            if os.path.exists(output_path):
-                size = os.path.getsize(output_path)
-                outputs_found.append(f"  ✅ {output_name}: {output_path} ({size:,} bytes)")
+            if isinstance(output_path, list):
+                # Handle list of files (like visualizations)
+                for file_path in output_path:
+                    if os.path.exists(file_path):
+                        size = os.path.getsize(file_path)
+                        outputs_found.append(f"  ✅ {output_name}: {file_path} ({size:,} bytes)")
+                    else:
+                        outputs_missing.append(f"  ❌ {output_name}: {file_path} (missing)")
             else:
-                outputs_missing.append(f"  ❌ {output_name}: {output_path} (missing)")
+                # Handle single file
+                if os.path.exists(output_path):
+                    size = os.path.getsize(output_path)
+                    outputs_found.append(f"  ✅ {output_name}: {output_path} ({size:,} bytes)")
+                else:
+                    outputs_missing.append(f"  ❌ {output_name}: {output_path} (missing)")
         
         if outputs_found:
             self.log("Generated files:")
@@ -160,7 +211,9 @@ class AnalysisRunner:
             for output in outputs_missing:
                 print(output)
     
-    def run_complete_workflow(self, skip_extract: bool = False, skip_kml: bool = False) -> bool:
+    def run_complete_workflow(self, skip_extract: bool = False, skip_kml: bool = False, 
+                            skip_schedule: bool = False, start_time: Optional[str] = None, 
+                            end_time: Optional[str] = None) -> bool:
         """Run the complete analysis workflow."""
         self.log("🚀 Starting ATC Conflict Analysis Workflow")
         print("=" * 60)
@@ -187,6 +240,15 @@ class AnalysisRunner:
         else:
             self.log("⏭️  Skipping KML merge")
         
+        # Step 4: Schedule conflicts (unless skipped)
+        if not skip_schedule and start_time and end_time:
+            if not self.run_scheduling(start_time, end_time):
+                return False
+        elif not skip_schedule and (not start_time or not end_time):
+            self.log("⚠️  Skipping scheduling (requires --start-time and --end-time)")
+        else:
+            self.log("⏭️  Skipping conflict scheduling")
+        
         # Check outputs
         self.check_outputs()
         
@@ -196,7 +258,7 @@ class AnalysisRunner:
         
         return True
     
-    def run_single_step(self, step: str) -> bool:
+    def run_single_step(self, step: str, start_time: Optional[str] = None, end_time: Optional[str] = None) -> bool:
         """Run a single step of the workflow."""
         self.log(f"🎯 Running single step: {step}")
         
@@ -206,6 +268,8 @@ class AnalysisRunner:
             return self.run_analysis()
         elif step == 'merge_kml':
             return self.run_kml_merge()
+        elif step == 'schedule':
+            return self.run_scheduling(start_time, end_time)
         else:
             self.log(f"Unknown step: {step}", "ERROR")
             return False
@@ -234,12 +298,20 @@ Examples:
                        help='Only run the KML generation step')
     parser.add_argument('--merge-only', action='store_true',
                        help='Only run the KML merge step')
+    parser.add_argument('--schedule-only', action='store_true',
+                       help='Only run the conflict scheduling step')
     
     # Skip options
     parser.add_argument('--skip-extract', action='store_true',
                        help='Skip XML extraction (use existing data)')
     parser.add_argument('--skip-kml', action='store_true',
                        help='Skip KML generation and merge')
+    parser.add_argument('--skip-schedule', action='store_true',
+                       help='Skip conflict scheduling')
+    
+    # Scheduling options
+    parser.add_argument('--start-time', help='Event start time for scheduling (HH:MM)')
+    parser.add_argument('--end-time', help='Event end time for scheduling (HH:MM)')
     
     # Output options
     parser.add_argument('--verbose', '-v', action='store_true',
@@ -260,11 +332,16 @@ Examples:
             success = runner.run_single_step('merge_kml')
         elif args.merge_only:
             success = runner.run_single_step('merge_kml')
+        elif args.schedule_only:
+            success = runner.run_single_step('schedule', args.start_time, args.end_time)
         else:
             # Run complete workflow
             success = runner.run_complete_workflow(
                 skip_extract=args.skip_extract,
-                skip_kml=args.skip_kml
+                skip_kml=args.skip_kml,
+                skip_schedule=args.skip_schedule,
+                start_time=args.start_time,
+                end_time=args.end_time
             )
         
         if success:
@@ -273,6 +350,9 @@ Examples:
             print("   • conflict_list.txt - Detailed conflict report")
             print("   • merged_flightplans.kml - Google Earth visualization")
             print("   • temp/conflict_analysis.json - Raw analysis data")
+            if args.start_time and args.end_time:
+                print("   • event_schedule.csv - Departure schedule")
+                print("   • atc_briefing.txt - ATC briefing document")
         else:
             print("\n❌ Analysis workflow failed!")
             sys.exit(1)
