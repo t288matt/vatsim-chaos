@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 """
-SimBrief XML Flight Plan Waypoint Extractor
-Extracts waypoints, coordinates, altitude, and time information from SimBrief XML files.
-Supports both main navlog and alternate navlog sections.
+SimBrief XML Flight Plan Extractor
+
+This script parses SimBrief XML flight plan files and extracts all waypoints, coordinates, altitudes, and timing information for each flight. It supports both the main navlog and alternate navlog sections.
+
+Outputs (for each input XML file):
+- <ROUTE>_<HASH>.kml:    KML file for Google Earth visualization of the flight plan
+- <ROUTE>_<HASH>_data.json:    JSON file with all waypoints and metadata for further analysis
+
+These outputs are used as the foundation for conflict analysis, scheduling, and 3D animation in the ATC event scenario workflow.
 """
 
 import xml.etree.ElementTree as ET
