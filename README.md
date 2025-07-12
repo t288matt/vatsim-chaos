@@ -1,12 +1,12 @@
 # ATC Conflict Analysis System
 
-A Python-based system for generating chaotic, conflicting SimBrief XML flight plans to create challenging air traffic control (ATC) event scenarios. The system is designed to help event organizers create situations where ATC must resolve numerous, simultaneous conflicts during live events.
+A Python-based system for generating chaotic, conflicting SimBrief XML flight plans to create challenging air traffic control (ATC) event scenarios. The system is designed to help the events team create situations where controllers are challenged and pilots can enjoy fun, dynamic events.
 
 ## 🎯 Purpose
 
 This system enables event organizers to:
 - **Parse SimBrief XML flight plans** and analyze multiple routes
-- **Intentionally generate and identify conflicts** between aircraft to maximize ATC workload
+- **Intentionally generate and identify conflicts** between aircraft to maximize ATC workload and event excitement
 - **Provide detailed conflict analysis** with location, timing, and phase information
 - **Detect conflicts both at waypoints and between waypoints** for comprehensive event realism
 - **Generate KML files** for Google Earth visualization with diverse color schemes
@@ -17,14 +17,29 @@ This system enables event organizers to:
 - Python 3.6+
 - SimBrief XML flight plan files
 
+### Master Workflow (Recommended)
+The easiest way to run the complete analysis is using the master script:
+
+```bash
+# Run complete workflow (extract → analyze → report → merge → schedule → frontend)
+python run_analysis.py
+
+# Run with custom schedule times
+python run_analysis.py --start 14:00 --end 18:00
+```
+
 ### Basic Workflow
 ```bash
+# Option 1: Run complete workflow with master script
+python run_analysis.py
+
+# Option 2: Run individual steps
 # 1. Place SimBrief XML files in the project directory
 # 2. Extract flight plan data and generate KML files
 python simbrief_xml_flightplan_extractor.py
 
 # 3. Run conflict analysis on all XML files
-python conflict_analyzer.py
+python analyze_and_report_conflicts.py
 
 # 4. Generate readable conflict report
 python conflicts_list.py
@@ -32,7 +47,7 @@ python conflicts_list.py
 # 5. Merge KML files for Google Earth viewing
 python merge_kml_flightplans.py
 
-# 6. Generate event schedule for conflicts
+# 6. Generate event schedule and pilot briefing (single output)
 python generate_schedule_conflicts.py --start 14:00 --end 18:00
 
 # 7. Export animation data for web visualization
@@ -47,11 +62,10 @@ Open web_visualization/cesium_flight_anim.html in your browser
 - `conflict_list.txt` - Formatted conflict list
 - `merged_flightplans.kml` - Combined KML file for Google Earth
 - Individual KML files in `temp/` directory
-- `event_schedule.csv` - Departure schedule
-- `atc_briefing.txt` - ATC conflict briefing
-- `web_visualization/animation_data.json` - Animation data for Cesium
+- `pilot_briefing.txt` - Pilot conflict briefing (authoritative, includes all departure times and conflict details)
+- `web_visualization/animation_data.json` - Animation data for Cesium (filtered by altitude)
 - `web_visualization/flight_tracks.json` - Flight path data
-- `web_visualization/conflict_points.json` - Conflict location/timing
+- `web_visualization/conflict_points.json` - Conflict location/timing (filtered by altitude)
 - `web_visualization/cesium_flight_anim.html` - 3D web visualization
 
 ## 🔍 Conflict Detection Features
@@ -65,7 +79,7 @@ Open web_visualization/cesium_flight_anim.html in your browser
 ### Conflict Criteria
 - **Lateral Separation**: < 3 nautical miles
 - **Vertical Separation**: < 900 feet
-- **Altitude Threshold**: Aircraft must be above 2500 ft
+- **Altitude Threshold**: Aircraft must be above 5000 ft
 - **Route Interpolation**: 10 interpolation points between waypoints for enroute conflicts
 - **Duplicate Filtering**: Ignores conflicts within 4 NM of previous conflicts between same routes
 
@@ -78,8 +92,8 @@ Open web_visualization/cesium_flight_anim.html in your browser
 ## 📁 System Components
 
 ### Core Analysis
-- `run_analysis.py` - Master workflow script
-- `conflict_analyzer.py` - Main analysis engine
+- `run_analysis.py` - Master workflow script (runs complete analysis pipeline)
+- `analyze_and_report_conflicts.py` - Main analysis engine
 - `conflicts_list.py` - Conflict listing and reporting
 - `conflict_list.txt` - Formatted conflict output
 
@@ -87,7 +101,7 @@ Open web_visualization/cesium_flight_anim.html in your browser
 - `simbrief_xml_flightplan_extractor.py` - Converts SimBrief XML to KML for visualization
 - `merge_kml_flightplans.py` - Merges individual KML files into a single file
 - `generate_schedule_conflicts.py` - Generates event schedule for conflicts
-- `export_animation_data.py` - Exports animation data for web visualization
+- `export_animation_data.py` - Exports animation data for web visualization (filters conflicts by altitude threshold)
 
 ### Data Organization
 - `temp/` - Directory containing all generated data files
@@ -151,7 +165,7 @@ The system parses SimBrief XML files containing:
 5. **Nearest Waypoint**: Calculates distance/direction from closest waypoint on either route
 
 ### Filtering Logic
-- **Low Altitude**: Aircraft ≤ 2500 ft excluded
+- **Low Altitude**: Aircraft ≤ 5000 ft excluded
 - **Duplicate Conflicts**: Conflicts within 4 NM of previous conflicts between same routes ignored
 - **Invalid Data**: Malformed XML entries skipped
 
@@ -187,15 +201,16 @@ The system uses 40 diverse colors for route visualization:
 
 ## 🎪 Event Scenario Applications
 
-This system is designed for event scenario creation, enabling organizers to:
+This system is designed for event scenario creation, enabling the events team to:
 
 ### Scenario Creation
 - **Maximize Conflict Density**: Generate as many conflicts as possible in a given airspace
-- **Create Chaotic Situations**: Overlap routes and phases to challenge ATC
+- **Create Chaotic Situations**: Overlap routes and phases to challenge controllers
 - **Increase Realism and Workload**: Simulate high-traffic, high-stress environments for live events
+- **Deliver Fun and Dynamic Events**: Provide pilots with engaging and unpredictable flying experiences
 
 ### Event Execution
-- **Readable Output**: Clear conflict descriptions for event planning and ATC briefings
+- **Readable Output**: Clear conflict descriptions for event planning and briefings
 - **Visual Analysis**: Google Earth integration for spatial understanding
 - **Structured Data**: JSON format for further analysis and integration
 
@@ -205,16 +220,31 @@ This system is designed for event scenario creation, enabling organizers to:
 ```bash
 # Run individual components
 python simbrief_xml_flightplan_extractor.py  # Extract data only
-python conflict_analyzer.py                   # Analyze conflicts only
+python analyze_and_report_conflicts.py        # Analyze conflicts only
 python conflicts_list.py                      # Generate report only
 python merge_kml_flightplans.py              # Merge KML files only
+python export_animation_data.py              # Export web visualization data only
+```
+
+### Master Script Options
+```bash
+# Run complete workflow
+python run_analysis.py
+
+# Run specific steps only
+python run_analysis.py --extract-only      # Extract flight plan data only
+python run_analysis.py --analyze-only      # Run conflict analysis only
+python run_analysis.py --report-only       # Generate conflict report only
+python run_analysis.py --merge-only        # Merge KML files only
+python run_analysis.py --schedule-only     # Generate event schedule only
+python run_analysis.py --frontend-only     # Update web visualization only
 ```
 
 ### File Organization
 ```
 Chaos2/
 ├── Core Analysis
-│   ├── conflict_analyzer.py      # Main analysis engine
+│   ├── analyze_and_report_conflicts.py      # Main analysis engine
 │   ├── conflicts_list.py         # Conflict reporting
 │   └── conflict_list.txt         # Formatted output
 ├── Data Processing
@@ -237,9 +267,10 @@ Chaos2/
 
 ### Common Issues
 1. **No XML files found**: Ensure SimBrief XML files are in the project directory
-2. **No conflicts detected**: Check that aircraft altitudes are above 2500 ft
+2. **No conflicts detected**: Check that aircraft altitudes are above 5000 ft
 3. **KML files not generated**: Verify XML files are valid SimBrief format
 4. **Memory errors**: Reduce number of flight plans for large datasets
+5. **Frontend not updating**: Run `python run_analysis.py --frontend-only` to update web visualization data
 
 ### Error Messages
 - `❌ No XML files found`: Place SimBrief XML files in the directory

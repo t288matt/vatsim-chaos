@@ -2,7 +2,7 @@
 
 ## System Overview
 
-The ATC Conflict Analysis System is a Python-based application designed to analyze SimBrief XML flight plans and identify potential air traffic conflicts for training purposes. The system processes multiple flight plans simultaneously, detects conflicts using 3D spatial analysis, and generates both detailed reports and visual outputs.
+- The ATC Conflict Analysis System is a Python-based application designed to analyze SimBrief XML flight plans and identify potential air traffic conflicts for event scenario creation. The system helps the events team build challenging events for controllers and fun, dynamic events for pilots. It processes multiple flight plans simultaneously, detects conflicts using 3D spatial analysis, and generates both detailed reports and visual outputs.
 
 ## Architecture Principles
 
@@ -10,7 +10,7 @@ The ATC Conflict Analysis System is a Python-based application designed to analy
 - **Single Responsibility**: Each component has a focused purpose
 - **Data-Driven**: JSON-based data exchange between components
 - **Visualization-First**: KML output for Google Earth integration
-- **Training-Focused**: Optimized for ATC instructor workflows
+- **Event-Focused**: Optimized for event scenario workflows
 
 ## System Components
 
@@ -33,13 +33,13 @@ The ATC Conflict Analysis System is a Python-based application designed to analy
 - 40-color visualization scheme for route identification
 
 ### 2. Conflict Analysis Engine
-**File**: `conflict_analyzer.py`
+**File**: `analyze_and_report_conflicts.py`
 
 **Responsibilities**:
 - Perform 3D spatial conflict detection
 - Analyze both waypoint and enroute conflicts
 - Optimize departure times for maximum conflicts
-- Generate comprehensive conflict scenarios
+- Generate comprehensive conflict scenarios for events
 
 **Core Algorithms**:
 - **Distance Calculation**: Haversine formula for lateral separation
@@ -53,36 +53,25 @@ The ATC Conflict Analysis System is a Python-based application designed to analy
 - Aircraft altitude > 2500 feet
 - Duplicate filtering within 4 NM
 
-### 3. Reporting Layer
-**File**: `conflicts_list.py`
-
-**Responsibilities**:
-- Generate human-readable conflict reports
-- Format location information (waypoint names vs. distance/direction)
-- Filter and deduplicate conflicts
-- Provide phase and timing analysis
-
-**Key Features**:
-- Smart location formatting for enroute conflicts
-- Compass direction calculation
-- Route pair deduplication
-- Phase-based conflict categorization
-
-### 4. Scheduling Layer
+### 3. Scheduling & Briefing
 **File**: `generate_schedule_conflicts.py`
 
 **Responsibilities**:
-- Generate departure schedules to maximize simultaneous conflicts
-- Output event schedule (`event_schedule.csv`) and ATC briefing (`atc_briefing.txt`)
+- Read conflict_analysis.json
+- Assign departure times to maximize/synchronize conflicts
+- Output pilot_briefing.txt (authoritative, includes schedule and conflicts)
 
-### 5. Animation Data Export Layer
+**Outputs**:
+- pilot_briefing.txt (single source of truth for schedule and conflicts)
+
+### 4. Animation Data Export Layer
 **File**: `export_animation_data.py`
 
 **Responsibilities**:
 - Export all analysis and schedule data into animation-ready JSON for web visualization
 - Output: `animation_data.json`, `flight_tracks.json`, `conflict_points.json`
 
-### 6. Visualization Layer
+### 5. Visualization Layer
 **Files**: `merge_kml_flightplans.py`, `web_visualization/cesium_flight_anim.html`
 
 **Responsibilities**:
@@ -94,33 +83,9 @@ The ATC Conflict Analysis System is a Python-based application designed to analy
 
 ## Data Flow
 
-```
-SimBrief XML Files
-       ↓
-[Data Extraction Layer]
-       ↓
-Individual KML/JSON Files
-       ↓
-[Conflict Analysis Engine]
-       ↓
-Conflict Analysis JSON
-       ↓
-[Reporting Layer]
-       ↓
-Formatted Conflict List
-       ↓
-[Merge KML Files]
-       ↓
-Combined Google Earth File
-       ↓
-[Animation Data Export]
-       ↓
-(animation_data.json, etc.)
-       ↓
-[Web Visualization (Cesium)]
-       ↓
-Animated 3D Globe, Real-Time Conflict Alerts
-```
+1. SimBrief XML → Extraction → conflict_analysis.json
+2. conflict_analysis.json → Scheduling → pilot_briefing.txt
+3. pilot_briefing.txt → Animation Export → animation_data.json
 
 ## Data Models
 
@@ -179,8 +144,7 @@ class Waypoint:
   "timeline": [ ... ]
 }
 ```
-- `event_schedule.csv`: Departure times for each flight
-- `atc_briefing.txt`: Human-readable conflict timing
+- `pilot_briefing.txt`: Human-readable conflict timing
 
 ## File Organization
 
@@ -226,7 +190,7 @@ Chaos2/
 ### 4. Conflict Detection Algorithm
 - **Two-Phase Approach**: Waypoint conflicts + interpolated enroute conflicts
 - **Filtering**: Altitude thresholds and duplicate detection
-- **Optimization**: Departure time optimization for training scenarios
+- **Optimization**: Departure time optimization for event scenarios
 
 ### 5. Visualization Strategy
 - **Platform**: Google Earth via KML format
@@ -270,4 +234,4 @@ The system is designed for local deployment with minimal setup:
 4. Generate reports: `python conflicts_list.py`
 5. Merge visualization: `python merge_kml_flightplans.py`
 
-This architecture provides a robust foundation for ATC conflict analysis while maintaining simplicity and ease of use for training applications. 
+This architecture provides a robust foundation for ATC conflict analysis while maintaining simplicity and ease of use for event scenario creation and execution. 

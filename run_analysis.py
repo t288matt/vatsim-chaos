@@ -4,7 +4,7 @@ Master Script for ATC Conflict Analysis System
 ==============================================
 
 This script orchestrates the complete workflow for analyzing SimBrief XML flight plans
-and generating conflict scenarios for ATC training events.
+and generating conflict scenarios for ATC events.
 
 Workflow:
 1. Extract flight plan data from XML files
@@ -40,7 +40,8 @@ SCRIPTS = {
     'extract': 'simbrief_xml_flightplan_extractor.py',
     'analyze': 'analyze_and_report_conflicts.py',
     'merge_kml': 'merge_kml_flightplans.py',
-    'schedule': 'generate_schedule_conflicts.py'  # updated from schedule_conflicts.py
+    'schedule': 'generate_schedule_conflicts.py',  # updated from schedule_conflicts.py
+    'frontend': 'export_animation_data.py'
 }
 
 OUTPUT_FILES = {
@@ -48,7 +49,7 @@ OUTPUT_FILES = {
     'merged_kml': 'merged_flightplans.kml',
     'analysis_data': 'temp/conflict_analysis.json',
     'schedule': 'event_schedule.csv',
-    'briefing': 'atc_briefing.txt'
+    'briefing': 'pilot_briefing.txt'
 }
 
 class AnalysisRunner:
@@ -61,7 +62,7 @@ class AnalysisRunner:
     def log(self, message: str, level: str = "INFO") -> None:
         """Log a message with timestamp."""
         timestamp = datetime.now().strftime("%H:%M:%S")
-        prefix = "🔍" if level == "INFO" else "⚠️" if level == "WARNING" else "❌"
+        prefix = "INFO" if level == "INFO" else "WARNING" if level == "WARNING" else "ERROR"
         print(f"[{timestamp}] {prefix} {message}")
     
     def run_script(self, script_name: str, description: str) -> bool:
@@ -85,16 +86,16 @@ class AnalysisRunner:
             if self.verbose and result.stdout:
                 print(result.stdout)
             
-            self.log(f"✅ {description} completed successfully")
+            self.log(f"{description} completed successfully")
             return True
             
         except subprocess.CalledProcessError as e:
-            self.log(f"❌ {description} failed with exit code {e.returncode}", "ERROR")
+            self.log(f"{description} failed with exit code {e.returncode}", "ERROR")
             if self.verbose and e.stderr:
                 print(f"Error output: {e.stderr}")
             return False
         except Exception as e:
-            self.log(f"❌ {description} failed: {e}", "ERROR")
+            self.log(f"{description} failed: {e}", "ERROR")
             return False
     
     def check_prerequisites(self) -> bool:
@@ -115,7 +116,7 @@ class AnalysisRunner:
                 self.log(f"Required script {script_name} not found!", "ERROR")
                 return False
         
-        self.log("✅ All prerequisites met")
+        self.log("All prerequisites met")
         return True
     
     def run_extraction(self) -> bool:
@@ -163,17 +164,24 @@ class AnalysisRunner:
             if self.verbose and result.stdout:
                 print(result.stdout)
             
-            self.log("✅ Conflict Scheduling completed successfully")
+            self.log(f"Conflict Scheduling completed successfully")
             return True
             
         except subprocess.CalledProcessError as e:
-            self.log(f"❌ Conflict Scheduling failed with exit code {e.returncode}", "ERROR")
+            self.log(f"Conflict Scheduling failed with exit code {e.returncode}", "ERROR")
             if self.verbose and e.stderr:
                 print(f"Error output: {e.stderr}")
             return False
         except Exception as e:
-            self.log(f"❌ Conflict Scheduling failed: {e}", "ERROR")
+            self.log(f"Conflict Scheduling failed: {e}", "ERROR")
             return False
+    
+    def run_frontend_update(self) -> bool:
+        """Run the frontend animation data export step."""
+        return self.run_script(
+            SCRIPTS['frontend'],
+            "Frontend Animation Data Export"
+        )
     
 
     
@@ -190,16 +198,16 @@ class AnalysisRunner:
                 for file_path in output_path:
                     if os.path.exists(file_path):
                         size = os.path.getsize(file_path)
-                        outputs_found.append(f"  ✅ {output_name}: {file_path} ({size:,} bytes)")
+                        outputs_found.append(f"  {output_name}: {file_path} ({size:,} bytes)")
                     else:
-                        outputs_missing.append(f"  ❌ {output_name}: {file_path} (missing)")
+                        outputs_missing.append(f"  {output_name}: {file_path} (missing)")
             else:
                 # Handle single file
                 if os.path.exists(output_path):
                     size = os.path.getsize(output_path)
-                    outputs_found.append(f"  ✅ {output_name}: {output_path} ({size:,} bytes)")
+                    outputs_found.append(f"  {output_name}: {output_path} ({size:,} bytes)")
                 else:
-                    outputs_missing.append(f"  ❌ {output_name}: {output_path} (missing)")
+                    outputs_missing.append(f"  {output_name}: {output_path} (missing)")
         
         if outputs_found:
             self.log("Generated files:")
@@ -209,13 +217,16 @@ class AnalysisRunner:
         if outputs_missing:
             self.log("Missing files:", "WARNING")
             for output in outputs_missing:
+                # Rename output for briefing if needed
+                if 'briefing' in output and 'atc_briefing.txt' in output:
+                    output = output.replace('atc_briefing.txt', 'pilot_briefing.txt')
                 print(output)
     
     def run_complete_workflow(self, skip_extract: bool = False, skip_kml: bool = False, 
                             skip_schedule: bool = False, start_time: Optional[str] = None, 
                             end_time: Optional[str] = None) -> bool:
         """Run the complete analysis workflow."""
-        self.log("🚀 Starting ATC Conflict Analysis Workflow")
+        self.log("Starting ATC Conflict Analysis Workflow")
         print("=" * 60)
         
         # Check prerequisites
@@ -227,7 +238,7 @@ class AnalysisRunner:
             if not self.run_extraction():
                 return False
         else:
-            self.log("⏭️  Skipping XML extraction (using existing data)")
+            self.log("Skipping XML extraction (using existing data)")
         
         # Step 2: Analyze conflicts
         if not self.run_analysis():
@@ -238,29 +249,33 @@ class AnalysisRunner:
             if not self.run_kml_merge():
                 return False
         else:
-            self.log("⏭️  Skipping KML merge")
+            self.log("Skipping KML merge")
         
         # Step 4: Schedule conflicts (unless skipped)
         if not skip_schedule and start_time and end_time:
             if not self.run_scheduling(start_time, end_time):
                 return False
         elif not skip_schedule and (not start_time or not end_time):
-            self.log("⚠️  Skipping scheduling (requires --start-time and --end-time)")
+            self.log("Skipping conflict scheduling")
         else:
-            self.log("⏭️  Skipping conflict scheduling")
+            self.log("Skipping conflict scheduling")
+        
+        # Step 5: Update frontend animation data
+        if not self.run_frontend_update():
+            return False
         
         # Check outputs
         self.check_outputs()
         
         # Summary
         elapsed_time = time.time() - self.start_time
-        self.log(f"🎯 Workflow completed in {elapsed_time:.1f} seconds")
+        self.log(f"Workflow completed in {elapsed_time:.1f} seconds")
         
         return True
     
     def run_single_step(self, step: str, start_time: Optional[str] = None, end_time: Optional[str] = None) -> bool:
         """Run a single step of the workflow."""
-        self.log(f"🎯 Running single step: {step}")
+        self.log(f"Running single step: {step}")
         
         if step == 'extract':
             return self.run_extraction()
@@ -270,6 +285,8 @@ class AnalysisRunner:
             return self.run_kml_merge()
         elif step == 'schedule':
             return self.run_scheduling(start_time, end_time)
+        elif step == 'frontend':
+            return self.run_frontend_update()
         else:
             self.log(f"Unknown step: {step}", "ERROR")
             return False
@@ -284,6 +301,7 @@ Examples:
   python run_analysis.py                    # Run complete workflow
   python run_analysis.py --extract-only     # Only extract XML data
   python run_analysis.py --analyze-only     # Only analyze conflicts
+  python run_analysis.py --frontend-only    # Only update frontend data
   python run_analysis.py --skip-extract     # Skip extraction, use existing data
   python run_analysis.py --verbose          # Enable verbose output
         """
@@ -300,6 +318,8 @@ Examples:
                        help='Only run the KML merge step')
     parser.add_argument('--schedule-only', action='store_true',
                        help='Only run the conflict scheduling step')
+    parser.add_argument('--frontend-only', action='store_true',
+                       help='Only run the frontend animation data export step')
     
     # Skip options
     parser.add_argument('--skip-extract', action='store_true',
@@ -334,6 +354,8 @@ Examples:
             success = runner.run_single_step('merge_kml')
         elif args.schedule_only:
             success = runner.run_single_step('schedule', args.start_time, args.end_time)
+        elif args.frontend_only:
+            success = runner.run_single_step('frontend')
         else:
             # Run complete workflow
             success = runner.run_complete_workflow(
@@ -345,23 +367,26 @@ Examples:
             )
         
         if success:
-            print("\n🎉 Analysis workflow completed successfully!")
-            print("📁 Check the generated files:")
+            print("\nAnalysis workflow completed successfully!")
+            print("Check the generated files:")
             print("   • conflict_list.txt - Detailed conflict report")
             print("   • merged_flightplans.kml - Google Earth visualization")
             print("   • temp/conflict_analysis.json - Raw analysis data")
+            print("   • web_visualization/animation_data.json - Frontend animation data")
+            print("   • web_visualization/conflict_points.json - Frontend conflict data")
+            print("   • web_visualization/flight_tracks.json - Frontend flight tracks")
             if args.start_time and args.end_time:
                 print("   • event_schedule.csv - Departure schedule")
-                print("   • atc_briefing.txt - ATC briefing document")
+                print("   • pilot_briefing.txt - Pilot briefing document")
         else:
-            print("\n❌ Analysis workflow failed!")
+            print("\nAnalysis workflow failed!")
             sys.exit(1)
             
     except KeyboardInterrupt:
-        print("\n⏹️  Workflow interrupted by user")
+        print("\nWorkflow interrupted by user")
         sys.exit(1)
     except Exception as e:
-        print(f"\n❌ Unexpected error: {e}")
+        print(f"\nUnexpected error: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
