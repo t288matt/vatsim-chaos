@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
-<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>Merged Flight Plans</name><description>All merged flight plans. Each original KML is in its own folder.</description><Folder><name>YBBNYCOM_XML_1752071436.kml</name><Placemark>
-      <name>YBBNYCOM_XML_1752071436 Flight Path</name>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>Merged Flight Plans</name><description>All merged flight plans. Each original KML is in its own folder.</description><Folder><name>YMERYORG_XML_1752350911.kml</name><Placemark>
+      <name>YMERYORG_XML_1752350911 Flight Path</name>
       <description>
         
-        &lt;h3&gt;YBBNYCOM_XML_1752071436 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YBBN → YCOM&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT BN H91 SANAD W786 OLTIN H201 TESAT V169 PEGSU V20 COM DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 22&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~1100 nm&lt;/p&gt;
+        &lt;h3&gt;YMERYORG_XML_1752350911 Flight Plan&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMER → YORG&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT MAKKA DCT&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 6&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~300 nm&lt;/p&gt;
         
       </description>
       <Style>
@@ -24,2090 +24,10 @@
         <tessellate>1</tessellate>
         <altitudeMode>absolute</altitudeMode>
         <coordinates>
-          153.1175,-27.384167,15
-          153.139222,-27.366083,5100
-          153.043972,-27.817833,19800
-          152.924778,-28.089806,25300
-          152.585306,-28.848889,34100
-          152.329883,-29.2772,38000
-          152.074778,-29.700944,38000
-          151.911861,-30.322778,38000
-          151.412389,-31.386389,38000
-          151.217333,-32.006,20000
-          151.2575,-32.552139,19000
-          151.236417,-32.943389,19000
-          151.229622,-33.068783,19000
-          151.222917,-33.192333,19000
-          151.211417,-33.402722,19000
-          151.182583,-33.943806,19000
-          150.785639,-34.330528,20000
-          150.033917,-35.178167,20000
-          149.743265,-35.499989,20000
-          148.957519,-36.353786,5600
-          148.973889,-36.300556,5600
-          148.973889,-36.300556,3106
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YBBN</name>
-      <description>
-        
-        &lt;h3&gt;YBBN&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -27.384167, 153.117500&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 15 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>BN</name>
-      <description>
-        
-        &lt;h3&gt;BN&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -27.366083, 153.139222&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 5100 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 01:39&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>SANEG</name>
-      <description>
-        
-        &lt;h3&gt;SANEG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -27.817833, 153.043972&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19800 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 06:57&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>HUUGO</name>
-      <description>
-        
-        &lt;h3&gt;HUUGO&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -28.089806, 152.924778&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 25300 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 09:58&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>APAGI</name>
-      <description>
-        
-        &lt;h3&gt;APAGI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -28.848889, 152.585306&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 34100 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 16:44&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -29.277200, 152.329883&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 38000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 21:01&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>CLIFF</name>
-      <description>
-        
-        &lt;h3&gt;CLIFF&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -29.700944, 152.074778&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 38000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 25:11&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>ADMAR</name>
-      <description>
-        
-        &lt;h3&gt;ADMAR&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -30.322778, 151.911861&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 38000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 30:19&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>SANAD</name>
-      <description>
-        
-        &lt;h3&gt;SANAD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -31.386389, 151.412389&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 38000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 40:11&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>EKIBI</name>
-      <description>
-        
-        &lt;h3&gt;EKIBI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -32.006000, 151.217333&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 45:53&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>OLTIN</name>
-      <description>
-        
-        &lt;h3&gt;OLTIN&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -32.552139, 151.257500&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 51:04&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>MONDO</name>
-      <description>
-        
-        &lt;h3&gt;MONDO&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -32.943389, 151.236417&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 54:51&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>LOWEP</name>
-      <description>
-        
-        &lt;h3&gt;LOWEP&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.068783, 151.229622&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 56:06&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YAKKA</name>
-      <description>
-        
-        &lt;h3&gt;YAKKA&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.192333, 151.222917&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 57:12&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>MEPIL</name>
-      <description>
-        
-        &lt;h3&gt;MEPIL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.402722, 151.211417&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 59:15&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TESAT</name>
-      <description>
-        
-        &lt;h3&gt;TESAT&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.943806, 151.182583&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 64:24&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>PEGSU</name>
-      <description>
-        
-        &lt;h3&gt;PEGSU&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.330528, 150.785639&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 69:58&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>ATGOD</name>
-      <description>
-        
-        &lt;h3&gt;ATGOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.178167, 150.033917&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 80:24&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.499989, 149.743265&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 84:24&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>COM</name>
-      <description>
-        
-        &lt;h3&gt;COM&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.353786, 148.957519&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 5600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 97:10&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YCOM</name>
-      <description>
-        
-        &lt;h3&gt;YCOM&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.300556, 148.973889&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 5600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 106:26&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YCOM</name>
-      <description>
-        
-        &lt;h3&gt;YCOM&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.300556, 148.973889&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3106 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff8000ff</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YBDGYSBK_XML_1752004656.kml</name><Placemark>
-      <name>YBDGYSBK_XML_1752004656 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YBDGYSBK_XML_1752004656 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YBDG → YSBK&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT AY W335 IGDEL DCT AKMIR W817 DARGI Y20 BK DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 15&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~750 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ffffff00</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7fffff00</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          144.329722,-36.739167,710
-          145.202903,-36.524564,19000
-          146.966083,-36.068,19000
-          147.581667,-35.781667,19000
-          148.208333,-35.481667,19000
-          148.667603,-35.260475,19000
-          149.62876,-34.542922,23000
-          150.10675,-34.178556,14000
-          150.42,-33.921667,7900
-          150.487889,-33.922611,7000
-          150.688117,-33.925136,4200
-          150.762494,-33.925994,3100
-          150.988506,-33.928328,2500
-          150.988333,-33.924444,2500
-          150.988333,-33.924444,34
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YBDG</name>
-      <description>
-        
-        &lt;h3&gt;YBDG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.739167, 144.329722&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 710 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.524564, 145.202903&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 12:14&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>AY</name>
-      <description>
-        
-        &lt;h3&gt;AY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.068000, 146.966083&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 27:21&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>COPPA</name>
-      <description>
-        
-        &lt;h3&gt;COPPA&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.781667, 147.581667&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 33:19&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>WOLBI</name>
-      <description>
-        
-        &lt;h3&gt;WOLBI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.481667, 148.208333&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 39:16&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>IGDEL</name>
-      <description>
-        
-        &lt;h3&gt;IGDEL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.260475, 148.667603&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 43:41&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.542922, 149.628760&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 23000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 54:31&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>AKMIR</name>
-      <description>
-        
-        &lt;h3&gt;AKMIR&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.178556, 150.106750&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 14000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 60:07&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>DARGI</name>
-      <description>
-        
-        &lt;h3&gt;DARGI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.921667, 150.420000&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7900 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 63:58&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>ANPEN</name>
-      <description>
-        
-        &lt;h3&gt;ANPEN&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.922611, 150.487889&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 64:29&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>GOMUB</name>
-      <description>
-        
-        &lt;h3&gt;GOMUB&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.925136, 150.688117&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 4200 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 66:14&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>NOLEM</name>
-      <description>
-        
-        &lt;h3&gt;NOLEM&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.925994, 150.762494&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3100 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 66:56&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>BK</name>
-      <description>
-        
-        &lt;h3&gt;BK&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.928328, 150.988506&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 68:51&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSBK</name>
-      <description>
-        
-        &lt;h3&gt;YSBK&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.924444, 150.988333&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 71:43&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSBK</name>
-      <description>
-        
-        &lt;h3&gt;YSBK&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.924444, 150.988333&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 34 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffff00</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YBDGYWSL_XML_1752005123.kml</name><Placemark>
-      <name>YBDGYWSL_XML_1752005123 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YBDGYWSL_XML_1752005123 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YBDG → YWSL&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT MNG W649 ESL DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 7&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~350 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ffff0080</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7fff0080</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          144.329722,-36.739167,710
-          144.81775,-36.822833,19000
-          145.194222,-36.885889,19000
-          146.308749,-37.589757,19000
-          147.159556,-38.111333,2900
-          146.965278,-38.091667,2600
-          146.965278,-38.091667,93
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YBDG</name>
-      <description>
-        
-        &lt;h3&gt;YBDG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.739167, 144.329722&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 710 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff0080</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.822833, 144.817750&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 09:47&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff0080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>MNG</name>
-      <description>
-        
-        &lt;h3&gt;MNG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.885889, 145.194222&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 13:19&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff0080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.589757, 146.308749&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 26:41&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff0080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>ESL</name>
-      <description>
-        
-        &lt;h3&gt;ESL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -38.111333, 147.159556&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2900 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 37:28&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff0080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YWSL</name>
-      <description>
-        
-        &lt;h3&gt;YWSL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -38.091667, 146.965278&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 41:22&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff0080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YWSL</name>
-      <description>
-        
-        &lt;h3&gt;YWSL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -38.091667, 146.965278&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 93 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff0080</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YMCOYMAY_XML_1752005610.kml</name><Placemark>
-      <name>YMCOYMAY_XML_1752005610 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YMCOYMAY_XML_1752005610 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMCO → YMAY&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT OTKED W859 VALDU W795 AY DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 8&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~400 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ffffa000</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7fffa000</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          149.720833,-37.598889,102
-          149.718322,-37.596156,1600
-          149.494242,-37.551164,8000
-          147.552169,-37.141086,8000
-          147.333655,-36.744823,8000
-          146.966083,-36.068,3000
-          146.958056,-36.067778,3000
-          146.958056,-36.067778,539
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YMCO</name>
-      <description>
-        
-        &lt;h3&gt;YMCO&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.598889, 149.720833&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 102 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffa000</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>OTKED</name>
-      <description>
-        
-        &lt;h3&gt;OTKED&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.596156, 149.718322&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 1600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 01:11&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffa000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.551164, 149.494242&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 8000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 06:02&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffa000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>VALDU</name>
-      <description>
-        
-        &lt;h3&gt;VALDU&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.141086, 147.552169&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 8000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 46:02&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffa000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.744823, 147.333655&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 8000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 56:05&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffa000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>AY</name>
-      <description>
-        
-        &lt;h3&gt;AY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.068000, 146.966083&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 72:05&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffa000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YMAY</name>
-      <description>
-        
-        &lt;h3&gt;YMAY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.067778, 146.958056&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 73:53&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffa000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YMAY</name>
-      <description>
-        
-        &lt;h3&gt;YMAY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.067778, 146.958056&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 539 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffffa000</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YMCOYSCB_XML_1752004186.kml</name><Placemark>
-      <name>YMCOYSCB_XML_1752004186 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YMCOYSCB_XML_1752004186 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMCO → YSCB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT COM DCT MENZI DCT CB DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 8&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~400 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ffff00e0</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7fff00e0</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          149.720833,-37.598889,102
-          149.396832,-37.075956,20000
-          148.957519,-36.353786,20000
-          149.018647,-36.142952,19000
-          149.194422,-35.530161,5900
-          149.195731,-35.281444,4400
-          149.195,-35.306944,4400
-          149.195,-35.306944,1887
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YMCO</name>
-      <description>
-        
-        &lt;h3&gt;YMCO&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.598889, 149.720833&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 102 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff00e0</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.075956, 149.396832&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 11:26&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff00e0</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>COM</name>
-      <description>
-        
-        &lt;h3&gt;COM&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.353786, 148.957519&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 21:23&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff00e0</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.142952, 149.018647&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 23:51&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff00e0</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>MENZI</name>
-      <description>
-        
-        &lt;h3&gt;MENZI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.530161, 149.194422&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 5900 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 31:20&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff00e0</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>CB</name>
-      <description>
-        
-        &lt;h3&gt;CB&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.281444, 149.195731&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 4400 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 34:17&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff00e0</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSCB</name>
-      <description>
-        
-        &lt;h3&gt;YSCB&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.306944, 149.195000&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 4400 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 37:48&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff00e0</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSCB</name>
-      <description>
-        
-        &lt;h3&gt;YSCB&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.306944, 149.195000&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 1887 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff00e0</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YMCOYSHT_XML_1752072392.kml</name><Placemark>
-      <name>YMCOYSHT_XML_1752072392 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YMCOYSHT_XML_1752072392 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMCO → YSHT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT OTKED&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 6&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~300 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ff00ff20</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7f00ff20</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          149.720833,-37.598889,102
-          149.718322,-37.596156,1600
-          148.897994,-37.389557,24000
-          147.547555,-37.034517,24000
-          145.3925,-36.428889,2900
-          145.3925,-36.428889,375
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YMCO</name>
-      <description>
-        
-        &lt;h3&gt;YMCO&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.598889, 149.720833&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 102 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff20</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>OTKED</name>
-      <description>
-        
-        &lt;h3&gt;OTKED&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.596156, 149.718322&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 1600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 02:36&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff20</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.389557, 148.897994&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 24000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 14:03&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff20</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.034517, 147.547555&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 24000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 29:16&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff20</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSHT</name>
-      <description>
-        
-        &lt;h3&gt;YSHT&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.428889, 145.392500&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2900 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 56:14&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff20</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSHT</name>
-      <description>
-        
-        &lt;h3&gt;YSHT&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.428889, 145.392500&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 375 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff20</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YMENYMAY_XML_1752006111.kml</name><Placemark>
-      <name>YMENYMAY_XML_1752006111 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YMENYMAY_XML_1752006111 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMEN → YMAY&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT ESDAN DCT ML H129 DOSEL W569 AY DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 11&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~550 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ff800080</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7f800080</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          144.901944,-37.728056,282
-          144.911369,-37.72675,1800
-          144.842,-37.660139,11000
-          145.176992,-37.361521,23000
-          145.395306,-37.165111,23000
-          145.738472,-36.85275,19000
-          146.422466,-36.419058,19000
-          146.482989,-36.380258,16800
-          146.966083,-36.068,3000
-          146.958056,-36.067778,3000
-          146.958056,-36.067778,539
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YMEN</name>
-      <description>
-        
-        &lt;h3&gt;YMEN&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.728056, 144.901944&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 282 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>ESDAN</name>
-      <description>
-        
-        &lt;h3&gt;ESDAN&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.726750, 144.911369&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 1800 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 02:02&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>ML</name>
-      <description>
-        
-        &lt;h3&gt;ML&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.660139, 144.842000&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 11000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 05:21&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.361521, 145.176992&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 23000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 12:59&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>DOSEL</name>
-      <description>
-        
-        &lt;h3&gt;DOSEL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.165111, 145.395306&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 23000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 16:19&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>BOGES</name>
-      <description>
-        
-        &lt;h3&gt;BOGES&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.852750, 145.738472&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 21:15&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.419058, 146.422466&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 29:34&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>VEGRU</name>
-      <description>
-        
-        &lt;h3&gt;VEGRU&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.380258, 146.482989&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 16800 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 30:41&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>AY</name>
-      <description>
-        
-        &lt;h3&gt;AY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.068000, 146.966083&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 39:03&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YMAY</name>
-      <description>
-        
-        &lt;h3&gt;YMAY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.067778, 146.958056&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 43:26&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YMAY</name>
-      <description>
-        
-        &lt;h3&gt;YMAY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.067778, 146.958056&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 539 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff800080</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YMERYMML_XML_1752003908.kml</name><Placemark>
-      <name>YMERYMML_XML_1752003908 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YMERYMML_XML_1752003908 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMER → YMML&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT MER W441 TEMIS V169 BOYSE BOYS9A&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 15&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~750 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ff00ffff</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7f00ffff</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
           149.901389,-36.908611,8
-          149.899444,-36.914167,1500
-          149.258796,-36.980826,20000
-          147.552169,-37.141086,20000
-          145.835058,-37.206333,20000
-          145.699887,-37.284917,20000
-          145.669472,-37.302556,19400
-          145.417139,-37.448222,14600
-          145.16,-37.679194,8900
-          145.079361,-37.751222,7000
-          145.009444,-37.8135,5400
-          144.943194,-37.825139,4400
-          144.868833,-37.834333,3200
-          144.843333,-37.673333,2900
-          144.843333,-37.673333,434
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YMER</name>
-      <description>
-        
-        &lt;h3&gt;YMER&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.908611, 149.901389&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 8 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>MER</name>
-      <description>
-        
-        &lt;h3&gt;MER&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.914167, 149.899444&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 1500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 01:53&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.980826, 149.258796&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 12:01&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>VALDU</name>
-      <description>
-        
-        &lt;h3&gt;VALDU&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.141086, 147.552169&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 32:51&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TEMIS</name>
-      <description>
-        
-        &lt;h3&gt;TEMIS&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.206333, 145.835058&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 54:03&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.284917, 145.699887&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 55:59&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>BOYSE</name>
-      <description>
-        
-        &lt;h3&gt;BOYSE&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.302556, 145.669472&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19400 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 56:23&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>MAXAL</name>
-      <description>
-        
-        &lt;h3&gt;MAXAL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.448222, 145.417139&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 14600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 59:28&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>OLTUR</name>
-      <description>
-        
-        &lt;h3&gt;OLTUR&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.679194, 145.160000&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 8900 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 63:10&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>VENVO</name>
-      <description>
-        
-        &lt;h3&gt;VENVO&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.751222, 145.079361&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 64:24&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>GOOLA</name>
-      <description>
-        
-        &lt;h3&gt;GOOLA&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.813500, 145.009444&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 5400 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 65:25&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>BOLTY</name>
-      <description>
-        
-        &lt;h3&gt;BOLTY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.825139, 144.943194&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 4400 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 66:02&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>AKDEL</name>
-      <description>
-        
-        &lt;h3&gt;AKDEL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.834333, 144.868833&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3200 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 66:51&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YMML</name>
-      <description>
-        
-        &lt;h3&gt;YMML&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.673333, 144.843333&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2900 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 70:58&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YMML</name>
-      <description>
-        
-        &lt;h3&gt;YMML&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.673333, 144.843333&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 434 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffff</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YMERYORG_XML_1752003182.kml</name><Placemark>
-      <name>YMERYORG_XML_1752003182 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YMERYORG_XML_1752003182 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMER → YORG&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT MAKKA DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 6&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~300 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ff400080</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7f400080</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          149.901389,-36.908611,8
-          149.801495,-36.483042,22000
-          149.334861,-34.430861,22000
-          149.249293,-34.00364,22000
+          149.759563,-36.302969,20000
+          149.394267,-34.698055,20000
+          149.334861,-34.430861,16000
           149.125556,-33.378056,5600
           149.125556,-33.378056,3112
         </coordinates>
@@ -2129,7 +49,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff400080</color>
+          <color>ff8000ff</color>
           <scale>1.5</scale>
         </LabelStyle>
       </Style>
@@ -2139,16 +59,35 @@
       <description>
         
         &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.483042, 149.801495&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 22000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 14:09&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.302969, 149.759563&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 12:48&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ff400080</color>
+          <color>ff8000ff</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOD</name>
+      <description>
+        
+        &lt;h3&gt;TOD&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.698055, 149.394267&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 30:33&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
+        
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff8000ff</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -2159,34 +98,15 @@
         
         &lt;h3&gt;MAKKA&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.430861, 149.334861&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 22000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 48:42&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 16000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 33:21&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ff400080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.003640, 149.249293&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 22000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 55:55&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff400080</color>
+          <color>ff8000ff</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -2198,14 +118,14 @@
         &lt;h3&gt;YORG&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.378056, 149.125556&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 5600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 69:58&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 47:13&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ff400080</color>
+          <color>ff8000ff</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -2224,936 +144,16 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff400080</color>
+          <color>ff8000ff</color>
           <scale>1.5</scale>
         </LabelStyle>
       </Style>
     </Placemark>
-  </Folder><Folder><name>YMESYSRI_XML_1752000081.kml</name><Placemark>
-      <name>YMESYSRI_XML_1752000081 Flight Path</name>
+  </Folder><Folder><name>YSNWYWLM_XML_1752352938.kml</name><Placemark>
+      <name>YSNWYWLM_XML_1752352938 Flight Path</name>
       <description>
         
-        &lt;h3&gt;YMESYSRI_XML_1752000081 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMES → YSRI&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT ESL W290 CB W122 AKMIR W713 KADOM W368 RIC DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 12&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~600 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ff00ff60</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7f00ff60</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          147.149444,-38.098889,23
-          147.159556,-38.111333,3000
-          147.532271,-37.749312,19000
-          147.826667,-37.46,19000
-          148.957519,-36.353786,19000
-          149.195731,-35.281444,20000
-          150.10675,-34.178556,19000
-          150.171964,-34.020999,19000
-          150.299611,-33.710806,10600
-          150.7764,-33.596936,2600
-          150.780833,-33.600556,2600
-          150.780833,-33.600556,67
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YMES</name>
-      <description>
-        
-        &lt;h3&gt;YMES&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -38.098889, 147.149444&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 23 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>ESL</name>
-      <description>
-        
-        &lt;h3&gt;ESL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -38.111333, 147.159556&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 01:50&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.749312, 147.532271&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 06:59&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>VISER</name>
-      <description>
-        
-        &lt;h3&gt;VISER&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.460000, 147.826667&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 10:18&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>COM</name>
-      <description>
-        
-        &lt;h3&gt;COM&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.353786, 148.957519&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 23:10&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>CB</name>
-      <description>
-        
-        &lt;h3&gt;CB&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.281444, 149.195731&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 33:51&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>AKMIR</name>
-      <description>
-        
-        &lt;h3&gt;AKMIR&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.178556, 150.106750&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 46:24&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.020999, 150.171964&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 47:57&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>KADOM</name>
-      <description>
-        
-        &lt;h3&gt;KADOM&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.710806, 150.299611&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 10600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 54:03&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>RIC</name>
-      <description>
-        
-        &lt;h3&gt;RIC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.596936, 150.776400&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 61:41&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSRI</name>
-      <description>
-        
-        &lt;h3&gt;YSRI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.600556, 150.780833&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 69:41&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSRI</name>
-      <description>
-        
-        &lt;h3&gt;YSRI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.600556, 150.780833&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 67 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ff60</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YMMBYSWG_XML_1752006152.kml</name><Placemark>
-      <name>YMMBYSWG_XML_1752006152 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YMMBYSWG_XML_1752006152 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMMB → YSWG&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT MB W188 TEMIS W696 LUTVU W465 AY W638 WG DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 13&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~650 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ffa00080</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7fa00080</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          145.102222,-37.975833,55
-          145.090278,-37.976389,3000
-          145.279642,-37.782792,13500
-          145.349494,-37.710981,16000
-          145.451801,-37.60518,19000
-          145.503689,-37.551372,19000
-          145.835058,-37.206333,19000
-          146.304531,-36.421514,19000
-          146.966083,-36.068,19000
-          146.966938,-36.066485,19000
-          147.469094,-35.165739,3200
-          147.466389,-35.165278,3200
-          147.466389,-35.165278,724
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YMMB</name>
-      <description>
-        
-        &lt;h3&gt;YMMB&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.975833, 145.102222&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 55 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>MB</name>
-      <description>
-        
-        &lt;h3&gt;MB&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.976389, 145.090278&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 02:14&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>LEKUN</name>
-      <description>
-        
-        &lt;h3&gt;LEKUN&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.782792, 145.279642&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 13500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 05:34&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>COLDS</name>
-      <description>
-        
-        &lt;h3&gt;COLDS&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.710981, 145.349494&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 16000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 06:32&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.605180, 145.451801&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 07:49&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>LACEY</name>
-      <description>
-        
-        &lt;h3&gt;LACEY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.551372, 145.503689&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 08:27&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TEMIS</name>
-      <description>
-        
-        &lt;h3&gt;TEMIS&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -37.206333, 145.835058&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 12:32&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>LUTVU</name>
-      <description>
-        
-        &lt;h3&gt;LUTVU&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.421514, 146.304531&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 20:55&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>AY</name>
-      <description>
-        
-        &lt;h3&gt;AY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.068000, 146.966083&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 26:37&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.066485, 146.966938&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 26:37&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>WG</name>
-      <description>
-        
-        &lt;h3&gt;WG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.165739, 147.469094&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3200 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 37:31&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSWG</name>
-      <description>
-        
-        &lt;h3&gt;YSWG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.165278, 147.466389&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3200 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 40:45&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSWG</name>
-      <description>
-        
-        &lt;h3&gt;YSWG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.165278, 147.466389&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 724 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa00080</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YMRYYMAY_XML_1752006905.kml</name><Placemark>
-      <name>YMRYYMAY_XML_1752006905 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YMRYYMAY_XML_1752006905 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YMRY → YMAY&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT COM DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 6&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~300 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ffff2000</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7fff2000</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          150.145556,-35.8975,19
-          149.681643,-36.077702,10000
-          148.957519,-36.353786,10000
-          147.776838,-36.189174,10000
-          146.958056,-36.067778,3000
-          146.958056,-36.067778,539
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YMRY</name>
-      <description>
-        
-        &lt;h3&gt;YMRY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.897500, 150.145556&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff2000</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.077702, 149.681643&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 10000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 18:32&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff2000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>COM</name>
-      <description>
-        
-        &lt;h3&gt;COM&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.353786, 148.957519&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 10000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 40:24&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff2000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.189174, 147.776838&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 10000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 73:13&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff2000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YMAY</name>
-      <description>
-        
-        &lt;h3&gt;YMAY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.067778, 146.958056&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 94:18&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff2000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YMAY</name>
-      <description>
-        
-        &lt;h3&gt;YMAY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -36.067778, 146.958056&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 539 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff2000</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YSHLYBTH_XML_1752005202.kml</name><Placemark>
-      <name>YSHLYBTH_XML_1752005202 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YSHLYBTH_XML_1752005202 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YSHL → YBTH&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT WOL DCT AKMIR W575 BTH DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 9&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~450 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ffa000ff</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7fa000ff</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          150.788611,-34.561111,31
-          150.790992,-34.557931,1500
-          150.421721,-34.35409,20000
-          150.10675,-34.178556,20000
-          149.954643,-33.925007,20000
-          149.942833,-33.90525,19400
-          149.656989,-33.414044,4900
-          149.651944,-33.409444,4900
-          149.651944,-33.409444,2435
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
-    <Placemark>
-      <name>YSHL</name>
-      <description>
-        
-        &lt;h3&gt;YSHL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.561111, 150.788611&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 31 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa000ff</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>WOL</name>
-      <description>
-        
-        &lt;h3&gt;WOL&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.557931, 150.790992&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 1500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 01:44&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.354090, 150.421721&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 10:01&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>AKMIR</name>
-      <description>
-        
-        &lt;h3&gt;AKMIR&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.178556, 150.106750&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 15:10&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.925007, 149.954643&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 19:40&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>REVKI</name>
-      <description>
-        
-        &lt;h3&gt;REVKI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.905250, 149.942833&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19400 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 19:54&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>BTH</name>
-      <description>
-        
-        &lt;h3&gt;BTH&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.414044, 149.656989&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 4900 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 27:39&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YBTH</name>
-      <description>
-        
-        &lt;h3&gt;YBTH&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.409444, 149.651944&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 4900 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 29:29&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa000ff</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YBTH</name>
-      <description>
-        
-        &lt;h3&gt;YBTH&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.409444, 149.651944&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2435 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffa000ff</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YSNWYWLM_XML_1752005345.kml</name><Placemark>
-      <name>YSNWYWLM_XML_1752005345 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YSNWYWLM_XML_1752005345 Flight Plan&lt;/h3&gt;
+        &lt;h3&gt;YSNWYWLM_XML_1752352938 Flight Plan&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YSNW → YWLM&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT NWA W144 RIC DCT RIC V665 MAKOR V402 WLM DCT&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 15&lt;/p&gt;
@@ -3162,11 +162,11 @@
       </description>
       <Style>
         <LineStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <width>4</width>
         </LineStyle>
         <PolyStyle>
-          <color>7fff2000</color>
+          <color>7f600080</color>
         </PolyStyle>
       </Style>
       <LineString>
@@ -3176,16 +176,16 @@
         <coordinates>
           150.536944,-34.948889,399
           150.529722,-34.951111,1900
-          150.555854,-34.802753,7000
-          150.644981,-34.292683,7000
-          150.691583,-34.038583,7000
-          150.798917,-33.607278,7000
-          150.7764,-33.596936,7000
-          150.938583,-33.379194,7000
-          151.139294,-33.112219,7000
-          151.229622,-33.068783,7000
-          151.473306,-32.961389,7000
-          151.508419,-32.945848,7000
+          150.625083,-34.407106,20000
+          150.644981,-34.292683,20000
+          150.691583,-34.038583,20000
+          150.798917,-33.607278,20000
+          150.7764,-33.596936,20000
+          150.938583,-33.379194,19000
+          151.034139,-33.252335,19000
+          151.139294,-33.112219,15200
+          151.229622,-33.068783,13300
+          151.473306,-32.961389,8000
           151.828775,-32.80335,2500
           151.834444,-32.795,2500
           151.834444,-32.795,31
@@ -3208,7 +208,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.5</scale>
         </LabelStyle>
       </Style>
@@ -3220,14 +220,14 @@
         &lt;h3&gt;NWA&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.951111, 150.529722&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 1900 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 02:18&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 01:33&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3237,16 +237,16 @@
       <description>
         
         &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.802753, 150.555854&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 06:11&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.407106, 150.625083&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 07:32&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3257,15 +257,15 @@
         
         &lt;h3&gt;TONTO&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.292683, 150.644981&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 18:50&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 08:39&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3276,15 +276,15 @@
         
         &lt;h3&gt;RAKSO&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.038583, 150.691583&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 24:57&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 11:02&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3295,15 +295,15 @@
         
         &lt;h3&gt;RIC&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.607278, 150.798917&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 35:29&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 15:09&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3314,15 +314,15 @@
         
         &lt;h3&gt;RIC&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.596936, 150.776400&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 35:55&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 15:20&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3333,15 +333,34 @@
         
         &lt;h3&gt;CAPER&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.379194, 150.938583&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 41:34&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 18:12&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TOD</name>
+      <description>
+        
+        &lt;h3&gt;TOD&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.252335, 151.034139&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 19000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 19:36&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
+        
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3352,15 +371,15 @@
         
         &lt;h3&gt;MAKOR&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.112219, 151.139294&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 48:41&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 15200 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 21:53&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3371,15 +390,15 @@
         
         &lt;h3&gt;LOWEP&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.068783, 151.229622&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 50:20&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 13300 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 23:01&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3390,34 +409,15 @@
         
         &lt;h3&gt;PUDUT&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -32.961389, 151.473306&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 54:56&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 8000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 26:13&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -32.945848, 151.508419&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 55:34&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3429,14 +429,14 @@
         &lt;h3&gt;WLM&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -32.803350, 151.828775&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 64:05&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 30:47&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ndb&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3448,14 +448,14 @@
         &lt;h3&gt;YWLM&lt;/h3&gt;
         &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -32.795000, 151.834444&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 66:58&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 37:59&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3474,29 +474,29 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ffff2000</color>
+          <color>ff600080</color>
           <scale>1.5</scale>
         </LabelStyle>
       </Style>
     </Placemark>
-  </Folder><Folder><name>YSSYYORG_XML_1752003534.kml</name><Placemark>
-      <name>YSSYYORG_XML_1752003534 Flight Path</name>
+  </Folder><Folder><name>YSSYYSWG_XML_1752350843.kml</name><Placemark>
+      <name>YSSYYSWG_XML_1752350843 Flight Path</name>
       <description>
         
-        &lt;h3&gt;YSSYYORG_XML_1752003534 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YSSY → YORG&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT KADOM W595 VIRUR DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 8&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~400 nm&lt;/p&gt;
+        &lt;h3&gt;YSSYYSWG_XML_1752350843 Flight Plan&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YSSY → YSWG&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT TESAT V169 EXETA W10 WG DCT&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 10&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~500 nm&lt;/p&gt;
         
       </description>
       <Style>
         <LineStyle>
-          <color>ff00ffe0</color>
+          <color>ff00ffa0</color>
           <width>4</width>
         </LineStyle>
         <PolyStyle>
-          <color>7f00ffe0</color>
+          <color>7f00ffa0</color>
         </PolyStyle>
       </Style>
       <LineString>
@@ -3505,13 +505,15 @@
         <altitudeMode>absolute</altitudeMode>
         <coordinates>
           151.177111,-33.946,21
-          150.833076,-33.854684,12000
-          150.299611,-33.710806,12000
-          149.613333,-33.523333,12000
-          149.499919,-33.491027,12000
-          149.124375,-33.383144,5600
-          149.125556,-33.378056,5600
-          149.125556,-33.378056,3112
+          151.182583,-33.943806,1500
+          150.785639,-34.330528,17200
+          150.67209,-34.399864,20000
+          150.275194,-34.6405,20000
+          149.042139,-34.828389,20000
+          148.826551,-34.87599,20000
+          147.469094,-35.165739,3200
+          147.466389,-35.165278,3200
+          147.466389,-35.165278,724
         </coordinates>
       </LineString>
     </Placemark>
@@ -3531,8 +533,46 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ff00ffa0</color>
           <scale>1.5</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>TESAT</name>
+      <description>
+        
+        &lt;h3&gt;TESAT&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.943806, 151.182583&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 1500 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 02:48&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
+        
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff00ffa0</color>
+          <scale>1.0</scale>
+        </LabelStyle>
+      </Style>
+    </Placemark>
+    <Placemark>
+      <name>PEGSU</name>
+      <description>
+        
+        &lt;h3&gt;PEGSU&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.330528, 150.785639&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 17200 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 10:19&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
+        
+      </description>
+      <Style>
+        <LabelStyle>
+          <color>ff00ffa0</color>
+          <scale>1.0</scale>
         </LabelStyle>
       </Style>
     </Placemark>
@@ -3541,54 +581,54 @@
       <description>
         
         &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.854684, 150.833076&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 12000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 08:11&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.399864, 150.672090&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 12:15&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ff00ffa0</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
     </Placemark>
     <Placemark>
-      <name>KADOM</name>
+      <name>EXETA</name>
       <description>
         
-        &lt;h3&gt;KADOM&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.710806, 150.299611&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 12000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 14:24&lt;/p&gt;
+        &lt;h3&gt;EXETA&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.640500, 150.275194&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 17:43&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ff00ffa0</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
     </Placemark>
     <Placemark>
-      <name>LOWDI</name>
+      <name>AVBEG</name>
       <description>
         
-        &lt;h3&gt;LOWDI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.523333, 149.613333&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 12000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 22:24&lt;/p&gt;
+        &lt;h3&gt;AVBEG&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.828389, 149.042139&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 31:45&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ff00ffa0</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
@@ -3598,121 +638,58 @@
       <description>
         
         &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.491027, 149.499919&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 12000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 23:43&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.875990, 148.826551&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 20000 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 34:13&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ff00ffa0</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
     </Placemark>
     <Placemark>
-      <name>VIRUR</name>
+      <name>WG</name>
       <description>
         
-        &lt;h3&gt;VIRUR&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.383144, 149.124375&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 5600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 27:43&lt;/p&gt;
+        &lt;h3&gt;WG&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.165739, 147.469094&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3200 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 50:13&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ff00ffa0</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
     </Placemark>
     <Placemark>
-      <name>YORG</name>
+      <name>YSWG</name>
       <description>
         
-        &lt;h3&gt;YORG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.378056, 149.125556&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 5600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 29:47&lt;/p&gt;
+        &lt;h3&gt;YSWG&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.165278, 147.466389&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3200 ft&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 55:50&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
         &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
         
       </description>
       <Style>
         <LabelStyle>
-          <color>ff00ffe0</color>
+          <color>ff00ffa0</color>
           <scale>1.0</scale>
         </LabelStyle>
       </Style>
     </Placemark>
-    <Placemark>
-      <name>YORG</name>
-      <description>
-        
-        &lt;h3&gt;YORG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.378056, 149.125556&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 3112 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff00ffe0</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-  </Folder><Folder><name>YSWGYSSY_XML_1751999779.kml</name><Placemark>
-      <name>YSWGYSSY_XML_1751999779 Flight Path</name>
-      <description>
-        
-        &lt;h3&gt;YSWGYSSY_XML_1751999779 Flight Plan&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; YSWG → YSSY&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Route:&lt;/strong&gt; DCT WG DCT HAPPI DCT AKMIR DCT WELSH DCT ODALE DCT KABLO DCT MITSA DCT ANKUB DCT TESAT DCT&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Waypoints:&lt;/strong&gt; 14&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Distance:&lt;/strong&gt; ~700 nm&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LineStyle>
-          <color>ff008080</color>
-          <width>4</width>
-        </LineStyle>
-        <PolyStyle>
-          <color>7f008080</color>
-        </PolyStyle>
-      </Style>
-      <LineString>
-        <extrude>1</extrude>
-        <tessellate>1</tessellate>
-        <altitudeMode>absolute</altitudeMode>
-        <coordinates>
-          147.466389,-35.165278,724
-          147.469094,-35.165739,2200
-          148.026294,-34.963736,14400
-          148.415418,-34.82068,21000
-          149.281404,-34.496051,21000
-          150.10675,-34.178556,11600
-          150.308264,-34.13495,9500
-          150.51775,-34.089222,7100
-          150.601,-34.071333,6300
-          150.783528,-34.031917,4400
-          150.9765,-33.986639,2500
-          151.182583,-33.943806,2500
-          151.177111,-33.946,2500
-          151.177111,-33.946,21
-        </coordinates>
-      </LineString>
-    </Placemark>
-    
-    
     <Placemark>
       <name>YSWG</name>
       <description>
@@ -3727,254 +704,7 @@
       </description>
       <Style>
         <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.5</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>WG</name>
-      <description>
-        
-        &lt;h3&gt;WG&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -35.165739, 147.469094&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2200 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 02:56&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; vor&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>HAPPI</name>
-      <description>
-        
-        &lt;h3&gt;HAPPI&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.963736, 148.026294&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 14400 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 08:14&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOC</name>
-      <description>
-        
-        &lt;h3&gt;TOC&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.820680, 148.415418&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 21000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 11:59&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CLB&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TOD</name>
-      <description>
-        
-        &lt;h3&gt;TOD&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.496051, 149.281404&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 21000 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 19:37&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; CRZ&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; ltlg&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>AKMIR</name>
-      <description>
-        
-        &lt;h3&gt;AKMIR&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.178556, 150.106750&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 11600 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 27:43&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>WELSH</name>
-      <description>
-        
-        &lt;h3&gt;WELSH&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.134950, 150.308264&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 9500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 29:31&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>ODALE</name>
-      <description>
-        
-        &lt;h3&gt;ODALE&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.089222, 150.517750&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 7100 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 31:29&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>KABLO</name>
-      <description>
-        
-        &lt;h3&gt;KABLO&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.071333, 150.601000&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 6300 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 32:12&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>MITSA</name>
-      <description>
-        
-        &lt;h3&gt;MITSA&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -34.031917, 150.783528&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 4400 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 33:49&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>ANKUB</name>
-      <description>
-        
-        &lt;h3&gt;ANKUB&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.986639, 150.976500&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 35:37&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>TESAT</name>
-      <description>
-        
-        &lt;h3&gt;TESAT&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.943806, 151.182583&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 37:35&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; wpt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSSY</name>
-      <description>
-        
-        &lt;h3&gt;YSSY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.946000, 151.177111&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 2500 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 42:04&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DSC&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; apt&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
-          <scale>1.0</scale>
-        </LabelStyle>
-      </Style>
-    </Placemark>
-    <Placemark>
-      <name>YSSY</name>
-      <description>
-        
-        &lt;h3&gt;YSSY&lt;/h3&gt;
-        &lt;p&gt;&lt;strong&gt;Coordinates:&lt;/strong&gt; -33.946000, 151.177111&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Altitude:&lt;/strong&gt; 21 ft&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Time:&lt;/strong&gt; 00:00&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Stage:&lt;/strong&gt; DEP&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; airport&lt;/p&gt;
-        
-      </description>
-      <Style>
-        <LabelStyle>
-          <color>ff008080</color>
+          <color>ff00ffa0</color>
           <scale>1.5</scale>
         </LabelStyle>
       </Style>

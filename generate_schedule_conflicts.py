@@ -23,7 +23,7 @@ import logging
 # Configuration
 CONFLICT_ANALYSIS_FILE = "temp/conflict_analysis.json"
 SCHEDULE_OUTPUT_FILE = "event_schedule.csv"
-BRIEFING_OUTPUT_FILE = "atc_briefing.txt"
+BRIEFING_OUTPUT_FILE = "pilot_briefing.txt"
 
 class ConflictScheduler:
     """Schedules aircraft departures to create simultaneous conflicts."""
@@ -45,7 +45,7 @@ class ConflictScheduler:
         try:
             return datetime.strptime(time_str, "%H:%M")
         except ValueError:
-            print(f"❌ Invalid time format: {time_str}. Use HH:MM format (e.g., 14:00)")
+            print(f"ERROR: Invalid time format: {time_str}. Use HH:MM format (e.g., 14:00)")
             sys.exit(1)
     
     def _calculate_duration(self) -> int:
@@ -56,7 +56,7 @@ class ConflictScheduler:
     def load_conflict_data(self) -> Dict:
         """Load conflict analysis data."""
         if not os.path.exists(CONFLICT_ANALYSIS_FILE):
-            print(f"❌ Conflict analysis file not found: {CONFLICT_ANALYSIS_FILE}")
+            print(f"ERROR: Conflict analysis file not found: {CONFLICT_ANALYSIS_FILE}")
             print("Run 'python run_analysis.py --analyze-only' first")
             sys.exit(1)
         
@@ -180,53 +180,76 @@ class ConflictScheduler:
         return flight_data
     
     def calculate_departure_times(self, flight_data: Dict) -> Dict[str, Dict]:
-        """Calculate optimal departure times for each aircraft."""
+        """Calculate optimal departure times to maximize simultaneous conflicts."""
         scheduled_flights = {}
-        # Start with the first flight at event start time
-        first_flight = list(flight_data.keys())[0]
-        scheduled_flights[first_flight] = {
-            'departure_time': self.start_time,
-            'conflicts': flight_data[first_flight]['conflicts'],
-            'flight_duration': flight_data[first_flight]['arrival_time']
-        }
-        logging.info(f"First flight {first_flight} departs at {self.start_time.strftime('%H:%M')}")
-        # Calculate departure times for other flights based on conflicts
+        
+        # Get all unique flight pairs that have conflicts
+        conflict_pairs = set()
         for flight, data in flight_data.items():
-            if flight == first_flight:
-                continue
-            possible_departures = []
             for conflict in data['conflicts']:
+                other_flight = conflict['other_flight']
+                pair = tuple(sorted([flight, other_flight]))
+                conflict_pairs.add(pair)
+        
+        logging.info(f"Found {len(conflict_pairs)} conflict pairs to schedule")
+        
+        # Analyze all conflicts to determine optimal departure order
+        flight_conflict_scores = {}
+        for flight in flight_data:
+            flight_conflict_scores[flight] = 0
+        
+        # Count how many conflicts each flight participates in
+        for flight1, flight2 in conflict_pairs:
+            flight_conflict_scores[flight1] += 1
+            flight_conflict_scores[flight2] += 1
+        
+        # Find the flight with the most conflicts to start with
+        best_starting_flight = max(flight_conflict_scores.items(), key=lambda x: x[1])[0]
+        logging.info(f"Selected {best_starting_flight} as starting flight (has {flight_conflict_scores[best_starting_flight]} conflicts)")
+        
+        # Schedule the best starting flight first
+        scheduled_flights[best_starting_flight] = {
+            'departure_time': self.start_time,
+            'conflicts': flight_data[best_starting_flight]['conflicts'],
+            'flight_duration': flight_data[best_starting_flight]['arrival_time']
+        }
+        
+        # For each remaining flight, calculate optimal departure time based on conflicts
+        remaining_flights = [f for f in flight_data.keys() if f != best_starting_flight]
+        
+        for flight in remaining_flights:
+            possible_departures = []
+            
+            # Check all conflicts this flight has with already scheduled flights
+            for conflict in flight_data[flight]['conflicts']:
                 other_flight = conflict['other_flight']
                 if other_flight in scheduled_flights:
                     other_departure = scheduled_flights[other_flight]['departure_time']
-                    # Find the correct arrival times for both flights to the conflict point
-                    # If this flight is flight1, use time1; if flight2, use time2
-                    if flight == conflict['conflict_id'].split('_')[0]:
-                        this_time_to_conflict = conflict['conflict_time']
-                        # Find the matching conflict in the other flight's list to get its time
-                        for c in flight_data[other_flight]['conflicts']:
-                            if c['conflict_id'] == conflict['conflict_id']:
-                                other_time_to_conflict = c['conflict_time']
-                                break
-                        else:
-                            other_time_to_conflict = 0
-                    else:
-                        # This flight is flight2
-                        this_time_to_conflict = conflict['conflict_time']
-                        # Find the matching conflict in the other flight's list to get its time
-                        for c in flight_data[other_flight]['conflicts']:
-                            if c['conflict_id'] == conflict['conflict_id']:
-                                other_time_to_conflict = c['conflict_time']
-                                break
-                        else:
-                            other_time_to_conflict = 0
-                    # Calculate required departure so both arrive at the same time
-                    required_departure = other_departure + timedelta(minutes=other_time_to_conflict - this_time_to_conflict)
-                    if self.start_time <= required_departure <= self.end_time:
-                        possible_departures.append(required_departure)
+                    
+                    # Find the matching conflict data
+                    conflict_data = None
+                    for c in flight_data[other_flight]['conflicts']:
+                        if c['other_flight'] == flight and c['conflict_id'] == conflict['conflict_id']:
+                            conflict_data = {
+                                'this_time': conflict['conflict_time'],
+                                'other_time': c['conflict_time']
+                            }
+                            break
+                    
+                    if conflict_data:
+                        # Calculate optimal departure time for simultaneous conflict
+                        # If other flight departs at other_departure, when should this flight depart?
+                        required_departure = other_departure + timedelta(minutes=conflict_data['other_time'] - conflict_data['this_time'])
+                        
+                        if self.start_time <= required_departure <= self.end_time:
+                            possible_departures.append(required_departure)
+            
+            # Choose the best departure time
             if possible_departures:
+                # Prefer earlier times to maximize conflicts
                 best_departure = min(possible_departures)
             else:
+                # Fallback: schedule after the latest scheduled flight
                 if scheduled_flights:
                     latest_departure = max(f['departure_time'] for f in scheduled_flights.values())
                     best_departure = latest_departure + timedelta(minutes=1)
@@ -234,12 +257,15 @@ class ConflictScheduler:
                         best_departure = self.end_time
                 else:
                     best_departure = self.start_time
+            
             scheduled_flights[flight] = {
                 'departure_time': best_departure,
-                'conflicts': data['conflicts'],
-                'flight_duration': data['arrival_time']
+                'conflicts': flight_data[flight]['conflicts'],
+                'flight_duration': flight_data[flight]['arrival_time']
             }
+            
             logging.info(f"Flight {flight} scheduled at {best_departure.strftime('%H:%M')}")
+        
         return scheduled_flights
     
     def _find_available_slot(self, used_times: List[datetime]) -> datetime:
@@ -318,7 +344,7 @@ class ConflictScheduler:
                     rounded_time = departure_time + timedelta(minutes=rounded_minutes)
                     conflict_time_str = rounded_time.strftime('%H:%M')
                     
-                    output.append(f"  • With {conflict['other_flight']} at {conflict['location']}")
+                    output.append(f"  - With {conflict['other_flight']} at {conflict['location']}")
                     output.append(f"    Time: {conflict_time_str} (departure +{rounded_minutes}min)")
                     output.append(f"    Distance: {conflict['distance']:.1f}nm, Alt diff: {conflict['altitude_diff']}ft")
                     output.append(f"    Phase: {conflict['phase']}")
@@ -332,7 +358,7 @@ class ConflictScheduler:
         import json
         anim_path = 'web_visualization/animation_data.json'
         if not os.path.exists(anim_path):
-            print(f"❌ {anim_path} not found. Cannot update departure times.")
+            print(f"ERROR: {anim_path} not found. Cannot update departure times.")
             return
         with open(anim_path, 'r') as f:
             data = json.load(f)
@@ -343,11 +369,11 @@ class ConflictScheduler:
                 flight['departure_time'] = scheduled_flights[flight_id]['departure_time'].strftime('%H:%M')
         with open(anim_path, 'w') as f:
             json.dump(data, f, indent=2)
-        print(f"✅ Updated departure_time for all flights in {anim_path}")
+        print(f"OK: Updated departure_time for all flights in {anim_path}")
 
     def run_scheduling(self) -> None:
         """Run the complete conflict scheduling process."""
-        print("🎯 ATC Conflict Scheduler")
+        print("ATC Conflict Scheduler")
         print("=" * 40)
         print(f"Event Window: {self.start_time.strftime('%H:%M')} - {self.end_time.strftime('%H:%M')}")
         print(f"Duration: {self.event_duration} minutes")
@@ -367,32 +393,31 @@ class ConflictScheduler:
         
         # Generate outputs
         logging.info("Generating schedule outputs...")
-        
-        # CSV schedule
-        schedule_csv = self.generate_schedule_output(scheduled_flights)
-        with open(SCHEDULE_OUTPUT_FILE, 'w') as f:
-            f.write(schedule_csv)
-        
-        # ATC briefing
-        briefing_text = self.generate_briefing_output(scheduled_flights, data)
-        with open(BRIEFING_OUTPUT_FILE, 'w') as f:
-            f.write(briefing_text)
-        
-        # After generating schedule, update animation_data.json
-        self.update_animation_data_departure_times(scheduled_flights)
-        
-        # Print summary
-        print("✅ Scheduling complete!")
-        print(f"📁 Generated files:")
-        print(f"   • {SCHEDULE_OUTPUT_FILE} - Departure schedule")
-        print(f"   • {BRIEFING_OUTPUT_FILE} - ATC briefing")
-        
-        # Print schedule summary
-        print(f"\n📋 Departure Schedule:")
-        for flight, data in sorted(scheduled_flights.items(), key=lambda x: x[1]['departure_time']):
-            departure_str = data['departure_time'].strftime('%H:%M')
-            conflicts = len(data['conflicts'])
-            print(f"   {departure_str} - {flight} ({conflicts} conflicts)")
+        try:
+            # CSV schedule
+            schedule_csv = self.generate_schedule_output(scheduled_flights)
+            with open(SCHEDULE_OUTPUT_FILE, 'w') as f:
+                f.write(schedule_csv)
+            # ATC briefing
+            briefing_text = self.generate_briefing_output(scheduled_flights, data)
+            with open(BRIEFING_OUTPUT_FILE, 'w') as f:
+                f.write(briefing_text)
+            # After generating schedule, update animation_data.json
+            self.update_animation_data_departure_times(scheduled_flights)
+            print("OK: Scheduling complete!")
+            print(f"Generated files:")
+            print(f"   - {SCHEDULE_OUTPUT_FILE} - Departure schedule")
+            print(f"   - {BRIEFING_OUTPUT_FILE} - ATC briefing")
+            print(f"\nDeparture Schedule:")
+            for flight, data in sorted(scheduled_flights.items(), key=lambda x: x[1]['departure_time']):
+                departure_str = data['departure_time'].strftime('%H:%M')
+                conflicts = len(data['conflicts'])
+                print(f"   {departure_str} - {flight} ({conflicts} conflicts)")
+        except Exception as e:
+            print(f"ERROR: Exception during output generation: {e}")
+            import traceback
+            traceback.print_exc()
+            sys.exit(1)
 
 def main():
     """Main function to parse arguments and run scheduling."""
@@ -419,14 +444,14 @@ Examples:
         end_time = datetime.strptime(args.end, "%H:%M")
         
         if start_time >= end_time:
-            print("❌ End time must be after start time")
+            print("ERROR: End time must be after start time")
             sys.exit(1)
         
         if (end_time - start_time).total_seconds() < 3600:  # Less than 1 hour
             print("⚠️  Warning: Event duration is less than 1 hour")
         
     except ValueError:
-        print("❌ Invalid time format. Use HH:MM (e.g., 14:00)")
+        print("ERROR: Invalid time format. Use HH:MM (e.g., 14:00)")
         sys.exit(1)
     
     # Create scheduler and run
@@ -435,11 +460,17 @@ Examples:
     try:
         scheduler.run_scheduling()
     except Exception as e:
-        print(f"❌ Scheduling failed: {e}")
+        print(f"ERROR: Scheduling failed: {e}")
         if args.verbose:
             import traceback
             traceback.print_exc()
         sys.exit(1)
 
 if __name__ == "__main__":
-    main() 
+    try:
+        main()
+    except Exception as e:
+        import traceback
+        print("\n[ERROR] Unhandled exception in generate_schedule_conflicts.py:")
+        traceback.print_exc()
+        exit(1) 

@@ -456,14 +456,16 @@ def is_conflict_valid(wp1: Waypoint, wp2: Waypoint, distance: float, altitude_di
 def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]:
     """
     Find potential crossing points between flight plans using conflict criteria.
+    Only returns the FIRST conflict between each aircraft pair.
     
     Args:
         flight_plans: List of flight plans to analyze
     
     Returns:
-        List of detected conflicts
+        List of detected first conflicts
     """
     crossing_points = []
+    first_conflicts = {}  # Track first conflict for each aircraft pair
     
     for i, fp1 in enumerate(flight_plans):
         for j, fp2 in enumerate(flight_plans):
@@ -491,28 +493,35 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
                         phase1 = get_phase_for_time(waypoints1, wp1.get_time_minutes())
                         phase2 = get_phase_for_time(waypoints2, wp2.get_time_minutes())
                         
-                        crossing_points.append({
-                            'flight1': fp1.get_route_identifier(),
-                            'flight2': fp2.get_route_identifier(),
-                            'flight1_idx': i,
-                            'flight2_idx': j,
-                            'waypoint1': wp1.name,
-                            'waypoint2': wp2.name,
-                            'lat1': wp1.lat,
-                            'lon1': wp1.lon,
-                            'lat2': wp2.lat,
-                            'lon2': wp2.lon,
-                            'alt1': wp1.altitude,
-                            'alt2': wp2.altitude,
-                            'stage1': phase1,
-                            'stage2': phase2,
-                            'time1': wp1.get_time_minutes(),
-                            'time2': wp2.get_time_minutes(),
-                            'distance': distance,
-                            'altitude_diff': altitude_diff,
-                            'conflict_type': 'enroute',
-                            'is_waypoint': True
-                        })
+                        conflict_time = min(wp1.get_time_minutes(), wp2.get_time_minutes())
+                        aircraft_pair = (i, j)
+                        
+                        # Only add if this is the first conflict for this aircraft pair
+                        if aircraft_pair not in first_conflicts or conflict_time < first_conflicts[aircraft_pair]['time']:
+                            conflict = {
+                                'flight1': fp1.get_route_identifier(),
+                                'flight2': fp2.get_route_identifier(),
+                                'flight1_idx': i,
+                                'flight2_idx': j,
+                                'waypoint1': wp1.name,
+                                'waypoint2': wp2.name,
+                                'lat1': wp1.lat,
+                                'lon1': wp1.lon,
+                                'lat2': wp2.lat,
+                                'lon2': wp2.lon,
+                                'alt1': wp1.altitude,
+                                'alt2': wp2.altitude,
+                                'stage1': phase1,
+                                'stage2': phase2,
+                                'time1': wp1.get_time_minutes(),
+                                'time2': wp2.get_time_minutes(),
+                                'distance': distance,
+                                'altitude_diff': altitude_diff,
+                                'conflict_type': 'enroute',
+                                'is_waypoint': True,
+                                'time': conflict_time
+                            }
+                            first_conflicts[aircraft_pair] = conflict
             
             # Check interpolated segments for conflicts
             segments1 = interpolate_route_segments(waypoints1)
@@ -535,33 +544,42 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
                         phase1 = get_phase_for_time(waypoints1, seg1['time'])
                         phase2 = get_phase_for_time(waypoints2, seg2['time'])
                         
-                        crossing_points.append({
-                            'flight1': fp1.get_route_identifier(),
-                            'flight2': fp2.get_route_identifier(),
-                            'flight1_idx': i,
-                            'flight2_idx': j,
-                            'waypoint1': f"{seg1['lat']:.4f},{seg1['lon']:.4f}",
-                            'waypoint2': f"{seg2['lat']:.4f},{seg2['lon']:.4f}",
-                            'lat1': seg1['lat'],
-                            'lon1': seg1['lon'],
-                            'lat2': seg2['lat'],
-                            'lon2': seg2['lon'],
-                            'alt1': seg1['altitude'],
-                            'alt2': seg2['altitude'],
-                            'stage1': phase1,
-                            'stage2': phase2,
-                            'time1': seg1['time'],
-                            'time2': seg2['time'],
-                            'distance': distance,
-                            'altitude_diff': altitude_diff,
-                            'conflict_type': 'enroute',
-                            'is_waypoint': False,
-                            'segment1': seg1['segment'],
-                            'segment2': seg2['segment']
-                        })
+                        conflict_time = min(seg1['time'], seg2['time'])
+                        aircraft_pair = (i, j)
+                        
+                        # Only add if this is the first conflict for this aircraft pair
+                        if aircraft_pair not in first_conflicts or conflict_time < first_conflicts[aircraft_pair]['time']:
+                            conflict = {
+                                'flight1': fp1.get_route_identifier(),
+                                'flight2': fp2.get_route_identifier(),
+                                'flight1_idx': i,
+                                'flight2_idx': j,
+                                'waypoint1': f"{seg1['lat']:.4f},{seg1['lon']:.4f}",
+                                'waypoint2': f"{seg2['lat']:.4f},{seg2['lon']:.4f}",
+                                'lat1': seg1['lat'],
+                                'lon1': seg1['lon'],
+                                'lat2': seg2['lat'],
+                                'lon2': seg2['lon'],
+                                'alt1': seg1['altitude'],
+                                'alt2': seg2['altitude'],
+                                'stage1': phase1,
+                                'stage2': phase2,
+                                'time1': seg1['time'],
+                                'time2': seg2['time'],
+                                'distance': distance,
+                                'altitude_diff': altitude_diff,
+                                'conflict_type': 'enroute',
+                                'is_waypoint': False,
+                                'segment1': seg1['segment'],
+                                'segment2': seg2['segment'],
+                                'time': conflict_time
+                            }
+                            first_conflicts[aircraft_pair] = conflict
             
             print(f"  Found {segment_conflicts} segment conflicts")
     
+    # Convert first_conflicts dict to list
+    crossing_points = list(first_conflicts.values())
     return crossing_points
 
 # =============================================================================
@@ -817,6 +835,7 @@ def filter_duplicate_conflicts(conflicts: List[Dict[str, Any]]) -> List[Dict[str
 def print_and_write_conflict_report(data: Dict[str, Any], output_file: str = CONFLICT_LIST_FILE) -> None:
     """
     Print and write a formatted conflict report.
+    Only reports the FIRST conflict between each aircraft pair.
     
     Args:
         data: Analysis data containing conflicts
@@ -825,28 +844,28 @@ def print_and_write_conflict_report(data: Dict[str, Any], output_file: str = CON
     scenario = data.get('scenario', {})
     conflicts = scenario.get('actual_conflicts', [])
     all_routes = set(data.get('flight_plans', []))
-    
+
     output = []
-    print("Conflicts Found:")
+    print("First Conflicts Found:")
     print("=" * 50)
-    output.append("Conflicts Found:")
+    output.append("First Conflicts Found:")
     output.append("=" * 50)
-    
+
     if not conflicts:
-        print("No conflicts found with current criteria.")
-        output.append("No conflicts found with current criteria.")
+        print("No first conflicts found with current criteria.")
+        output.append("No first conflicts found with current criteria.")
         # Always write the file, even if no conflicts
         with open(output_file, "w", encoding="utf-8") as f:
             f.write("\n".join(output))
         logging.info(f"Conflict report written to {output_file}")
         return
-    
+
     # Filter duplicate conflicts
     filtered_conflicts = filter_duplicate_conflicts(conflicts)
     
-    print(f"\nTotal Conflicts: {len(filtered_conflicts)}\n")
+    print(f"\nTotal First Conflicts: {len(filtered_conflicts)}\n")
     output.append("")
-    output.append(f"Total Conflicts: {len(filtered_conflicts)}")
+    output.append(f"Total First Conflicts: {len(filtered_conflicts)}")
     output.append("")
     
     # Print each conflict
@@ -907,17 +926,17 @@ def print_and_write_conflict_report(data: Dict[str, Any], output_file: str = CON
     routes_without_conflicts = sorted(all_routes - routes_with_conflicts)
     
     print("")
-    print("The following routes do not have any conflicts:")
+    print("The following routes do not have any first conflicts:")
     output.append("")
-    output.append("The following routes do not have any conflicts:")
+    output.append("The following routes do not have any first conflicts:")
     
     if routes_without_conflicts:
         for route in routes_without_conflicts:
             print(route)
             output.append(route)
     else:
-        print("(All routes have at least one conflict)")
-        output.append("(All routes have at least one conflict)")
+        print("(All routes have at least one first conflict)")
+        output.append("(All routes have at least one first conflict)")
     
     # Write to file
     with open(output_file, "w", encoding="utf-8") as f:

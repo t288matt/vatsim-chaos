@@ -2,7 +2,10 @@
 
 ## System Overview
 
-- The ATC Conflict Analysis System is a Python-based application designed to analyze SimBrief XML flight plans and identify potential air traffic conflicts for event scenario creation. The system helps the events team build challenging events for controllers and fun, dynamic events for pilots. It processes multiple flight plans simultaneously, detects conflicts using 3D spatial analysis, and generates both detailed reports and visual outputs.
+The ATC Conflict Analysis System is a Python-based application designed to analyze SimBrief XML flight plans and identify potential air traffic conflicts for event scenario creation. The system helps the events team build challenging events for controllers and fun, dynamic events for pilots. It processes multiple flight plans simultaneously, detects conflicts using 3D spatial analysis, and generates both detailed reports and visual outputs.
+
+**Key Concept: First Conflicts**
+The system focuses on identifying "first conflicts" - the initial point where two aircraft first meet conflict criteria during their flights. This is critical for event planning as it represents the moment when ATC first needs to intervene between aircraft pairs, rather than tracking every subsequent conflict between the same aircraft.
 
 ## Architecture Principles
 
@@ -11,6 +14,7 @@
 - **Data-Driven**: JSON-based data exchange between components
 - **Visualization-First**: KML output for Google Earth integration
 - **Event-Focused**: Optimized for event scenario workflows
+- **First Conflict Priority**: Tracks only the initial conflict between aircraft pairs for ATC intervention planning
 
 ## System Components
 
@@ -40,18 +44,21 @@
 - Analyze both waypoint and enroute conflicts
 - Optimize departure times for maximum conflicts
 - Generate comprehensive conflict scenarios for events
+- **Identify and track only first conflicts between aircraft pairs**
 
 **Core Algorithms**:
 - **Distance Calculation**: Haversine formula for lateral separation
-- **Route Interpolation**: 10-point interpolation between waypoints
+- **Route Interpolation**: Configurable spacing (default 2nm) between waypoints
 - **Phase Detection**: TOC/TOD-based climb/cruise/descent determination
 - **Conflict Filtering**: Altitude thresholds and duplicate detection
+- **First Conflict Detection**: Tracks earliest conflict between each aircraft pair
 
 **Conflict Criteria**:
 - Lateral separation < 3 nautical miles
 - Vertical separation < 900 feet
 - Aircraft altitude > 2500 feet
 - Duplicate filtering within 4 NM
+- **First conflict only**: Only the earliest conflict between aircraft pairs is reported
 
 ### 3. Scheduling & Briefing
 **File**: `generate_schedule_conflicts.py`
@@ -125,7 +132,8 @@ class Waypoint:
     'time1/time2': float,     # Arrival times (minutes)
     'stage1/stage2': str,     # Flight phases
     'conflict_type': str,      # 'at waypoint' or 'between waypoints'
-    'is_waypoint': bool       # True for waypoint conflicts
+    'is_waypoint': bool,      # True for waypoint conflicts
+    'time': float             # Earliest conflict time (for first conflict detection)
 }
 ```
 
@@ -144,31 +152,6 @@ class Waypoint:
   "timeline": [ ... ]
 }
 ```
-- `pilot_briefing.txt`: Human-readable conflict timing
-
-## File Organization
-
-```
-Chaos2/
-├── Core Analysis
-│   ├── conflict_analyzer.py      # Main analysis engine
-│   ├── conflicts_list.py         # Conflict reporting
-│   └── conflict_list.txt         # Formatted output
-├── Data Processing
-│   ├── simbrief_xml_flightplan_extractor.py  # XML extraction
-│   └── merge_kml_flightplans.py             # KML merging
-├── Input Data
-│   └── *.xml                    # SimBrief XML files
-├── Output Data
-│   ├── temp/                    # Generated data files
-│   │   ├── *.kml               # Individual KML files
-│   │   ├── *_data.json         # Flight plan data
-│   │   └── conflict_analysis.json  # Analysis results
-│   └── merged_flightplans.kml  # Combined visualization
-└── Documentation
-    ├── README.md               # User documentation
-    └── ARCHITECTURE.md         # This document
-```
 
 ## Key Technical Decisions
 
@@ -179,7 +162,7 @@ Chaos2/
 
 ### 2. Spatial Analysis
 - **Distance Calculation**: Haversine formula for accurate nautical mile calculations
-- **Interpolation**: 10-point linear interpolation for enroute conflict detection
+- **Interpolation**: Configurable spacing (default 2nm) for enroute conflict detection
 - **Coordinate System**: WGS84 lat/lon with nautical mile distances
 
 ### 3. Data Persistence
@@ -191,6 +174,7 @@ Chaos2/
 - **Two-Phase Approach**: Waypoint conflicts + interpolated enroute conflicts
 - **Filtering**: Altitude thresholds and duplicate detection
 - **Optimization**: Departure time optimization for event scenarios
+- **First Conflict Focus**: Only tracks the earliest conflict between aircraft pairs
 
 ### 5. Visualization Strategy
 - **Platform**: Google Earth via KML format
@@ -230,8 +214,8 @@ Chaos2/
 The system is designed for local deployment with minimal setup:
 1. Place SimBrief XML files in project directory
 2. Run extraction script: `python simbrief_xml_flightplan_extractor.py`
-3. Run analysis: `python conflict_analyzer.py`
-4. Generate reports: `python conflicts_list.py`
+3. Run analysis script: `python analyze_and_report_conflicts.py`
+4. Generate schedule: `python generate_schedule_conflicts.py --start 14:00 --end 18:00`
 5. Merge visualization: `python merge_kml_flightplans.py`
 
 This architecture provides a robust foundation for ATC conflict analysis while maintaining simplicity and ease of use for event scenario creation and execution. 

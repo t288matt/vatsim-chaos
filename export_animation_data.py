@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 """
-Animation Data Export Script
-============================
+Animation Data Exporter for ATC Conflict Analysis System
 
 Reads existing ATC conflict analysis files and exports animation-ready data
-for 3D web visualization. Does not modify any existing scripts or data.
+for web visualization.
 
-This script reads:
+Input files:
 - temp/conflict_analysis.json (flight plans and conflicts)
-- event_schedule.csv (departure times)
+- event_schedule.csv (departure timing)
 - atc_briefing.txt (conflict timing info)
 
-Exports:
-- animation_data.json (complete animation timeline)
+Output files:
+- animation_data.json (complete animation data)
 - flight_tracks.json (individual flight paths)
 - conflict_points.json (conflict locations and timing)
 """
@@ -21,10 +20,11 @@ import json
 import csv
 import re
 import os
+import logging
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
-from typing import Dict, List, Tuple, Any
-import logging
+from typing import List, Dict, Tuple, Any
+from env import MIN_ALTITUDE_THRESHOLD
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -76,21 +76,25 @@ class AnimationDataExporter:
             return False
     
     def load_schedule(self) -> bool:
-        """Load departure schedule from existing CSV"""
+        """Load departure schedule from atc_briefing.txt instead of CSV"""
         try:
-            with open('event_schedule.csv', 'r') as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    flight_id = row.get('Aircraft', '')  # Changed from 'flight_id'
-                    departure_time = row.get('Departure_Time', '')  # Changed from 'departure_time'
-                    if flight_id and departure_time:
-                        self.schedule[flight_id] = departure_time
-            
-            logger.info(f"Loaded schedule for {len(self.schedule)} flights")
+            with open('pilot_briefing.txt', 'r') as f:
+                content = f.read()
+            # Parse DEPARTURE SCHEDULE section
+            schedule_section = re.search(r'DEPARTURE SCHEDULE:\n(-+\n)?([\s\S]+?)\n\n', content)
+            if not schedule_section:
+                logger.warning("No DEPARTURE SCHEDULE section found in pilot_briefing.txt.")
+                return False
+            schedule_lines = schedule_section.group(2).strip().split('\n')
+            for line in schedule_lines:
+                match = re.match(r'(\d{2}:\d{2}) - ([A-Z0-9\-]+) \((\d+) conflicts?\)', line)
+                if match:
+                    departure_time, flight_id, _ = match.groups()
+                    self.schedule[flight_id] = departure_time
+            logger.info(f"Loaded schedule for {len(self.schedule)} flights from pilot_briefing.txt")
             return True
-            
         except FileNotFoundError:
-            logger.warning("event_schedule.csv not found. Using default timing.")
+            logger.warning("pilot_briefing.txt not found. Using default timing.")
             return False
     
     def parse_conflict_timing(self) -> Dict[str, List[Dict]]:
@@ -98,7 +102,7 @@ class AnimationDataExporter:
         conflict_timing = {}
         
         try:
-            with open('atc_briefing.txt', 'r') as f:
+            with open('pilot_briefing.txt', 'r') as f:
                 content = f.read()
             
             # Parse conflict timing from briefing
@@ -114,10 +118,10 @@ class AnimationDataExporter:
                     'location': location
                 }
             
-            logger.info(f"Parsed {len(conflict_timing)} conflict timings from briefing")
+            logger.info(f"Parsed {len(conflict_timing)} conflict timings from pilot briefing")
             
         except FileNotFoundError:
-            logger.warning("atc_briefing.txt not found. Using estimated timing.")
+            logger.warning("pilot_briefing.txt not found. Using estimated timing.")
         
         return conflict_timing
     
@@ -245,11 +249,13 @@ class AnimationDataExporter:
                     'time_from_departure': wp['time_from_departure'],
                     'stage': wp['stage']
                 })
+            # Use scheduled departure time if available
+            departure_time = self.schedule.get(flight_id, '14:00')
             track = {
                 'flight_id': flight_id,
                 'departure': departure,
                 'arrival': arrival,
-                'departure_time': '14:00',
+                'departure_time': departure_time,
                 'waypoints': track_waypoints,
                 'conflicts': []
             }
@@ -324,33 +330,69 @@ class AnimationDataExporter:
             conflict_points = self.generate_conflict_points()
             timeline = self.generate_timeline()
             
+            # Filter conflicts based on altitude threshold
+            filtered_conflicts = []
+            logger.info(f"Starting altitude filtering with {len(conflict_points)} conflicts")
+            for conflict in conflict_points:
+                # Get altitudes from the original conflict data
+                conflict_id = conflict.get('id', 'unknown')
+                if conflict_id.startswith('conflict_'):
+                    try:
+                        conflict_index = int(conflict_id.split('_')[1])
+                        if conflict_index < len(self.conflicts):
+                            original_conflict = self.conflicts[conflict_index]
+                            alt1_orig = original_conflict.get('alt1', 0)
+                            alt2_orig = original_conflict.get('alt2', 0)
+                            # Check if both aircraft are above the altitude threshold
+                            if alt1_orig >= MIN_ALTITUDE_THRESHOLD and alt2_orig >= MIN_ALTITUDE_THRESHOLD:
+                                filtered_conflicts.append(conflict)
+                                logger.info(f"Keeping conflict {conflict_id}: altitudes {alt1_orig}ft/{alt2_orig}ft (both above {MIN_ALTITUDE_THRESHOLD}ft)")
+                            else:
+                                logger.info(f"Filtering out conflict {conflict_id}: altitudes {alt1_orig}ft/{alt2_orig}ft (below {MIN_ALTITUDE_THRESHOLD}ft threshold)")
+                        else:
+                            logger.warning(f"Conflict index {conflict_index} out of range for {conflict_id}")
+                            filtered_conflicts.append(conflict)  # Keep it if we can't verify
+                    except (ValueError, IndexError) as e:
+                        logger.warning(f"Error processing conflict {conflict_id}: {e}")
+                        filtered_conflicts.append(conflict)  # Keep it if we can't verify
+                else:
+                    # Fallback: check the single altitude field
+                    alt = conflict.get('altitude', 0)
+                    if alt >= MIN_ALTITUDE_THRESHOLD:
+                        filtered_conflicts.append(conflict)
+                        logger.info(f"Keeping conflict {conflict_id}: altitude {alt}ft (above {MIN_ALTITUDE_THRESHOLD}ft)")
+                    else:
+                        logger.info(f"Filtering out conflict {conflict_id}: altitude {alt}ft (below {MIN_ALTITUDE_THRESHOLD}ft threshold)")
+            
+            logger.info(f"Altitude filtering complete: {len(filtered_conflicts)} conflicts remaining out of {len(conflict_points)}")
+            
             # Update metadata
             self.animation_data['metadata'].update({
                 'total_flights': len(tracks),
-                'total_conflicts': len(conflict_points),
+                'total_conflicts': len(filtered_conflicts),
                 'event_duration': len(timeline)
             })
             
             self.animation_data['flights'] = tracks
-            self.animation_data['conflicts'] = conflict_points
+            self.animation_data['conflicts'] = filtered_conflicts
             self.animation_data['timeline'] = timeline
             
             # Export main animation data
-            with open('animation_data.json', 'w') as f:
+            with open('web_visualization/animation_data.json', 'w') as f:
                 json.dump(self.animation_data, f, indent=2)
             
             # Export individual files for web components
-            with open('flight_tracks.json', 'w') as f:
+            with open('web_visualization/flight_tracks.json', 'w') as f:
                 json.dump(tracks, f, indent=2)
             
-            with open('conflict_points.json', 'w') as f:
-                json.dump(conflict_points, f, indent=2)
+            with open('web_visualization/conflict_points.json', 'w') as f:
+                json.dump(filtered_conflicts, f, indent=2)
             
-            logger.info("✅ Animation data exported successfully!")
-            logger.info(f"📁 Generated files:")
-            logger.info(f"   • animation_data.json - Complete animation data")
-            logger.info(f"   • flight_tracks.json - Individual flight paths")
-            logger.info(f"   • conflict_points.json - Conflict locations")
+            logger.info("Animation data exported successfully!")
+            logger.info(f"Generated files:")
+            logger.info(f"   animation_data.json - Complete animation data")
+            logger.info(f"   flight_tracks.json - Individual flight paths")
+            logger.info(f"   conflict_points.json - Conflict locations")
             
             return True
             
@@ -360,11 +402,13 @@ class AnimationDataExporter:
     
     def run(self) -> bool:
         """Run the complete export process"""
-        logger.info("🎬 Animation Data Exporter")
+        logger.info("Animation Data Exporter")
         logger.info("=" * 50)
         if not self.load_conflict_analysis():
             return False
-        # No schedule loading
+        self.load_schedule() # Load schedule from atc_briefing.txt
+        logger.info(f"Schedule keys: {list(self.schedule.keys())}")
+        logger.info(f"Flight names: {self.flight_names}")
         self.parse_conflict_timing()
         return self.export_animation_data()
 
@@ -375,8 +419,8 @@ def main():
     success = exporter.run()
     
     if success:
-        print("\n🎉 Animation data export completed!")
-        print("📁 Ready for 3D web visualization")
+        print("\nAnimation data export completed!")
+        print("Ready for 3D web visualization")
     else:
         print("\n❌ Animation data export failed!")
         print("💡 Make sure to run analysis first: python run_analysis.py --analyze-only")

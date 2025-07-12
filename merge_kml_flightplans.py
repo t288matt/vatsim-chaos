@@ -11,7 +11,7 @@ TEMP_DIR = "temp"
 
 # Find all KML files in the temp directory (except the merged output)
 if not os.path.exists(TEMP_DIR):
-    print(f"❌ Temp directory '{TEMP_DIR}' not found. Run the extractor script first.")
+    print(f"Temp directory '{TEMP_DIR}' not found. Run the extractor script first.")
     exit(1)
 
 kml_files = [f for f in os.listdir(TEMP_DIR) if f.endswith('.kml') and f != MERGED_FILENAME]
@@ -22,7 +22,7 @@ if not kml_files:
 
 print(f"Merging {len(kml_files)} KML files from {TEMP_DIR}:")
 for f in kml_files:
-    print(f"  • {f}")
+    print(f"  - {f}")
 
 # Create the root KML structure
 kml_ns = "http://www.opengis.net/kml/2.2"
@@ -51,4 +51,4 @@ for kml_file in kml_files:
 
 # Write the merged KML to main directory
 ET.ElementTree(root).write(MERGED_FILENAME, encoding='utf-8', xml_declaration=True)
-print(f"✅ Merged KML written to {MERGED_FILENAME}") 
+print(f"Merged KML written to {MERGED_FILENAME}") 

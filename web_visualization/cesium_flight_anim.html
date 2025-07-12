@@ -13,6 +13,30 @@
     #info p { margin: 4px 0; font-size: 12px; }
     #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: #00ff88; padding: 20px; border-radius: 8px; z-index: 20; }
     .conflict-alert { background: rgba(255,0,0,0.3); border-left: 3px solid #ff4444; padding: 4px; margin: 2px 0; }
+    #commentary-box { 
+      position: absolute; 
+      bottom: 10px; 
+      right: 10px; 
+      background: rgba(0,0,0,0.8); 
+      color: #00ff88; 
+      padding: 12px; 
+      border-radius: 6px; 
+      z-index: 10; 
+      font-family: Arial, sans-serif; 
+      max-width: 300px; 
+      max-height: 200px; 
+      overflow-y: auto;
+      border-left: 3px solid #00ff88;
+    }
+    #commentary-box h4 { margin: 0 0 8px 0; color: #00ff88; font-size: 14px; }
+    .departure-log { 
+      font-size: 11px; 
+      margin: 2px 0; 
+      padding: 2px 0; 
+      border-bottom: 1px solid rgba(0,255,136,0.3);
+    }
+    .departure-time { color: #ffff00; font-weight: bold; }
+    .flight-id { color: #00ffff; }
   </style>
 </head>
 <body>
@@ -29,7 +53,11 @@
   </div>
   <div id="controls" style="position:absolute;top:10px;right:10px;z-index:20;background:rgba(0,0,0,0.7);color:#fff;padding:10px;border-radius:6px;">
     <label>Aircraft Size: <input id="acft-size" type="range" min="64" max="1024" value="512" step="16"> <span id="acft-size-val">512</span></label><br>
-    <label>Font Size: <input id="font-size" type="range" min="3" max="32" value="3" step="1"> <span id="font-size-val">3</span> px</label>
+    <label>Font Size: <input id="font-size" type="range" min="3" max="32" value="16" step="1"> <span id="font-size-val">16</span> px</label>
+  </div>
+  <div id="commentary-box">
+    <h4>📢 Flight Commentary</h4>
+    <div id="departure-logs"></div>
   </div>
   <script>
     // Best practice: Set up Cesium viewer and timeline for animation
@@ -54,6 +82,8 @@
     let flightEntities = [];
     let labelVisible = true;
     let selectedFlightId = null;
+    let departedFlights = new Set(); // Track which flights have departed
+    let lastUpdateTime = 0; // Track last update time to avoid duplicate logs
     document.getElementById('toggle-labels').onclick = () => {
       labelVisible = !labelVisible;
       flightEntities.forEach(e => {
@@ -61,7 +91,7 @@
       });
     };
     let acftSize = 512;
-    let fontSize = 3;
+    let fontSize = 16;
     document.getElementById('acft-size').oninput = function() {
       acftSize = parseInt(this.value);
       document.getElementById('acft-size-val').textContent = acftSize;
@@ -219,6 +249,10 @@
       const minutes = Math.floor(seconds / 60);
       const timeStr = minutesToTimeString(minutes);
       document.getElementById('current-time').textContent = timeStr;
+      
+      // Check for new departures
+      checkForDepartures(minutes, timeStr);
+      
       const activeConflicts = conflicts.filter(conflict => {
         const conflictTime = conflict.time1 || 0;
         return Math.abs(minutes - conflictTime) < 2;
@@ -231,6 +265,32 @@
         alertDiv.innerHTML = `⚠️ ${conflict.flight1} vs ${conflict.flight2} at ${conflict.location}`;
         alertsDiv.appendChild(alertDiv);
       });
+    }
+    
+    function checkForDepartures(currentMinutes, timeStr) {
+      flights.forEach(flight => {
+        const departureMinutes = parseTimeToMinutes(flight.departure_time || '14:00');
+        if (currentMinutes >= departureMinutes && !departedFlights.has(flight.flight_id)) {
+          departedFlights.add(flight.flight_id);
+          logDeparture(flight.flight_id, timeStr, flight.departure_time);
+        }
+      });
+    }
+    
+    function logDeparture(flightId, currentTime, scheduledTime) {
+      const logsDiv = document.getElementById('departure-logs');
+      const logEntry = document.createElement('div');
+      logEntry.className = 'departure-log';
+      logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId}</span> departed (scheduled: ${scheduledTime})`;
+      logsDiv.appendChild(logEntry);
+      
+      // Keep only last 10 entries to prevent overflow
+      while (logsDiv.children.length > 10) {
+        logsDiv.removeChild(logsDiv.firstChild);
+      }
+      
+      // Auto-scroll to bottom
+      logsDiv.scrollTop = logsDiv.scrollHeight;
     }
     // Highlight selected flight
     viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
@@ -269,7 +329,13 @@
           ];
           createScheduledFlights();
         }
-        viewer.clock.onTick.addEventListener(updateUI);
+        // Remove viewer.clock.onTick.addEventListener(updateUI);
+        // Instead, use requestAnimationFrame for UI updates
+        function animationFrameUpdate() {
+          updateUI();
+          requestAnimationFrame(animationFrameUpdate);
+        }
+        requestAnimationFrame(animationFrameUpdate);
         updateUI();
       } catch (error) {
         document.getElementById('info').innerHTML += '<br>❌ Error loading data';

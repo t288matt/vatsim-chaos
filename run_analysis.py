@@ -169,7 +169,7 @@ class AnalysisRunner:
             
         except subprocess.CalledProcessError as e:
             self.log(f"Conflict Scheduling failed with exit code {e.returncode}", "ERROR")
-            if self.verbose and e.stderr:
+            if e.stderr:
                 print(f"Error output: {e.stderr}")
             return False
         except Exception as e:

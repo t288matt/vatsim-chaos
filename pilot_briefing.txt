@@ -1,0 +1,38 @@
+ATC CONFLICT EVENT BRIEFING
+==================================================
+Event Start: 14:00
+Event End: 18:00
+Duration: 240 minutes
+
+DEPARTURE SCHEDULE:
+------------------------------
+14:00 - YSSY-YSWG (2 conflicts)
+14:01 - YMER-YORG (1 conflicts)
+14:04 - YSNW-YWLM (1 conflicts)
+
+CONFLICT ANALYSIS:
+------------------------------
+
+YSSY-YSWG conflicts:
+  - With YMER-YORG at -34.7678,149.4399
+    Time: 14:27 (departure +27min)
+    Distance: 2.1nm, Alt diff: 0ft
+    Phase: cruise
+  - With YSNW-YWLM at -34.4184,150.6416
+    Time: 14:13 (departure +13min)
+    Distance: 2.5nm, Alt diff: 0ft
+    Phase: cruise
+
+YMER-YORG conflicts:
+  - With YSSY-YSWG at -34.7963,149.4166
+    Time: 14:30 (departure +29min)
+    Distance: 2.1nm, Alt diff: 0ft
+    Phase: cruise
+
+YSNW-YWLM conflicts:
+  - With YSSY-YSWG at -34.3785,150.6301
+    Time: 14:12 (departure +8min)
+    Distance: 2.5nm, Alt diff: 0ft
+    Phase: cruise
+
+Total conflicts: 4

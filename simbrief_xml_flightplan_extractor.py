@@ -130,7 +130,7 @@ def parse_waypoint_from_fix(fix_element) -> Optional[Waypoint]:
         return Waypoint(name, lat, lon, altitude, time_total, stage, waypoint_type)
         
     except (ValueError, TypeError) as e:
-        print(f"⚠️  Error parsing waypoint {ident}: {e}")
+        print(f"Error parsing waypoint {ident}: {e}")
         return None
 
 def parse_airport_info(airport_element) -> Optional[Waypoint]:
@@ -158,7 +158,7 @@ def parse_airport_info(airport_element) -> Optional[Waypoint]:
         return Waypoint(name, lat, lon, elevation, 0, "DEP", "airport")
         
     except (ValueError, TypeError) as e:
-        print(f"⚠️  Error parsing airport {icao}: {e}")
+        print(f"Error parsing airport {icao}: {e}")
         return None
 
 def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
@@ -183,28 +183,28 @@ def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
             departure = parse_airport_info(origin_elem)
             if departure:
                 flight_plan.set_departure(departure)
-                print(f"📍 Departure: {departure}")
+                print(f"Departure: {departure}")
         
         # Parse arrival airport
         if dest_elem:
             arrival = parse_airport_info(dest_elem)
             if arrival:
                 flight_plan.set_arrival(arrival)
-                print(f"🎯 Arrival: {arrival}")
+                print(f"Arrival: {arrival}")
         
         # Parse main navlog waypoints
         navlog = root.find('navlog')
         if navlog is not None:
-            print(f"\n📋 Parsing main navlog waypoints...")
+            print(f"\nParsing main navlog waypoints...")
             for fix in navlog.findall('fix'):
                 waypoint = parse_waypoint_from_fix(fix)
                 if waypoint:
                     flight_plan.add_waypoint(waypoint)
-                    print(f"  • {waypoint}")
+                    print(f"  - {waypoint}")
         # Do NOT parse alternate navlog waypoints anymore
         # alt_navlog = root.find('alternate_navlog')
         # if alt_navlog is not None:
-        #     print(f"\n📋 Parsing alternate navlog waypoints...")
+        #     print(f"\nParsing alternate navlog waypoints...")
         #     for fix in alt_navlog.findall('fix'):
         #         waypoint = parse_waypoint_from_fix(fix)
         #         if waypoint:
@@ -214,7 +214,7 @@ def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
         return flight_plan
         
     except Exception as e:
-        print(f"❌ Error parsing XML file: {e}")
+        print(f"Error parsing XML file: {e}")
         return None
 
 def create_kml_from_flight_plan(flight_plan: FlightPlan, filename: str) -> str:
@@ -362,70 +362,70 @@ def save_flight_data(flight_plan: FlightPlan, base_filename: str):
     temp_dir = "temp"
     if not os.path.exists(temp_dir):
         os.makedirs(temp_dir)
-        print(f"📁 Created temp directory: {temp_dir}")
+        print(f"Created temp directory: {temp_dir}")
     
     # Save as JSON in temp directory
     json_filename = os.path.join(temp_dir, f"{base_filename}_data.json")
     with open(json_filename, 'w', encoding='utf-8') as f:
         json.dump(flight_plan.to_dict(), f, indent=2, ensure_ascii=False)
-    print(f"✅ Saved flight data to {json_filename}")
+    print(f"Saved flight data to {json_filename}")
     
     # Save as KML in temp directory
     kml_filename = os.path.join(temp_dir, f"{base_filename}.kml")
     kml_content = create_kml_from_flight_plan(flight_plan, base_filename)
     with open(kml_filename, 'w', encoding='utf-8') as f:
         f.write(kml_content)
-    print(f"✅ Saved KML to {kml_filename}")
+    print(f"Saved KML to {kml_filename}")
     
     # Print summary
     all_waypoints = flight_plan.get_all_waypoints()
-    print(f"\n📊 Flight Plan Summary:")
-    print(f"   Route: {flight_plan.origin} → {flight_plan.destination}")
+    print(f"\nFlight Plan Summary:")
+    print(f"   Route: {flight_plan.origin} to {flight_plan.destination}")
     print(f"   Total waypoints: {len(all_waypoints)}")
     print(f"   Route: {flight_plan.route}")
     
     if all_waypoints:
-        print(f"\n📍 Waypoints:")
+        print(f"\nWaypoints:")
         for i, wp in enumerate(all_waypoints):
             print(f"   {i+1:2d}. {wp.name:12s} {wp.lat:8.4f}, {wp.lon:8.4f} {wp.altitude:6d}ft {wp.get_time_formatted()} (elapsed)")
 
 def main():
     """Main function to process all SimBrief XML files in the directory"""
     try:
-        print("🚁 SimBrief XML Flight Plan Extractor")
+        print("SimBrief XML Flight Plan Extractor")
         print("=" * 50)
         temp_dir = "temp"
         if os.path.exists(temp_dir):
             import shutil
             shutil.rmtree(temp_dir)
-            print(f"🗑️  Removed existing temp directory: {temp_dir}")
+            print("Removed existing temp directory: temp")
         xml_files = [f for f in os.listdir('.') if f.endswith('.xml')]
         if not xml_files:
-            print("❌ No XML files found in the current directory")
+            print(f"No XML files found in the current directory")
             exit(1)
-        print(f"📁 Found {len(xml_files)} XML files to process:")
+        print(f"Found {len(xml_files)} XML files to process:")
         for xml_file in xml_files:
-            print(f"   • {xml_file}")
+            print(f"   - {xml_file}")
         print("\n" + "=" * 50)
         success_count = 0
         for xml_filename in xml_files:
-            print(f"\n🔄 Processing {xml_filename}...")
-            print("-" * 40)
+            print(f"Processing {xml_filename}...")
+            print("----------------------------------------")
             flight_plan = extract_flight_plan_from_xml(xml_filename)
             if not flight_plan:
-                print(f"❌ Failed to extract flight plan from {xml_filename}")
+                print(f"Failed to extract flight plan from {xml_filename}")
                 continue
             base_filename = xml_filename.replace('.xml', '')
             save_flight_data(flight_plan, base_filename)
-            print(f"✅ Successfully processed {xml_filename}")
+            print(f"Successfully processed {xml_filename}")
             success_count += 1
         if success_count == 0:
-            print("❌ No flight plans were successfully processed. Exiting.")
+            print("No flight plans were successfully processed. Exiting.")
             exit(1)
-        print(f"\n🎉 Completed processing {success_count} XML files!")
-        print("📁 All flight data and KML files have been created in temp directory.")
+        print(f"\nCompleted processing {success_count} XML files!")
+        print("All flight data and KML files have been created in temp directory.")
     except Exception as e:
-        print(f"❌ Fatal error in extraction: {e}")
+        print(f"Fatal error in extraction: {e}")
         import traceback
         traceback.print_exc()
         exit(2)

@@ -2,16 +2,17 @@
 
 A Python-based system for generating chaotic, conflicting SimBrief XML flight plans to create challenging air traffic control (ATC) event scenarios. The system is designed to help the events team create situations where controllers are challenged and pilots can enjoy fun, dynamic events.
 
-## 🎯 Purpose
+## Purpose
 
 This system enables event organizers to:
 - **Parse SimBrief XML flight plans** and analyze multiple routes
 - **Intentionally generate and identify conflicts** between aircraft to maximize ATC workload and event excitement
+- **Focus on "First Conflicts"** - the initial point where two aircraft first meet conflict criteria, representing the moment ATC first needs to intervene
 - **Provide detailed conflict analysis** with location, timing, and phase information
 - **Detect conflicts both at waypoints and between waypoints** for comprehensive event realism
 - **Generate KML files** for Google Earth visualization with diverse color schemes
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.6+
@@ -59,7 +60,7 @@ Open web_visualization/cesium_flight_anim.html in your browser
 
 ### Expected Output
 - `temp/conflict_analysis.json` - Detailed conflict data
-- `conflict_list.txt` - Formatted conflict list
+- `conflict_list.txt` - Formatted conflict list (first conflicts only)
 - `merged_flightplans.kml` - Combined KML file for Google Earth
 - Individual KML files in `temp/` directory
 - `pilot_briefing.txt` - Pilot conflict briefing (authoritative, includes all departure times and conflict details)
@@ -68,7 +69,7 @@ Open web_visualization/cesium_flight_anim.html in your browser
 - `web_visualization/conflict_points.json` - Conflict location/timing (filtered by altitude)
 - `web_visualization/cesium_flight_anim.html` - 3D web visualization
 
-## 🔍 Conflict Detection Features
+## Conflict Detection Features
 
 ### Detection Methods
 - **At Waypoints**: Detects conflicts when aircraft are at the same named waypoint
@@ -80,22 +81,30 @@ Open web_visualization/cesium_flight_anim.html in your browser
 - **Lateral Separation**: < 3 nautical miles
 - **Vertical Separation**: < 900 feet
 - **Altitude Threshold**: Aircraft must be above 5000 ft
-- **Route Interpolation**: 10 interpolation points between waypoints for enroute conflicts
+- **Route Interpolation**: Configurable spacing (default 2nm) between waypoints for enroute conflicts
 - **Duplicate Filtering**: Ignores conflicts within 4 NM of previous conflicts between same routes
 
+### First Conflict Concept
+The system focuses on **"First Conflicts"** - the initial point where two aircraft first meet conflict criteria during their flights. This is critical for event planning because:
+
+- **ATC Intervention Point**: Represents the moment when controllers first need to intervene between aircraft pairs
+- **Event Planning**: Helps organizers understand when conflicts will first occur
+- **Resource Allocation**: Enables better planning of ATC resources and timing
+- **Realistic Scenarios**: Focuses on the most critical conflict moment rather than tracking every subsequent conflict
+
 ### Output Formats
-- **Detailed Conflict List**: Shows all conflicts with location, altitudes, times, and phases
+- **Detailed First Conflict List**: Shows only the first conflict between each aircraft pair with location, altitudes, times, and phases
 - **JSON Export**: Structured data for further analysis (stored in temp directory)
 - **KML Visualization**: Google Earth compatible files with 40 diverse colors
 - **Smart Location Format**: Shows conflicts between waypoints as "X NM [direction] of [waypoint]"
 
-## 📁 System Components
+## System Components
 
 ### Core Analysis
 - `run_analysis.py` - Master workflow script (runs complete analysis pipeline)
-- `analyze_and_report_conflicts.py` - Main analysis engine
+- `analyze_and_report_conflicts.py` - Main analysis engine (focuses on first conflicts)
 - `conflicts_list.py` - Conflict listing and reporting
-- `conflict_list.txt` - Formatted conflict output
+- `conflict_list.txt` - Formatted conflict output (first conflicts only)
 
 ### Data Processing
 - `simbrief_xml_flightplan_extractor.py` - Converts SimBrief XML to KML for visualization
@@ -114,7 +123,7 @@ Open web_visualization/cesium_flight_anim.html in your browser
 - `web_visualization/cesium_flight_anim.html` - 3D animated web visualization (CesiumJS)
 - 40 diverse colors for easy route identification
 
-## 🌐 Web Visualization Features
+## Web Visualization Features
 - 3D animated aircraft with scalable icons
 - Real-time altitude labels (below aircraft)
 - Conflict points and live alerts
@@ -122,7 +131,7 @@ Open web_visualization/cesium_flight_anim.html in your browser
 - Toggleable flight labels
 - Loads data from JSON (no server required)
 
-## 📊 Conflict Types
+## Conflict Types
 
 ### At Waypoints
 - **Location**: Shows waypoint names (e.g., "YORG/VIRUR")
@@ -135,7 +144,7 @@ Open web_visualization/cesium_flight_anim.html in your browser
 - **Phase**: Determined by position relative to TOC/TOD (climb, cruise, descent)
 - **Segments**: Shows route segments involved
 
-## 🛠️ Technical Details
+## Technical Details
 
 ### Flight Plan Structure
 The system parses SimBrief XML files containing:
@@ -161,13 +170,15 @@ The system parses SimBrief XML files containing:
 1. **Distance**: Haversine formula for lateral separation
 2. **Altitude**: Absolute difference between aircraft altitudes
 3. **Time**: Converted from seconds to minutes for analysis
-4. **Interpolation**: Linear interpolation between waypoints
+4. **Interpolation**: Configurable spacing (default 2nm) between waypoints
 5. **Nearest Waypoint**: Calculates distance/direction from closest waypoint on either route
+6. **First Conflict Detection**: Tracks only the earliest conflict between each aircraft pair
 
 ### Filtering Logic
 - **Low Altitude**: Aircraft ≤ 5000 ft excluded
 - **Duplicate Conflicts**: Conflicts within 4 NM of previous conflicts between same routes ignored
 - **Invalid Data**: Malformed XML entries skipped
+- **First Conflict Only**: Only the earliest conflict between aircraft pairs is reported
 
 ### Color Scheme
 The system uses 40 diverse colors for route visualization:
@@ -177,9 +188,14 @@ The system uses 40 diverse colors for route visualization:
 - **Metallic tones**: Gold, Amber, Lavender, Violet, Aqua, Rose, Orchid
 - **Light variants**: Light Gold, Light Lavender, Light Mint, Light Salmon, Light Plum
 
-## 📋 Example Output
+## Example Output
 
 ```
+First Conflicts Found:
+==================================================
+
+Total First Conflicts: 1
+
 1. YMCO-YMAY & YMEN-YMAY
    Location: YMAY/YMAY
    Conflict Type: at waypoint
@@ -199,28 +215,29 @@ The system uses 40 diverse colors for route visualization:
    Phase: descent/cruise
 ```
 
-## 🎪 Event Scenario Applications
+## Event Scenario Applications
 
 This system is designed for event scenario creation, enabling the events team to:
 
 ### Scenario Creation
-- **Maximize Conflict Density**: Generate as many conflicts as possible in a given airspace
+- **Maximize First Conflict Density**: Generate as many initial conflicts as possible in a given airspace
 - **Create Chaotic Situations**: Overlap routes and phases to challenge controllers
 - **Increase Realism and Workload**: Simulate high-traffic, high-stress environments for live events
 - **Deliver Fun and Dynamic Events**: Provide pilots with engaging and unpredictable flying experiences
+- **Focus on Critical Moments**: Identify when ATC first needs to intervene between aircraft pairs
 
 ### Event Execution
-- **Readable Output**: Clear conflict descriptions for event planning and briefings
+- **Readable Output**: Clear first conflict descriptions for event planning and briefings
 - **Visual Analysis**: Google Earth integration for spatial understanding
 - **Structured Data**: JSON format for further analysis and integration
 
-## 🔧 Advanced Usage
+## Advanced Usage
 
 ### Custom Analysis
 ```bash
 # Run individual components
 python simbrief_xml_flightplan_extractor.py  # Extract data only
-python analyze_and_report_conflicts.py        # Analyze conflicts only
+python analyze_and_report_conflicts.py        # Analyze first conflicts only
 python conflicts_list.py                      # Generate report only
 python merge_kml_flightplans.py              # Merge KML files only
 python export_animation_data.py              # Export web visualization data only
@@ -233,23 +250,32 @@ python run_analysis.py
 
 # Run specific steps only
 python run_analysis.py --extract-only      # Extract flight plan data only
-python run_analysis.py --analyze-only      # Run conflict analysis only
-python run_analysis.py --report-only       # Generate conflict report only
+python run_analysis.py --analyze-only      # Run first conflict analysis only
+python run_analysis.py --report-only       # Generate first conflict report only
 python run_analysis.py --merge-only        # Merge KML files only
 python run_analysis.py --schedule-only     # Generate event schedule only
 python run_analysis.py --frontend-only     # Update web visualization only
 ```
 
+### Configuration
+The system uses `env.py` for configurable parameters:
+- `LATERAL_SEPARATION_THRESHOLD`: Lateral separation for conflicts (default: 3.0nm)
+- `VERTICAL_SEPARATION_THRESHOLD`: Vertical separation for conflicts (default: 900ft)
+- `MIN_ALTITUDE_THRESHOLD`: Minimum altitude for conflict detection (default: 5000ft)
+- `INTERPOLATION_SPACING_NM`: Distance between interpolated route points (default: 2.0nm)
+
 ### File Organization
 ```
 Chaos2/
 ├── Core Analysis
-│   ├── analyze_and_report_conflicts.py      # Main analysis engine
+│   ├── analyze_and_report_conflicts.py      # Main analysis engine (first conflicts)
 │   ├── conflicts_list.py         # Conflict reporting
-│   └── conflict_list.txt         # Formatted output
+│   └── conflict_list.txt         # Formatted output (first conflicts only)
 ├── Data Processing
 │   ├── simbrief_xml_flightplan_extractor.py  # XML extraction
 │   └── merge_kml_flightplans.py             # KML merging
+├── Configuration
+│   └── env.py                    # Configurable parameters
 ├── Input Data
 │   └── *.xml                    # SimBrief XML files
 ├── Output Data
@@ -258,12 +284,17 @@ Chaos2/
 │   │   ├── *_data.json         # Flight plan data
 │   │   └── conflict_analysis.json  # Analysis results
 │   └── merged_flightplans.kml  # Combined visualization
+├── Web Visualization
+│   ├── cesium_flight_anim.html  # 3D web visualization
+│   ├── animation_data.json      # Animation data
+│   ├── flight_tracks.json       # Flight path data
+│   └── conflict_points.json     # First conflict data
 └── Documentation
     ├── README.md               # User documentation
-    └── ARCHITECTURE.md         # Technical architecture
+    └── ARCHITECTURE.md         # System architecture
 ```
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 1. **No XML files found**: Ensure SimBrief XML files are in the project directory
@@ -277,7 +308,7 @@ Chaos2/
 - `⚠️ Error parsing waypoint`: Check XML file format and data integrity
 - `❌ Need at least 2 flight plans`: Add more flight plan files for analysis
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 ### Planned Features
 1. **Real-time Processing**: WebSocket integration for live flight data
@@ -293,14 +324,14 @@ The system is designed for easy extension and modification:
 - Standard library dependencies for easy deployment
 - Comprehensive error handling and logging
 
-## 📚 Requirements
+## Requirements
 
 - **Python 3.6+**: Core runtime
 - **Standard Library**: xml.etree.ElementTree, json, os, math
 - **No External Dependencies**: Self-contained for easy deployment
 - **SimBrief XML Files**: Flight plan data in SimBrief format
 
-## 📄 License
+## License
 
 This project is designed for event scenario creation and live ATC challenge applications.
 
