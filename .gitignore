@@ -7,6 +7,7 @@ atc_briefing.txt
 # Temporary data and analysis files
 temp/
 *.json
+*.xml
 
 # Python cache files
 __pycache__/
