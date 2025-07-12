@@ -26,6 +26,7 @@ from typing import List, Dict, Tuple, Optional, Any
 from collections import defaultdict
 from dataclasses import dataclass
 from env import LATERAL_SEPARATION_THRESHOLD, VERTICAL_SEPARATION_THRESHOLD, MIN_ALTITUDE_THRESHOLD, DUPLICATE_FILTER_DISTANCE, MIN_DEPARTURE_SEPARATION_MINUTES
+from env import INTERPOLATION_SPACING_NM
 
 # =============================================================================
 # CONFIGURATION CONSTANTS
@@ -144,6 +145,10 @@ class Conflict:
 
 def setup_logging() -> None:
     """Configure logging for the application."""
+    # Clear the log file at the start of each run
+    with open('conflict_analysis.log', 'w') as f:
+        f.write('')  # Clear the file
+    
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s',
@@ -368,33 +373,27 @@ def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
 def interpolate_route_segments(waypoints: List[Waypoint]) -> List[Dict[str, Any]]:
     """
     Interpolate route segments between waypoints to find potential crossing points.
-    
+    Adds points every ~INTERPOLATION_SPACING_NM along each segment.
     Args:
         waypoints: List of waypoints to interpolate between
-    
     Returns:
         List of interpolated segment points
     """
     segments = []
-    
+    spacing_nm = INTERPOLATION_SPACING_NM  # Interpolate every X nautical miles (from env.py)
     for i in range(len(waypoints) - 1):
         wp1 = waypoints[i]
         wp2 = waypoints[i + 1]
-        
-        # Create interpolation points along this segment
-        for j in range(1, INTERPOLATION_POINTS):
-            t = j / INTERPOLATION_POINTS
-            
-            # Linear interpolation of lat/lon
+        segment_distance = calculate_distance_nm(wp1.lat, wp1.lon, wp2.lat, wp2.lon)
+        if segment_distance == 0:
+            continue
+        num_points = max(1, int(segment_distance // spacing_nm))
+        for j in range(1, num_points + 1):
+            t = j / (num_points + 1)
             lat = wp1.lat + t * (wp2.lat - wp1.lat)
             lon = wp1.lon + t * (wp2.lon - wp1.lon)
-            
-            # Linear interpolation of altitude
             alt = int(wp1.altitude + t * (wp2.altitude - wp1.altitude))
-            
-            # Linear interpolation of time
             time = wp1.get_time_minutes() + t * (wp2.get_time_minutes() - wp1.get_time_minutes())
-            
             segments.append({
                 'lat': lat,
                 'lon': lon,
@@ -403,7 +402,6 @@ def interpolate_route_segments(waypoints: List[Waypoint]) -> List[Dict[str, Any]
                 'segment': f"{wp1.name}-{wp2.name}",
                 'interpolation_point': j
             })
-    
     return segments
 
 def get_phase_for_time(waypoints: List[Waypoint], time_min: float) -> str:
@@ -475,6 +473,8 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
             waypoints1 = fp1.get_all_waypoints()
             waypoints2 = fp2.get_all_waypoints()
             
+            print(f"Checking {fp1.get_route_identifier()} vs {fp2.get_route_identifier()}")
+            
             # Check each waypoint pair for conflicts
             for wp1 in waypoints1:
                 for wp2 in waypoints2:
@@ -484,6 +484,8 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
                         
                     distance = calculate_distance_nm(wp1.lat, wp1.lon, wp2.lat, wp2.lon)
                     altitude_diff = abs(wp1.altitude - wp2.altitude)
+                    
+                    print(f"  Waypoint check: {wp1.name} vs {wp2.name} - Distance: {distance:.1f}nm, Alt diff: {altitude_diff}ft")
                     
                     if is_conflict_valid(wp1, wp2, distance, altitude_diff):
                         phase1 = get_phase_for_time(waypoints1, wp1.get_time_minutes())
@@ -516,6 +518,9 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
             segments1 = interpolate_route_segments(waypoints1)
             segments2 = interpolate_route_segments(waypoints2)
             
+            print(f"  Checking {len(segments1)} segments vs {len(segments2)} segments")
+            
+            segment_conflicts = 0
             for seg1 in segments1:
                 for seg2 in segments2:
                     distance = calculate_distance_nm(seg1['lat'], seg1['lon'], seg2['lat'], seg2['lon'])
@@ -526,6 +531,7 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
                         seg1['altitude'] > MIN_ALTITUDE_THRESHOLD and
                         seg2['altitude'] > MIN_ALTITUDE_THRESHOLD):
                         
+                        segment_conflicts += 1
                         phase1 = get_phase_for_time(waypoints1, seg1['time'])
                         phase2 = get_phase_for_time(waypoints2, seg2['time'])
                         
@@ -553,6 +559,8 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
                             'segment1': seg1['segment'],
                             'segment2': seg2['segment']
                         })
+            
+            print(f"  Found {segment_conflicts} segment conflicts")
     
     return crossing_points
 
@@ -827,6 +835,10 @@ def print_and_write_conflict_report(data: Dict[str, Any], output_file: str = CON
     if not conflicts:
         print("No conflicts found with current criteria.")
         output.append("No conflicts found with current criteria.")
+        # Always write the file, even if no conflicts
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write("\n".join(output))
+        logging.info(f"Conflict report written to {output_file}")
         return
     
     # Filter duplicate conflicts
@@ -936,13 +948,13 @@ def extract_flight_plans(xml_files: List[str]) -> List[FlightPlan]:
     
     for xml_file in xml_files:
         logging.info(f"Analyzing {xml_file}...")
-        print(f"\n🔄 Analyzing {xml_file}...")
+        print(f"\nAnalyzing {xml_file}...")
         
         flight_plan = extract_flight_plan_from_xml(xml_file)
         if flight_plan:
             flight_plans.append(flight_plan)
-            print(f"   ✅ {flight_plan.origin} → {flight_plan.destination}")
-            print(f"   📍 {len(flight_plan.get_all_waypoints())} waypoints")
+            print(f"   {flight_plan.origin} to {flight_plan.destination}")
+            print(f"   {len(flight_plan.get_all_waypoints())} waypoints")
         else:
             logging.warning(f"Failed to extract flight plan from {xml_file}")
     
@@ -971,19 +983,19 @@ def main() -> None:
     # Setup logging
     setup_logging()
     
-    print("🎯 Merged Conflict Analyzer and Reporter")
+    print("Merged Conflict Analyzer and Reporter")
     print("=" * 60)
     
     # Find XML files
     xml_files = find_xml_files()
     if not xml_files:
-        print("❌ No XML files found in the current directory")
+        print("No XML files found in the current directory")
         logging.error("No XML files found in current directory")
         return
     
-    print(f"📁 Found {len(xml_files)} XML files to analyze:")
+    print(f"Found {len(xml_files)} XML files to analyze:")
     for xml_file in xml_files:
-        print(f"   • {xml_file}")
+        print(f"   - {xml_file}")
     
     print("\n" + "=" * 60)
     
@@ -991,16 +1003,16 @@ def main() -> None:
     flight_plans = extract_flight_plans(xml_files)
     
     if len(flight_plans) < 2:
-        print("❌ Need at least 2 flight plans to analyze conflicts")
+        print("Need at least 2 flight plans to analyze conflicts")
         logging.error("Insufficient flight plans for analysis")
         return
     
-    print(f"\n📊 Analyzing {len(flight_plans)} flight plans for conflicts...")
+    print(f"\nAnalyzing {len(flight_plans)} flight plans for conflicts...")
     
     # Find crossing points
     crossing_points = find_crossing_points(flight_plans)
     
-    print(f"🎯 Found {len(crossing_points)} potential conflicts")
+    print(f"Found {len(crossing_points)} potential conflicts")
     print(f"   (Criteria: <{VERTICAL_SEPARATION_THRESHOLD}ft vertical, <{LATERAL_SEPARATION_THRESHOLD}NM lateral, >{MIN_ALTITUDE_THRESHOLD}ft altitude)")
     
     # Generate conflict scenario
@@ -1018,13 +1030,13 @@ def main() -> None:
     # Generate and display conflict report
     print_and_write_conflict_report(analysis)
     
-    print(f"\n✅ Analysis complete! Check {CONFLICT_LIST_FILE} for detailed report.")
+    print(f"\nAnalysis complete! Check {CONFLICT_LIST_FILE} for detailed report.")
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(f"❌ Fatal error in analyze_and_report_conflicts: {e}")
+        print(f"Fatal error in analyze_and_report_conflicts: {e}")
         import traceback
         traceback.print_exc()
         exit(2) 
