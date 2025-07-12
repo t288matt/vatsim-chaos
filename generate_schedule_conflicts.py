@@ -391,6 +391,84 @@ class ConflictScheduler:
         logging.info("Calculating optimal departure times...")
         scheduled_flights = self.calculate_departure_times(flight_data)
         
+        # After scheduling, update each conflict with actual lateral separation at scheduled conflict time
+        import json
+        anim_path = 'web_visualization/animation_data.json'
+        if os.path.exists(anim_path):
+            with open(anim_path, 'r') as f:
+                anim_data = json.load(f)
+            flight_waypoints = {f['flight_id']: f['waypoints'] for f in anim_data.get('flights', [])}
+            def interpolate_position(waypoints, minutes):
+                # Find the two waypoints that bracket the time
+                prev_wp = None
+                for wp in waypoints:
+                    if wp['time_from_departure'] > minutes:
+                        break
+                    prev_wp = wp
+                next_wp = None
+                for wp in waypoints:
+                    if wp['time_from_departure'] >= minutes:
+                        next_wp = wp
+                        break
+                # Ensure both waypoints are valid and have lat/lon
+                if not prev_wp or not next_wp or prev_wp == next_wp:
+                    return (None, None)
+                if any(k not in prev_wp or k not in next_wp for k in ('lat', 'lon')):
+                    return (None, None)
+                t0 = prev_wp['time_from_departure']
+                t1 = next_wp['time_from_departure']
+                frac = (minutes - t0) / (t1 - t0) if t1 > t0 else 0
+                lat = prev_wp['lat'] + frac * (next_wp['lat'] - prev_wp['lat'])
+                lon = prev_wp['lon'] + frac * (next_wp['lon'] - prev_wp['lon'])
+                return (lat, lon)
+            for flight, data in scheduled_flights.items():
+                for conflict in data['conflicts']:
+                    other_flight = conflict['other_flight']
+                    # Get scheduled departure times
+                    dep1 = scheduled_flights[flight]['departure_time']
+                    dep2 = scheduled_flights[other_flight]['departure_time'] if other_flight in scheduled_flights else self.start_time
+                    # Get conflict time offsets
+                    t1 = conflict['conflict_time']
+                    t2 = None
+                    for c in scheduled_flights[other_flight]['conflicts']:
+                        if c['other_flight'] == flight and c['conflict_id'] == conflict['conflict_id']:
+                            t2 = c['conflict_time']
+                            break
+                    if t2 is None:
+                        t2 = t1
+                    # Calculate absolute times since event start
+                    abs1 = (dep1 - self.start_time).total_seconds() / 60.0 + t1
+                    abs2 = (dep2 - self.start_time).total_seconds() / 60.0 + t2
+                    # Interpolate positions
+                    wp1 = flight_waypoints.get(flight, [])
+                    wp2 = flight_waypoints.get(other_flight, [])
+                    # Debug output for interpolation
+                    print(f"[DEBUG] Conflict: {flight} vs {other_flight}")
+                    print(f"[DEBUG]   Scheduled departures: {dep1.strftime('%H:%M')} (flight), {dep2.strftime('%H:%M')} (other)")
+                    print(f"[DEBUG]   Conflict times: t1={t1}, t2={t2}")
+                    if wp1:
+                        t_min1 = wp1[0]['time_from_departure'] if len(wp1) > 0 else None
+                        t_max1 = wp1[-1]['time_from_departure'] if len(wp1) > 0 else None
+                        print(f"[DEBUG]   {flight} waypoints time range: {t_min1} to {t_max1}")
+                    if wp2:
+                        t_min2 = wp2[0]['time_from_departure'] if len(wp2) > 0 else None
+                        t_max2 = wp2[-1]['time_from_departure'] if len(wp2) > 0 else None
+                        print(f"[DEBUG]   {other_flight} waypoints time range: {t_min2} to {t_max2}")
+                    lat1, lon1 = interpolate_position(wp1, t1)
+                    lat2, lon2 = interpolate_position(wp2, t2)
+                    if None in (lat1, lon1, lat2, lon2):
+                        print(f"[DEBUG]   Interpolation failed: lat1={lat1}, lon1={lon1}, lat2={lat2}, lon2={lon2}")
+                    # Calculate lateral separation
+                    if (
+                        lat1 is not None and lon1 is not None and lat2 is not None and lon2 is not None
+                        and isinstance(lat1, (float, int)) and isinstance(lon1, (float, int))
+                        and isinstance(lat2, (float, int)) and isinstance(lon2, (float, int))
+                    ):
+                        sep = self._calculate_distance_nm(float(lat1), float(lon1), float(lat2), float(lon2))
+                    else:
+                        sep = None
+                    conflict['lateral_sep'] = sep
+        
         # Generate outputs
         logging.info("Generating schedule outputs...")
         try:

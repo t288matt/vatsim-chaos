@@ -68,6 +68,7 @@
       shouldAnimate: true,
       baseLayerPicker: false
     });
+    viewer.clock.multiplier = 48;
     viewer.imageryLayers.removeAll();
     viewer.imageryLayers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider({
       url: 'https://a.tile.openstreetmap.org/'
@@ -164,6 +165,7 @@
       viewer.clock.currentTime = start.clone();
       viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
       viewer.clock.multiplier = 1;
+      viewer.clock.multiplier = 48;
       viewer.timeline.zoomTo(start, stop);
       viewer.clock.shouldAnimate = true;
       // Create flight entities with animated paths and 3D models
@@ -252,8 +254,26 @@
       activeConflicts.forEach(conflict => {
         const alertDiv = document.createElement('div');
         alertDiv.className = 'conflict-alert';
-        alertDiv.innerHTML = `⚠️ ${conflict.flight1} vs ${conflict.flight2} at ${conflict.location}`;
+        // Use Alt: and Sep: fields instead of lat/long
+        const alt = conflict.altitude !== undefined ? Math.round(conflict.altitude) + 'ft' : 'N/A';
+        const sep = conflict.lateral_sep !== undefined ? conflict.lateral_sep.toFixed(1) + 'nm' : 'N/A';
+        alertDiv.innerHTML = `⚠️ ${conflict.flight1} vs ${conflict.flight2}  Alt: ${alt}  Sep: ${sep}`;
         alertsDiv.appendChild(alertDiv);
+      });
+      // Set all aircraft to black by default
+      flightEntities.forEach(entity => {
+        if (entity.model) {
+          entity.model.color = Cesium.Color.BLACK.withAlpha(0.8);
+        }
+      });
+      // Set aircraft involved in active conflicts to red
+      activeConflicts.forEach(conflict => {
+        [conflict.flight1, conflict.flight2].forEach(flightId => {
+          const entity = flightEntities.find(e => e.id === flightId);
+          if (entity && entity.model) {
+            entity.model.color = Cesium.Color.RED.withAlpha(0.8);
+          }
+        });
       });
     }
     

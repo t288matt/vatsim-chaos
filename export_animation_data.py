@@ -286,6 +286,9 @@ class AnimationDataExporter:
                 'time2': conflict.get('time2', 0),
                 'conflict_type': conflict.get('conflict_type', 'between_waypoints')
             }
+            # Add lateral_sep if present
+            if 'lateral_sep' in conflict:
+                conflict_point['lateral_sep'] = conflict['lateral_sep']
             conflict_points.append(conflict_point)
         return conflict_points
     
