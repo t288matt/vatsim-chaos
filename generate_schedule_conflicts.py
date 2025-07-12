@@ -353,23 +353,7 @@ class ConflictScheduler:
         
         return "\n".join(output)
     
-    def update_animation_data_departure_times(self, scheduled_flights):
-        """Update animation_data.json with the correct departure_time for each flight."""
-        import json
-        anim_path = 'web_visualization/animation_data.json'
-        if not os.path.exists(anim_path):
-            print(f"ERROR: {anim_path} not found. Cannot update departure times.")
-            return
-        with open(anim_path, 'r') as f:
-            data = json.load(f)
-        flights = data.get('flights', [])
-        for flight in flights:
-            flight_id = flight.get('flight_id')
-            if flight_id in scheduled_flights:
-                flight['departure_time'] = scheduled_flights[flight_id]['departure_time'].strftime('%H:%M')
-        with open(anim_path, 'w') as f:
-            json.dump(data, f, indent=2)
-        print(f"OK: Updated departure_time for all flights in {anim_path}")
+
 
     def run_scheduling(self) -> None:
         """Run the complete conflict scheduling process."""
@@ -458,16 +442,7 @@ class ConflictScheduler:
                     lat2, lon2 = interpolate_position(wp2, t2)
                     if None in (lat1, lon1, lat2, lon2):
                         print(f"[DEBUG]   Interpolation failed: lat1={lat1}, lon1={lon1}, lat2={lat2}, lon2={lon2}")
-                    # Calculate lateral separation
-                    if (
-                        lat1 is not None and lon1 is not None and lat2 is not None and lon2 is not None
-                        and isinstance(lat1, (float, int)) and isinstance(lon1, (float, int))
-                        and isinstance(lat2, (float, int)) and isinstance(lon2, (float, int))
-                    ):
-                        sep = self._calculate_distance_nm(float(lat1), float(lon1), float(lat2), float(lon2))
-                    else:
-                        sep = None
-                    conflict['lateral_sep'] = sep
+
         
         # Generate outputs
         logging.info("Generating schedule outputs...")
@@ -480,8 +455,7 @@ class ConflictScheduler:
             briefing_text = self.generate_briefing_output(scheduled_flights, data)
             with open(BRIEFING_OUTPUT_FILE, 'w') as f:
                 f.write(briefing_text)
-            # After generating schedule, update animation_data.json
-            self.update_animation_data_departure_times(scheduled_flights)
+
             print("OK: Scheduling complete!")
             print(f"Generated files:")
             print(f"   - {SCHEDULE_OUTPUT_FILE} - Departure schedule")

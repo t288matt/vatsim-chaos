@@ -8,7 +8,7 @@ for web visualization.
 Input files:
 - temp/conflict_analysis.json (flight plans and conflicts)
 - event_schedule.csv (departure timing)
-- atc_briefing.txt (conflict timing info)
+- pilot_briefing.txt (conflict timing info)
 
 Output files:
 - animation_data.json (complete animation data)
@@ -76,7 +76,7 @@ class AnimationDataExporter:
             return False
     
     def load_schedule(self) -> bool:
-        """Load departure schedule from atc_briefing.txt instead of CSV"""
+        """Load departure schedule from pilot_briefing.txt instead of CSV"""
         try:
             with open('pilot_briefing.txt', 'r') as f:
                 content = f.read()
@@ -125,6 +125,35 @@ class AnimationDataExporter:
         
         return conflict_timing
     
+    def parse_conflict_distances(self) -> Dict[Tuple[str, str, str], str]:
+        """Parse pilot_briefing.txt for conflict distances. Returns a dict keyed by (flight1, flight2, location) with the distance as a string."""
+        conflict_distances = {}
+        try:
+            with open('pilot_briefing.txt', 'r') as f:
+                lines = f.readlines()
+            current_flight = None
+            for i, line in enumerate(lines):
+                line = line.strip()
+                # Detect the start of a conflict block
+                if line.endswith('conflicts:'):
+                    current_flight = line.split()[0]
+                # Parse conflict line
+                if line.startswith('- With') and current_flight:
+                    # Example: - With YSSY-YSWG at -34.7963,149.4166
+                    parts = line.split('With ')[1].split(' at ')
+                    if len(parts) == 2:
+                        other_flight = parts[0].strip()
+                        location = parts[1].strip()
+                        # Look ahead for Distance line
+                        for j in range(i+1, min(i+5, len(lines))):
+                            if 'Distance:' in lines[j]:
+                                dist_val = lines[j].split('Distance:')[1].split('nm')[0].strip()
+                                conflict_distances[(current_flight, other_flight, location)] = dist_val
+                                break
+        except Exception as e:
+            logger.warning(f"Could not parse conflict distances from pilot_briefing.txt: {e}")
+        return conflict_distances
+
     def convert_coordinates(self, lat: float, lon: float) -> Tuple[float, float]:
         """Convert lat/lon to 3D coordinates (simplified)"""
         # Simple conversion for web visualization
@@ -265,30 +294,36 @@ class AnimationDataExporter:
     def generate_conflict_points(self) -> List[Dict]:
         """Generate conflict points for animation (fixed for new structure)"""
         conflict_points = []
+        conflict_distances = self.parse_conflict_distances()
         for i, conflict in enumerate(self.conflicts):
             # Use lat1/lon1 as the conflict location (or lat2/lon2 if missing)
             lat = conflict.get('lat1', conflict.get('lat2', 0))
             lon = conflict.get('lon1', conflict.get('lon2', 0))
             x, y = self.convert_coordinates(lat, lon)
+            flight1 = conflict.get('flight1', '')
+            flight2 = conflict.get('flight2', '')
+            location = conflict.get('waypoint1', '')
+            # Try to get the distance from the parsed briefing
+            dist_val = conflict_distances.get((flight1, flight2, location))
+            if not dist_val:
+                # Try the reverse order (for the other flight's block)
+                dist_val = conflict_distances.get((flight2, flight1, location))
             conflict_point = {
                 'id': f"conflict_{i}",
-                'location': conflict.get('waypoint1', ''),
+                'location': location,
                 'lat': lat,
                 'lon': lon,
                 'x': x,
                 'y': y,
                 'altitude': conflict.get('alt1', 0),
-                'flight1': conflict.get('flight1', ''),
-                'flight2': conflict.get('flight2', ''),
-                'distance': conflict.get('distance', 0),
+                'flight1': flight1,
+                'flight2': flight2,
+                'distance': dist_val if dist_val else conflict.get('distance', 0),
                 'altitude_diff': conflict.get('altitude_diff', 0),
                 'time1': conflict.get('time1', 0),
                 'time2': conflict.get('time2', 0),
                 'conflict_type': conflict.get('conflict_type', 'between_waypoints')
             }
-            # Add lateral_sep if present
-            if 'lateral_sep' in conflict:
-                conflict_point['lateral_sep'] = conflict['lateral_sep']
             conflict_points.append(conflict_point)
         return conflict_points
     
@@ -409,7 +444,7 @@ class AnimationDataExporter:
         logger.info("=" * 50)
         if not self.load_conflict_analysis():
             return False
-        self.load_schedule() # Load schedule from atc_briefing.txt
+        self.load_schedule() # Load schedule from pilot_briefing.txt
         logger.info(f"Schedule keys: {list(self.schedule.keys())}")
         logger.info(f"Flight names: {self.flight_names}")
         self.parse_conflict_timing()

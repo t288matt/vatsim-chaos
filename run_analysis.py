@@ -218,8 +218,7 @@ class AnalysisRunner:
             self.log("Missing files:", "WARNING")
             for output in outputs_missing:
                 # Rename output for briefing if needed
-                if 'briefing' in output and 'atc_briefing.txt' in output:
-                    output = output.replace('atc_briefing.txt', 'pilot_briefing.txt')
+                
                 print(output)
     
     def run_complete_workflow(self, skip_extract: bool = False, skip_kml: bool = False, 

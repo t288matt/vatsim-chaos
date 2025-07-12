@@ -2,7 +2,7 @@
 conflict_list.txt
 merged_flightplans.kml
 event_schedule.csv
-atc_briefing.txt
+
 
 # Temporary data and analysis files
 temp/

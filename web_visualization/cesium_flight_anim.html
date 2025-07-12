@@ -256,8 +256,8 @@
         alertDiv.className = 'conflict-alert';
         // Use Alt: and Sep: fields instead of lat/long
         const alt = conflict.altitude !== undefined ? Math.round(conflict.altitude) + 'ft' : 'N/A';
-        const sep = conflict.lateral_sep !== undefined ? conflict.lateral_sep.toFixed(1) + 'nm' : 'N/A';
-        alertDiv.innerHTML = `⚠️ ${conflict.flight1} vs ${conflict.flight2}  Alt: ${alt}  Sep: ${sep}`;
+        const dist = conflict.distance !== undefined ? conflict.distance + 'nm' : 'N/A';
+        alertDiv.innerHTML = `⚠️ ${conflict.flight1} vs ${conflict.flight2}  Alt: ${alt}  Dist: ${dist}`;
         alertsDiv.appendChild(alertDiv);
       });
       // Set all aircraft to black by default
