@@ -223,23 +223,13 @@
         });
         flightEntities.push(entity);
       });
-      // Add conflict points
-      // Camera auto-zoom with debug output
-      let minLat = 90, maxLat = -90, minLon = 180, maxLon = -180;
-      flights.forEach(flight => {
-        flight.waypoints.forEach(wp => {
-          if (wp.lat < minLat) minLat = wp.lat;
-          if (wp.lat > maxLat) maxLat = wp.lat;
-          if (wp.lon < minLon) minLon = wp.lon;
-          if (wp.lon > maxLon) maxLon = wp.lon;
-        });
-      });
-      if (minLat < maxLat && minLon < maxLon && (maxLat - minLat > 0.01) && (maxLon - minLon > 0.01)) {
-        viewer.zoomTo(viewer.entities);
-      } else {
-        const ausRect = Cesium.Rectangle.fromDegrees(110, -45, 155, -10);
-        viewer.camera.flyTo({ destination: ausRect, duration: 1.5 });
-      }
+      // Remove camera auto-zoom logic so map does not move on first flight start
+      // if (minLat < maxLat && minLon < maxLon && (maxLat - minLat > 0.01) && (maxLon - minLon > 0.01)) {
+      //   viewer.zoomTo(viewer.entities);
+      // } else {
+      //   const ausRect = Cesium.Rectangle.fromDegrees(110, -45, 155, -10);
+      //   viewer.camera.flyTo({ destination: ausRect, duration: 1.5 });
+      // }
     }
     function updateUI() {
       document.getElementById('flight-count').textContent = flights.length;
@@ -329,8 +319,11 @@
           ];
           createScheduledFlights();
         }
-        // Remove viewer.clock.onTick.addEventListener(updateUI);
-        // Instead, use requestAnimationFrame for UI updates
+        // Set camera to fixed rectangle (Sydney, Wagga Wagga, relevant airspace)
+        const startRect = Cesium.Rectangle.fromDegrees(144.5, -37.5, 153.5, -31.5);
+        viewer.camera.setView({ destination: startRect });
+        // Remove viewer.zoomTo(viewer.entities) and other auto-zoom logic
+        // Remove viewer.camera.flyTo({ destination: ausRect, duration: 1.5 });
         function animationFrameUpdate() {
           updateUI();
           requestAnimationFrame(animationFrameUpdate);
@@ -338,7 +331,7 @@
         requestAnimationFrame(animationFrameUpdate);
         updateUI();
       } catch (error) {
-        document.getElementById('info').innerHTML += '<br>❌ Error loading data';
+        document.getElementById('info').innerHTML += '<br>ERROR: Error loading data';
       } finally {
         document.getElementById('loading').style.display = 'none';
       }
