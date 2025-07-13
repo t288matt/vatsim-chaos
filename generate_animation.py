@@ -311,22 +311,34 @@ class AnimationDataGenerator:
             tracks.append(track)
         return tracks
     
+    def add_minutes_to_hhmm(self, hhmm: str, minutes: float) -> str:
+        # Add float minutes to a HHMM string, return new HHMM string
+        h = int(hhmm[:2])
+        m = int(hhmm[2:])
+        total = h * 60 + m + minutes
+        total = int(round(total))
+        hours = (total // 60) % 24
+        mins = total % 60
+        return f"{hours:02d}{mins:02d}"
+
     def generate_conflict_points(self) -> List[Dict]:
         """Generate conflict points for animation (fixed for new structure)"""
         conflict_points = []
         conflict_distances = self.parse_conflict_distances()
         for i, conflict in enumerate(self.conflicts):
-            # Use lat1/lon1 as the conflict location (or lat2/lon2 if missing)
             lat = conflict.get('lat1', conflict.get('lat2', 0))
             lon = conflict.get('lon1', conflict.get('lon2', 0))
             flight1 = conflict.get('flight1', '')
             flight2 = conflict.get('flight2', '')
             location = conflict.get('waypoint1', '')
-            # Try to get the distance from the parsed briefing
             dist_val = conflict_distances.get((flight1, flight2, location))
             if not dist_val:
-                # Try the reverse order (for the other flight's block)
                 dist_val = conflict_distances.get((flight2, flight1, location))
+            # --- FIX: Calculate actual UTC time for conflict ---
+            dep1 = self.schedule.get(flight1, '1400')
+            dep2 = self.schedule.get(flight2, '1400')
+            t1 = self.add_minutes_to_hhmm(dep1, conflict.get('time1', 0))
+            t2 = self.add_minutes_to_hhmm(dep2, conflict.get('time2', 0))
             conflict_point = {
                 'id': f"conflict_{i}",
                 'location': location,
@@ -337,8 +349,8 @@ class AnimationDataGenerator:
                 'flight2': flight2,
                 'distance': dist_val if dist_val else conflict.get('distance', 0),
                 'altitude_diff': conflict.get('altitude_diff', 0),
-                'time1': self.float_minutes_to_hhmm(conflict.get('time1', 0)),
-                'time2': self.float_minutes_to_hhmm(conflict.get('time2', 0)),
+                'time1': t1,
+                'time2': t2,
                 'conflict_type': conflict.get('conflict_type', 'between_waypoints')
             }
             conflict_points.append(conflict_point)
@@ -361,17 +373,17 @@ class AnimationDataGenerator:
             })
         # Add conflict events
         for conflict in self.conflicts:
-            # Use time1 (float, minutes from event start) for timeline
-            t_str = self.float_minutes_to_hhmm(conflict.get('time1', 0))
+            flight1 = conflict.get('flight1', '')
+            dep1 = self.schedule.get(flight1, '1400')
+            t1 = self.add_minutes_to_hhmm(dep1, conflict.get('time1', 0))
             timeline.append({
-                'time': t_str,
+                'time': t1,
                 'type': 'conflict',
-                'flight1': conflict.get('flight1', ''),
+                'flight1': flight1,
                 'flight2': conflict.get('flight2', ''),
                 'location': conflict.get('waypoint1', ''),
                 'action': 'conflict_start'
             })
-        # Sort timeline by time
         timeline.sort(key=lambda x: x['time'])
         return timeline
     

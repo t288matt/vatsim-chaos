@@ -6,33 +6,60 @@ Duration: 240 minutes
 
 DEPARTURE SCHEDULE:
 ------------------------------
-1400 - YMES-YSRI (1 conflicts)
-1416 - YSSY-YSWG (2 conflicts)
-1420 - YSNW-YWLM (1 conflicts)
+1400 - YBBN-YCOM (1 conflicts)
+1400 - YBDG-YSBK (1 conflicts)
+1402 - YBDG-YWSL (0 conflicts)
+1408 - YMER-YORG (1 conflicts)
+1442 - YMES-YSRI (1 conflicts)
+1458 - YSSY-YSWG (3 conflicts)
+1503 - YSNW-YWLM (1 conflicts)
+1512 - YSHL-YBTH (0 conflicts)
 
 CONFLICT ANALYSIS:
 ------------------------------
 
-YMES-YSRI conflicts:
-  - With YSSY-YSWG at -34.7096,149.6681
-    Time: 1440 (departure +40min)
-    Distance: 2.6nm, Alt diff: 519ft
+YBBN-YCOM conflicts:
+  - With YSSY-YSWG at -34.3709,150.7498
+    Time: 1510 (departure +70min)
+    Distance: 2.9nm, Alt diff: 560ft
     Phase: cruise
 
 YSSY-YSWG conflicts:
-  - With YMES-YSRI at -34.7255,149.7174
-    Time: 1440 (departure +24min)
+  - With YBBN-YCOM at -34.3709,150.7498
+    Time: 1510 (departure +12min)
+    Distance: 2.9nm, Alt diff: 560ft
+    Phase: cruise
+  - With YMES-YSRI at -34.7096,149.6681
+    Time: 1522 (departure +24min)
     Distance: 2.6nm, Alt diff: 519ft
     Phase: cruise
-  - With YSNW-YWLM at -34.4140,150.6487
-    Time: 1429 (departure +13min)
-    Distance: 1.8nm, Alt diff: 823ft
-    Phase: cruise
-
-YSNW-YWLM conflicts:
-  - With YSSY-YSWG at -34.4318,150.6207
-    Time: 1427 (departure +7min)
+  - With YSNW-YWLM at -34.4318,150.6207
+    Time: 1511 (departure +13min)
     Distance: 1.8nm, Alt diff: 823ft
     Phase: climb
 
-Total conflicts: 4
+YSNW-YWLM conflicts:
+  - With YSSY-YSWG at -34.4318,150.6207
+    Time: 1510 (departure +7min)
+    Distance: 1.8nm, Alt diff: 823ft
+    Phase: climb
+
+YMES-YSRI conflicts:
+  - With YSSY-YSWG at -34.7096,149.6681
+    Time: 1522 (departure +40min)
+    Distance: 2.6nm, Alt diff: 519ft
+    Phase: cruise
+
+YBDG-YSBK conflicts:
+  - With YMER-YORG at -34.7432,149.3605
+    Time: 1451 (departure +51min)
+    Distance: 2.3nm, Alt diff: 117ft
+    Phase: cruise
+
+YMER-YORG conflicts:
+  - With YBDG-YSBK at -34.7432,149.3605
+    Time: 1451 (departure +43min)
+    Distance: 2.3nm, Alt diff: 117ft
+    Phase: cruise
+
+Total conflicts: 8

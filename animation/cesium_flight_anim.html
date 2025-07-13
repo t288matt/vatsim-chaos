@@ -241,6 +241,22 @@
       //   viewer.camera.flyTo({ destination: ausRect, duration: 1.5 });
       // }
     }
+    function createConflictMarkers(conflictPoints) {
+      conflictPoints.forEach((conflict, index) => {
+        const position = Cesium.Cartesian3.fromDegrees(conflict.lon, conflict.lat, conflict.altitude);
+        viewer.entities.add({
+          id: `conflict_marker_${index}`,
+          position: position,
+          point: {
+            pixelSize: 15,
+            color: Cesium.Color.RED,
+            outlineColor: Cesium.Color.WHITE,
+            outlineWidth: 3,
+            heightReference: Cesium.HeightReference.NONE
+          }
+        });
+      });
+    }
     function updateUI() {
       document.getElementById('flight-count').textContent = flights.length;
       document.getElementById('conflict-count').textContent = conflicts.length;
@@ -333,6 +349,7 @@
         const animationLoaded = await loadAnimationData();
         if (animationLoaded) {
           createScheduledFlights();
+          createConflictMarkers(conflicts); // Call the new function here
         } else {
           flights = [
             {
@@ -346,6 +363,7 @@
             }
           ];
           createScheduledFlights();
+          createConflictMarkers(conflicts); // Call the new function here
         }
         // Set camera to fixed rectangle (Sydney, Wagga Wagga, relevant airspace)
         const startRect = Cesium.Rectangle.fromDegrees(144.5, -37.5, 153.5, -31.5);

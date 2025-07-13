@@ -1148,12 +1148,27 @@ def main() -> None:
     scenario = generate_conflict_scenario(flight_plans, potential_conflicts)
     
     # Save analysis data
+    flights_dict = {}
+    for fp in flight_plans:
+        flights_dict[fp.get_route_identifier()] = {
+            'waypoints': [
+                {
+                    'name': wp.name,
+                    'lat': wp.lat,
+                    'lon': wp.lon,
+                    'altitude': wp.altitude,
+                    'time_total': wp.time_total,
+                    'stage': wp.stage,
+                    'type': wp.waypoint_type
+                } for wp in fp.get_all_waypoints()
+            ]
+        }
     analysis = {
         'flight_plans': [fp.get_route_identifier() for fp in flight_plans],
         'potential_conflicts': potential_conflicts,
-        'scenario': scenario
+        'scenario': scenario,
+        'flights': flights_dict
     }
-    
     save_analysis_data(analysis)
     
     # Generate and display conflict report
