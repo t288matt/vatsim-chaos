@@ -32,7 +32,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │                                    STEP 1: XML EXTRACTION                                                                               │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
-│  │                    simbrief_xml_flightplan_extractor.py                                                                           │  │
+│  │                    extract_simbrief_xml_flightplan.py                                                                           │  │
 │  │                                                                                                                               │  │
 │  │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                                    │  │
 │  │  │ Parse XML   │───▶│ Extract     │───▶│ Generate    │───▶│ Save Flight │───▶│ Create KML  │                                    │  │
@@ -59,7 +59,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │                                    STEP 2: CONFLICT ANALYSIS                                                                           │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
-│  │                    analyze_and_report_conflicts.py                                                                                │  │
+│  │                    find_potential_conflicts.py                                                                                │  │
 │  │                                                                                                                               │  │
 │  │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                                    │  │
 │  │  │ Load Flight │───▶│ Detect      │───▶│ Filter      │───▶│ Generate    │───▶│ Save        │                                    │  │
@@ -141,7 +141,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │                                    STEP 5: FRONTEND EXPORT                                                                             │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
-│  │                    export_animation_data.py                                                                                       │  │
+│  │                    generate_animation.py                                                                                       │  │
 │  │                                                                                                                               │  │
 │  │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                                    │  │
 │  │  │ Load        │───▶│ Filter      │───▶│ Generate    │───▶│ Create      │───▶│ Save        │                                    │  │

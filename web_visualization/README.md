@@ -8,7 +8,6 @@ This directory contains the 3D web visualization for the ATC Conflict Analysis S
 - **Description:**
   - Standalone HTML file for animated 3D globe flight visualization using CesiumJS (Google Earth style).
   - No Node.js or build tools required. Just open in your browser.
-  - **Dynamically loads** scheduling data from `event_schedule.csv` and flight data from `animation_data.json`.
   - **Shows all flights** with their scheduled departure times to create planned conflicts.
 - **How to use:**
   1. Open `cesium_flight_anim.html` in your browser (Chrome, Edge, or Firefox).
@@ -33,7 +32,7 @@ This directory contains the 3D web visualization for the ATC Conflict Analysis S
 
 ## Refreshing Data
 
-- After running `export_animation_data.py`, reload `cesium_flight_anim.html` in your browser to see updated flights/conflicts.
+- After running `generate_animation.py`, reload `cesium_flight_anim.html` in your browser to see updated flights/conflicts.
 
 ## Troubleshooting
 
@@ -42,7 +41,6 @@ This directory contains the 3D web visualization for the ATC Conflict Analysis S
 
 ## Features
 
-- **Dynamic Scheduling**: Aircraft depart at times from `event_schedule.csv`
 - **Real-time Conflicts**: Conflict points marked on the globe
 - **Live Alerts**: Conflict warnings appear during animation
 - **3D Navigation**: Zoom, pan, and rotate around the globe

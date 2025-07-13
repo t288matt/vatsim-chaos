@@ -37,11 +37,11 @@ from typing import List, Optional
 
 # Configuration
 SCRIPTS = {
-    'extract': 'simbrief_xml_flightplan_extractor.py',
-    'analyze': 'analyze_and_report_conflicts.py',
+    'extract': 'extract_simbrief_xml_flightplan.py',
+    'analyze': 'find_potential_conflicts.py',
     'merge_kml': 'merge_kml_flightplans.py',
     'schedule': 'generate_schedule_conflicts.py',  # updated from schedule_conflicts.py
-    'frontend': 'export_animation_data.py'
+    'frontend': 'generate_animation.py'
 }
 
 OUTPUT_FILES = {
@@ -368,15 +368,15 @@ Examples:
         if success:
             print("\nAnalysis workflow completed successfully!")
             print("Check the generated files:")
-            print("   • conflict_list.txt - Detailed conflict report")
-            print("   • merged_flightplans.kml - Google Earth visualization")
-            print("   • temp/conflict_analysis.json - Raw analysis data")
-            print("   • web_visualization/animation_data.json - Frontend animation data")
-            print("   • web_visualization/conflict_points.json - Frontend conflict data")
-            print("   • web_visualization/flight_tracks.json - Frontend flight tracks")
+            print("   - conflict_list.txt - Detailed conflict report")
+            print("   - merged_flightplans.kml - Google Earth visualization")
+            print("   - temp/conflict_analysis.json - Raw analysis data")
+            print("   - web_visualization/animation_data.json - Frontend animation data")
+            print("   - web_visualization/conflict_points.json - Frontend conflict data")
+            print("   - web_visualization/flight_tracks.json - Frontend flight tracks")
             if args.start_time and args.end_time:
-                print("   • event_schedule.csv - Departure schedule")
-                print("   • pilot_briefing.txt - Pilot briefing document")
+                print("   - event_schedule.csv - Departure schedule")
+                print("   - pilot_briefing.txt - Pilot briefing document")
         else:
             print("\nAnalysis workflow failed!")
             sys.exit(1)

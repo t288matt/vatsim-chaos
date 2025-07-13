@@ -19,7 +19,7 @@ The system focuses on identifying "first conflicts" - the initial point where tw
 ## System Components
 
 ### 1. Data Extraction Layer
-**File**: `simbrief_xml_flightplan_extractor.py`
+**File**: `extract_simbrief_xml_flightplan.py`
 
 **Responsibilities**:
 - Parse SimBrief XML flight plan files
@@ -37,7 +37,7 @@ The system focuses on identifying "first conflicts" - the initial point where tw
 - 40-color visualization scheme for route identification
 
 ### 2. Conflict Analysis Engine
-**File**: `analyze_and_report_conflicts.py`
+**File**: `find_potential_conflicts.py`
 
 **Responsibilities**:
 - Perform 3D spatial conflict detection
@@ -72,10 +72,10 @@ The system focuses on identifying "first conflicts" - the initial point where tw
 - pilot_briefing.txt (single source of truth for schedule and conflicts)
 
 ### 4. Animation Data Export Layer
-**File**: `export_animation_data.py`
+**File**: `generate_animation.py`
 
 **Responsibilities**:
-- Export all analysis and schedule data into animation-ready JSON for web visualization
+- Generate all analysis and schedule data into animation-ready JSON for web visualization
 - Output: `animation_data.json`, `flight_tracks.json`, `conflict_points.json`
 
 ### 5. Visualization Layer
@@ -92,7 +92,7 @@ The system focuses on identifying "first conflicts" - the initial point where tw
 
 1. SimBrief XML → Extraction → conflict_analysis.json
 2. conflict_analysis.json → Scheduling → pilot_briefing.txt
-3. pilot_briefing.txt → Animation Export → animation_data.json
+3. pilot_briefing.txt → Animation Generation → animation_data.json
 
 ## Data Models
 
@@ -213,8 +213,8 @@ class Waypoint:
 
 The system is designed for local deployment with minimal setup:
 1. Place SimBrief XML files in project directory
-2. Run extraction script: `python simbrief_xml_flightplan_extractor.py`
-3. Run analysis script: `python analyze_and_report_conflicts.py`
+2. Run extraction script: `python extract_simbrief_xml_flightplan.py`
+3. Run analysis script: `python find_potential_conflicts.py`
 4. Generate schedule: `python generate_schedule_conflicts.py --start 14:00 --end 18:00`
 5. Merge visualization: `python merge_kml_flightplans.py`
 

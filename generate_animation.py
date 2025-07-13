@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Animation Data Exporter for ATC Conflict Analysis System
+Animation Data Generator for ATC Conflict Analysis System
 
-Reads existing ATC conflict analysis files and exports animation-ready data
+Reads existing ATC conflict analysis files and generates animation-ready data
 for web visualization.
 
 Input files:
@@ -30,8 +30,8 @@ from env import MIN_ALTITUDE_THRESHOLD
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-class AnimationDataExporter:
-    """Exports existing analysis data for 3D animation"""
+class AnimationDataGenerator:
+    """Generates animation data from existing analysis for 3D visualization"""
     
     def __init__(self):
         self.flights = {}
@@ -55,9 +55,9 @@ class AnimationDataExporter:
             with open('temp/conflict_analysis.json', 'r') as f:
                 data = json.load(f)
 
-            # The new structure uses 'flight_plans' (list of flight names) and 'crossing_points' (list of conflicts)
+            # The new structure uses 'flight_plans' (list of flight names) and 'potential_conflicts' (list of conflicts)
             self.flight_names = data.get('flight_plans', [])
-            self.conflicts = data.get('crossing_points', [])
+            self.conflicts = data.get('potential_conflicts', [])
 
             # Try to load detailed flight data if present (for waypoints, etc.)
             self.flights = data.get('flights', {})
@@ -360,8 +360,8 @@ class AnimationDataExporter:
         timeline.sort(key=lambda x: x['time'])
         return timeline
     
-    def export_animation_data(self) -> bool:
-        """Export all animation data to JSON files"""
+    def generate_animation_data(self) -> bool:
+        """Generate all animation data to JSON files"""
         try:
             # Generate animation data
             tracks = self.generate_flight_tracks()
@@ -415,18 +415,18 @@ class AnimationDataExporter:
             self.animation_data['conflicts'] = filtered_conflicts
             self.animation_data['timeline'] = timeline
             
-            # Export main animation data
+            # Generate main animation data
             with open('web_visualization/animation_data.json', 'w') as f:
                 json.dump(self.animation_data, f, indent=2)
             
-            # Export individual files for web components
+            # Generate individual files for web components
             with open('web_visualization/flight_tracks.json', 'w') as f:
                 json.dump(tracks, f, indent=2)
             
             with open('web_visualization/conflict_points.json', 'w') as f:
                 json.dump(filtered_conflicts, f, indent=2)
             
-            logger.info("Animation data exported successfully!")
+            logger.info("Animation data generated successfully!")
             logger.info(f"Generated files:")
             logger.info(f"   animation_data.json - Complete animation data")
             logger.info(f"   flight_tracks.json - Individual flight paths")
@@ -435,12 +435,12 @@ class AnimationDataExporter:
             return True
             
         except Exception as e:
-            logger.error(f"Error exporting animation data: {e}")
+            logger.error(f"Error generating animation data: {e}")
             return False
     
     def run(self) -> bool:
-        """Run the complete export process"""
-        logger.info("Animation Data Exporter")
+        """Run the complete generation process"""
+        logger.info("Animation Data Generator")
         logger.info("=" * 50)
         if not self.load_conflict_analysis():
             return False
@@ -448,20 +448,20 @@ class AnimationDataExporter:
         logger.info(f"Schedule keys: {list(self.schedule.keys())}")
         logger.info(f"Flight names: {self.flight_names}")
         self.parse_conflict_timing()
-        return self.export_animation_data()
+        return self.generate_animation_data()
 
 
 def main():
     """Main function"""
-    exporter = AnimationDataExporter()
-    success = exporter.run()
+    generator = AnimationDataGenerator()
+    success = generator.run()
     
     if success:
-        print("\nAnimation data export completed!")
+        print("\nAnimation data generation completed!")
         print("Ready for 3D web visualization")
     else:
-        print("\n❌ Animation data export failed!")
-        print("💡 Make sure to run analysis first: python run_analysis.py --analyze-only")
+        print("\nAnimation data generation failed!")
+        print("Make sure to run analysis first: python run_analysis.py --analyze-only")
 
 
 if __name__ == "__main__":

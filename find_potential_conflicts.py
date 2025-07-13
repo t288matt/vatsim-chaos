@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Merged Conflict Analyzer and Reporter for ATC Event Scenarios
+Find Potential Conflicts for ATC Event Scenarios
 
 This script analyzes SimBrief XML flight plans to identify potential conflicts
 and generates comprehensive reports for event scenario creation.
@@ -372,7 +372,7 @@ def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
 
 def interpolate_route_segments(waypoints: List[Waypoint]) -> List[Dict[str, Any]]:
     """
-    Interpolate route segments between waypoints to find potential crossing points.
+    Interpolate route segments between waypoints to find potential conflicts.
     Adds points every ~INTERPOLATION_SPACING_NM along each segment.
     Args:
         waypoints: List of waypoints to interpolate between
@@ -453,9 +453,9 @@ def is_conflict_valid(wp1: Waypoint, wp2: Waypoint, distance: float, altitude_di
             wp1.altitude > MIN_ALTITUDE_THRESHOLD and
             wp2.altitude > MIN_ALTITUDE_THRESHOLD)
 
-def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]:
+def find_potential_conflicts(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]:
     """
-    Find potential crossing points between flight plans using conflict criteria.
+    Find potential conflicts between flight plans using conflict criteria.
     Only returns the FIRST conflict between each aircraft pair.
     
     Args:
@@ -464,7 +464,7 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
     Returns:
         List of detected first conflicts
     """
-    crossing_points = []
+    potential_conflicts = []
     first_conflicts = {}  # Track first conflict for each aircraft pair
     
     for i, fp1 in enumerate(flight_plans):
@@ -579,14 +579,14 @@ def find_crossing_points(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]
             print(f"  Found {segment_conflicts} segment conflicts")
     
     # Convert first_conflicts dict to list
-    crossing_points = list(first_conflicts.values())
-    return crossing_points
+    potential_conflicts = list(first_conflicts.values())
+    return potential_conflicts
 
 # =============================================================================
 # OPTIMIZATION FUNCTIONS
 # =============================================================================
 
-def optimize_departure_times(flight_plans: List[FlightPlan], crossing_points: List[Dict[str, Any]]) -> Dict[str, Any]:
+def optimize_departure_times(flight_plans: List[FlightPlan], potential_conflicts: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Optimize departure times to maximize conflicts.
     Enforce: No two flights can depart from the same airport within 2 minutes of each other.
@@ -594,9 +594,9 @@ def optimize_departure_times(flight_plans: List[FlightPlan], crossing_points: Li
     from collections import defaultdict
     # Group conflicts by flight pairs
     conflict_groups = defaultdict(list)
-    for crossing in crossing_points:
-        key = (crossing['flight1_idx'], crossing['flight2_idx'])
-        conflict_groups[key].append(crossing)
+    for conflict in potential_conflicts:
+        key = (conflict['flight1_idx'], conflict['flight2_idx'])
+        conflict_groups[key].append(conflict)
     # Start with first flight at time 0
     departure_times = {0: 0}
     conflict_scores = defaultdict(int)
@@ -632,18 +632,18 @@ def optimize_departure_times(flight_plans: List[FlightPlan], crossing_points: Li
             if any(abs(test_time - t) < MIN_DEPARTURE_SEPARATION_MINUTES and flight_origin[idx] == origin for idx, t in departure_times.items() if idx != flight_idx):
                 continue
             score = 0
-            for crossing in crossing_points:
-                if crossing['flight1_idx'] == flight_idx or crossing['flight2_idx'] == flight_idx:
-                    other_flight = crossing['flight2_idx'] if crossing['flight1_idx'] == flight_idx else crossing['flight1_idx']
+            for conflict in potential_conflicts:
+                if conflict['flight1_idx'] == flight_idx or conflict['flight2_idx'] == flight_idx:
+                    other_flight = conflict['flight2_idx'] if conflict['flight1_idx'] == flight_idx else conflict['flight1_idx']
                     if other_flight in departure_times:
                         other_time = departure_times[other_flight]
-                        flight_time = crossing['time1'] if crossing['flight1_idx'] == flight_idx else crossing['time2']
-                        other_crossing_time = crossing['time2'] if crossing['flight1_idx'] == flight_idx else crossing['time1']
-                        if crossing['flight1_idx'] == flight_idx:
-                            conflict_time = other_time + other_crossing_time
+                        flight_time = conflict['time1'] if conflict['flight1_idx'] == flight_idx else conflict['time2']
+                        other_conflict_time = conflict['time2'] if conflict['flight1_idx'] == flight_idx else conflict['time1']
+                        if conflict['flight1_idx'] == flight_idx:
+                            conflict_time = other_time + other_conflict_time
                             suggested_departure = conflict_time - flight_time
                         else:
-                            conflict_time = other_time + other_crossing_time
+                            conflict_time = other_time + other_conflict_time
                             suggested_departure = conflict_time - flight_time
                         if abs(test_time - suggested_departure) < TIME_TOLERANCE:
                             score += 1
@@ -657,36 +657,36 @@ def optimize_departure_times(flight_plans: List[FlightPlan], crossing_points: Li
         'conflict_scores': conflict_scores
     }
 
-def generate_conflict_scenario(flight_plans: List[FlightPlan], crossing_points: List[Dict[str, Any]]) -> Dict[str, Any]:
+def generate_conflict_scenario(flight_plans: List[FlightPlan], potential_conflicts: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Generate a complete conflict scenario with departure times.
     
     Args:
         flight_plans: List of flight plans
-        crossing_points: List of detected conflicts
+        potential_conflicts: List of detected conflicts
     
     Returns:
         Complete conflict scenario with departure schedule and actual conflicts
     """
     # Optimize departure times
-    optimization = optimize_departure_times(flight_plans, crossing_points)
+    optimization = optimize_departure_times(flight_plans, potential_conflicts)
     departure_times = optimization['departure_times']
     conflict_scores = optimization['conflict_scores']
     
-    # Calculate actual conflicts with departure times
-    actual_conflicts = []
-    for crossing in crossing_points:
-        flight1_idx = crossing['flight1_idx']
-        flight2_idx = crossing['flight2_idx']
+    # Calculate potential conflicts with departure times
+    potential_conflicts_with_timing = []
+    for conflict in potential_conflicts:
+        flight1_idx = conflict['flight1_idx']
+        flight2_idx = conflict['flight2_idx']
         if flight1_idx in departure_times and flight2_idx in departure_times:
-            # Calculate when each aircraft reaches the crossing point
-            flight1_arrival = departure_times[flight1_idx] + crossing['time1']
-            flight2_arrival = departure_times[flight2_idx] + crossing['time2']
-            conflict = dict(crossing)
-            conflict['flight1_arrival'] = flight1_arrival
-            conflict['flight2_arrival'] = flight2_arrival
-            conflict['time_diff'] = abs(flight1_arrival - flight2_arrival)
-            actual_conflicts.append(conflict)
+            # Calculate when each aircraft reaches the conflict point
+            flight1_arrival = departure_times[flight1_idx] + conflict['time1']
+            flight2_arrival = departure_times[flight2_idx] + conflict['time2']
+            potential_conflict_with_timing = dict(conflict)
+            potential_conflict_with_timing['flight1_arrival'] = flight1_arrival
+            potential_conflict_with_timing['flight2_arrival'] = flight2_arrival
+            potential_conflict_with_timing['time_diff'] = abs(flight1_arrival - flight2_arrival)
+            potential_conflicts_with_timing.append(potential_conflict_with_timing)
     
     return {
         'departure_schedule': [
@@ -697,8 +697,8 @@ def generate_conflict_scenario(flight_plans: List[FlightPlan], crossing_points: 
             }
             for i in range(len(flight_plans))
         ],
-        'actual_conflicts': actual_conflicts,
-        'total_conflicts': len(actual_conflicts)
+        'potential_conflicts': potential_conflicts_with_timing,
+        'total_conflicts': len(potential_conflicts_with_timing)
     }
 
 # =============================================================================
@@ -842,7 +842,7 @@ def print_and_write_conflict_report(data: Dict[str, Any], output_file: str = CON
         output_file: Output file path for the report
     """
     scenario = data.get('scenario', {})
-    conflicts = scenario.get('actual_conflicts', [])
+    conflicts = scenario.get('potential_conflicts', [])
     all_routes = set(data.get('flight_plans', []))
 
     output = []
@@ -1002,7 +1002,7 @@ def main() -> None:
     # Setup logging
     setup_logging()
     
-    print("Merged Conflict Analyzer and Reporter")
+    print("Find Potential Conflicts for ATC Event Scenarios")
     print("=" * 60)
     
     # Find XML files
@@ -1028,19 +1028,19 @@ def main() -> None:
     
     print(f"\nAnalyzing {len(flight_plans)} flight plans for conflicts...")
     
-    # Find crossing points
-    crossing_points = find_crossing_points(flight_plans)
+    # Find potential conflicts
+    potential_conflicts = find_potential_conflicts(flight_plans)
     
-    print(f"Found {len(crossing_points)} potential conflicts")
+    print(f"Found {len(potential_conflicts)} potential conflicts")
     print(f"   (Criteria: <{VERTICAL_SEPARATION_THRESHOLD}ft vertical, <{LATERAL_SEPARATION_THRESHOLD}NM lateral, >{MIN_ALTITUDE_THRESHOLD}ft altitude)")
     
     # Generate conflict scenario
-    scenario = generate_conflict_scenario(flight_plans, crossing_points)
+    scenario = generate_conflict_scenario(flight_plans, potential_conflicts)
     
     # Save analysis data
     analysis = {
         'flight_plans': [fp.get_route_identifier() for fp in flight_plans],
-        'crossing_points': crossing_points,
+        'potential_conflicts': potential_conflicts,
         'scenario': scenario
     }
     
@@ -1055,7 +1055,7 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(f"Fatal error in analyze_and_report_conflicts: {e}")
+        print(f"Fatal error in find_potential_conflicts: {e}")
         import traceback
         traceback.print_exc()
         exit(2) 

@@ -22,7 +22,6 @@ import logging
 
 # Configuration
 CONFLICT_ANALYSIS_FILE = "temp/conflict_analysis.json"
-SCHEDULE_OUTPUT_FILE = "event_schedule.csv"
 BRIEFING_OUTPUT_FILE = "pilot_briefing.txt"
 
 class ConflictScheduler:
@@ -116,7 +115,7 @@ class ConflictScheduler:
 
     def analyze_conflicts_for_scheduling(self, data: Dict) -> Dict[str, Dict]:
         """Analyze conflicts and prepare for scheduling."""
-        conflicts = data.get('scenario', {}).get('actual_conflicts', [])
+        conflicts = data.get('scenario', {}).get('potential_conflicts', [])
         flight_plans = data.get('flight_plans', [])
         
         # Apply the same filtering logic as the main analysis system
@@ -442,15 +441,10 @@ class ConflictScheduler:
                     lat2, lon2 = interpolate_position(wp2, t2)
                     if None in (lat1, lon1, lat2, lon2):
                         print(f"[DEBUG]   Interpolation failed: lat1={lat1}, lon1={lon1}, lat2={lat2}, lon2={lon2}")
-
         
         # Generate outputs
         logging.info("Generating schedule outputs...")
         try:
-            # CSV schedule
-            schedule_csv = self.generate_schedule_output(scheduled_flights)
-            with open(SCHEDULE_OUTPUT_FILE, 'w') as f:
-                f.write(schedule_csv)
             # ATC briefing
             briefing_text = self.generate_briefing_output(scheduled_flights, data)
             with open(BRIEFING_OUTPUT_FILE, 'w') as f:
@@ -458,7 +452,6 @@ class ConflictScheduler:
 
             print("OK: Scheduling complete!")
             print(f"Generated files:")
-            print(f"   - {SCHEDULE_OUTPUT_FILE} - Departure schedule")
             print(f"   - {BRIEFING_OUTPUT_FILE} - ATC briefing")
             print(f"\nDeparture Schedule:")
             for flight, data in sorted(scheduled_flights.items(), key=lambda x: x[1]['departure_time']):
@@ -500,7 +493,7 @@ Examples:
             sys.exit(1)
         
         if (end_time - start_time).total_seconds() < 3600:  # Less than 1 hour
-            print("⚠️  Warning: Event duration is less than 1 hour")
+            print("Warning: Event duration is less than 1 hour")
         
     except ValueError:
         print("ERROR: Invalid time format. Use HH:MM (e.g., 14:00)")

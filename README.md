@@ -37,10 +37,10 @@ python run_analysis.py
 # Option 2: Run individual steps
 # 1. Place SimBrief XML files in the project directory
 # 2. Extract flight plan data and generate KML files
-python simbrief_xml_flightplan_extractor.py
+python extract_simbrief_xml_flightplan.py
 
 # 3. Run conflict analysis on all XML files
-python analyze_and_report_conflicts.py
+python find_potential_conflicts.py
 
 # 4. Generate readable conflict report
 python conflicts_list.py
@@ -51,8 +51,8 @@ python merge_kml_flightplans.py
 # 6. Generate event schedule and pilot briefing (single output)
 python generate_schedule_conflicts.py --start 14:00 --end 18:00
 
-# 7. Export animation data for web visualization
-python export_animation_data.py
+# 7. Generate animation data for web visualization
+python generate_animation.py
 
 # 8. Open the visualization
 Open web_visualization/cesium_flight_anim.html in your browser
@@ -102,15 +102,15 @@ The system focuses on **"First Conflicts"** - the initial point where two aircra
 
 ### Core Analysis
 - `run_analysis.py` - Master workflow script (runs complete analysis pipeline)
-- `analyze_and_report_conflicts.py` - Main analysis engine (focuses on first conflicts)
+- `find_potential_conflicts.py` - Main analysis engine (focuses on first conflicts)
 - `conflicts_list.py` - Conflict listing and reporting
 - `conflict_list.txt` - Formatted conflict output (first conflicts only)
 
 ### Data Processing
-- `simbrief_xml_flightplan_extractor.py` - Converts SimBrief XML to KML for visualization
+- `extract_simbrief_xml_flightplan.py` - Converts SimBrief XML to KML for visualization
 - `merge_kml_flightplans.py` - Merges individual KML files into a single file
 - `generate_schedule_conflicts.py` - Generates event schedule for conflicts
-- `export_animation_data.py` - Exports animation data for web visualization (filters conflicts by altitude threshold)
+- `generate_animation.py` - Generates animation data for web visualization (filters conflicts by altitude threshold)
 
 ### Data Organization
 - `temp/` - Directory containing all generated data files
@@ -236,11 +236,11 @@ This system is designed for event scenario creation, enabling the events team to
 ### Custom Analysis
 ```bash
 # Run individual components
-python simbrief_xml_flightplan_extractor.py  # Extract data only
-python analyze_and_report_conflicts.py        # Analyze first conflicts only
+python extract_simbrief_xml_flightplan.py  # Extract data only
+python find_potential_conflicts.py        # Analyze first conflicts only
 python conflicts_list.py                      # Generate report only
 python merge_kml_flightplans.py              # Merge KML files only
-python export_animation_data.py              # Export web visualization data only
+python generate_animation.py              # Export web visualization data only
 ```
 
 ### Master Script Options
@@ -268,11 +268,11 @@ The system uses `env.py` for configurable parameters:
 ```
 Chaos2/
 ├── Core Analysis
-│   ├── analyze_and_report_conflicts.py      # Main analysis engine (first conflicts)
+│   ├── find_potential_conflicts.py      # Main analysis engine (first conflicts)
 │   ├── conflicts_list.py         # Conflict reporting
 │   └── conflict_list.txt         # Formatted output (first conflicts only)
 ├── Data Processing
-│   ├── simbrief_xml_flightplan_extractor.py  # XML extraction
+│   ├── extract_simbrief_xml_flightplan.py  # XML extraction
 │   └── merge_kml_flightplans.py             # KML merging
 ├── Configuration
 │   └── env.py                    # Configurable parameters

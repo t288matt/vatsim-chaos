@@ -215,7 +215,7 @@ def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
         #         waypoint = parse_waypoint_from_fix(fix)
         #         if waypoint:
         #             flight_plan.add_waypoint(waypoint)
-        #             print(f"  • {waypoint}")
+        #             print(f"  - {waypoint}")
         
         return flight_plan
         
@@ -288,7 +288,7 @@ def create_kml_from_flight_plan(flight_plan: FlightPlan, filename: str) -> str:
     <description>Flight plan extracted from SimBrief XML</description>
     
     <!-- Flight Information -->
-    <Snippet maxLines="2">{flight_plan.origin} → {flight_plan.destination}</Snippet>
+            <Snippet maxLines="2">{flight_plan.origin} to {flight_plan.destination}</Snippet>
     
     <!-- Flight Path Line -->
     <Placemark>
@@ -296,7 +296,7 @@ def create_kml_from_flight_plan(flight_plan: FlightPlan, filename: str) -> str:
       <description>
         <![CDATA[
         <h3>{filename} Flight Plan</h3>
-        <p><strong>Route:</strong> {flight_plan.origin} → {flight_plan.destination}</p>
+        <p><strong>Route:</strong> {flight_plan.origin} to {flight_plan.destination}</p>
         <p><strong>Route:</strong> {flight_plan.route}</p>
         <p><strong>Waypoints:</strong> {len(all_waypoints)}</p>
         <p><strong>Distance:</strong> ~{len(all_waypoints) * 50} nm</p>
