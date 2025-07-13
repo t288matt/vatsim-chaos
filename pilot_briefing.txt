@@ -6,19 +6,32 @@ Duration: 240 minutes
 
 DEPARTURE SCHEDULE:
 ------------------------------
-1400 - YBBN-YCOM (1 conflicts)
-1400 - YBDG-YSBK (1 conflicts)
-1402 - YBDG-YWSL (0 conflicts)
-1408 - YMER-YORG (1 conflicts)
-1442 - YMES-YSRI (1 conflicts)
-1458 - YSSY-YSWG (3 conflicts)
-1503 - YSNW-YWLM (1 conflicts)
-1512 - YSHL-YBTH (0 conflicts)
+1400 - YBBN-YCOM (2 conflicts)
+1400 - YMER-YMML (2 conflicts)
+1400 - YMCO-YSCB (2 conflicts)
+1400 - YMCO-YSHT (1 conflicts)
+1400 - YMRY-YMAY (0 conflicts)
+1402 - YMCO-YMAY (1 conflicts)
+1435 - YBDG-YWSL (1 conflicts)
+1436 - YMEN-YMAY (1 conflicts)
+1442 - YMES-YSRI (5 conflicts)
+1443 - YBDG-YSBK (2 conflicts)
+1443 - YMMB-YSWG (4 conflicts)
+1451 - YMER-YORG (5 conflicts)
+1458 - YSSY-YSWG (9 conflicts)
+1503 - YSNW-YWLM (4 conflicts)
+1513 - YSHL-YBTH (1 conflicts)
+1532 - YSSY-YORG (3 conflicts)
+1542 - YSWG-YSSY (2 conflicts)
 
 CONFLICT ANALYSIS:
 ------------------------------
 
 YBBN-YCOM conflicts:
+  - With YSSY-YSWG at -34.3709,150.7498
+    Time: 1510 (departure +70min)
+    Distance: 2.1nm, Alt diff: 480ft
+    Phase: cruise
   - With YSSY-YSWG at -34.3709,150.7498
     Time: 1510 (departure +70min)
     Distance: 2.9nm, Alt diff: 560ft
@@ -27,7 +40,15 @@ YBBN-YCOM conflicts:
 YSSY-YSWG conflicts:
   - With YBBN-YCOM at -34.3709,150.7498
     Time: 1510 (departure +12min)
+    Distance: 2.1nm, Alt diff: 480ft
+    Phase: cruise
+  - With YBBN-YCOM at -34.3709,150.7498
+    Time: 1510 (departure +12min)
     Distance: 2.9nm, Alt diff: 560ft
+    Phase: cruise
+  - With YMES-YSRI at -34.7096,149.6681
+    Time: 1522 (departure +24min)
+    Distance: 2.6nm, Alt diff: 519ft
     Phase: cruise
   - With YMES-YSRI at -34.7096,149.6681
     Time: 1522 (departure +24min)
@@ -35,31 +56,187 @@ YSSY-YSWG conflicts:
     Phase: cruise
   - With YSNW-YWLM at -34.4318,150.6207
     Time: 1511 (departure +13min)
+    Distance: 2.7nm, Alt diff: 823ft
+    Phase: climb
+  - With YSNW-YWLM at -34.4318,150.6207
+    Time: 1511 (departure +13min)
     Distance: 1.8nm, Alt diff: 823ft
     Phase: climb
-
-YSNW-YWLM conflicts:
-  - With YSSY-YSWG at -34.4318,150.6207
-    Time: 1510 (departure +7min)
-    Distance: 1.8nm, Alt diff: 823ft
+  - With YSSY-YSWG at -34.0359,151.0881
+    Time: 1503 (departure +5min)
+    Distance: 0.0nm, Alt diff: 95ft
     Phase: climb
+  - With YSWG-YSSY at -35.1279,147.6462
+    Time: 1546 (departure +48min)
+    Distance: 2.0nm, Alt diff: 141ft
+    Phase: descent
+  - With YSWG-YSSY at -35.1279,147.6462
+    Time: 1546 (departure +48min)
+    Distance: 2.0nm, Alt diff: 141ft
+    Phase: descent
 
 YMES-YSRI conflicts:
+  - With YMCO-YSCB at -36.3304,148.9643
+    Time: 1505 (departure +23min)
+    Distance: 2.9nm, Alt diff: 888ft
+    Phase: cruise
+  - With YMER-YORG at -34.9556,149.4521
+    Time: 1519 (departure +37min)
+    Distance: 2.6nm, Alt diff: 722ft
+    Phase: descent
+  - With YSSY-YORG at -33.7330,150.2905
+    Time: 1536 (departure +54min)
+    Distance: 2.1nm, Alt diff: 800ft
+    Phase: descent
+  - With YSSY-YSWG at -34.7096,149.6681
+    Time: 1522 (departure +40min)
+    Distance: 2.6nm, Alt diff: 519ft
+    Phase: cruise
   - With YSSY-YSWG at -34.7096,149.6681
     Time: 1522 (departure +40min)
     Distance: 2.6nm, Alt diff: 519ft
     Phase: cruise
 
-YBDG-YSBK conflicts:
-  - With YMER-YORG at -34.7432,149.3605
-    Time: 1451 (departure +51min)
-    Distance: 2.3nm, Alt diff: 117ft
-    Phase: cruise
+YSNW-YWLM conflicts:
+  - With YSHL-YBTH at -34.4900,150.6679
+    Time: 1517 (departure +14min)
+    Distance: 2.8nm, Alt diff: 666ft
+    Phase: climb
+  - With YSNW-YWLM at -34.8451,150.5484
+    Time: 1508 (departure +5min)
+    Distance: 0.4nm, Alt diff: 352ft
+    Phase: climb
+  - With YSSY-YSWG at -34.4318,150.6207
+    Time: 1510 (departure +7min)
+    Distance: 2.7nm, Alt diff: 823ft
+    Phase: climb
+  - With YSSY-YSWG at -34.4318,150.6207
+    Time: 1510 (departure +7min)
+    Distance: 1.8nm, Alt diff: 823ft
+    Phase: climb
+
+YSWG-YSSY conflicts:
+  - With YSSY-YSWG at -35.1279,147.6462
+    Time: 1546 (departure +4min)
+    Distance: 2.0nm, Alt diff: 141ft
+    Phase: descent
+  - With YSSY-YSWG at -35.1279,147.6462
+    Time: 1546 (departure +4min)
+    Distance: 2.0nm, Alt diff: 141ft
+    Phase: descent
 
 YMER-YORG conflicts:
   - With YBDG-YSBK at -34.7432,149.3605
-    Time: 1451 (departure +43min)
+    Time: 1534 (departure +43min)
     Distance: 2.3nm, Alt diff: 117ft
     Phase: cruise
+  - With YMER-YORG at -36.2632,149.7515
+    Time: 1509 (departure +18min)
+    Distance: 2.1nm, Alt diff: 759ft
+    Phase: cruise
+  - With YSSY-YORG at -33.4262,149.1351
+    Time: 1600 (departure +69min)
+    Distance: 2.7nm, Alt diff: 347ft
+    Phase: descent
+  - With YMES-YSRI at -34.9556,149.4521
+    Time: 1519 (departure +28min)
+    Distance: 2.6nm, Alt diff: 722ft
+    Phase: descent
+  - With YSSY-YORG at -33.4270,149.1353
+    Time: 1537 (departure +46min)
+    Distance: 2.7nm, Alt diff: 538ft
+    Phase: descent
 
-Total conflicts: 8
+YSSY-YORG conflicts:
+  - With YMER-YORG at -33.4262,149.1351
+    Time: 1559 (departure +27min)
+    Distance: 2.7nm, Alt diff: 347ft
+    Phase: descent
+  - With YMER-YORG at -33.4270,149.1353
+    Time: 1559 (departure +27min)
+    Distance: 2.7nm, Alt diff: 538ft
+    Phase: descent
+  - With YMES-YSRI at -33.7330,150.2905
+    Time: 1546 (departure +14min)
+    Distance: 2.1nm, Alt diff: 800ft
+    Phase: descent
+
+YBDG-YSBK conflicts:
+  - With YMER-YORG at -34.7432,149.3605
+    Time: 1534 (departure +51min)
+    Distance: 2.3nm, Alt diff: 117ft
+    Phase: cruise
+  - With YMMB-YSWG at -36.1213,146.7604
+    Time: 1509 (departure +26min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+
+YMMB-YSWG conflicts:
+  - With YBDG-YSBK at -36.1213,146.7604
+    Time: 1508 (departure +25min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+  - With YBDG-YWSL at -37.2378,145.7515
+    Time: 1455 (departure +12min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+  - With YMEN-YMAY at -36.6049,146.1293
+    Time: 1502 (departure +19min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+  - With YMER-YMML at -37.2937,145.6847
+    Time: 1454 (departure +11min)
+    Distance: 3.0nm, Alt diff: 700ft
+    Phase: descent
+
+YMER-YMML conflicts:
+  - With YMCO-YSCB at -36.9884,149.3436
+    Time: 1412 (departure +12min)
+    Distance: 2.7nm, Alt diff: 881ft
+    Phase: cruise
+  - With YMMB-YSWG at -37.2937,145.6847
+    Time: 1456 (departure +56min)
+    Distance: 3.0nm, Alt diff: 700ft
+    Phase: descent
+
+YMCO-YSCB conflicts:
+  - With YMER-YMML at -36.9884,149.3436
+    Time: 1413 (departure +13min)
+    Distance: 2.7nm, Alt diff: 881ft
+    Phase: cruise
+  - With YMES-YSRI at -36.3304,148.9643
+    Time: 1422 (departure +22min)
+    Distance: 2.9nm, Alt diff: 888ft
+    Phase: cruise
+
+YBDG-YWSL conflicts:
+  - With YMMB-YSWG at -37.2378,145.7515
+    Time: 1455 (departure +20min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+
+YSHL-YBTH conflicts:
+  - With YSNW-YWLM at -34.4900,150.6679
+    Time: 1517 (departure +4min)
+    Distance: 2.8nm, Alt diff: 666ft
+    Phase: climb
+
+YMEN-YMAY conflicts:
+  - With YMMB-YSWG at -36.6049,146.1293
+    Time: 1502 (departure +26min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+
+YMCO-YMAY conflicts:
+  - With YMCO-YSHT at -37.5680,149.5783
+    Time: 1406 (departure +4min)
+    Distance: 0.6nm, Alt diff: 0ft
+    Phase: climb
+
+YMCO-YSHT conflicts:
+  - With YMCO-YMAY at -37.5680,149.5783
+    Time: 1405 (departure +5min)
+    Distance: 0.6nm, Alt diff: 0ft
+    Phase: climb
+
+Total conflicts: 45

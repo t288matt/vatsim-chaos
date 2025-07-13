@@ -30,6 +30,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from typing import List, Dict, Tuple, Any
 from env import MIN_ALTITUDE_THRESHOLD
+from collections import defaultdict
 
 # =============================================================================
 # Animation Data Generation Script
@@ -309,6 +310,13 @@ class AnimationDataGenerator:
                 'conflicts': []
             }
             tracks.append(track)
+        # Ensure all flight_id values are unique by appending a suffix to duplicates
+        flight_id_counts = defaultdict(int)
+        for track in tracks:
+            base_id = track['flight_id']
+            flight_id_counts[base_id] += 1
+            if flight_id_counts[base_id] > 1:
+                track['flight_id'] = f"{base_id}-{flight_id_counts[base_id]}"
         return tracks
     
     def add_minutes_to_hhmm(self, hhmm: str, minutes: float) -> str:
