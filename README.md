@@ -23,16 +23,16 @@ The easiest way to run the complete analysis is using the master script:
 
 ```bash
 # Run complete workflow (extract → analyze → report → merge → schedule → frontend)
-python run_analysis.py
+python execute.py
 
 # Run with custom schedule times
-python run_analysis.py --start 14:00 --end 18:00
+python execute.py --start 14:00 --end 18:00
 ```
 
 ### Basic Workflow
 ```bash
 # Option 1: Run complete workflow with master script
-python run_analysis.py
+python execute.py
 
 # Option 2: Run individual steps
 # 1. Place SimBrief XML files in the project directory
@@ -55,19 +55,19 @@ python generate_schedule_conflicts.py --start 14:00 --end 18:00
 python generate_animation.py
 
 # 8. Open the visualization
-Open web_visualization/cesium_flight_anim.html in your browser
+Open animation/cesium_flight_anim.html in your browser
 ```
 
 ### Expected Output
-- `temp/conflict_analysis.json` - Detailed conflict data
+- `temp/potential_conflict_data.json` - Detailed conflict data
 - `conflict_list.txt` - Formatted conflict list (first conflicts only)
 - `merged_flightplans.kml` - Combined KML file for Google Earth
 - Individual KML files in `temp/` directory
 - `pilot_briefing.txt` - Pilot conflict briefing (authoritative, includes all departure times and conflict details)
-- `web_visualization/animation_data.json` - Animation data for Cesium (filtered by altitude)
-- `web_visualization/flight_tracks.json` - Flight path data
-- `web_visualization/conflict_points.json` - Conflict location/timing (filtered by altitude)
-- `web_visualization/cesium_flight_anim.html` - 3D web visualization
+- `animation/animation_data.json` - Animation data for Cesium (filtered by altitude)
+- `animation/flight_tracks.json` - Flight path data
+- `animation/conflict_points.json` - Conflict location/timing (filtered by altitude)
+- `animation/cesium_flight_anim.html` - 3D web visualization
 
 ## Conflict Detection Features
 
@@ -101,7 +101,7 @@ The system focuses on **"First Conflicts"** - the initial point where two aircra
 ## System Components
 
 ### Core Analysis
-- `run_analysis.py` - Master workflow script (runs complete analysis pipeline)
+- `execute.py` - Master workflow script (runs complete analysis pipeline)
 - `find_potential_conflicts.py` - Main analysis engine (focuses on first conflicts)
 - `conflicts_list.py` - Conflict listing and reporting
 - `conflict_list.txt` - Formatted conflict output (first conflicts only)
@@ -116,11 +116,11 @@ The system focuses on **"First Conflicts"** - the initial point where two aircra
 - `temp/` - Directory containing all generated data files
   - Individual KML files for each flight plan
   - Individual JSON data files for each flight plan
-  - `conflict_analysis.json` - Main analysis results
+  - `potential_conflict_data.json` - Main analysis results
 
 ### Visualization
 - `merged_flightplans.kml` - Combined KML file for Google Earth viewing
-- `web_visualization/cesium_flight_anim.html` - 3D animated web visualization (CesiumJS)
+- `animation/cesium_flight_anim.html` - 3D animated web visualization (CesiumJS)
 - 40 diverse colors for easy route identification
 
 ## Web Visualization Features
@@ -238,103 +238,6 @@ This system is designed for event scenario creation, enabling the events team to
 # Run individual components
 python extract_simbrief_xml_flightplan.py  # Extract data only
 python find_potential_conflicts.py        # Analyze first conflicts only
-python conflicts_list.py                      # Generate report only
 python merge_kml_flightplans.py              # Merge KML files only
 python generate_animation.py              # Export web visualization data only
 ```
-
-### Master Script Options
-```bash
-# Run complete workflow
-python run_analysis.py
-
-# Run specific steps only
-python run_analysis.py --extract-only      # Extract flight plan data only
-python run_analysis.py --analyze-only      # Run first conflict analysis only
-python run_analysis.py --report-only       # Generate first conflict report only
-python run_analysis.py --merge-only        # Merge KML files only
-python run_analysis.py --schedule-only     # Generate event schedule only
-python run_analysis.py --frontend-only     # Update web visualization only
-```
-
-### Configuration
-The system uses `env.py` for configurable parameters:
-- `LATERAL_SEPARATION_THRESHOLD`: Lateral separation for conflicts (default: 3.0nm)
-- `VERTICAL_SEPARATION_THRESHOLD`: Vertical separation for conflicts (default: 900ft)
-- `MIN_ALTITUDE_THRESHOLD`: Minimum altitude for conflict detection (default: 5000ft)
-- `INTERPOLATION_SPACING_NM`: Distance between interpolated route points (default: 2.0nm)
-
-### File Organization
-```
-Chaos2/
-├── Core Analysis
-│   ├── find_potential_conflicts.py      # Main analysis engine (first conflicts)
-│   ├── conflicts_list.py         # Conflict reporting
-│   └── conflict_list.txt         # Formatted output (first conflicts only)
-├── Data Processing
-│   ├── extract_simbrief_xml_flightplan.py  # XML extraction
-│   └── merge_kml_flightplans.py             # KML merging
-├── Configuration
-│   └── env.py                    # Configurable parameters
-├── Input Data
-│   └── *.xml                    # SimBrief XML files
-├── Output Data
-│   ├── temp/                    # Generated data files
-│   │   ├── *.kml               # Individual KML files
-│   │   ├── *_data.json         # Flight plan data
-│   │   └── conflict_analysis.json  # Analysis results
-│   └── merged_flightplans.kml  # Combined visualization
-├── Web Visualization
-│   ├── cesium_flight_anim.html  # 3D web visualization
-│   ├── animation_data.json      # Animation data
-│   ├── flight_tracks.json       # Flight path data
-│   └── conflict_points.json     # First conflict data
-└── Documentation
-    ├── README.md               # User documentation
-    └── ARCHITECTURE.md         # System architecture
-```
-
-## Troubleshooting
-
-### Common Issues
-1. **No XML files found**: Ensure SimBrief XML files are in the project directory
-2. **No conflicts detected**: Check that aircraft altitudes are above 5000 ft
-3. **KML files not generated**: Verify XML files are valid SimBrief format
-4. **Memory errors**: Reduce number of flight plans for large datasets
-5. **Frontend not updating**: Run `python run_analysis.py --frontend-only` to update web visualization data
-
-### Error Messages
-- `❌ No XML files found`: Place SimBrief XML files in the directory
-- `⚠️ Error parsing waypoint`: Check XML file format and data integrity
-- `❌ Need at least 2 flight plans`: Add more flight plan files for analysis
-
-## Future Enhancements
-
-### Planned Features
-1. **Real-time Processing**: WebSocket integration for live flight data
-2. **Advanced Algorithms**: Machine learning for conflict prediction
-3. **Database Integration**: Persistent storage for historical analysis
-4. **API Layer**: RESTful interface for external integrations
-5. **Enhanced Visualization**: 3D rendering and animation capabilities
-
-### Contributing
-The system is designed for easy extension and modification:
-- Modular architecture with clear separation of concerns
-- JSON-based data exchange between components
-- Standard library dependencies for easy deployment
-- Comprehensive error handling and logging
-
-## Requirements
-
-- **Python 3.6+**: Core runtime
-- **Standard Library**: xml.etree.ElementTree, json, os, math
-- **No External Dependencies**: Self-contained for easy deployment
-- **SimBrief XML Files**: Flight plan data in SimBrief format
-
-## License
-
-This project is designed for event scenario creation and live ATC challenge applications.
-
----
-
-**For detailed technical information, see [ARCHITECTURE.md](ARCHITECTURE.md)** 

@@ -14,7 +14,7 @@ Workflow:
 5. Generate comprehensive conflict reports
 
 Usage:
-    python run_analysis.py [options]
+    python execute.py [options]
 
 Options:
     --extract-only    Only run the XML extraction step
@@ -47,7 +47,7 @@ SCRIPTS = {
 OUTPUT_FILES = {
     'conflict_report': 'conflict_list.txt',
     'merged_kml': 'merged_flightplans.kml',
-    'analysis_data': 'temp/conflict_analysis.json',
+    'analysis_data': 'temp/potential_conflict_data.json',
     'schedule': 'event_schedule.csv',
     'briefing': 'pilot_briefing.txt'
 }
@@ -297,12 +297,12 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python run_analysis.py                    # Run complete workflow
-  python run_analysis.py --extract-only     # Only extract XML data
-  python run_analysis.py --analyze-only     # Only analyze conflicts
-  python run_analysis.py --frontend-only    # Only update frontend data
-  python run_analysis.py --skip-extract     # Skip extraction, use existing data
-  python run_analysis.py --verbose          # Enable verbose output
+  python execute.py                    # Run complete workflow
+  python execute.py --extract-only     # Only extract XML data
+  python execute.py --analyze-only     # Only analyze conflicts
+  python execute.py --frontend-only    # Only update frontend data
+  python execute.py --skip-extract     # Skip extraction, use existing data
+  python execute.py --verbose          # Enable verbose output
         """
     )
     
@@ -370,10 +370,10 @@ Examples:
             print("Check the generated files:")
             print("   - conflict_list.txt - Detailed conflict report")
             print("   - merged_flightplans.kml - Google Earth visualization")
-            print("   - temp/conflict_analysis.json - Raw analysis data")
-            print("   - web_visualization/animation_data.json - Frontend animation data")
-            print("   - web_visualization/conflict_points.json - Frontend conflict data")
-            print("   - web_visualization/flight_tracks.json - Frontend flight tracks")
+            print("   - temp/potential_conflict_data.json - Raw analysis data")
+            print("   - animation/animation_data.json - Frontend animation data")
+            print("   - animation/conflict_points.json - Frontend conflict data")
+            print("   - animation/flight_tracks.json - Frontend flight tracks")
             if args.start_time and args.end_time:
                 print("   - event_schedule.csv - Departure schedule")
                 print("   - pilot_briefing.txt - Pilot briefing document")

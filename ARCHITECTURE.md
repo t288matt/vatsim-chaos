@@ -64,7 +64,7 @@ The system focuses on identifying "first conflicts" - the initial point where tw
 **File**: `generate_schedule_conflicts.py`
 
 **Responsibilities**:
-- Read conflict_analysis.json
+- Read potential_conflict_data.json
 - Assign departure times to maximize/synchronize conflicts
 - Output pilot_briefing.txt (authoritative, includes schedule and conflicts)
 
@@ -79,7 +79,7 @@ The system focuses on identifying "first conflicts" - the initial point where tw
 - Output: `animation_data.json`, `flight_tracks.json`, `conflict_points.json`
 
 ### 5. Visualization Layer
-**Files**: `merge_kml_flightplans.py`, `web_visualization/cesium_flight_anim.html`
+**Files**: `merge_kml_flightplans.py`, `animation/cesium_flight_anim.html`
 
 **Responsibilities**:
 - Merge KML files for Google Earth
@@ -90,8 +90,8 @@ The system focuses on identifying "first conflicts" - the initial point where tw
 
 ## Data Flow
 
-1. SimBrief XML → Extraction → conflict_analysis.json
-2. conflict_analysis.json → Scheduling → pilot_briefing.txt
+1. SimBrief XML → Extraction → potential_conflict_data.json
+2. potential_conflict_data.json → Scheduling → pilot_briefing.txt
 3. pilot_briefing.txt → Animation Generation → animation_data.json
 
 ## Data Models

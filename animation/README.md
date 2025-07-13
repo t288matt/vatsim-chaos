@@ -1,6 +1,6 @@
-# Web Visualization
+# Animation
 
-This directory contains the 3D web visualization for the ATC Conflict Analysis System.
+This directory contains the 3D animation visualization for the ATC Conflict Analysis System.
 
 ## Cesium Flight Animation
 

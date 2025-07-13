@@ -1,6 +1,6 @@
 import json
 
-with open('web_visualization/animation_data.json') as f:
+with open('animation/animation_data.json') as f:
     data = json.load(f)
 
 print('FLIGHT CHECK:')

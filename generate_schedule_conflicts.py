@@ -21,7 +21,7 @@ from typing import Dict, List, Tuple, Optional
 import logging
 
 # Configuration
-CONFLICT_ANALYSIS_FILE = "temp/conflict_analysis.json"
+CONFLICT_ANALYSIS_FILE = "temp/potential_conflict_data.json"
 BRIEFING_OUTPUT_FILE = "pilot_briefing.txt"
 
 class ConflictScheduler:
@@ -56,7 +56,7 @@ class ConflictScheduler:
         """Load conflict analysis data."""
         if not os.path.exists(CONFLICT_ANALYSIS_FILE):
             print(f"ERROR: Conflict analysis file not found: {CONFLICT_ANALYSIS_FILE}")
-            print("Run 'python run_analysis.py --analyze-only' first")
+            print("Run 'python execute.py --analyze-only' first")
             sys.exit(1)
         
         with open(CONFLICT_ANALYSIS_FILE, 'r') as f:
@@ -376,7 +376,7 @@ class ConflictScheduler:
         
         # After scheduling, update each conflict with actual lateral separation at scheduled conflict time
         import json
-        anim_path = 'web_visualization/animation_data.json'
+        anim_path = 'animation/animation_data.json'
         if os.path.exists(anim_path):
             with open(anim_path, 'r') as f:
                 anim_data = json.load(f)

@@ -6,7 +6,7 @@ Reads existing ATC conflict analysis files and generates animation-ready data
 for web visualization.
 
 Input files:
-- temp/conflict_analysis.json (flight plans and conflicts)
+- temp/potential_conflict_data.json (flight plans and conflicts)
 - event_schedule.csv (departure timing)
 - pilot_briefing.txt (conflict timing info)
 
@@ -52,7 +52,7 @@ class AnimationDataGenerator:
     def load_conflict_analysis(self) -> bool:
         """Load flight plans and conflicts from existing analysis (fixed for new structure)"""
         try:
-            with open('temp/conflict_analysis.json', 'r') as f:
+            with open('temp/potential_conflict_data.json', 'r') as f:
                 data = json.load(f)
 
             # The new structure uses 'flight_plans' (list of flight names) and 'potential_conflicts' (list of conflicts)
@@ -63,13 +63,13 @@ class AnimationDataGenerator:
             self.flights = data.get('flights', {})
             if not self.flights:
                 # Warn if only flight names are present
-                logging.warning("No detailed flight data found in conflict_analysis.json. Only flight names will be available for animation.")
+                logging.warning("No detailed flight data found in potential_conflict_data.json. Only flight names will be available for animation.")
 
             logging.info(f"Loaded {len(self.flight_names)} flights and {len(self.conflicts)} conflicts")
             return True
 
         except FileNotFoundError:
-            logging.error("temp/conflict_analysis.json not found. Run analysis first.")
+            logging.error("temp/potential_conflict_data.json not found. Run analysis first.")
             return False
         except json.JSONDecodeError as e:
             logging.error(f"Error parsing conflict analysis: {e}")
@@ -416,14 +416,14 @@ class AnimationDataGenerator:
             self.animation_data['timeline'] = timeline
             
             # Generate main animation data
-            with open('web_visualization/animation_data.json', 'w') as f:
+            with open('animation/animation_data.json', 'w') as f:
                 json.dump(self.animation_data, f, indent=2)
             
             # Generate individual files for web components
-            with open('web_visualization/flight_tracks.json', 'w') as f:
+            with open('animation/flight_tracks.json', 'w') as f:
                 json.dump(tracks, f, indent=2)
             
-            with open('web_visualization/conflict_points.json', 'w') as f:
+            with open('animation/conflict_points.json', 'w') as f:
                 json.dump(filtered_conflicts, f, indent=2)
             
             logger.info("Animation data generated successfully!")
@@ -461,7 +461,7 @@ def main():
         print("Ready for 3D web visualization")
     else:
         print("\nAnimation data generation failed!")
-        print("Make sure to run analysis first: python run_analysis.py --analyze-only")
+        print("Make sure to run analysis first: python execute.py --analyze-only")
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │                                                    START                                                                                  │
 │                                                                                                                                    │
 │  ┌─────────────────┐                                                                                                                │
-│  │   run_analysis.py│                                                                                                                │
+│  │   execute.py│                                                                                                                │
 │  │   Master Script │                                                                                                                │
 │  └─────────────────┘                                                                                                                │
 │           │                                                                                                                          │
@@ -77,8 +77,8 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    OUTPUTS                                                                                        │  │
 │  │  • conflict_list.txt (2,704 bytes)                                                                                             │  │
-│  │  • temp/conflict_analysis.json                                                                                                 │  │
-│  │  • conflict_analysis.log                                                                                                        │  │
+│  │  • temp/potential_conflict_data.json                                                                                                 │  │
+│  │  • temp/conflict_analysis.log                                                                                                   │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
                                     │
@@ -122,7 +122,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │  │  │ Data        │    │ Times       │    │ Rules       │    │ Timeline    │    │             │                                    │  │
 │  │  └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘                                    │  │
 │  │                                                                                                                               │  │
-│  │  • Load conflict analysis data                                                                                                │  │
+│  │  • Load potential_conflict_data.json                                                                                                │  │
 │  │  • Calculate optimal departure times                                                                                           │  │
 │  │  • Apply 2-minute separation rules                                                                                            │  │
 │  │  • Generate event timeline                                                                                                     │  │
@@ -132,7 +132,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    OUTPUTS                                                                                        │  │
 │  │  • pilot_briefing.txt (5,427 bytes) - Pilot briefing (includes authoritative departure schedule and conflict details)                 │  │
-│  │  • temp/conflict_analysis.json - Raw analysis data                                                                              │  │
+│  │  • temp/potential_conflict_data.json - Raw analysis data                                                                              │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
                                     │
@@ -149,19 +149,19 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │  │  │ Data        │    │ by Altitude │    │ Tracks      │    │ Timeline    │    │             │                                    │  │
 │  │  └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘                                    │  │
 │  │                                                                                                                               │  │
-│  │  • Load conflict_analysis.json                                                                                                │  │
+│  │  • Load potential_conflict_data.json                                                                                                │  │
 │  │  • Filter conflicts above 5000 ft                                                                                             │  │
 │  │  • Extract waypoints from XML files                                                                                           │  │
 │  │  • Generate flight track data                                                                                                 │  │
 │  │  • Create animation timeline                                                                                                  │  │
-│  │  • Export to web_visualization/                                                                                               │  │
+│  │  • Export to animation/                                                                                               │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    OUTPUTS                                                                                        │  │
-│  │  • web_visualization/animation_data.json                                                                                       │  │
-│  │  • web_visualization/flight_tracks.json                                                                                        │  │
-│  │  • web_visualization/conflict_points.json                                                                                      │  │
+│  │  • animation/animation_data.json                                                                                       │  │
+│  │  • animation/flight_tracks.json                                                                                        │  │
+│  │  • animation/conflict_points.json                                                                                      │  │
 │  │  • Ready for 3D web visualization                                                                                             │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -173,7 +173,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    ANALYSIS REPORTS                                                                               │  │
 │  │  • conflict_list.txt (2,704 bytes) - Detailed conflict analysis                                                                 │  │
-│  │  • temp/conflict_analysis.json - Raw analysis data                                                                              │  │
+│  │  • temp/potential_conflict_data.json - Raw analysis data                                                                              │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
@@ -184,9 +184,9 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    FRONTEND DATA                                                                                  │  │
-│  │  • web_visualization/animation_data.json - Complete animation data                                                              │  │
-│  │  • web_visualization/flight_tracks.json - Individual flight paths                                                               │  │
-│  │  • web_visualization/conflict_points.json - Conflict locations                                                                  │  │
+│  │  • animation/animation_data.json - Complete animation data                                                              │  │
+│  │  • animation/flight_tracks.json - Individual flight paths                                                               │  │
+│  │  • animation/conflict_points.json - Conflict locations                                                                  │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
@@ -236,7 +236,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 5. **Frontend Export**
    - ✅ Analysis data loaded
    - ✅ Conflicts filtered
-   - ✅ JSON files created in web_visualization/
+   - ✅ JSON files created in animation/
 
 ### Error Handling:
 - Unicode/emoji characters removed from all scripts

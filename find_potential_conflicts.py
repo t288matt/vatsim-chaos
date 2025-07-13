@@ -42,7 +42,7 @@ TIME_TOLERANCE = 2  # minutes
 
 # File paths
 TEMP_DIRECTORY = "temp"
-CONFLICT_ANALYSIS_FILE = "conflict_analysis.json"
+CONFLICT_ANALYSIS_FILE = "potential_conflict_data.json"
 CONFLICT_LIST_FILE = "conflict_list.txt"
 
 # Earth radius for distance calculations
@@ -145,8 +145,11 @@ class Conflict:
 
 def setup_logging() -> None:
     """Configure logging for the application."""
+    # Ensure temp directory exists
+    os.makedirs('temp', exist_ok=True)
+    
     # Clear the log file at the start of each run
-    with open('conflict_analysis.log', 'w') as f:
+    with open('temp/conflict_analysis.log', 'w') as f:
         f.write('')  # Clear the file
     
     logging.basicConfig(
@@ -154,7 +157,7 @@ def setup_logging() -> None:
         format='%(asctime)s - %(levelname)s - %(message)s',
         handlers=[
             logging.StreamHandler(),
-            logging.FileHandler('conflict_analysis.log')
+            logging.FileHandler('temp/conflict_analysis.log')
         ]
     )
 
