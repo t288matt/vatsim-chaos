@@ -60,6 +60,12 @@
     <div id="departure-logs"></div>
   </div>
   <script>
+    // Auto-reload the page every 2 minutes (120,000 ms)
+    setTimeout(function() {
+      window.location.reload();
+    }, 120000);
+  </script>
+  <script>
     // Best practice: Set up Cesium viewer and timeline for animation
     window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/';
     const viewer = new Cesium.Viewer('cesiumContainer', {
