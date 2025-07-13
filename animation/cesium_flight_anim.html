@@ -112,8 +112,10 @@
         }
       });
     };
-    function parseTimeToMinutes(timeStr) {
-      const [hours, minutes] = timeStr.split(':').map(Number);
+    function parseUTCTimeToMinutes(utcTimeStr) {
+      // Convert UTC "HHMM" string to minutes since event start (14:00)
+      const hours = parseInt(utcTimeStr.substring(0, 2));
+      const minutes = parseInt(utcTimeStr.substring(2, 4));
       const eventStart = 14 * 60;
       return (hours * 60 + minutes) - eventStart;
     }
@@ -133,13 +135,18 @@
           data = JSON.parse(text);
         } catch (jsonErr) {
           document.getElementById('info').innerHTML += '<br>❌ JSON parse error: ' + jsonErr.message;
+          console.error('JSON parse error:', jsonErr);
           return false;
         }
+        console.log('Loaded data:', data);
         if (data.flights && Array.isArray(data.flights)) flights = data.flights;
         if (data.conflicts && Array.isArray(data.conflicts)) conflicts = data.conflicts;
+        console.log('Flights:', flights);
+        console.log('Conflicts:', conflicts);
         return true;
       } catch (error) {
         document.getElementById('info').innerHTML += '<br>❌ Data load error: ' + error.message;
+        console.error('Data load error:', error);
         return false;
       }
     }
@@ -150,9 +157,9 @@
       // Calculate global timeline
       let minTime = Infinity, maxTime = -Infinity;
       flights.forEach(flight => {
-        const departureMinutes = parseTimeToMinutes(flight.departure_time || '14:00');
+        const departureMinutes = parseUTCTimeToMinutes(flight.departure_time || '1400');
         flight.waypoints.forEach(wp => {
-          const absoluteTime = departureMinutes + (wp.time_from_departure || 0);
+          const absoluteTime = parseUTCTimeToMinutes(wp['UTC time'] || '1400');
           if (absoluteTime < minTime) minTime = absoluteTime;
           if (absoluteTime > maxTime) maxTime = absoluteTime;
         });
@@ -174,9 +181,9 @@
         const property = new Cesium.SampledPositionProperty();
         const altitudeProperty = new Cesium.SampledProperty(Number);
         let entityStart = Infinity, entityStop = -Infinity;
-        const departureMinutes = parseTimeToMinutes(flight.departure_time || '14:00');
+        const departureMinutes = parseUTCTimeToMinutes(flight.departure_time || '1400');
         flight.waypoints.forEach(wp => {
-          const absoluteTime = departureMinutes + (wp.time_from_departure || 0);
+          const absoluteTime = parseUTCTimeToMinutes(wp['UTC time'] || '1400');
           const t = Cesium.JulianDate.addSeconds(start, absoluteTime * 60, new Cesium.JulianDate());
           property.addSample(t, Cesium.Cartesian3.fromDegrees(wp.lon, wp.lat, wp.altitude));
           altitudeProperty.addSample(t, wp.altitude);
@@ -225,6 +232,7 @@
         });
         flightEntities.push(entity);
       });
+
       // Remove camera auto-zoom logic so map does not move on first flight start
       // if (minLat < maxLat && minLon < maxLon && (maxLat - minLat > 0.01) && (maxLon - minLon > 0.01)) {
       //   viewer.zoomTo(viewer.entities);
@@ -246,7 +254,7 @@
       checkForDepartures(minutes, timeStr);
       
       const activeConflicts = conflicts.filter(conflict => {
-        const conflictTime = conflict.time1 || 0;
+        const conflictTime = parseUTCTimeToMinutes(conflict.time1 || '1400');
         return Math.abs(minutes - conflictTime) < 2;
       });
       const alertsDiv = document.getElementById('conflict-alerts');
@@ -279,7 +287,7 @@
     
     function checkForDepartures(currentMinutes, timeStr) {
       flights.forEach(flight => {
-        const departureMinutes = parseTimeToMinutes(flight.departure_time || '14:00');
+        const departureMinutes = parseUTCTimeToMinutes(flight.departure_time || '1400');
         if (currentMinutes >= departureMinutes && !departedFlights.has(flight.flight_id)) {
           departedFlights.add(flight.flight_id);
           logDeparture(flight.flight_id, timeStr, flight.departure_time);
@@ -329,11 +337,11 @@
           flights = [
             {
               flight_id: 'Demo Flight 1',
-              departure_time: '14:00',
+              departure_time: '1400',
               waypoints: [
-                { lon: 151.177, lat: -33.946, altitude: 0, time_from_departure: 0 },
-                { lon: 153.117, lat: -27.384, altitude: 10000, time_from_departure: 10 },
-                { lon: 144.843, lat: -37.673, altitude: 0, time_from_departure: 20 }
+                { lon: 151.177, lat: -33.946, altitude: 0, utc_time: '1400' },
+                { lon: 153.117, lat: -27.384, altitude: 10000, utc_time: '1410' },
+                { lon: 144.843, lat: -37.673, altitude: 0, utc_time: '1420' }
               ]
             }
           ];
@@ -351,6 +359,7 @@
         requestAnimationFrame(animationFrameUpdate);
         updateUI();
       } catch (error) {
+        console.error('Visualization error:', error);
         document.getElementById('info').innerHTML += '<br>ERROR: Error loading data';
       } finally {
         document.getElementById('loading').style.display = 'none';

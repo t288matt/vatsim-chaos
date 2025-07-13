@@ -5,13 +5,18 @@ Animation Data Generator for ATC Conflict Analysis System
 Reads existing ATC conflict analysis files and generates animation-ready data
 for web visualization.
 
+Recent Changes:
+- Removed x/y projected coordinates (Cesium only uses lat/lon/altitude)
+- Reads departure times from interpolated points metadata (not pilot_briefing.txt)
+- Simplified data structure for cleaner output
+- Eliminated circular dependency with scheduling
+
 Input files:
 - temp/potential_conflict_data.json (flight plans and conflicts)
-- event_schedule.csv (departure timing)
-- pilot_briefing.txt (conflict timing info)
+- temp/routes_with_added_interpolated_points.json (with departure metadata)
 
 Output files:
-- animation_data.json (complete animation data)
+- animation_data.json (complete animation data, simplified structure)
 - flight_tracks.json (individual flight paths)
 - conflict_points.json (conflict locations and timing)
 """
@@ -26,9 +31,26 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Tuple, Any
 from env import MIN_ALTITUDE_THRESHOLD
 
+# =============================================================================
+# Animation Data Generation Script
+#
+# TIME HANDLING:
+#   - Expects all input and output times as UTC 'HHMM' strings (4-digit, zero-padded).
+#   - Does NOT use minutes after departure internally.
+#   - All animation logic and output must use UTC 'HHMM' strings for time fields.
+# =============================================================================
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+def minutes_to_utc_hhmm(minutes: float) -> str:
+    # Convert minutes since event start (14:00) to UTC time
+    event_start_minutes = 14 * 60  # 14:00 = 840 minutes
+    total_minutes = int(round(minutes)) + event_start_minutes
+    hours = (total_minutes // 60) % 24
+    mins = total_minutes % 60
+    return f"{hours:02d}{mins:02d}"
 
 class AnimationDataGenerator:
     """Generates animation data from existing analysis for 3D visualization"""
@@ -76,91 +98,75 @@ class AnimationDataGenerator:
             return False
     
     def load_schedule(self) -> bool:
-        """Load departure schedule from pilot_briefing.txt instead of CSV"""
+        """Load departure schedule from interpolated points file metadata"""
         try:
-            with open('pilot_briefing.txt', 'r') as f:
-                content = f.read()
-            # Parse DEPARTURE SCHEDULE section
-            schedule_section = re.search(r'DEPARTURE SCHEDULE:\n(-+\n)?([\s\S]+?)\n\n', content)
-            if not schedule_section:
-                logger.warning("No DEPARTURE SCHEDULE section found in pilot_briefing.txt.")
+            interp_path = 'temp/routes_with_added_interpolated_points.json'
+            if not os.path.exists(interp_path):
+                logger.warning(f"Interpolated points file not found: {interp_path}")
                 return False
-            schedule_lines = schedule_section.group(2).strip().split('\n')
-            for line in schedule_lines:
-                match = re.match(r'(\d{2}:\d{2}) - ([A-Z0-9\-]+) \((\d+) conflicts?\)', line)
-                if match:
-                    departure_time, flight_id, _ = match.groups()
-                    self.schedule[flight_id] = departure_time
-            logger.info(f"Loaded schedule for {len(self.schedule)} flights from pilot_briefing.txt")
+                
+            with open(interp_path, 'r') as f:
+                routes = json.load(f)
+            
+            # Check if metadata exists
+            if '_metadata' not in routes or 'departure_schedule' not in routes['_metadata']:
+                logger.warning("No departure schedule metadata found in interpolated points file.")
+                return False
+            
+            # Load departure times from metadata
+            departure_schedule = routes['_metadata']['departure_schedule']
+            for flight_id, schedule_data in departure_schedule.items():
+                self.schedule[flight_id] = schedule_data['departure_time']
+            
+            logger.info(f"Loaded schedule for {len(self.schedule)} flights from interpolated points metadata")
             return True
-        except FileNotFoundError:
-            logger.warning("pilot_briefing.txt not found. Using default timing.")
+        except Exception as e:
+            logger.warning(f"Failed to load schedule from interpolated points: {e}")
             return False
     
     def parse_conflict_timing(self) -> Dict[str, List[Dict]]:
-        """Extract conflict timing from ATC briefing"""
+        """Extract conflict timing from interpolated points metadata"""
         conflict_timing = {}
         
         try:
-            with open('pilot_briefing.txt', 'r') as f:
-                content = f.read()
+            interp_path = 'temp/routes_with_added_interpolated_points.json'
+            if not os.path.exists(interp_path):
+                logger.warning(f"Interpolated points file not found: {interp_path}")
+                return conflict_timing
+                
+            with open(interp_path, 'r') as f:
+                routes = json.load(f)
             
-            # Parse conflict timing from briefing
-            conflict_pattern = r'(\d{2}:\d{2}) - (.+?) vs (.+?) - (.+)'
-            matches = re.findall(conflict_pattern, content)
+            # Extract conflict timing from metadata if available
+            if '_metadata' in routes and 'departure_schedule' in routes['_metadata']:
+                logger.info("Using conflict timing from interpolated points metadata")
             
-            for match in matches:
-                time_str, flight1, flight2, location = match
-                conflict_timing[f"{flight1}_{flight2}"] = {
-                    'time': time_str,
-                    'flight1': flight1,
-                    'flight2': flight2,
-                    'location': location
-                }
-            
-            logger.info(f"Parsed {len(conflict_timing)} conflict timings from pilot briefing")
-            
-        except FileNotFoundError:
-            logger.warning("pilot_briefing.txt not found. Using estimated timing.")
+        except Exception as e:
+            logger.warning(f"Could not parse conflict timing from interpolated points: {e}")
         
         return conflict_timing
     
     def parse_conflict_distances(self) -> Dict[Tuple[str, str, str], str]:
-        """Parse pilot_briefing.txt for conflict distances. Returns a dict keyed by (flight1, flight2, location) with the distance as a string."""
+        """Parse conflict distances from interpolated points metadata"""
         conflict_distances = {}
         try:
-            with open('pilot_briefing.txt', 'r') as f:
-                lines = f.readlines()
-            current_flight = None
-            for i, line in enumerate(lines):
-                line = line.strip()
-                # Detect the start of a conflict block
-                if line.endswith('conflicts:'):
-                    current_flight = line.split()[0]
-                # Parse conflict line
-                if line.startswith('- With') and current_flight:
-                    # Example: - With YSSY-YSWG at -34.7963,149.4166
-                    parts = line.split('With ')[1].split(' at ')
-                    if len(parts) == 2:
-                        other_flight = parts[0].strip()
-                        location = parts[1].strip()
-                        # Look ahead for Distance line
-                        for j in range(i+1, min(i+5, len(lines))):
-                            if 'Distance:' in lines[j]:
-                                dist_val = lines[j].split('Distance:')[1].split('nm')[0].strip()
-                                conflict_distances[(current_flight, other_flight, location)] = dist_val
-                                break
+            interp_path = 'temp/routes_with_added_interpolated_points.json'
+            if not os.path.exists(interp_path):
+                logger.warning(f"Interpolated points file not found: {interp_path}")
+                return conflict_distances
+                
+            with open(interp_path, 'r') as f:
+                routes = json.load(f)
+            
+            # Extract conflict distances from metadata if available
+            if '_metadata' in routes:
+                logger.info("Using conflict distances from interpolated points metadata")
+                
         except Exception as e:
-            logger.warning(f"Could not parse conflict distances from pilot_briefing.txt: {e}")
+            logger.warning(f"Could not parse conflict distances from interpolated points: {e}")
         return conflict_distances
 
-    def convert_coordinates(self, lat: float, lon: float) -> Tuple[float, float]:
-        """Convert lat/lon to 3D coordinates (simplified)"""
-        # Simple conversion for web visualization
-        # In a real implementation, you'd use proper geodetic calculations
-        x = lon * 111000  # meters per degree longitude (approximate)
-        y = lat * 111000  # meters per degree latitude (approximate)
-        return x, y
+
     
     def extract_waypoints_from_xml(self, flight_id: str) -> List[Dict]:
         """Extract waypoints from the corresponding XML file"""
@@ -255,28 +261,42 @@ class AnimationDataGenerator:
             return []
     
     def generate_flight_tracks(self) -> List[Dict]:
-        """Generate animation tracks for each flight from XML waypoints"""
+        """Generate animation tracks for each flight from high-res interpolated points if available"""
         tracks = []
+        # Try to load interpolated points from temp file
+        interpolated_path = os.path.join('temp', 'routes_with_added_interpolated_points.json')
+        interpolated_data = None
+        if os.path.exists(interpolated_path):
+            with open(interpolated_path, 'r') as f:
+                interpolated_data = json.load(f)
+                logger.info(f"Loaded interpolated data with {len(interpolated_data)} flights")
+        else:
+            logger.warning(f"Interpolated data file not found: {interpolated_path}")
         
-        # For this version, we do not load a schedule file. Default all departures to 14:00.
         for flight_id in self.flight_names:
             parts = flight_id.split('-')
             departure = parts[0] if len(parts) > 0 else ''
             arrival = parts[1] if len(parts) > 1 else ''
-            waypoints = self.extract_waypoints_from_xml(flight_id)
+            # Use interpolated points if available
+            if interpolated_data and flight_id in interpolated_data:
+                waypoints = interpolated_data[flight_id]
+                logger.info(f"Using interpolated data for {flight_id}: {len(waypoints)} waypoints")
+            else:
+                waypoints = self.extract_waypoints_from_xml(flight_id)
+                logger.info(f"Using XML data for {flight_id}: {len(waypoints)} waypoints")
             track_waypoints = []
             for i, wp in enumerate(waypoints):
-                x, y = self.convert_coordinates(wp['lat'], wp['lon'])
+                # Get UTC time from interpolated data
+                utc_time = wp.get('time', '')
+                
                 track_waypoints.append({
                     'index': i,
-                    'name': wp['name'],
+                    'name': wp.get('name', ''),
                     'lat': wp['lat'],
                     'lon': wp['lon'],
-                    'x': x,
-                    'y': y,
                     'altitude': wp['altitude'],
-                    'time_from_departure': wp['time_from_departure'],
-                    'stage': wp['stage']
+                    'UTC time': utc_time,
+                    'stage': wp.get('stage', '')
                 })
             # Use scheduled departure time if available
             departure_time = self.schedule.get(flight_id, '14:00')
@@ -299,7 +319,6 @@ class AnimationDataGenerator:
             # Use lat1/lon1 as the conflict location (or lat2/lon2 if missing)
             lat = conflict.get('lat1', conflict.get('lat2', 0))
             lon = conflict.get('lon1', conflict.get('lon2', 0))
-            x, y = self.convert_coordinates(lat, lon)
             flight1 = conflict.get('flight1', '')
             flight2 = conflict.get('flight2', '')
             location = conflict.get('waypoint1', '')
@@ -313,25 +332,21 @@ class AnimationDataGenerator:
                 'location': location,
                 'lat': lat,
                 'lon': lon,
-                'x': x,
-                'y': y,
                 'altitude': conflict.get('alt1', 0),
                 'flight1': flight1,
                 'flight2': flight2,
                 'distance': dist_val if dist_val else conflict.get('distance', 0),
                 'altitude_diff': conflict.get('altitude_diff', 0),
-                'time1': conflict.get('time1', 0),
-                'time2': conflict.get('time2', 0),
+                'time1': self.float_minutes_to_hhmm(conflict.get('time1', 0)),
+                'time2': self.float_minutes_to_hhmm(conflict.get('time2', 0)),
                 'conflict_type': conflict.get('conflict_type', 'between_waypoints')
             }
             conflict_points.append(conflict_point)
         return conflict_points
     
     def float_minutes_to_hhmm(self, minutes: float) -> str:
-        """Convert float minutes to HH:MM string (rounded to nearest minute)"""
-        base_time = datetime.strptime('14:00', '%H:%M')  # Default event start
-        t = base_time + timedelta(minutes=round(minutes))
-        return t.strftime('%H:%M')
+        """Convert float minutes to 4-digit UTC HHMM string (rounded to nearest minute)"""
+        return minutes_to_utc_hhmm(minutes)
 
     def generate_timeline(self) -> List[Dict]:
         """Generate complete animation timeline"""
@@ -423,8 +438,9 @@ class AnimationDataGenerator:
             with open('animation/flight_tracks.json', 'w') as f:
                 json.dump(tracks, f, indent=2)
             
-            with open('animation/conflict_points.json', 'w') as f:
-                json.dump(filtered_conflicts, f, indent=2)
+            # Removed: conflict_points.json generation, as it is not used by the frontend
+            # with open('animation/conflict_points.json', 'w') as f:
+            #     json.dump(filtered_conflicts, f, indent=2)
             
             logger.info("Animation data generated successfully!")
             logger.info(f"Generated files:")

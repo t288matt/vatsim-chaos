@@ -29,7 +29,12 @@ from env import LATERAL_SEPARATION_THRESHOLD, VERTICAL_SEPARATION_THRESHOLD, MIN
 from env import INTERPOLATION_SPACING_NM
 
 # =============================================================================
-# CONFIGURATION CONSTANTS
+# ATC Conflict Detection Script
+#
+# INTERNAL TIME HANDLING:
+#   - All calculations, conflict detection, and sorting use minutes after departure (float/int).
+#   - Do NOT use or enforce UTC 'HHMM' string formatting internally.
+#   - Only output files for the frontend (e.g., interpolation, animation) should convert times to UTC 'HHMM' strings.
 # =============================================================================
 
 # Route interpolation settings
@@ -65,12 +70,10 @@ class Waypoint:
     
     def get_time_formatted(self) -> str:
         """Convert total time to HH:MM format."""
-        total_minutes = self.time_total
-        if self.time_total > 10000:  # Heuristic: treat as seconds
-            total_minutes = self.time_total // 60
-        minutes = total_minutes // 100
-        seconds = total_minutes % 100
-        return f"{minutes:02d}:{seconds:02d}"
+        total_minutes = self.get_time_minutes()
+        hours = int(total_minutes // 60)
+        minutes = int(total_minutes % 60)
+        return f"{hours:02d}:{minutes:02d}"
     
     def get_time_minutes(self) -> float:
         """Get time in minutes as float."""
@@ -228,6 +231,13 @@ def abbreviate_waypoint_name(name: str) -> str:
         "TOP OF DESCENT": "TOD"
     }
     return abbreviations.get(name, name)
+
+def minutes_to_utc_hhmm(minutes: float) -> str:
+    """Convert minutes since midnight UTC to zero-padded 4-digit HHMM string."""
+    total_minutes = int(round(minutes))
+    hours = (total_minutes // 60) % 24
+    mins = total_minutes % 60
+    return f"{hours:02d}{mins:02d}"
 
 # =============================================================================
 # XML PARSING FUNCTIONS
@@ -584,6 +594,71 @@ def find_potential_conflicts(flight_plans: List[FlightPlan]) -> List[Dict[str, A
     # Convert first_conflicts dict to list
     potential_conflicts = list(first_conflicts.values())
     return potential_conflicts
+
+def add_conflict_specific_points(interpolated_data: Dict[str, List[Dict]], conflicts: List[Dict[str, Any]]) -> Dict[str, List[Dict]]:
+    """
+    Add interpolation points at exact conflict times to ensure animation accuracy.
+    Args:
+        interpolated_data: The existing interpolated route data
+        conflicts: List of detected conflicts
+    Returns:
+        Updated interpolated data with conflict-specific points added
+    """
+    from copy import deepcopy
+    updated_data = deepcopy(interpolated_data)
+
+    for conflict in conflicts:
+        flight1 = conflict.get('flight1', '')
+        flight2 = conflict.get('flight2', '')
+        time1 = conflict.get('time1', 0)
+        time2 = conflict.get('time2', 0)
+        lat1 = conflict.get('lat1', 0)
+        lon1 = conflict.get('lon1', 0)
+        lat2 = conflict.get('lat2', 0)
+        lon2 = conflict.get('lon2', 0)
+        alt1 = conflict.get('alt1', 0)
+        alt2 = conflict.get('alt2', 0)
+
+        # Convert minutes after departure to UTC time for conflict points
+        # Event starts at 14:00 (840 minutes), so add conflict minutes to get UTC
+        event_start_minutes = 14 * 60  # 14:00 = 840 minutes
+        utc_time1 = minutes_to_utc_hhmm(time1 + event_start_minutes)
+        utc_time2 = minutes_to_utc_hhmm(time2 + event_start_minutes)
+        
+        # Insert conflict point for flight1
+        if flight1 in updated_data:
+            updated_data[flight1].append({
+                'lat': lat1,
+                'lon': lon1,
+                'altitude': alt1,
+                'time': utc_time1,
+                'name': f"CONFLICT_{flight2}",
+                'segment': 'conflict_point',
+                'interpolation_point': 999
+            })
+        # Insert conflict point for flight2
+        if flight2 in updated_data:
+            updated_data[flight2].append({
+                'lat': lat2,
+                'lon': lon2,
+                'altitude': alt2,
+                'time': utc_time2,
+                'name': f"CONFLICT_{flight1}",
+                'segment': 'conflict_point',
+                'interpolation_point': 999
+            })
+    # Sort all points for each flight by time (minutes after departure)
+    def safe_time_key(x):
+        t = x.get('time', 0)
+        if isinstance(t, str):
+            try:
+                return float(t)
+            except ValueError:
+                return 0
+        return t
+    for flight_id in updated_data:
+        updated_data[flight_id].sort(key=safe_time_key)
+    return updated_data
 
 # =============================================================================
 # OPTIMIZATION FUNCTIONS
@@ -1024,6 +1099,33 @@ def main() -> None:
     # Extract flight plans
     flight_plans = extract_flight_plans(xml_files)
     
+    # Store all routes with interpolated points for animation accuracy
+    routes_with_interpolated = {}
+    for fp in flight_plans:
+        waypoints = fp.get_all_waypoints()
+        # Include original waypoints as first points
+        route_points = [
+            {
+                'lat': wp.lat,
+                'lon': wp.lon,
+                'altitude': wp.altitude,
+                'time': wp.get_time_minutes(),
+                'name': wp.name
+            } for wp in waypoints
+        ]
+        # Add interpolated points
+        interpolated = interpolate_route_segments(waypoints)
+        route_points.extend(interpolated)
+        routes_with_interpolated[fp.get_route_identifier()] = route_points
+    
+    # Keep times as minutes after departure for internal processing
+    
+    # Write to temp file
+    temp_dir = 'temp'
+    os.makedirs(temp_dir, exist_ok=True)
+    with open(os.path.join(temp_dir, 'routes_with_added_interpolated_points.json'), 'w') as f:
+        json.dump(routes_with_interpolated, f, indent=2)
+    
     if len(flight_plans) < 2:
         print("Need at least 2 flight plans to analyze conflicts")
         logging.error("Insufficient flight plans for analysis")
@@ -1036,6 +1138,11 @@ def main() -> None:
     
     print(f"Found {len(potential_conflicts)} potential conflicts")
     print(f"   (Criteria: <{VERTICAL_SEPARATION_THRESHOLD}ft vertical, <{LATERAL_SEPARATION_THRESHOLD}NM lateral, >{MIN_ALTITUDE_THRESHOLD}ft altitude)")
+    
+    # Add conflict-specific interpolation points and update the file
+    routes_with_interpolated = add_conflict_specific_points(routes_with_interpolated, potential_conflicts)
+    with open(os.path.join(temp_dir, 'routes_with_added_interpolated_points.json'), 'w') as f:
+        json.dump(routes_with_interpolated, f, indent=2)
     
     # Generate conflict scenario
     scenario = generate_conflict_scenario(flight_plans, potential_conflicts)

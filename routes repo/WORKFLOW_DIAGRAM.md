@@ -3,6 +3,12 @@
 ## System Overview
 This workflow diagram illustrates the complete process flow from SimBrief XML input to final visualization outputs.
 
+**Recent Improvements:**
+- ✅ **Eliminated circular dependency** between scheduling and animation
+- ✅ **Metadata-based approach** for departure schedule sharing
+- ✅ **Removed x/y projected coordinates** from animation data
+- ✅ **Linear data flow** with clear dependencies
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                    ATC CONFLICT ANALYSIS WORKFLOW                                                                        │
@@ -111,58 +117,88 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
                                     │
                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                    STEP 4: SCHEDULING & PILOT BRIEFING                                                                       │
+│                                    STEP 4: SCHEDULING & METADATA                                                                       │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                    generate_schedule_conflicts.py                                                                                 │  │
 │  │                                                                                                                               │  │
 │  │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                                    │  │
-│  │  │ Load        │───▶│ Calculate   │───▶│ Apply       │───▶│ Generate    │───▶│ Save        │                                    │  │
-│  │  │ Conflicts   │    │ Departure   │    │ Separation   │    │ Schedule    │    │ CSV File    │                                    │  │
-│  │  │ Data        │    │ Times       │    │ Rules       │    │ Timeline    │    │             │                                    │  │
+│  │  │ Load        │───▶│ Calculate   │───▶│ Apply       │───▶│ Add         │───▶│ Save        │                                    │  │
+│  │  │ Conflicts   │    │ Departure   │    │ Separation   │    │ Metadata    │    │ Files       │                                    │  │
+│  │  │ Data        │    │ Times       │    │ Rules       │    │ to Points   │    │             │                                    │  │
 │  │  └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘                                    │  │
 │  │                                                                                                                               │  │
 │  │  • Load potential_conflict_data.json                                                                                                │  │
 │  │  • Calculate optimal departure times                                                                                           │  │
 │  │  • Apply 2-minute separation rules                                                                                            │  │
-│  │  • Generate event timeline                                                                                                     │  │
-│  │  • Create departure schedule                                                                                                   │  │
+│  │  • Add departure schedule metadata to interpolated points                                                                      │  │
+│  │  • Use interpolated points directly (no circular dependency)                                                                   │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    OUTPUTS                                                                                        │  │
-│  │  • pilot_briefing.txt (5,427 bytes) - Pilot briefing (includes authoritative departure schedule and conflict details)                 │  │
-│  │  • temp/potential_conflict_data.json - Raw analysis data                                                                              │  │
+│  │  • pilot_briefing.txt - Pilot briefing document                                                                                │  │
+│  │  • temp/routes_with_added_interpolated_points.json (with metadata)                                                              │  │
+│  │  • _metadata.departure_schedule containing departure times                                                                      │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                    STEP 5: FRONTEND EXPORT                                                                             │
+│                                    STEP 5: ANIMATION GENERATION                                                                        │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                    generate_animation.py                                                                                       │  │
 │  │                                                                                                                               │  │
 │  │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                                    │  │
-│  │  │ Load        │───▶│ Filter      │───▶│ Generate    │───▶│ Create      │───▶│ Save        │                                    │  │
-│  │  │ Analysis    │    │ Conflicts   │    │ Flight      │    │ Animation   │    │ JSON Files  │                                    │  │
-│  │  │ Data        │    │ by Altitude │    │ Tracks      │    │ Timeline    │    │             │                                    │  │
+│  │  │ Load        │───▶│ Read        │───▶│ Generate    │───▶│ Create      │───▶│ Save        │                                    │  │
+│  │  │ Analysis    │    │ Metadata    │    │ Flight      │    │ Animation   │    │ JSON Files  │                                    │  │
+│  │  │ Data        │    │ Schedule    │    │ Tracks      │    │ Timeline    │    │ (No x/y)    │                                    │  │
 │  │  └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘                                    │  │
 │  │                                                                                                                               │  │
 │  │  • Load potential_conflict_data.json                                                                                                │  │
-│  │  • Filter conflicts above 5000 ft                                                                                             │  │
-│  │  • Extract waypoints from XML files                                                                                           │  │
-│  │  • Generate flight track data                                                                                                 │  │
-│  │  • Create animation timeline                                                                                                  │  │
-│  │  • Export to animation/                                                                                               │  │
+│  │  • Read departure times from interpolated points metadata                                                                      │  │
+│  │  • Extract waypoints from interpolated points                                                                                  │  │
+│  │  • Generate flight track data (lat/lon/altitude only)                                                                         │  │
+│  │  • Create animation timeline                                                                                                   │  │
+│  │  • Export to animation/ (simplified structure)                                                                                │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    OUTPUTS                                                                                        │  │
-│  │  • animation/animation_data.json                                                                                       │  │
-│  │  • animation/flight_tracks.json                                                                                        │  │
-│  │  • animation/conflict_points.json                                                                                      │  │
-│  │  • Ready for 3D web visualization                                                                                             │  │
+│  │  • animation/animation_data.json (simplified, no x/y fields)                                                                    │  │
+│  │  • animation/flight_tracks.json                                                                                                 │  │
+│  │  • animation/conflict_points.json                                                                                               │  │
+│  │  • Ready for 3D web visualization                                                                                              │  │
+│  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                    STEP 6: DATA AUDIT                                                                                  │
+│                                                                                                                                    │
+│  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
+│  │                    audit_conflict.py                                                                                             │  │
+│  │                                                                                                                               │  │
+│  │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                                    │  │
+│  │  │ Load All    │───▶│ Compare     │───▶│ Round       │───▶│ Generate    │───▶│ Save        │                                    │  │
+│  │  │ Data        │    │ Sources     │    │ Times       │    │ Markdown    │    │ Audit       │                                    │  │
+│  │  │ Sources      │    │ (3 files)   │    │ (0 decimals)│    │ Tables      │    │ Report      │                                    │  │
+│  │  └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘                                    │  │
+│  │                                                                                                                               │  │
+│  │  • Load potential_conflict_data.json                                                                                                │  │
+│  │  • Load routes_with_added_interpolated_points.json                                                                              │  │
+│  │  • Load animation_data.json                                                                                                     │  │
+│  │  • Compare conflict data across all sources                                                                                     │  │
+│  │  • Round time values to zero decimal places                                                                                     │  │
+│  │  • Generate readable Markdown tables                                                                                            │  │
+│  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
+│                                                                                                                                    │
+│  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
+│  │                                    OUTPUTS                                                                                        │  │
+│  │  • audit_conflict_output.txt - Markdown audit report                                                                             │  │
+│  │  • Raw data comparison across all processing stages                                                                              │  │
+│  │  • Time values rounded to zero decimal places                                                                                   │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
                                     │
@@ -172,26 +208,29 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    ANALYSIS REPORTS                                                                               │  │
-│  │  • conflict_list.txt (2,704 bytes) - Detailed conflict analysis                                                                 │  │
-│  │  • temp/potential_conflict_data.json - Raw analysis data                                                                              │  │
+│  │  • conflict_list.txt - Detailed conflict analysis                                                                                │  │
+│  │  • temp/potential_conflict_data.json - Raw analysis data                                                                         │  │
+│  │  • audit_conflict_output.txt - Data integrity audit                                                                              │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    VISUALIZATION FILES                                                                             │  │
-│  │  • merged_flightplans.kml (140,897 bytes) - Google Earth visualization                                                         │  │
-│  │  • Individual KML files for each flight plan                                                                                    │  │
+│  │  • merged_flightplans.kml - Google Earth visualization                                                                          │  │
+│  │  • Individual KML files for each flight plan                                                                                     │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    FRONTEND DATA                                                                                  │  │
-│  │  • animation/animation_data.json - Complete animation data                                                              │  │
-│  │  • animation/flight_tracks.json - Individual flight paths                                                               │  │
-│  │  • animation/conflict_points.json - Conflict locations                                                                  │  │
+│  │  • animation/animation_data.json - Complete animation data (simplified)                                                           │  │
+│  │  • animation/flight_tracks.json - Individual flight paths                                                                        │  │
+│  │  • animation/conflict_points.json - Conflict locations                                                                           │  │
+│  │  • animation/cesium_flight_anim.html - 3D web visualization                                                                      │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    SCHEDULING DATA                                                                                │  │
-│  │  • pilot_briefing.txt - Pilot briefing document (authoritative, includes schedule and conflicts)                                     │  │
+│  │  • pilot_briefing.txt - Pilot briefing document                                                                                 │  │
+│  │  • temp/routes_with_added_interpolated_points.json - With departure metadata                                                      │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
                                     │
@@ -201,13 +240,31 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    PERFORMANCE METRICS                                                                             │  │
-│  │  • Total Processing Time: 0.9 seconds                                                                                           │  │
-│  │  • Files Processed: 16 XML files                                                                                                │  │
-│  │  • Conflicts Detected: Filtered by altitude > 5000 ft                                                                           │  │
-│  │  • Output Files Generated: 6+ files                                                                                             │  │
-│  │  • Error Rate: 0% (after Unicode cleanup)                                                                                       │  │
+│  │  • Total Processing Time: 0.4 seconds                                                                                            │  │
+│  │  • Files Processed: 16 XML files                                                                                                 │  │
+│  │  • Conflicts Detected: Filtered by altitude > 5000 ft                                                                            │  │
+│  │  • Output Files Generated: 6+ files                                                                                              │  │
+│  │  • Error Rate: 0% (after Unicode cleanup)                                                                                        │  │
+│  │  • Circular Dependencies: Eliminated                                                                                             │  │
+│  │  • Data Structure: Simplified (no x/y fields)                                                                                    │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+## Key Improvements in Data Flow
+
+### Before (Circular Dependency):
+```
+Scheduling ←→ Animation Generation
+     ↓              ↓
+pilot_briefing.txt  animation_data.json
+```
+
+### After (Linear Flow):
+```
+Conflict Analysis → Scheduling → Animation Generation
+       ↓              ↓              ↓
+potential_conflict_data.json → routes_with_metadata.json → animation_data.json
+```
 
 ## Decision Points and Quality Gates
 
@@ -233,20 +290,32 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
    - ✅ Files merged successfully
    - ✅ Conflict markers added
 
-5. **Frontend Export**
-   - ✅ Analysis data loaded
-   - ✅ Conflicts filtered
-   - ✅ JSON files created in animation/
+5. **Scheduling & Metadata**
+   - ✅ Departure times calculated
+   - ✅ Metadata added to interpolated points
+   - ✅ No circular dependency with animation
+
+6. **Animation Generation**
+   - ✅ Metadata-based schedule loading
+   - ✅ Simplified data structure (no x/y fields)
+   - ✅ Linear data flow maintained
+
+7. **Data Audit**
+   - ✅ All data sources compared
+   - ✅ Time values rounded to zero decimals
+   - ✅ Markdown audit report generated
 
 ### Error Handling:
 - Unicode/emoji characters removed from all scripts
 - File existence checks at each step
 - Graceful failure handling with error messages
 - Logging of all operations with timestamps
+- Metadata fallback when missing
 
 ### Success Criteria:
 - Complete workflow execution without errors
 - All output files generated with correct data
 - Frontend visualization ready for use
-- KML files compatible with Google Earth
-- Animation data suitable for 3D web visualization 
+- **Linear data flow maintained**
+- **No circular dependencies**
+- **Simplified data structures** 

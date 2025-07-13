@@ -251,11 +251,12 @@ class AnalysisRunner:
             self.log("Skipping KML merge")
         
         # Step 4: Schedule conflicts (unless skipped)
-        if not skip_schedule and start_time and end_time:
-            if not self.run_scheduling(start_time, end_time):
-                return False
-        elif not skip_schedule and (not start_time or not end_time):
-            self.log("Skipping conflict scheduling")
+        if not skip_schedule:
+            if start_time and end_time:
+                if not self.run_scheduling(start_time, end_time):
+                    return False
+            else:
+                self.log("Skipping conflict scheduling - no times provided")
         else:
             self.log("Skipping conflict scheduling")
         
@@ -269,7 +270,16 @@ class AnalysisRunner:
         # Summary
         elapsed_time = time.time() - self.start_time
         self.log(f"Workflow completed in {elapsed_time:.1f} seconds")
-        
+
+        # Run conflict audit as the last step
+        try:
+            import subprocess
+            self.log("Running conflict data audit...")
+            subprocess.run([sys.executable, 'audit_conflict.py'], check=True)
+            self.log("Conflict audit completed. See audit_conflict_output.txt for results.")
+        except Exception as e:
+            self.log(f"Conflict audit failed: {e}", "ERROR")
+
         return True
     
     def run_single_step(self, step: str, start_time: Optional[str] = None, end_time: Optional[str] = None) -> bool:
@@ -297,7 +307,8 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python execute.py                    # Run complete workflow
+  python execute.py                    # Run complete workflow with default times (14:00-18:00)
+  python execute.py --start-time 15:00 --end-time 19:00  # Custom times
   python execute.py --extract-only     # Only extract XML data
   python execute.py --analyze-only     # Only analyze conflicts
   python execute.py --frontend-only    # Only update frontend data
@@ -329,8 +340,8 @@ Examples:
                        help='Skip conflict scheduling')
     
     # Scheduling options
-    parser.add_argument('--start-time', help='Event start time for scheduling (HH:MM)')
-    parser.add_argument('--end-time', help='Event end time for scheduling (HH:MM)')
+    parser.add_argument('--start-time', default='14:00', help='Event start time for scheduling (HH:MM, default: 14:00)')
+    parser.add_argument('--end-time', default='18:00', help='Event end time for scheduling (HH:MM, default: 18:00)')
     
     # Output options
     parser.add_argument('--verbose', '-v', action='store_true',

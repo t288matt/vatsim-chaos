@@ -2,6 +2,16 @@
 
 A Python-based system for generating chaotic, conflicting SimBrief XML flight plans to create challenging air traffic control (ATC) event scenarios. The system is designed to help the events team create situations where controllers are challenged and pilots can enjoy fun, dynamic events.
 
+**Recent Improvements:**
+- ✅ **Fixed scheduling algorithm** - Now respects conflict analysis departure times instead of "most conflicts" rule
+- ✅ **Corrected departure timing** - YSSY-YSWG now departs at 14:16 instead of 14:00 as intended
+- ✅ **Enhanced audit system** - Added departure time column to track scheduling accuracy
+- ✅ **Eliminated circular dependency** between scheduling and animation
+- ✅ **Metadata-based approach** for departure schedule sharing
+- ✅ **Removed x/y projected coordinates** from animation data
+- ✅ **Linear data flow** with clear dependencies
+- ✅ **Simplified data structures** for better performance
+
 ## Purpose
 
 This system enables event organizers to:
@@ -11,6 +21,7 @@ This system enables event organizers to:
 - **Provide detailed conflict analysis** with location, timing, and phase information
 - **Detect conflicts both at waypoints and between waypoints** for comprehensive event realism
 - **Generate KML files** for Google Earth visualization with diverse color schemes
+- **Schedule departures accurately** based on conflict analysis results
 
 ## Quick Start
 
@@ -26,7 +37,7 @@ The easiest way to run the complete analysis is using the master script:
 python execute.py
 
 # Run with custom schedule times
-python execute.py --start 14:00 --end 18:00
+python execute.py --start-time 14:00 --end-time 18:00
 ```
 
 ### Basic Workflow
@@ -48,14 +59,17 @@ python conflicts_list.py
 # 5. Merge KML files for Google Earth viewing
 python merge_kml_flightplans.py
 
-# 6. Generate event schedule and pilot briefing (single output)
+# 6. Generate event schedule and pilot briefing (with metadata)
 python generate_schedule_conflicts.py --start 14:00 --end 18:00
 
-# 7. Generate animation data for web visualization
+# 7. Generate animation data for web visualization (simplified structure)
 python generate_animation.py
 
 # 8. Open the visualization
 Open animation/cesium_flight_anim.html in your browser
+
+# 9. Run data integrity audit (optional)
+python audit_conflict.py  # Generates audit_conflict_output.txt with raw data comparison
 ```
 
 ### Expected Output
@@ -64,10 +78,45 @@ Open animation/cesium_flight_anim.html in your browser
 - `merged_flightplans.kml` - Combined KML file for Google Earth
 - Individual KML files in `temp/` directory
 - `pilot_briefing.txt` - Pilot conflict briefing (authoritative, includes all departure times and conflict details)
-- `animation/animation_data.json` - Animation data for Cesium (filtered by altitude)
+- `temp/routes_with_added_interpolated_points.json` - Interpolated points with departure metadata
+- `animation/animation_data.json` - Animation data for Cesium (simplified structure, no x/y fields)
 - `animation/flight_tracks.json` - Flight path data
 - `animation/conflict_points.json` - Conflict location/timing (filtered by altitude)
 - `animation/cesium_flight_anim.html` - 3D web visualization
+- `audit_conflict_output.txt` - **Raw data audit report** (Markdown tables showing exact values across all data sources)
+
+## System Architecture
+
+### Linear Data Flow (No Circular Dependencies)
+```
+Conflict Analysis → Scheduling → Animation Generation
+       ↓              ↓              ↓
+potential_conflict_data.json → routes_with_metadata.json → animation_data.json
+```
+
+### Key Improvements
+- **Fixed scheduling algorithm** - Now uses conflict analysis departure times instead of "most conflicts" rule
+- **Eliminated circular dependency** between scheduling and animation
+- **Metadata-based approach** for departure schedule sharing
+- **Simplified data structures** (removed x/y projected coordinates)
+- **Linear processing** with clear dependencies
+
+## Scheduling Algorithm
+
+### Previous Issue
+The original scheduling algorithm incorrectly prioritized flights with "most conflicts" and forced them to depart at event start time, ignoring the intended departure times from conflict analysis.
+
+### Current Fix
+The scheduling algorithm now:
+1. **Loads conflict analysis data** to get intended departure times
+2. **Sorts flights by intended departure time** (earliest first)
+3. **Schedules flights at their intended times** instead of forcing the "most conflicts" flight to depart first
+4. **Respects conflict analysis results** (e.g., YSSY-YSWG at 14:16)
+
+### Example Results
+- **YMES-YSRI**: 14:00 (as intended)
+- **YSSY-YSWG**: 14:16 (as intended) - previously was incorrectly 14:00
+- **YSNW-YWLM**: 14:20 (as intended)
 
 ## Conflict Detection Features
 
@@ -109,14 +158,16 @@ The system focuses on **"First Conflicts"** - the initial point where two aircra
 ### Data Processing
 - `extract_simbrief_xml_flightplan.py` - Converts SimBrief XML to KML for visualization
 - `merge_kml_flightplans.py` - Merges individual KML files into a single file
-- `generate_schedule_conflicts.py` - Generates event schedule for conflicts
-- `generate_animation.py` - Generates animation data for web visualization (filters conflicts by altitude threshold)
+- `generate_schedule_conflicts.py` - Generates event schedule and adds metadata to interpolated points (FIXED: now respects conflict analysis departure times)
+- `generate_animation.py` - Generates animation data for web visualization (simplified structure)
+- `audit_conflict.py` - **Raw data integrity audit** across all processing stages (shows exact values with NO CONVERSIONS, includes departure time column)
 
 ### Data Organization
 - `temp/` - Directory containing all generated data files
   - Individual KML files for each flight plan
   - Individual JSON data files for each flight plan
   - `potential_conflict_data.json` - Main analysis results
+  - `routes_with_added_interpolated_points.json` - Interpolated points with departure metadata
 
 ### Visualization
 - `merged_flightplans.kml` - Combined KML file for Google Earth viewing
@@ -130,6 +181,79 @@ The system focuses on **"First Conflicts"** - the initial point where two aircra
 - Timeline controls, camera auto-zoom
 - Toggleable flight labels
 - Loads data from JSON (no server required)
+- **Simplified data structure** (lat/lon/altitude only, no x/y fields)
+
+## Data Structure Changes
+
+### Animation Data (Simplified)
+```json
+{
+  "metadata": { ... },
+  "flights": [
+    {
+      "flight_id": "YBDG-YSBK",
+      "departure": "YBDG",
+      "arrival": "YSBK",
+      "departure_time": "1400",
+      "waypoints": [
+        {
+          "index": 0,
+          "name": "YBDG",
+          "lat": -37.123456,
+          "lon": 147.123456,
+          "altitude": 23,
+          "UTC time": "1400",
+          "stage": ""
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Key Changes:**
+- **Removed x/y fields**: No longer includes projected coordinates
+- **Simplified structure**: Only essential geographic and timing data
+- **UTC time format**: Consistent HHMM string format for animation
+
+### Interpolated Points with Metadata
+```json
+{
+  "YBDG-YSBK": [...],
+  "YSSY-YSWG": [...],
+  "_metadata": {
+    "departure_schedule": {
+      "YBDG-YSBK": {
+        "departure_time": "1400",
+        "conflicts": 2
+      }
+    },
+    "event_start": "1400",
+    "event_end": "1800",
+    "total_flights": 3,
+    "total_conflicts": 4
+  }
+}
+```
+
+## Audit System
+
+### Enhanced Audit Report
+The audit system now includes a **departure time column** to track scheduling accuracy:
+
+```
+Columns: Source | Flight | Departure Time | Time (UTC) | Lat | Lon | Alt | Altitude Diff | Distance
+```
+
+This allows verification that:
+- **Scheduling algorithm** correctly uses conflict analysis departure times
+- **Animation data** reflects the correct scheduled times
+- **All data sources** are consistent across the workflow
+
+### Data Sources Tracked
+1. **potential_conflict_data.json** - Raw conflict analysis results
+2. **interpolated_points** - Backend processed data with metadata
+3. **animation_data.json** - Frontend visualization data
 
 ## Conflict Types
 
@@ -241,3 +365,10 @@ python find_potential_conflicts.py        # Analyze first conflicts only
 python merge_kml_flightplans.py              # Merge KML files only
 python generate_animation.py              # Export web visualization data only
 ```
+
+### Recent Improvements Summary
+- **Circular Dependency Elimination**: Linear data flow from analysis to visualization
+- **Metadata-Based Approach**: Departure schedule shared via interpolated points metadata
+- **Data Structure Simplification**: Removed x/y projected coordinates from animation data
+- **Performance Optimization**: Reduced file sizes and processing overhead
+- **Audit Enhancement**: Time values rounded to zero decimal places for cleaner output

@@ -1,0 +1,4 @@
+add more rotes and test the code
+add a functon that proposes level   changes to the flight plans proposed
+geenerate its own flights
+Add tests/ directory with unit and integration tests for all scripts, focusing on input/output validation.

@@ -29,14 +29,14 @@ class Waypoint:
         self.waypoint_type = waypoint_type  # vor, ndb, wpt, etc.
         
     def get_time_formatted(self) -> str:
-        """Convert total minutes from departure to elapsed time HH:MM format"""
+        """Convert total minutes from departure to 4-digit UTC HHMM format"""
         # SimBrief XML gives time_total in minutes (e.g., 1359 = 13 minutes 59 seconds)
         total_minutes = self.time_total
         if self.time_total > 10000:  # Heuristic: treat as seconds
             total_minutes = self.time_total // 60
-        hours = total_minutes // 60
+        hours = (total_minutes // 60) % 24
         minutes = total_minutes % 60
-        return f"{hours:02d}:{minutes:02d}"
+        return f"{hours:02d}{minutes:02d}"
     
     def to_dict(self) -> Dict:
         return {
