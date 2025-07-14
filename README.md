@@ -13,6 +13,35 @@ A Python-based system for generating chaotic, conflicting SimBrief XML flight pl
 - ✅ **Removed x/y projected coordinates** from animation data
 - ✅ **Linear data flow** with clear dependencies
 - ✅ **Simplified data structures** for better performance
+- ✅ **Single Source of Truth** - One comprehensive JSON file contains all flight data, conflicts, and scheduling
+
+## Single Source of Truth Architecture
+
+**Key Innovation: `temp/routes_with_added_interpolated_points.json`**
+
+The system implements a true single source of truth approach where one comprehensive JSON file contains all necessary data:
+
+### Why `find_potential_conflicts.py` creates the foundation:
+1. **Route Interpolation**: The conflict detection algorithm needs to check for conflicts not just at waypoints, but also **between** waypoints. To do this accurately, it interpolates additional points along each route at regular intervals (every 2 nautical miles by default).
+
+2. **Enhanced Conflict Detection**: By adding interpolated points, the system can detect conflicts that occur between the original waypoints, which is crucial for realistic ATC scenarios where aircraft don't just conflict at navigation points.
+
+3. **Data Structure**: The interpolated points file contains:
+   - Original waypoints from the flight plans
+   - Additional interpolated points between waypoints
+   - Each point has lat/lon/altitude/time data
+   - This becomes the foundation for all downstream processing
+
+4. **Single Source of Truth Foundation**: This file becomes the base that other scripts build upon. `generate_schedule_conflicts.py` then adds departure schedule metadata to it, and `generate_animation.py` reads from it.
+
+### The Data Flow:
+```
+XML files → find_potential_conflicts.py → routes_with_added_interpolated_points.json (with interpolated points)
+                                                                    ↓
+generate_schedule_conflicts.py → adds departure schedule metadata
+                                                                    ↓  
+generate_animation.py → reads single source of truth
+```
 
 ## Flight ID System
 
@@ -169,6 +198,19 @@ The system focuses on **"First Conflicts"** - the initial point where two aircra
 - **Smart Location Format**: Shows conflicts between waypoints as "X NM [direction] of [waypoint]"
 
 ## System Components
+
+### Python Scripts - Input and Output Files
+
+| Script | Input Files | Output Files |
+|--------|-------------|--------------|
+| **execute.py** | None (master script) | None (orchestrates other scripts) |
+| **extract_simbrief_xml_flightplan.py** | `*.xml` (SimBrief XML files in root directory) | `temp/*_data.json` (individual flight data)<br>`temp/*.kml` (individual KML files) |
+| **find_potential_conflicts.py** | `*.xml` (SimBrief XML files)<br>`temp/*_data.json` (individual flight data) | `temp/potential_conflict_data.json` (conflict analysis)<br>`conflict_list.txt` (formatted conflict report)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) |
+| **merge_kml_flightplans.py** | `temp/*.kml` (individual KML files) | `merged_flightplans.kml` (merged KML for Google Earth) |
+| **generate_schedule_conflicts.py** | `temp/potential_conflict_data.json` (conflict analysis)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) | `pilot_briefing.txt` (pilot briefing)<br>`temp/routes_with_added_interpolated_points.json` (updated with schedule metadata) |
+| **generate_animation.py** | `temp/routes_with_added_interpolated_points.json` (single source of truth) | `animation/animation_data.json` (complete animation data)<br>`animation/conflict_points.json` (conflict locations) |
+| **audit_conflict.py** | `temp/potential_conflict_data.json` (conflict analysis)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes)<br>`animation/animation_data.json` (animation data) | `audit_conflict_output.txt` (data integrity audit report) |
+| **animation/validate_animation_data.py** | `animation/animation_data.json` (animation data) | Console output (validation results) |
 
 ### Core Analysis
 - `execute.py` - Master workflow script (runs complete analysis pipeline)

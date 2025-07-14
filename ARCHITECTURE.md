@@ -15,6 +15,34 @@ The system enforces two key separation rules:
 1. **Departure Separation**: Minimum 2 minutes between departures from the same airport
 2. **Same Route Separation**: Minimum 5 minutes between flights with identical origin-destination
 
+## Single Source of Truth Architecture
+
+**Key Innovation: `temp/routes_with_added_interpolated_points.json`**
+
+The system implements a true single source of truth approach where one comprehensive JSON file contains all necessary data:
+
+### Why `find_potential_conflicts.py` creates the foundation:
+1. **Route Interpolation**: The conflict detection algorithm needs to check for conflicts not just at waypoints, but also **between** waypoints. To do this accurately, it interpolates additional points along each route at regular intervals (every 2 nautical miles by default).
+
+2. **Enhanced Conflict Detection**: By adding interpolated points, the system can detect conflicts that occur between the original waypoints, which is crucial for realistic ATC scenarios where aircraft don't just conflict at navigation points.
+
+3. **Data Structure**: The interpolated points file contains:
+   - Original waypoints from the flight plans
+   - Additional interpolated points between waypoints
+   - Each point has lat/lon/altitude/time data
+   - This becomes the foundation for all downstream processing
+
+4. **Single Source of Truth Foundation**: This file becomes the base that other scripts build upon. `generate_schedule_conflicts.py` then adds departure schedule metadata to it, and `generate_animation.py` reads from it.
+
+### The Data Flow:
+```
+XML files → find_potential_conflicts.py → routes_with_added_interpolated_points.json (with interpolated points)
+                                                                    ↓
+generate_schedule_conflicts.py → adds departure schedule metadata
+                                                                    ↓  
+generate_animation.py → reads single source of truth
+```
+
 ## Architecture Principles
 
 - **Modular Design**: Clear separation between data extraction, analysis, reporting, and visualization
@@ -26,8 +54,22 @@ The system enforces two key separation rules:
 - **Linear Data Flow**: Eliminated circular dependencies through metadata-based approach
 - **Accurate Scheduling**: Respects conflict analysis departure times instead of "most conflicts" rule
 - **Flight ID Tracking**: Uses unique flight IDs for better conflict tracking and separation enforcement
+- **Single Source of Truth**: One comprehensive JSON file contains all flight data, conflicts, and scheduling
 
 ## System Components
+
+### Python Scripts - Input and Output Files
+
+| Script | Input Files | Output Files |
+|--------|-------------|--------------|
+| **execute.py** | None (master script) | None (orchestrates other scripts) |
+| **extract_simbrief_xml_flightplan.py** | `*.xml` (SimBrief XML files in root directory) | `temp/*_data.json` (individual flight data)<br>`temp/*.kml` (individual KML files) |
+| **find_potential_conflicts.py** | `*.xml` (SimBrief XML files)<br>`temp/*_data.json` (individual flight data) | `temp/potential_conflict_data.json` (conflict analysis)<br>`conflict_list.txt` (formatted conflict report)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) |
+| **merge_kml_flightplans.py** | `temp/*.kml` (individual KML files) | `merged_flightplans.kml` (merged KML for Google Earth) |
+| **generate_schedule_conflicts.py** | `temp/potential_conflict_data.json` (conflict analysis)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) | `pilot_briefing.txt` (pilot briefing)<br>`temp/routes_with_added_interpolated_points.json` (updated with schedule metadata) |
+| **generate_animation.py** | `temp/routes_with_added_interpolated_points.json` (single source of truth) | `animation/animation_data.json` (complete animation data)<br>`animation/conflict_points.json` (conflict locations) |
+| **audit_conflict.py** | `temp/potential_conflict_data.json` (conflict analysis)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes)<br>`animation/animation_data.json` (animation data) | `audit_conflict_output.txt` (data integrity audit report) |
+| **animation/validate_animation_data.py** | `animation/animation_data.json` (animation data) | Console output (validation results) |
 
 ### 1. Data Extraction Layer
 **File**: `extract_simbrief_xml_flightplan.py`
@@ -56,6 +98,7 @@ The system enforces two key separation rules:
 - Optimize departure times for maximum conflicts
 - Generate comprehensive conflict scenarios for events
 - **Identify and track only first conflicts between aircraft pairs**
+- **Create the single source of truth foundation with interpolated routes**
 
 **Core Algorithms**:
 - **Distance Calculation**: Haversine formula for lateral separation
@@ -107,12 +150,14 @@ The original algorithm incorrectly prioritized flights with "most conflicts" and
 **Responsibilities**:
 - Generate all analysis and schedule data into animation-ready JSON for web visualization
 - **Read departure times from interpolated points metadata (not pilot_briefing.txt)**
+- **Use only the single source of truth - no XML file dependencies**
 - Output: `animation_data.json`, `conflict_points.json`
 
 **Key Changes**:
 - **Removed x/y fields**: No longer generates projected coordinates
 - **Metadata-based schedule loading**: Reads from interpolated points file
 - **Simplified data structure**: Only essential lat/lon/altitude/time fields
+- **Eliminated XML dependency**: Now uses only the single source of truth
 
 ### 5. Visualization Layer
 **Files**: `merge_kml_flightplans.py`, `animation/cesium_flight_anim.html`
