@@ -54,10 +54,11 @@ class Waypoint:
         return f"{self.name}: {self.lat:.6f}, {self.lon:.6f}, {self.altitude}ft, {self.get_time_formatted()}"
 
 class FlightPlan:
-    def __init__(self, origin: str, destination: str, route: str = ""):
+    def __init__(self, origin: str, destination: str, route: str = "", flight_id: str = ""):
         self.origin = origin
         self.destination = destination
         self.route = route
+        self.flight_id = flight_id
         self.waypoints: List[Waypoint] = []
         self.departure: Optional[Waypoint] = None
         self.arrival: Optional[Waypoint] = None
@@ -86,6 +87,7 @@ class FlightPlan:
             'origin': self.origin,
             'destination': self.destination,
             'route': self.route,
+            'flight_id': self.flight_id,
             'departure': self.departure.to_dict() if self.departure else None,
             'waypoints': [wp.to_dict() for wp in self.waypoints],
             'arrival': self.arrival.to_dict() if self.arrival else None,
@@ -99,6 +101,10 @@ def abbreviate_waypoint_name(name: str) -> str:
         "TOP OF DESCENT": "TOD"
     }
     return abbreviations.get(name, name)
+
+def generate_flight_id(flight_counter: int) -> str:
+    """Generate a unique flight identifier in FLT0001 format"""
+    return f"FLT{flight_counter:04d}"
 
 def parse_waypoint_from_fix(fix_element) -> Optional[Waypoint]:
     """Parse a waypoint from a fix element in the XML"""
@@ -167,7 +173,7 @@ def parse_airport_info(airport_element) -> Optional[Waypoint]:
         print(f"Error parsing airport {icao}: {e}")
         return None
 
-def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
+def extract_flight_plan_from_xml(xml_file: str, flight_id: str = "") -> Optional[FlightPlan]:
     """Extract flight plan from SimBrief XML file"""
     try:
         tree = ET.parse(xml_file)
@@ -182,7 +188,7 @@ def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
         dest_code = dest_elem.findtext('icao_code', '') if dest_elem else 'UNKNOWN'
         route = route_elem.text if (route_elem is not None and route_elem.text is not None) else ""
         
-        flight_plan = FlightPlan(origin_code, dest_code, route)
+        flight_plan = FlightPlan(origin_code, dest_code, route, flight_id)
         
         # Parse departure airport
         if origin_elem:
@@ -284,18 +290,19 @@ def create_kml_from_flight_plan(flight_plan: FlightPlan, filename: str) -> str:
     kml_template = f'''<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>{filename} Flight Plan - {flight_plan.origin} to {flight_plan.destination}</name>
+    <name>{flight_plan.flight_id} Flight Plan - {flight_plan.origin} to {flight_plan.destination}</name>
     <description>Flight plan extracted from SimBrief XML</description>
     
     <!-- Flight Information -->
-            <Snippet maxLines="2">{flight_plan.origin} to {flight_plan.destination}</Snippet>
+            <Snippet maxLines="2">{flight_plan.flight_id}: {flight_plan.origin} to {flight_plan.destination}</Snippet>
     
     <!-- Flight Path Line -->
     <Placemark>
-      <name>{filename} Flight Path</name>
+      <name>{flight_plan.flight_id} Flight Path</name>
       <description>
         <![CDATA[
-        <h3>{filename} Flight Plan</h3>
+        <h3>{flight_plan.flight_id} Flight Plan</h3>
+        <p><strong>Flight ID:</strong> {flight_plan.flight_id}</p>
         <p><strong>Route:</strong> {flight_plan.origin} to {flight_plan.destination}</p>
         <p><strong>Route:</strong> {flight_plan.route}</p>
         <p><strong>Waypoints:</strong> {len(all_waypoints)}</p>
@@ -386,6 +393,7 @@ def save_flight_data(flight_plan: FlightPlan, base_filename: str):
     # Print summary
     all_waypoints = flight_plan.get_all_waypoints()
     print(f"\nFlight Plan Summary:")
+    print(f"   Flight ID: {flight_plan.flight_id}")
     print(f"   Route: {flight_plan.origin} to {flight_plan.destination}")
     print(f"   Total waypoints: {len(all_waypoints)}")
     print(f"   Route: {flight_plan.route}")
@@ -413,17 +421,45 @@ def main():
         for xml_file in xml_files:
             print(f"   - {xml_file}")
         print("\n" + "=" * 50)
+        
+        # Track flights with same origin-destination to generate unique IDs
+        route_counter = {}  # Track count for each origin-destination pair
+        flight_counter = 1  # Global flight counter for unique IDs
+        
         success_count = 0
         for xml_filename in xml_files:
             print(f"Processing {xml_filename}...")
             print("----------------------------------------")
-            flight_plan = extract_flight_plan_from_xml(xml_filename)
+            
+            # Extract basic info first to determine flight ID
+            try:
+                tree = ET.parse(xml_filename)
+                root = tree.getroot()
+                origin_elem = root.find('origin')
+                dest_elem = root.find('destination')
+                origin_code = origin_elem.findtext('icao_code', '') if origin_elem else 'UNKNOWN'
+                dest_code = dest_elem.findtext('icao_code', '') if dest_elem else 'UNKNOWN'
+                route_key = f"{origin_code}-{dest_code}"
+                
+                # Generate unique flight ID
+                flight_id = generate_flight_id(flight_counter)
+                flight_counter += 1
+                
+                print(f"Flight ID: {flight_id} for route {route_key}")
+                
+            except Exception as e:
+                print(f"Error reading basic flight info from {xml_filename}: {e}")
+                continue
+            
+            flight_plan = extract_flight_plan_from_xml(xml_filename, flight_id)
             if not flight_plan:
                 print(f"Failed to extract flight plan from {xml_filename}")
                 continue
-            base_filename = xml_filename.replace('.xml', '')
+            
+            # Use flight ID as base filename instead of XML filename
+            base_filename = flight_id
             save_flight_data(flight_plan, base_filename)
-            print(f"Successfully processed {xml_filename}")
+            print(f"Successfully processed {xml_filename} as {flight_id}")
             success_count += 1
         if success_count == 0:
             print("No flight plans were successfully processed. Exiting.")

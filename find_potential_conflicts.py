@@ -82,10 +82,11 @@ class Waypoint:
 class FlightPlan:
     """Represents a complete flight plan with route and waypoints."""
     
-    def __init__(self, origin: str, destination: str, route: str = ""):
+    def __init__(self, origin: str, destination: str, route: str = "", flight_id: str = ""):
         self.origin = origin
         self.destination = destination
         self.route = route
+        self.flight_id = flight_id
         self.waypoints: List[Waypoint] = []
         self.departure: Optional[Waypoint] = None
         self.arrival: Optional[Waypoint] = None
@@ -113,7 +114,9 @@ class FlightPlan:
         return all_wps
     
     def get_route_identifier(self) -> str:
-        """Get the route identifier (origin-destination)."""
+        """Get the route identifier (flight ID if available, otherwise origin-destination)."""
+        if hasattr(self, 'flight_id') and self.flight_id:
+            return self.flight_id
         return f"{self.origin}-{self.destination}"
 
 @dataclass
@@ -328,12 +331,13 @@ def parse_airport_info(airport_element) -> Optional[Waypoint]:
         logging.error(f"Error parsing airport {icao}: {e}")
         return None
 
-def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
+def extract_flight_plan_from_xml(xml_file: str, flight_id: str = "") -> Optional[FlightPlan]:
     """
     Extract flight plan from SimBrief XML file.
     
     Args:
         xml_file: Path to the XML file
+        flight_id: Optional flight ID to assign to this flight plan
     
     Returns:
         FlightPlan object or None if extraction fails
@@ -351,7 +355,7 @@ def extract_flight_plan_from_xml(xml_file: str) -> Optional[FlightPlan]:
         dest_code = dest_elem.findtext('icao_code', '') if dest_elem is not None else 'UNKNOWN'
         route = route_elem.text if (route_elem is not None and route_elem.text is not None) else ""
         
-        flight_plan = FlightPlan(origin_code, dest_code, route)
+        flight_plan = FlightPlan(origin_code, dest_code, route, flight_id)
         
         # Parse departure airport
         if origin_elem is not None:
@@ -1042,15 +1046,20 @@ def extract_flight_plans(xml_files: List[str]) -> List[FlightPlan]:
         List of extracted flight plans
     """
     flight_plans = []
+    flight_counter = 1
     
     for xml_file in xml_files:
         logging.info(f"Analyzing {xml_file}...")
         print(f"\nAnalyzing {xml_file}...")
         
-        flight_plan = extract_flight_plan_from_xml(xml_file)
+        # Generate unique flight ID
+        flight_id = f"FLT{flight_counter:04d}"
+        flight_counter += 1
+        
+        flight_plan = extract_flight_plan_from_xml(xml_file, flight_id)
         if flight_plan:
             flight_plans.append(flight_plan)
-            print(f"   {flight_plan.origin} to {flight_plan.destination}")
+            print(f"   {flight_id}: {flight_plan.origin} to {flight_plan.destination}")
             print(f"   {len(flight_plan.get_all_waypoints())} waypoints")
         else:
             logging.warning(f"Failed to extract flight plan from {xml_file}")

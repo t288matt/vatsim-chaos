@@ -4,4 +4,5 @@ VERTICAL_SEPARATION_THRESHOLD = 900  # feet
 MIN_ALTITUDE_THRESHOLD = 5000  # feet
 DUPLICATE_FILTER_DISTANCE = 4.0  # nautical miles
 MIN_DEPARTURE_SEPARATION_MINUTES = 2  # minutes between departures from same airport 
+MIN_SAME_ROUTE_SEPARATION_MINUTES = 5  # minutes between flights with same origin-destination
 INTERPOLATION_SPACING_NM = 1.5  # nautical miles between interpolated route points 

@@ -7,351 +7,211 @@ Note: Departure Time column shows scheduled departure times to verify scheduling
 ### Conflict with YSSY-YSWG (Conflict 1)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YBBN-YCOM    | 1400           | 12           | -34.37089  | 150.74984  |   20000 |            480 | 2.13      |
-| interpolated_points      | YBBN-YCOM    | 1400           | 1400         | -34.37089  | 150.74984  |   20000 |              0 | N/A       |
-| animation_data           | YBBN-YCOM    | 1400           | 1400         | -34.37089  | 150.74984  |   20000 |              0 | N/A       |
-
-### Conflict with YSSY-YSWG (Conflict 2)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YBBN-YCOM    | 1400           | 12           | -34.37089  | 150.74984  |   20000 |            560 | 2.87      |
-| interpolated_points      | YBBN-YCOM    | 1400           | 1400         | -34.37089  | 150.74984  |   20000 |              0 | N/A       |
+| potential_conflict_data  | YBBN-YCOM    | N/A            | 12           | -34.37089  | 150.74984  |   20000 |            480 | 2.13      |
+| interpolated_points      | YBBN-YCOM    | N/A            | 70.46349206349207 | -34.37089  | 150.74984  |   20000 |              0 | N/A       |
 | animation_data           | YBBN-YCOM    | 1400           | 1400         | -34.37089  | 150.74984  |   20000 |              0 | N/A       |
 
 ## Flight: YBDG-YSBK
-### Conflict with YMER-YORG (Conflict 3)
+### Conflict with YMER-YORG (Conflict 2)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YBDG-YSBK    | 1443           | 43           | -34.74317  | 149.36053  |   21883 |            117 | 2.32      |
-| interpolated_points      | YBDG-YSBK    | 1443           | 1534         | -34.74317  | 149.36053  |   21883 |              0 | N/A       |
+| potential_conflict_data  | YBDG-YSBK    | N/A            | 43           | -34.74317  | 149.36053  |   21883 |            117 | 2.32      |
+| interpolated_points      | YBDG-YSBK    | N/A            | 51.493410852713176 | -34.74317  | 149.36053  |   21883 |              0 | N/A       |
 | animation_data           | YBDG-YSBK    | 1443           | 1534         | -34.74317  | 149.36053  |   21883 |              0 | N/A       |
 
-### Conflict with YMMB-YSWG (Conflict 4)
+### Conflict with YMMB-YSWG (Conflict 3)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YBDG-YSBK    | 1443           | 25           | -36.12127  | 146.76038  |   19000 |              0 | 2.85      |
-| interpolated_points      | YBDG-YSBK    | 1443           | 1508         | -36.12127  | 146.76038  |   19000 |              0 | N/A       |
+| potential_conflict_data  | YBDG-YSBK    | N/A            | 25           | -36.12127  | 146.76038  |   19000 |              0 | 2.85      |
+| interpolated_points      | YBDG-YSBK    | N/A            | 25.58638888888889 | -36.12127  | 146.76038  |   19000 |              0 | N/A       |
 | animation_data           | YBDG-YSBK    | 1443           | 1508         | -36.12127  | 146.76038  |   19000 |              0 | N/A       |
 
 ## Flight: YBDG-YWSL
-### Conflict with YMMB-YSWG (Conflict 5)
+### Conflict with YMMB-YSWG (Conflict 4)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YBDG-YWSL    | 1435           | 12           | -37.23782  | 145.75149  |   19000 |              0 | 2.75      |
-| interpolated_points      | YBDG-YWSL    | 1435           | 1455         | -37.23782  | 145.75149  |   19000 |              0 | N/A       |
+| potential_conflict_data  | YBDG-YWSL    | N/A            | 12           | -37.23782  | 145.75149  |   19000 |              0 | 2.75      |
+| interpolated_points      | YBDG-YWSL    | N/A            |         20.0 | -37.23782  | 145.75149  |   19000 |              0 | N/A       |
 | animation_data           | YBDG-YWSL    | 1435           | 1455         | -37.23782  | 145.75149  |   19000 |              0 | N/A       |
 
 ## Flight: YMCO-YMAY
-### Conflict with YMCO-YSHT (Conflict 6)
+### Conflict with YMCO-YSHT (Conflict 5)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMCO-YMAY    | 1402           | 4            | -37.56804  | 149.57827  |    5600 |              0 | 0.61      |
-| interpolated_points      | YMCO-YMAY    | 1402           | 1406         | -37.56804  | 149.57827  |    5600 |              0 | N/A       |
+| potential_conflict_data  | YMCO-YMAY    | N/A            | 4            | -37.56804  | 149.57827  |    5600 |              0 | 0.61      |
+| interpolated_points      | YMCO-YMAY    | N/A            | 4.214583333333334 | -37.56804  | 149.57827  |    5600 |              0 | N/A       |
 | animation_data           | YMCO-YMAY    | 1402           | 1406         | -37.56804  | 149.57827  |    5600 |              0 | N/A       |
 
 ## Flight: YMCO-YSCB
-### Conflict with YMER-YMML (Conflict 7)
+### Conflict with YMER-YMML (Conflict 6)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMCO-YSCB    | 1400           | 12           | -36.98842  | 149.34358  |   20000 |            881 | 2.68      |
-| interpolated_points      | YMCO-YSCB    | 1400           | 1412         | -36.98842  | 149.34358  |   20000 |              0 | N/A       |
+| potential_conflict_data  | YMCO-YSCB    | N/A            | 12           | -36.98842  | 149.34358  |   20000 |            881 | 2.68      |
+| interpolated_points      | YMCO-YSCB    | N/A            | 12.63939393939394 | -36.98842  | 149.34358  |   20000 |              0 | N/A       |
 | animation_data           | YMCO-YSCB    | 1400           | 1412         | -36.98842  | 149.34358  |   20000 |              0 | N/A       |
 
-### Conflict with YMES-YSRI (Conflict 8)
+### Conflict with YMES-YSRI (Conflict 7)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMCO-YSCB    | 1400           | 22           | -36.33036  | 148.96431  |   19888 |            888 | 2.85      |
-| interpolated_points      | YMCO-YSCB    | 1400           | 1421         | -36.33036  | 148.96431  |   19888 |              0 | N/A       |
+| potential_conflict_data  | YMCO-YSCB    | N/A            | 22           | -36.33036  | 148.96431  |   19888 |            888 | 2.85      |
+| interpolated_points      | YMCO-YSCB    | N/A            | 21.65740740740741 | -36.33036  | 148.96431  |   19888 |              0 | N/A       |
 | animation_data           | YMCO-YSCB    | 1400           | 1421         | -36.33036  | 148.96431  |   19888 |              0 | N/A       |
 
 ## Flight: YMCO-YSHT
-### Conflict with YMCO-YMAY (Conflict 6)
+### Conflict with YMCO-YMAY (Conflict 5)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMCO-YSHT    | 1400           | 4            | -37.55926  | 149.57183  |    5600 |              0 | 0.61      |
-| interpolated_points      | YMCO-YSHT    | 1400           | 1404         | -37.55926  | 149.57183  |    5600 |              0 | N/A       |
+| potential_conflict_data  | YMCO-YSHT    | N/A            | 4            | -37.55926  | 149.57183  |    5600 |              0 | 0.61      |
+| interpolated_points      | YMCO-YSHT    | N/A            | 4.644642857142857 | -37.55926  | 149.57183  |    5600 |              0 | N/A       |
 | animation_data           | YMCO-YSHT    | 1400           | 1404         | -37.55926  | 149.57183  |    5600 |              0 | N/A       |
 
 ## Flight: YMEN-YMAY
-### Conflict with YMMB-YSWG (Conflict 9)
+### Conflict with YMMB-YSWG (Conflict 8)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMEN-YMAY    | 1436           | 19           | -36.60493  | 146.12933  |   19000 |              0 | 2.85      |
-| interpolated_points      | YMEN-YMAY    | 1436           | 1502         | -36.60493  | 146.12933  |   19000 |              0 | N/A       |
+| potential_conflict_data  | YMEN-YMAY    | N/A            | 19           | -36.60493  | 146.12933  |   19000 |              0 | 2.85      |
+| interpolated_points      | YMEN-YMAY    | N/A            | 26.002380952380953 | -36.60493  | 146.12933  |   19000 |              0 | N/A       |
 | animation_data           | YMEN-YMAY    | 1436           | 1502         | -36.60493  | 146.12933  |   19000 |              0 | N/A       |
 
 ## Flight: YMER-YMML
-### Conflict with YMCO-YSCB (Conflict 7)
+### Conflict with YMCO-YSCB (Conflict 6)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMER-YMML    | 1400           | 12           | -36.97765  | 149.28930  |   19119 |            881 | 2.68      |
-| interpolated_points      | YMER-YMML    | 1400           | 1411         | -36.97765  | 149.28930  |   19119 |              0 | N/A       |
+| potential_conflict_data  | YMER-YMML    | N/A            | 12           | -36.97765  | 149.28930  |   19119 |            881 | 2.68      |
+| interpolated_points      | YMER-YMML    | N/A            | 11.534126984126985 | -36.97765  | 149.28930  |   19119 |              0 | N/A       |
 | animation_data           | YMER-YMML    | 1400           | 1411         | -36.97765  | 149.28930  |   19119 |              0 | N/A       |
 
-### Conflict with YMMB-YSWG (Conflict 10)
+### Conflict with YMMB-YSWG (Conflict 9)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMER-YMML    | 1400           | 11           | -37.29374  | 145.68468  |   19700 |            700 | 2.99      |
-| interpolated_points      | YMER-YMML    | 1400           | 1456         | -37.29374  | 145.68468  |   19700 |              0 | N/A       |
+| potential_conflict_data  | YMER-YMML    | N/A            | 11           | -37.29374  | 145.68468  |   19700 |            700 | 2.99      |
+| interpolated_points      | YMER-YMML    | N/A            | 56.18333333333334 | -37.29374  | 145.68468  |   19700 |              0 | N/A       |
 | animation_data           | YMER-YMML    | 1400           | 1456         | -37.29374  | 145.68468  |   19700 |              0 | N/A       |
 
 ## Flight: YMER-YORG
-### Conflict with YBDG-YSBK (Conflict 3)
+### Conflict with YBDG-YSBK (Conflict 2)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMER-YORG    | 1451           | 43           | -34.74846  | 149.40708  |   22000 |            117 | 2.32      |
-| interpolated_points      | YMER-YORG    | 1451           | 1534         | -34.74846  | 149.40708  |   22000 |              0 | N/A       |
+| potential_conflict_data  | YMER-YORG    | N/A            | 43           | -34.74846  | 149.40708  |   22000 |            117 | 2.32      |
+| interpolated_points      | YMER-YORG    | N/A            | 43.35297619047619 | -34.74846  | 149.40708  |   22000 |              0 | N/A       |
 | animation_data           | YMER-YORG    | 1451           | 1534         | -34.74846  | 149.40708  |   22000 |              0 | N/A       |
 
-### Conflict with YMER-YORG (Conflict 11)
+### Conflict with YSSY-YORG (Conflict 10)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMER-YORG    | 1451           | 14           | -36.26317  | 149.75150  |   22000 |            759 | 2.10      |
-| interpolated_points      | YMER-YORG    | 1451           | 1451         | -36.26317  | 149.75150  |   22000 |              0 | N/A       |
-| animation_data           | YMER-YORG    | 1451           | 1451         | -36.26317  | 149.75150  |   22000 |              0 | N/A       |
-
-### Conflict with YMER-YORG (Conflict 11)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMER-YORG    | 1451           | 14           | -36.26317  | 149.75150  |   22000 |            759 | 2.10      |
-| interpolated_points      | YMER-YORG    | 1451           | 1451         | -36.26317  | 149.75150  |   22000 |              0 | N/A       |
-| animation_data           | YMER-YORG    | 1451           | 1451         | -36.26317  | 149.75150  |   22000 |              0 | N/A       |
-
-### Conflict with YSSY-YORG (Conflict 12)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMER-YORG    | 1451           | 27           | -33.42618  | 149.13507  |    6861 |            347 | 2.72      |
-| interpolated_points      | YMER-YORG    | 1451           | 1451         | -33.42618  | 149.13507  |    6861 |              0 | N/A       |
+| potential_conflict_data  | YMER-YORG    | N/A            | 27           | -33.42618  | 149.13507  |    6861 |            347 | 2.72      |
+| interpolated_points      | YMER-YORG    | N/A            | 68.88589743589743 | -33.42618  | 149.13507  |    6861 |              0 | N/A       |
 | animation_data           | YMER-YORG    | 1451           | 1451         | -33.42618  | 149.13507  |    6861 |              0 | N/A       |
 
-### Conflict with YMES-YSRI (Conflict 13)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMER-YORG    | 1451           | 28           | -34.95557  | 149.45206  |   20462 |            722 | 2.59      |
-| interpolated_points      | YMER-YORG    | 1451           | 1519         | -34.95557  | 149.45206  |   20462 |              0 | N/A       |
-| animation_data           | YMER-YORG    | 1451           | 1519         | -34.95557  | 149.45206  |   20462 |              0 | N/A       |
-
-### Conflict with YSSY-YORG (Conflict 14)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMER-YORG    | 1451           | 27           | -33.42702  | 149.13529  |    5976 |            538 | 2.74      |
-| interpolated_points      | YMER-YORG    | 1451           | 1537         | -33.42702  | 149.13529  |    5976 |              0 | N/A       |
-| animation_data           | YMER-YORG    | 1451           | 1537         | -33.42702  | 149.13529  |    5976 |              0 | N/A       |
-
 ## Flight: YMES-YSRI
-### Conflict with YMCO-YSCB (Conflict 8)
+### Conflict with YMCO-YSCB (Conflict 7)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMES-YSRI    | 1442           | 22           | -36.37286  | 148.93802  |   19000 |            888 | 2.85      |
-| interpolated_points      | YMES-YSRI    | 1442           | 1504         | -36.37286  | 148.93802  |   19000 |              0 | N/A       |
+| potential_conflict_data  | YMES-YSRI    | N/A            | 22           | -36.37286  | 148.93802  |   19000 |            888 | 2.85      |
+| interpolated_points      | YMES-YSRI    | N/A            | 22.944827586206898 | -36.37286  | 148.93802  |   19000 |              0 | N/A       |
 | animation_data           | YMES-YSRI    | 1442           | 1504         | -36.37286  | 148.93802  |   19000 |              0 | N/A       |
 
-### Conflict with YMER-YORG (Conflict 13)
+### Conflict with YSSY-YORG (Conflict 11)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMES-YSRI    | 1442           | 28           | -34.99551  | 149.43192  |   19740 |            722 | 2.59      |
-| interpolated_points      | YMES-YSRI    | 1442           | 1519         | -34.99551  | 149.43192  |   19740 |              0 | N/A       |
-| animation_data           | YMES-YSRI    | 1442           | 1519         | -34.99551  | 149.43192  |   19740 |              0 | N/A       |
-
-### Conflict with YSSY-YORG (Conflict 15)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMES-YSRI    | 1442           | 14           | -33.73296  | 150.29049  |   11200 |            800 | 2.05      |
-| interpolated_points      | YMES-YSRI    | 1442           | 1535         | -33.73296  | 150.29049  |   11200 |              0 | N/A       |
+| potential_conflict_data  | YMES-YSRI    | N/A            | 14           | -33.73296  | 150.29049  |   11200 |            800 | 2.05      |
+| interpolated_points      | YMES-YSRI    | N/A            | 53.614285714285714 | -33.73296  | 150.29049  |   11200 |              0 | N/A       |
 | animation_data           | YMES-YSRI    | 1442           | 1535         | -33.73296  | 150.29049  |   11200 |              0 | N/A       |
 
-### Conflict with YSSY-YSWG (Conflict 16)
+### Conflict with YSSY-YSWG (Conflict 12)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMES-YSRI    | 1442           | 24           | -34.70958  | 149.66811  |   19481 |            519 | 2.61      |
-| interpolated_points      | YMES-YSRI    | 1442           | 1442         | -34.70958  | 149.66811  |   19481 |              0 | N/A       |
-| animation_data           | YMES-YSRI    | 1442           | 1442         | -34.70958  | 149.66811  |   19481 |              0 | N/A       |
-
-### Conflict with YSSY-YSWG (Conflict 17)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMES-YSRI    | 1442           | 24           | -34.70958  | 149.66811  |   19481 |            519 | 2.61      |
-| interpolated_points      | YMES-YSRI    | 1442           | 1442         | -34.70958  | 149.66811  |   19481 |              0 | N/A       |
+| potential_conflict_data  | YMES-YSRI    | N/A            | 24           | -34.70958  | 149.66811  |   19481 |            519 | 2.61      |
+| interpolated_points      | YMES-YSRI    | N/A            | 40.35740740740741 | -34.70958  | 149.66811  |   19481 |              0 | N/A       |
 | animation_data           | YMES-YSRI    | 1442           | 1442         | -34.70958  | 149.66811  |   19481 |              0 | N/A       |
 
 ## Flight: YMMB-YSWG
-### Conflict with YBDG-YSBK (Conflict 4)
+### Conflict with YBDG-YSBK (Conflict 3)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMMB-YSWG    | 1443           | 25           | -36.16318  | 146.78797  |   19000 |              0 | 2.85      |
-| interpolated_points      | YMMB-YSWG    | 1443           | 1508         | -36.16318  | 146.78797  |   19000 |              0 | N/A       |
+| potential_conflict_data  | YMMB-YSWG    | N/A            | 25           | -36.16318  | 146.78797  |   19000 |              0 | 2.85      |
+| interpolated_points      | YMMB-YSWG    | N/A            | 25.08205128205128 | -36.16318  | 146.78797  |   19000 |              0 | N/A       |
 | animation_data           | YMMB-YSWG    | 1443           | 1508         | -36.16318  | 146.78797  |   19000 |              0 | N/A       |
 
-### Conflict with YBDG-YWSL (Conflict 5)
+### Conflict with YBDG-YWSL (Conflict 4)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMMB-YSWG    | 1443           | 12           | -37.28301  | 145.76142  |   19000 |              0 | 2.75      |
-| interpolated_points      | YMMB-YSWG    | 1443           | 1454         | -37.28301  | 145.76142  |   19000 |              0 | N/A       |
+| potential_conflict_data  | YMMB-YSWG    | N/A            | 12           | -37.28301  | 145.76142  |   19000 |              0 | 2.75      |
+| interpolated_points      | YMMB-YSWG    | N/A            | 11.625925925925927 | -37.28301  | 145.76142  |   19000 |              0 | N/A       |
 | animation_data           | YMMB-YSWG    | 1443           | 1454         | -37.28301  | 145.76142  |   19000 |              0 | N/A       |
 
-### Conflict with YMEN-YMAY (Conflict 9)
+### Conflict with YMEN-YMAY (Conflict 8)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMMB-YSWG    | 1443           | 19           | -36.62332  | 146.18381  |   19000 |              0 | 2.85      |
-| interpolated_points      | YMMB-YSWG    | 1443           | 1501         | -36.62332  | 146.18381  |   19000 |              0 | N/A       |
+| potential_conflict_data  | YMMB-YSWG    | N/A            | 19           | -36.62332  | 146.18381  |   19000 |              0 | 2.85      |
+| interpolated_points      | YMMB-YSWG    | N/A            | 18.760952380952382 | -36.62332  | 146.18381  |   19000 |              0 | N/A       |
 | animation_data           | YMMB-YSWG    | 1443           | 1501         | -36.62332  | 146.18381  |   19000 |              0 | N/A       |
 
-### Conflict with YMER-YMML (Conflict 10)
+### Conflict with YMER-YMML (Conflict 9)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YMMB-YSWG    | 1443           | 11           | -37.34051  | 145.70619  |   19000 |            700 | 2.99      |
-| interpolated_points      | YMMB-YSWG    | 1443           | 1453         | -37.34051  | 145.70619  |   19000 |              0 | N/A       |
+| potential_conflict_data  | YMMB-YSWG    | N/A            | 11           | -37.34051  | 145.70619  |   19000 |            700 | 2.99      |
+| interpolated_points      | YMMB-YSWG    | N/A            | 10.94537037037037 | -37.34051  | 145.70619  |   19000 |              0 | N/A       |
 | animation_data           | YMMB-YSWG    | 1443           | 1453         | -37.34051  | 145.70619  |   19000 |              0 | N/A       |
 
 ## Flight: YSHL-YBTH
-### Conflict with YSNW-YWLM (Conflict 18)
+### Conflict with YSNW-YWLM (Conflict 13)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSHL-YBTH    | 1513           | 4            | -34.48998  | 150.66790  |    7666 |            666 | 2.82      |
-| interpolated_points      | YSHL-YBTH    | 1513           | 1517         | -34.48998  | 150.66790  |    7666 |              0 | N/A       |
+| potential_conflict_data  | YSHL-YBTH    | N/A            | 4            | -34.48998  | 150.66790  |    7666 |            666 | 2.82      |
+| interpolated_points      | YSHL-YBTH    | N/A            | 4.494444444444445 | -34.48998  | 150.66790  |    7666 |              0 | N/A       |
 | animation_data           | YSHL-YBTH    | 1513           | 1517         | -34.48998  | 150.66790  |    7666 |              0 | N/A       |
 
 ## Flight: YSNW-YWLM
-### Conflict with YSHL-YBTH (Conflict 18)
+### Conflict with YSHL-YBTH (Conflict 13)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSNW-YWLM    | 1503           | 4            | -34.48700  | 150.61103  |    7000 |            666 | 2.82      |
-| interpolated_points      | YSNW-YWLM    | 1503           | 1517         | -34.48700  | 150.61103  |    7000 |              0 | N/A       |
+| potential_conflict_data  | YSNW-YWLM    | N/A            | 4            | -34.48700  | 150.61103  |    7000 |            666 | 2.82      |
+| interpolated_points      | YSNW-YWLM    | N/A            | 14.014285714285714 | -34.48700  | 150.61103  |    7000 |              0 | N/A       |
 | animation_data           | YSNW-YWLM    | 1503           | 1517         | -34.48700  | 150.61103  |    7000 |              0 | N/A       |
 
-### Conflict with YSNW-YWLM (Conflict 19)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSNW-YWLM    | 1503           | 3            | -34.84514  | 150.54839  |    5542 |            352 | 0.43      |
-| interpolated_points      | YSNW-YWLM    | 1503           | 1503         | -34.84514  | 150.54839  |    5542 |              0 | N/A       |
-| animation_data           | YSNW-YWLM    | 1503           | 1503         | -34.84514  | 150.54839  |    5542 |              0 | N/A       |
-
-### Conflict with YSNW-YWLM (Conflict 19)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSNW-YWLM    | 1503           | 3            | -34.84514  | 150.54839  |    5542 |            352 | 0.43      |
-| interpolated_points      | YSNW-YWLM    | 1503           | 1503         | -34.84514  | 150.54839  |    5542 |              0 | N/A       |
-| animation_data           | YSNW-YWLM    | 1503           | 1503         | -34.84514  | 150.54839  |    5542 |              0 | N/A       |
-
-### Conflict with YSSY-YSWG (Conflict 20)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSNW-YWLM    | 1503           | 7            | -34.43183  | 150.62075  |   19177 |            823 | 2.69      |
-| interpolated_points      | YSNW-YWLM    | 1503           | 1503         | -34.43183  | 150.62075  |   19177 |              0 | N/A       |
-| animation_data           | YSNW-YWLM    | 1503           | 1503         | -34.43183  | 150.62075  |   19177 |              0 | N/A       |
-
-### Conflict with YSSY-YSWG (Conflict 21)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSNW-YWLM    | 1503           | 7            | -34.43183  | 150.62075  |   19177 |            823 | 1.75      |
-| interpolated_points      | YSNW-YWLM    | 1503           | 1503         | -34.43183  | 150.62075  |   19177 |              0 | N/A       |
-| animation_data           | YSNW-YWLM    | 1503           | 1503         | -34.43183  | 150.62075  |   19177 |              0 | N/A       |
-
 ## Flight: YSSY-YORG
-### Conflict with YMER-YORG (Conflict 12)
+### Conflict with YMER-YORG (Conflict 10)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YORG    | 1532           | 27           | -33.39856  | 149.17802  |    6514 |            347 | 2.72      |
-| interpolated_points      | YSSY-YORG    | 1532           | 1532         | -33.39856  | 149.17802  |    6514 |              0 | N/A       |
+| potential_conflict_data  | YSSY-YORG    | N/A            | 27           | -33.39856  | 149.17802  |    6514 |            347 | 2.72      |
+| interpolated_points      | YSSY-YORG    | N/A            | 27.145238095238092 | -33.39856  | 149.17802  |    6514 |              0 | N/A       |
 | animation_data           | YSSY-YORG    | 1532           | 1532         | -33.39856  | 149.17802  |    6514 |              0 | N/A       |
 
-### Conflict with YMER-YORG (Conflict 14)
+### Conflict with YMES-YSRI (Conflict 11)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YORG    | 1532           | 27           | -33.39856  | 149.17802  |    6514 |            538 | 2.74      |
-| interpolated_points      | YSSY-YORG    | 1532           | 1532         | -33.39856  | 149.17802  |    6514 |              0 | N/A       |
-| animation_data           | YSSY-YORG    | 1532           | 1532         | -33.39856  | 149.17802  |    6514 |              0 | N/A       |
-
-### Conflict with YMES-YSRI (Conflict 15)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YORG    | 1532           | 14           | -33.71838  | 150.32769  |   12000 |            800 | 2.05      |
-| interpolated_points      | YSSY-YORG    | 1532           | 1546         | -33.71838  | 150.32769  |   12000 |              0 | N/A       |
+| potential_conflict_data  | YSSY-YORG    | N/A            | 14           | -33.71838  | 150.32769  |   12000 |            800 | 2.05      |
+| interpolated_points      | YSSY-YORG    | N/A            | 14.072807017543859 | -33.71838  | 150.32769  |   12000 |              0 | N/A       |
 | animation_data           | YSSY-YORG    | 1532           | 1546         | -33.71838  | 150.32769  |   12000 |              0 | N/A       |
 
 ## Flight: YSSY-YSWG
 ### Conflict with YBBN-YCOM (Conflict 1)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 12           | -34.37808  | 150.70779  |   19520 |            480 | 2.13      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1509         | -34.37808  | 150.70779  |   19520 |              0 | N/A       |
+| potential_conflict_data  | YSSY-YSWG    | N/A            | 12           | -34.37808  | 150.70779  |   19520 |            480 | 2.13      |
+| interpolated_points      | YSSY-YSWG    | N/A            | 11.923333333333334 | -34.37808  | 150.70779  |   19520 |              0 | N/A       |
 | animation_data           | YSSY-YSWG    | 1458           | 1509         | -34.37808  | 150.70779  |   19520 |              0 | N/A       |
 
-### Conflict with YBBN-YCOM (Conflict 2)
+### Conflict with YMES-YSRI (Conflict 12)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 12           | -34.38600  | 150.69480  |   19440 |            560 | 2.87      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1458         | -34.38600  | 150.69480  |   19440 |              0 | N/A       |
-| animation_data           | YSSY-YSWG    | 1458           | 1458         | -34.38600  | 150.69480  |   19440 |              0 | N/A       |
-
-### Conflict with YMES-YSRI (Conflict 16)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 24           | -34.72550  | 149.71738  |   20000 |            519 | 2.61      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1458         | -34.72550  | 149.71738  |   20000 |              0 | N/A       |
+| potential_conflict_data  | YSSY-YSWG    | N/A            | 24           | -34.72550  | 149.71738  |   20000 |            519 | 2.61      |
+| interpolated_points      | YSSY-YSWG    | N/A            | 24.315079365079363 | -34.72550  | 149.71738  |   20000 |              0 | N/A       |
 | animation_data           | YSSY-YSWG    | 1458           | 1458         | -34.72550  | 149.71738  |   20000 |              0 | N/A       |
 
-### Conflict with YMES-YSRI (Conflict 17)
+### Conflict with YSWG-YSSY (Conflict 14)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 24           | -34.72550  | 149.71738  |   20000 |            519 | 2.61      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1458         | -34.72550  | 149.71738  |   20000 |              0 | N/A       |
-| animation_data           | YSSY-YSWG    | 1458           | 1458         | -34.72550  | 149.71738  |   20000 |              0 | N/A       |
-
-### Conflict with YSNW-YWLM (Conflict 20)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 7            | -34.40470  | 150.66402  |   20000 |            823 | 2.69      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1510         | -34.40470  | 150.66402  |   20000 |              0 | N/A       |
-| animation_data           | YSSY-YSWG    | 1458           | 1510         | -34.40470  | 150.66402  |   20000 |              0 | N/A       |
-
-### Conflict with YSNW-YWLM (Conflict 21)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 7            | -34.41402  | 150.64874  |   20000 |            823 | 1.75      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1458         | -34.41402  | 150.64874  |   20000 |              0 | N/A       |
-| animation_data           | YSSY-YSWG    | 1458           | 1458         | -34.41402  | 150.64874  |   20000 |              0 | N/A       |
-
-### Conflict with YSSY-YSWG (Conflict 22)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 5            | -34.03588  | 151.08807  |    5333 |             95 | 0.00      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1502         | -34.03588  | 151.08807  |    5333 |              0 | N/A       |
-| animation_data           | YSSY-YSWG    | 1458           | 1502         | -34.03588  | 151.08807  |    5333 |              0 | N/A       |
-
-### Conflict with YSSY-YSWG (Conflict 22)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 5            | -34.03588  | 151.08807  |    5333 |             95 | 0.00      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1502         | -34.03588  | 151.08807  |    5333 |              0 | N/A       |
-| animation_data           | YSSY-YSWG    | 1458           | 1502         | -34.03588  | 151.08807  |    5333 |              0 | N/A       |
-
-### Conflict with YSWG-YSSY (Conflict 23)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 4            | -35.12795  | 147.64615  |    5391 |            141 | 2.01      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1458         | -35.12795  | 147.64615  |    5391 |              0 | N/A       |
-| animation_data           | YSSY-YSWG    | 1458           | 1458         | -35.12795  | 147.64615  |    5391 |              0 | N/A       |
-
-### Conflict with YSWG-YSSY (Conflict 24)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSSY-YSWG    | 1458           | 4            | -35.12795  | 147.64615  |    5391 |            141 | 2.01      |
-| interpolated_points      | YSSY-YSWG    | 1458           | 1458         | -35.12795  | 147.64615  |    5391 |              0 | N/A       |
+| potential_conflict_data  | YSSY-YSWG    | N/A            | 4            | -35.12795  | 147.64615  |    5391 |            141 | 2.01      |
+| interpolated_points      | YSSY-YSWG    | N/A            | 48.3963768115942 | -35.12795  | 147.64615  |    5391 |              0 | N/A       |
 | animation_data           | YSSY-YSWG    | 1458           | 1458         | -35.12795  | 147.64615  |    5391 |              0 | N/A       |
 
 ## Flight: YSWG-YSSY
-### Conflict with YSSY-YSWG (Conflict 23)
+### Conflict with YSSY-YSWG (Conflict 14)
 | Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSWG-YSSY    | 1542           | 4            | -35.11524  | 147.60839  |    5250 |            141 | 2.01      |
-| interpolated_points      | YSWG-YSSY    | 1542           | 1542         | -35.11524  | 147.60839  |    5250 |              0 | N/A       |
-| animation_data           | YSWG-YSSY    | 1542           | 1542         | -35.11524  | 147.60839  |    5250 |              0 | N/A       |
-
-### Conflict with YSSY-YSWG (Conflict 24)
-| Source                   | Flight       | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
-|:----------------------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | YSWG-YSSY    | 1542           | 4            | -35.11524  | 147.60839  |    5250 |            141 | 2.01      |
-| interpolated_points      | YSWG-YSSY    | 1542           | 1542         | -35.11524  | 147.60839  |    5250 |              0 | N/A       |
+| potential_conflict_data  | YSWG-YSSY    | N/A            | 4            | -35.11524  | 147.60839  |    5250 |            141 | 2.01      |
+| interpolated_points      | YSWG-YSSY    | N/A            | 4.258333333333333 | -35.11524  | 147.60839  |    5250 |              0 | N/A       |
 | animation_data           | YSWG-YSSY    | 1542           | 1542         | -35.11524  | 147.60839  |    5250 |              0 | N/A       |
 

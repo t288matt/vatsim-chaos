@@ -34,7 +34,7 @@ import sys
 from datetime import datetime, timedelta
 from typing import Dict, List, Tuple, Optional, Set
 import logging
-from env import MIN_DEPARTURE_SEPARATION_MINUTES
+from env import MIN_DEPARTURE_SEPARATION_MINUTES, MIN_SAME_ROUTE_SEPARATION_MINUTES
 
 # Configuration
 CONFLICT_ANALYSIS_FILE = "temp/potential_conflict_data.json"
@@ -201,10 +201,16 @@ class ConflictScheduler:
             departure_time = self.start_time
         elif departure_time > self.end_time:
             departure_time = self.end_time
-        # Check 2-minute separation rule from same airport
+        
+        # Check separation rules
         aircraft_origin = aircraft.split('-')[0]  # Extract origin airport
+        aircraft_dest = aircraft.split('-')[1] if '-' in aircraft else aircraft  # Extract destination airport
+        
         for scheduled_aircraft_id, scheduled_time in scheduled_aircraft.items():
             scheduled_origin = scheduled_aircraft_id.split('-')[0]
+            scheduled_dest = scheduled_aircraft_id.split('-')[1] if '-' in scheduled_aircraft_id else scheduled_aircraft_id
+            
+            # Check same airport separation (2 minutes)
             if scheduled_origin == aircraft_origin:
                 time_diff = abs((departure_time - scheduled_time).total_seconds() / 60)
                 if time_diff < MIN_DEPARTURE_SEPARATION_MINUTES:
@@ -218,6 +224,22 @@ class ConflictScheduler:
                         departure_time = adjusted_time
                     else:
                         return None  # No valid time found
+            
+            # Check same route separation (5 minutes)
+            if scheduled_origin == aircraft_origin and scheduled_dest == aircraft_dest:
+                time_diff = abs((departure_time - scheduled_time).total_seconds() / 60)
+                if time_diff < MIN_SAME_ROUTE_SEPARATION_MINUTES:
+                    # Try to find a nearby time that respects the rule
+                    if departure_time > scheduled_time:
+                        adjusted_time = scheduled_time + timedelta(minutes=MIN_SAME_ROUTE_SEPARATION_MINUTES)
+                    else:
+                        adjusted_time = scheduled_time - timedelta(minutes=MIN_SAME_ROUTE_SEPARATION_MINUTES)
+                    # Check if adjusted time is within event window
+                    if self.start_time <= adjusted_time <= self.end_time:
+                        departure_time = adjusted_time
+                    else:
+                        return None  # No valid time found
+        
         return departure_time
     
     def _find_fallback_departure_time(self, aircraft: str, scheduled_aircraft: Dict[str, datetime]) -> datetime:
@@ -225,16 +247,25 @@ class ConflictScheduler:
         # Start at event start time
         departure_time = self.start_time
         
-        # Check 2-minute separation rule
+        # Check separation rules
         aircraft_origin = aircraft.split('-')[0]
+        aircraft_dest = aircraft.split('-')[1] if '-' in aircraft else aircraft
         
         for scheduled_aircraft_id, scheduled_time in scheduled_aircraft.items():
             scheduled_origin = scheduled_aircraft_id.split('-')[0]
+            scheduled_dest = scheduled_aircraft_id.split('-')[1] if '-' in scheduled_aircraft_id else scheduled_aircraft_id
             
+            # Check same airport separation (2 minutes)
             if scheduled_origin == aircraft_origin:
                 time_diff = abs((departure_time - scheduled_time).total_seconds() / 60)
                 if time_diff < MIN_DEPARTURE_SEPARATION_MINUTES:
                     departure_time = scheduled_time + timedelta(minutes=MIN_DEPARTURE_SEPARATION_MINUTES)
+            
+            # Check same route separation (5 minutes)
+            if scheduled_origin == aircraft_origin and scheduled_dest == aircraft_dest:
+                time_diff = abs((departure_time - scheduled_time).total_seconds() / 60)
+                if time_diff < MIN_SAME_ROUTE_SEPARATION_MINUTES:
+                    departure_time = scheduled_time + timedelta(minutes=MIN_SAME_ROUTE_SEPARATION_MINUTES)
         
         # Ensure within event window
         if departure_time > self.end_time:
