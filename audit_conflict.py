@@ -26,6 +26,7 @@ audit_output = 'audit_conflict_output.txt'
 COLS = [
     ("Source", 24),
     ("Flight", 12),
+    ("Aircraft Type", 12),
     ("Departure Time", 14),
     ("Time (UTC)", 12),
     ("Lat", 10),
@@ -81,7 +82,7 @@ def audit_conflicts():
     with open(audit_output, 'w') as out:
         out.write('# Conflict Data Audit Report\n')
         out.write('For each flight, all conflicts it is involved in are listed.\n')
-        out.write('Columns: Source | Flight | Departure Time | Time (UTC) | Lat | Lon | Alt | Altitude Diff | Distance\n')
+        out.write('Columns: Source | Flight | Aircraft Type | Departure Time | Time (UTC) | Lat | Lon | Alt | Altitude Diff | Distance\n')
         out.write('Note: Departure Time column shows scheduled departure times to verify scheduling algorithm accuracy.\n\n')
         for flight in sorted(flight_conflicts.keys()):
             out.write(f'## Flight: {flight}\n')
@@ -110,24 +111,32 @@ def audit_conflicts():
                     else:
                         time_display = time_val
                     departure_time = departure_times.get(f, 'N/A')
+                    # Get aircraft type from flights data
+                    aircraft_type = "UNK"
+                    if f in pc.get('flights', {}):
+                        aircraft_type = pc['flights'][f].get('aircraft_type', 'UNK')
                     out.write(FMT_ROW.format(
-                        'potential_conflict_data', f, departure_time, time_display, f"{lat:.5f}", f"{lon:.5f}", alt, adiff, f"{dist:.2f}"))
+                        'potential_conflict_data', f, aircraft_type, departure_time, time_display, f"{lat:.5f}", f"{lon:.5f}", alt, adiff, f"{dist:.2f}"))
                 # 2. From routes_with_added_interpolated_points.json
                 lat = c['lat1'] if this_flight == c['flight1'] else c['lat2']
                 lon = c['lon1'] if this_flight == c['flight1'] else c['lon2']
                 alt = c['alt1'] if this_flight == c['flight1'] else c['alt2']
-                points = interp.get(this_flight, [])
+                entry = interp.get(this_flight, {})
+                points = entry.get('route', []) if isinstance(entry, dict) else entry
                 if points:
                     p = find_closest_point(points, lat, lon, alt)
                     adiff = abs(p.get('altitude', 0) - alt)
                     time_display = p.get('time', 'N/A')
                     departure_time = departure_times.get(this_flight, 'N/A')
+                    # Get aircraft type from new structure
+                    aircraft_type = entry.get('aircraft_type', 'UNK') if isinstance(entry, dict) else "UNK"
                     out.write(FMT_ROW.format(
-                        'interpolated_points', this_flight, departure_time, time_display, f"{p.get('lat', 0):.5f}", f"{p.get('lon', 0):.5f}",
+                        'interpolated_points', this_flight, aircraft_type, departure_time, time_display, f"{p.get('lat', 0):.5f}", f"{p.get('lon', 0):.5f}",
                         p.get('altitude', 0), adiff, 'N/A'))
                 else:
                     departure_time = departure_times.get(this_flight, 'N/A')
-                    out.write(FMT_ROW.format('interpolated_points', this_flight, departure_time, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'))
+                    aircraft_type = entry.get('aircraft_type', 'UNK') if isinstance(entry, dict) else "UNK"
+                    out.write(FMT_ROW.format('interpolated_points', this_flight, aircraft_type, departure_time, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'))
                 # 3. From animation_data.json
                 flight_data = next((fl for fl in anim.get('flights', []) if fl['flight_id'] == this_flight), None)
                 if flight_data:
@@ -137,14 +146,16 @@ def audit_conflicts():
                         adiff = abs(p.get('altitude', 0) - alt)
                         time_display = p.get('UTC time', p.get('time', 'N/A'))
                         departure_time = flight_data.get('departure_time', 'N/A')
+                        aircraft_type = flight_data.get('aircraft_type', 'UNK')
                         out.write(FMT_ROW.format(
-                            'animation_data', this_flight, departure_time, time_display, f"{p.get('lat', 0):.5f}", f"{p.get('lon', 0):.5f}",
+                            'animation_data', this_flight, aircraft_type, departure_time, time_display, f"{p.get('lat', 0):.5f}", f"{p.get('lon', 0):.5f}",
                             p.get('altitude', 0), adiff, 'N/A'))
                     else:
                         departure_time = flight_data.get('departure_time', 'N/A')
-                        out.write(FMT_ROW.format('animation_data', this_flight, departure_time, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'))
+                        aircraft_type = flight_data.get('aircraft_type', 'UNK')
+                        out.write(FMT_ROW.format('animation_data', this_flight, aircraft_type, departure_time, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'))
                 else:
-                    out.write(FMT_ROW.format('animation_data', this_flight, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'))
+                    out.write(FMT_ROW.format('animation_data', this_flight, 'UNK', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'))
                 out.write('\n')
 
 if __name__ == '__main__':

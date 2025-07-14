@@ -70,13 +70,15 @@ class FlightPlan:
     - Each flight plan has a unique flight_id (FLT0001, FLT0002, etc.)
     - The flight_id is used throughout the workflow for conflict tracking
     - Route information (origin-destination) is preserved for separation rules
+    - Aircraft type is extracted from SimBrief XML and included for display purposes
     """
     
-    def __init__(self, origin: str, destination: str, route: str = "", flight_id: str = ""):
+    def __init__(self, origin: str, destination: str, route: str = "", flight_id: str = "", aircraft_type: str = "UNK"):
         self.origin = origin
         self.destination = destination
         self.route = route
         self.flight_id = flight_id  # Unique flight identifier (FLT0001, FLT0002, etc.)
+        self.aircraft_type = aircraft_type  # Aircraft type (e.g., "A320", "B737", "DH8D")
         self.waypoints: List[Waypoint] = []
         self.departure: Optional[Waypoint] = None
         self.arrival: Optional[Waypoint] = None
@@ -106,6 +108,7 @@ class FlightPlan:
             'destination': self.destination,
             'route': self.route,
             'flight_id': self.flight_id,
+            'aircraft_type': self.aircraft_type,
             'departure': self.departure.to_dict() if self.departure else None,
             'waypoints': [wp.to_dict() for wp in self.waypoints],
             'arrival': self.arrival.to_dict() if self.arrival else None,
@@ -220,7 +223,21 @@ def extract_flight_plan_from_xml(xml_file: str, flight_id: str = "") -> Optional
         dest_code = dest_elem.findtext('icao_code', '') if dest_elem else 'UNKNOWN'
         route = route_elem.text if (route_elem is not None and route_elem.text is not None) else ""
         
-        flight_plan = FlightPlan(origin_code, dest_code, route, flight_id)
+        # Extract aircraft type from XML
+        aircraft_type = "UNK"  # Default fallback
+        aircraft_elem = root.find('aircraft')
+        if aircraft_elem is not None:
+            # Try to get ICAO aircraft code
+            icao_code = aircraft_elem.findtext('icaocode')
+            if icao_code and icao_code.strip():
+                aircraft_type = icao_code.strip()
+            else:
+                # Fallback to base_type if icaocode not available
+                base_type = aircraft_elem.findtext('base_type')
+                if base_type and base_type.strip():
+                    aircraft_type = base_type.strip()
+        
+        flight_plan = FlightPlan(origin_code, dest_code, route, flight_id, aircraft_type)
         
         # Parse departure airport
         if origin_elem:
@@ -335,6 +352,7 @@ def create_kml_from_flight_plan(flight_plan: FlightPlan, filename: str) -> str:
         <![CDATA[
         <h3>{flight_plan.flight_id} Flight Plan</h3>
         <p><strong>Flight ID:</strong> {flight_plan.flight_id}</p>
+        <p><strong>Aircraft Type:</strong> {flight_plan.aircraft_type}</p>
         <p><strong>Route:</strong> {flight_plan.origin} to {flight_plan.destination}</p>
         <p><strong>Route:</strong> {flight_plan.route}</p>
         <p><strong>Waypoints:</strong> {len(all_waypoints)}</p>
@@ -426,6 +444,7 @@ def save_flight_data(flight_plan: FlightPlan, base_filename: str):
     all_waypoints = flight_plan.get_all_waypoints()
     print(f"\nFlight Plan Summary:")
     print(f"   Flight ID: {flight_plan.flight_id}")
+    print(f"   Aircraft Type: {flight_plan.aircraft_type}")
     print(f"   Route: {flight_plan.origin} to {flight_plan.destination}")
     print(f"   Total waypoints: {len(all_waypoints)}")
     print(f"   Route: {flight_plan.route}")

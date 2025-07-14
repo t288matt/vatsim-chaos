@@ -100,13 +100,15 @@ class FlightPlan:
     - The flight_id is used for conflict tracking and separation enforcement
     - Route information (origin-destination) is preserved for separation rules
     - get_route_identifier() returns flight_id if available, otherwise origin-destination
+    - Aircraft type is included for display and information purposes
     """
     
-    def __init__(self, origin: str, destination: str, route: str = "", flight_id: str = ""):
+    def __init__(self, origin: str, destination: str, route: str = "", flight_id: str = "", aircraft_type: str = "UNK"):
         self.origin = origin
         self.destination = destination
         self.route = route
         self.flight_id = flight_id  # Unique flight identifier (FLT0001, FLT0002, etc.)
+        self.aircraft_type = aircraft_type  # Aircraft type (e.g., "A320", "B737", "DH8D")
         self.waypoints: List[Waypoint] = []
         self.departure: Optional[Waypoint] = None
         self.arrival: Optional[Waypoint] = None
@@ -984,10 +986,18 @@ def print_and_write_conflict_report(data: Dict[str, Any], output_file: str = CON
     output.append(f"Total First Conflicts: {len(filtered_conflicts)}")
     output.append("")
     
+    # Get aircraft types for display
+    flights_dict = data.get('flights', {})
+    
     # Print each conflict
     for i, conflict in enumerate(filtered_conflicts, 1):
         conflict_output = []
-        conflict_output.append(f"{i}. {conflict['flight1']} & {conflict['flight2']}")
+        
+        # Get aircraft types
+        flight1_type = flights_dict.get(conflict['flight1'], {}).get('aircraft_type', 'UNK')
+        flight2_type = flights_dict.get(conflict['flight2'], {}).get('aircraft_type', 'UNK')
+        
+        conflict_output.append(f"{i}. {conflict['flight1']} ({flight1_type}) & {conflict['flight2']} ({flight2_type})")
         
         # Format location
         location_str = format_location(conflict, conflicts)
@@ -1071,32 +1081,85 @@ def find_xml_files() -> List[str]:
 
 def extract_flight_plans(xml_files: List[str]) -> List[FlightPlan]:
     """
-    Extract flight plans from XML files.
+    Extract flight plans from individual JSON files in temp directory.
     
     Args:
-        xml_files: List of XML file paths
+        xml_files: List of XML file paths (used for reference only)
     
     Returns:
         List of extracted flight plans
     """
     flight_plans = []
-    flight_counter = 1
     
-    for xml_file in xml_files:
-        logging.info(f"Analyzing {xml_file}...")
-        print(f"\nAnalyzing {xml_file}...")
+    # Look for individual flight JSON files in temp directory
+    temp_dir = "temp"
+    if not os.path.exists(temp_dir):
+        logging.error(f"Temp directory {temp_dir} not found. Run extract_simbrief_xml_flightplan.py first.")
+        return flight_plans
+    
+    # Find all FLT*_data.json files
+    json_files = [f for f in os.listdir(temp_dir) if f.endswith('_data.json') and f.startswith('FLT')]
+    json_files.sort()  # Sort to ensure consistent order
+    
+    if not json_files:
+        logging.error(f"No flight data JSON files found in {temp_dir}. Run extract_simbrief_xml_flightplan.py first.")
+        return flight_plans
+    
+    for json_file in json_files:
+        json_path = os.path.join(temp_dir, json_file)
+        logging.info(f"Loading flight data from {json_file}...")
+        print(f"\nLoading {json_file}...")
         
-        # Generate unique flight ID
-        flight_id = f"FLT{flight_counter:04d}"
-        flight_counter += 1
-        
-        flight_plan = extract_flight_plan_from_xml(xml_file, flight_id)
-        if flight_plan:
+        try:
+            with open(json_path, 'r') as f:
+                flight_data = json.load(f)
+            
+            # Extract flight information
+            origin = flight_data.get('origin', 'UNKNOWN')
+            destination = flight_data.get('destination', 'UNKNOWN')
+            route = flight_data.get('route', '')
+            flight_id = flight_data.get('flight_id', '')
+            aircraft_type = flight_data.get('aircraft_type', 'UNK')
+            
+            # Create flight plan
+            flight_plan = FlightPlan(origin, destination, route, flight_id, aircraft_type)
+            
+            # Add departure waypoint
+            if 'departure' in flight_data and flight_data['departure']:
+                dep_data = flight_data['departure']
+                departure = Waypoint(
+                    dep_data['name'], dep_data['lat'], dep_data['lon'], 
+                    dep_data['altitude'], dep_data.get('time_seconds', 0),
+                    dep_data.get('stage', ''), dep_data.get('type', '')
+                )
+                flight_plan.set_departure(departure)
+            
+            # Add waypoints
+            for wp_data in flight_data.get('waypoints', []):
+                waypoint = Waypoint(
+                    wp_data['name'], wp_data['lat'], wp_data['lon'],
+                    wp_data['altitude'], wp_data.get('time_seconds', 0),
+                    wp_data.get('stage', ''), wp_data.get('type', '')
+                )
+                flight_plan.add_waypoint(waypoint)
+            
+            # Add arrival waypoint
+            if 'arrival' in flight_data and flight_data['arrival']:
+                arr_data = flight_data['arrival']
+                arrival = Waypoint(
+                    arr_data['name'], arr_data['lat'], arr_data['lon'],
+                    arr_data['altitude'], arr_data.get('time_seconds', 0),
+                    arr_data.get('stage', ''), arr_data.get('type', '')
+                )
+                flight_plan.set_arrival(arrival)
+            
             flight_plans.append(flight_plan)
-            print(f"   {flight_id}: {flight_plan.origin} to {flight_plan.destination}")
+            print(f"   {flight_id}: {origin} to {destination} ({aircraft_type})")
             print(f"   {len(flight_plan.get_all_waypoints())} waypoints")
-        else:
-            logging.warning(f"Failed to extract flight plan from {xml_file}")
+            
+        except Exception as e:
+            logging.error(f"Failed to load flight data from {json_file}: {e}")
+            print(f"   Error loading {json_file}: {e}")
     
     return flight_plans
 
@@ -1194,6 +1257,7 @@ def main() -> None:
     flights_dict = {}
     for fp in flight_plans:
         flights_dict[fp.get_route_identifier()] = {
+            'aircraft_type': fp.aircraft_type,
             'waypoints': [
                 {
                     'name': wp.name,

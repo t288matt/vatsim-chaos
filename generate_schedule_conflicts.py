@@ -469,10 +469,15 @@ class ConflictScheduler:
         # Flight schedule
         output.append("DEPARTURE SCHEDULE:")
         output.append("-" * 30)
+        
+        # Get aircraft types from original data
+        flights_dict = original_data.get('flights', {})
+        
         for flight, data in sorted(scheduled_flights.items(), key=lambda x: x[1]['departure_time']):
             departure_str = datetime_to_utc_hhmm(data['departure_time'])
             conflicts = len(data['conflicts'])
-            output.append(f"{departure_str} - {flight} ({conflicts} conflicts)")
+            aircraft_type = flights_dict.get(flight, {}).get('aircraft_type', 'UNK')
+            output.append(f"{departure_str} - {flight} ({aircraft_type}) ({conflicts} conflicts)")
         
         output.append("")
         
@@ -483,9 +488,15 @@ class ConflictScheduler:
         total_conflicts = 0
         for flight, data in scheduled_flights.items():
             if data['conflicts']:
-                output.append(f"\n{flight} conflicts:")
+                # Get aircraft type for this flight
+                flight_aircraft_type = flights_dict.get(flight, {}).get('aircraft_type', 'UNK')
+                output.append(f"\n{flight} ({flight_aircraft_type}) conflicts:")
                 for conflict in data['conflicts']:
                     total_conflicts += 1
+                    
+                    # Get aircraft type for the other flight
+                    other_flight = conflict['other_flight']
+                    other_aircraft_type = flights_dict.get(other_flight, {}).get('aircraft_type', 'UNK')
                     
                     # Calculate conflict time based on departure time and flight duration to conflict
                     departure_time = data['departure_time']
@@ -497,7 +508,7 @@ class ConflictScheduler:
                     rounded_time = departure_time + timedelta(minutes=rounded_minutes)
                     conflict_time_str = datetime_to_utc_hhmm(rounded_time)
                     
-                    output.append(f"  - With {conflict['other_flight']} at {conflict['location']}")
+                    output.append(f"  - With {other_flight} ({other_aircraft_type}) at {conflict['location']}")
                     output.append(f"    Time: {conflict_time_str} (departure +{rounded_minutes}min)")
                     output.append(f"    Distance: {conflict['distance']:.1f}nm, Alt diff: {conflict['altitude_diff']}ft")
                     output.append(f"    Phase: {conflict['phase']}")
@@ -507,7 +518,7 @@ class ConflictScheduler:
         return "\n".join(output)
     
     def update_interpolated_points_with_schedule(self, scheduled_flights: Dict) -> None:
-        """Update interpolated points file with departure schedule metadata."""
+        """Update interpolated points file with departure schedule metadata and aircraft type."""
         try:
             interp_path = 'temp/routes_with_added_interpolated_points.json'
             if not os.path.exists(interp_path):
@@ -516,7 +527,24 @@ class ConflictScheduler:
             with open(interp_path, 'r') as f:
                 routes = json.load(f)
 
+            # Load aircraft types from potential_conflict_data.json
+            with open('temp/potential_conflict_data.json', 'r') as f:
+                conflict_data = json.load(f)
+            # Build a mapping from flight_id to aircraft_type (handle nested structure)
+            acft_type_map = {}
+            if 'flights' in conflict_data:
+                # Structure: {"flights": {"FLT0001": {"aircraft_type": "E190", ...}}}
+                for flight_id, flight in conflict_data['flights'].items():
+                    if isinstance(flight, dict) and 'aircraft_type' in flight:
+                        acft_type_map[flight_id] = flight['aircraft_type']
+            else:
+                # Structure: {"FLT0001": {"aircraft_type": "E190", ...}}
+                for flight_id, flight in conflict_data.items():
+                    if isinstance(flight, dict) and 'aircraft_type' in flight:
+                        acft_type_map[flight_id] = flight['aircraft_type']
+            
             # Update all points with scheduled UTC times
+            new_routes = {}
             for flight_id, points in routes.items():
                 if flight_id == '_metadata':
                     continue
@@ -524,20 +552,22 @@ class ConflictScheduler:
                 if dep_dt is not None:
                     dep_min = dep_dt.hour * 60 + dep_dt.minute
                     for pt in points:
-                        # Get offset in minutes after departure
-                        orig_time = pt.get('time', 0)
-                        # Compute UTC minutes
-                        utc_minutes = dep_min + (orig_time if isinstance(orig_time, (int, float)) else 0)
-                        # Wrap around 24h
-                        utc_minutes = utc_minutes % (24 * 60)
-                        # Convert to HHMM string
-                        hours = int(utc_minutes // 60)
-                        mins = int(utc_minutes % 60)
-                        pt['time'] = f"{hours:02d}{mins:02d}"
+                        if isinstance(pt, dict):
+                            orig_time = pt.get('time', 0)
+                            utc_minutes = dep_min + (orig_time if isinstance(orig_time, (int, float)) else 0)
+                            utc_minutes = utc_minutes % (24 * 60)
+                            hours = int(utc_minutes // 60)
+                            mins = int(utc_minutes % 60)
+                            pt['time'] = f"{hours:02d}{mins:02d}"
+                # Compose new structure
+                new_routes[flight_id] = {
+                    'aircraft_type': acft_type_map.get(flight_id, 'UNK'),
+                    'route': points
+                }
 
             # Update conflict-specific points with exact scheduled conflict times
             for flight_id, flight_data in scheduled_flights.items():
-                if flight_id in routes:
+                if flight_id in new_routes:
                     dep_dt = flight_data['departure_time']
                     dep_min = dep_dt.hour * 60 + dep_dt.minute
                     for conflict in flight_data.get('conflicts', []):
@@ -548,33 +578,31 @@ class ConflictScheduler:
                         hours = int(utc_minutes // 60)
                         mins = int(utc_minutes % 60)
                         conflict_hhmm = f"{hours:02d}{mins:02d}"
-                        # Find the conflict point for this flight
-                        for pt in routes[flight_id]:
-                            if (pt.get('name', '').startswith('CONFLICT_') and other_flight in pt.get('name', '')):
+                        for pt in new_routes[flight_id]['route']:
+                            if isinstance(pt, dict) and (pt.get('name', '').startswith('CONFLICT_') and other_flight in pt.get('name', '')):
                                 pt['time'] = conflict_hhmm
                                 break
 
             # Sort all points by UTC time
-            for flight_id in routes:
-                if flight_id != '_metadata':
-                    routes[flight_id].sort(key=lambda x: int(x.get('time', '0000')))
+            for flight_id in new_routes:
+                if flight_id != '_metadata' and isinstance(new_routes[flight_id]['route'], list):
+                    new_routes[flight_id]['route'].sort(key=lambda x: int(x.get('time', '0000')))
 
             # Add departure schedule metadata
-            routes['_metadata'] = {
+            new_routes['_metadata'] = {
                 'departure_schedule': {},
                 'event_start': datetime_to_utc_hhmm(self.start_time),
                 'event_end': datetime_to_utc_hhmm(self.end_time),
                 'total_flights': len(scheduled_flights),
                 'total_conflicts': sum(len(data.get('conflicts', [])) for data in scheduled_flights.values())
             }
-            # Add departure times for each flight
             for flight_id, flight_data in scheduled_flights.items():
-                routes['_metadata']['departure_schedule'][flight_id] = {
+                new_routes['_metadata']['departure_schedule'][flight_id] = {
                     'departure_time': datetime_to_utc_hhmm(flight_data['departure_time']),
                     'conflicts': len(flight_data.get('conflicts', []))
                 }
             with open(interp_path, 'w') as f:
-                json.dump(routes, f, indent=2)
+                json.dump(new_routes, f, indent=2)
         except Exception as e:
             import traceback
             traceback.print_exc()
@@ -590,6 +618,9 @@ class ConflictScheduler:
         # Load conflict data
         # logging.info("Loading conflict analysis data...")
         data = self.load_conflict_data()
+        
+        # Get aircraft types from original data
+        flights_dict = data.get('flights', {})
         
         # Schedule aircraft for maximum conflicts
         # logging.info("Scheduling aircraft to maximize unique conflict pairs...")
@@ -614,7 +645,8 @@ class ConflictScheduler:
             for flight, data in sorted(scheduled_flights.items(), key=lambda x: x[1]['departure_time']):
                 departure_str = datetime_to_utc_hhmm(data['departure_time'])
                 conflicts = len(data['conflicts'])
-                print(f"   {departure_str} - {flight} ({conflicts} conflicts)")
+                aircraft_type = flights_dict.get(flight, {}).get('aircraft_type', 'UNK')
+                print(f"   {departure_str} - {flight} ({aircraft_type}) ({conflicts} conflicts)")
         except Exception as e:
             print(f"ERROR: Exception during output generation: {e}")
             import traceback

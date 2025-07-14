@@ -23,7 +23,7 @@
       border-radius: 6px; 
       z-index: 10; 
       font-family: Arial, sans-serif; 
-      max-width: 300px; 
+      max-width: 450px; 
       max-height: 200px; 
       overflow-y: auto;
       border-left: 3px solid #00ff88;
@@ -235,7 +235,8 @@
             text: new Cesium.CallbackProperty(function(time, result) {
               const alt = altitudeProperty.getValue(time);
               const route = `${flight.departure}-${flight.arrival}`;
-              return `${flight.flight_id}\n${route}\nAlt: ${alt !== undefined ? Math.round(alt) : 'N/A'} ft`;
+              const acftType = flight.aircraft_type || 'UNK';
+              return `${flight.flight_id} (${acftType})\n${route}\nAlt: ${alt !== undefined ? Math.round(alt) : 'N/A'} ft`;
             }, false),
             font: fontSize + 'px sans-serif',
             fillColor: color,
@@ -305,7 +306,8 @@
           const flight = flights.find(f => f.flight_id === flightId);
           if (flight) {
             const route = `${flight.departure}-${flight.arrival}`;
-            return `${flightId} (${route})`;
+            const acftType = flight.aircraft_type || 'UNK';
+            return `${flightId} (${acftType}) (${route})`;
           }
           return flightId;
         };
@@ -351,7 +353,8 @@
       const flight = flights.find(f => f.flight_id === flightId);
       if (flight) {
         const route = `${flight.departure}-${flight.arrival}`;
-        logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId} (${route})</span> departed (scheduled: ${scheduledTime})`;
+        const acftType = flight.aircraft_type || 'UNK';
+        logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId} (${acftType}) (${route})</span> departed (scheduled: ${scheduledTime})`;
       } else {
         logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId}</span> departed (scheduled: ${scheduledTime})`;
       }

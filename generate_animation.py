@@ -343,9 +343,10 @@ class AnimationDataGenerator:
                 arrival = parts[1] if len(parts) > 1 else ''
             
             # Use interpolated points if available
-            if interpolated_data and flight_id in interpolated_data:
+            if interpolated_data and flight_id in interpolated_data and isinstance(interpolated_data[flight_id], dict) and 'route' in interpolated_data[flight_id]:
+                waypoints = interpolated_data[flight_id]['route']
+            elif interpolated_data and flight_id in interpolated_data and isinstance(interpolated_data[flight_id], list):
                 waypoints = interpolated_data[flight_id]
-                logger.info(f"Using interpolated data for {flight_id}: {len(waypoints)} waypoints")
             else:
                 waypoints = self.extract_waypoints_from_xml(flight_id)
                 logger.info(f"Using XML data for {flight_id}: {len(waypoints)} waypoints")
@@ -363,6 +364,15 @@ class AnimationDataGenerator:
                     'UTC time': utc_time,
                     'stage': wp.get('stage', '')
                 })
+            # Get aircraft type from flight data
+            aircraft_type = "UNK"
+            if interpolated_data and flight_id in interpolated_data and isinstance(interpolated_data[flight_id], dict):
+                aircraft_type = interpolated_data[flight_id].get('aircraft_type', 'UNK')
+            elif flight_id in self.flights:
+                aircraft_type = self.flights[flight_id].get('aircraft_type', 'UNK')
+            else:
+                aircraft_type = 'UNK'
+            
             # Use scheduled departure time if available
             departure_time = self.schedule[flight_id]
             track = {
@@ -370,6 +380,7 @@ class AnimationDataGenerator:
                 'departure': departure,
                 'arrival': arrival,
                 'departure_time': departure_time,
+                'aircraft_type': aircraft_type,
                 'waypoints': track_waypoints,
                 'conflicts': []
             }
@@ -453,8 +464,20 @@ class AnimationDataGenerator:
             if flight1 not in interpolated_routes or flight2 not in interpolated_routes:
                 continue
                 
-            route1 = interpolated_routes[flight1]
-            route2 = interpolated_routes[flight2]
+            # --- PATCH: Robust handling for new structure ---
+            # In generate_flight_tracks (waypoints assignment)
+            if flight1 in interpolated_routes and isinstance(interpolated_routes[flight1], dict) and 'route' in interpolated_routes[flight1]:
+                route1 = interpolated_routes[flight1]['route']
+            elif flight1 in interpolated_routes and isinstance(interpolated_routes[flight1], list):
+                route1 = interpolated_routes[flight1]
+            else:
+                continue
+            if flight2 in interpolated_routes and isinstance(interpolated_routes[flight2], dict) and 'route' in interpolated_routes[flight2]:
+                route2 = interpolated_routes[flight2]['route']
+            elif flight2 in interpolated_routes and isinstance(interpolated_routes[flight2], list):
+                route2 = interpolated_routes[flight2]
+            else:
+                continue
             
             # Find when both flights are at the same location at the same time
             for wp1 in route1:
