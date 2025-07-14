@@ -5,6 +5,18 @@ Find Potential Conflicts for ATC Event Scenarios
 This script analyzes SimBrief XML flight plans to identify potential conflicts
 and generates comprehensive reports for event scenario creation.
 
+FLIGHT ID SYSTEM:
+- Uses unique flight IDs (FLT0001, FLT0002, etc.) for conflict tracking
+- Flight IDs are maintained throughout the entire workflow
+- Route information (origin-destination) is preserved for separation rules
+- Enables tracking of "first conflicts" between unique aircraft pairs
+- Supports separation enforcement for flights with same origin-destination
+
+SEPARATION RULES:
+- MIN_DEPARTURE_SEPARATION_MINUTES: Minimum time between departures from same airport
+- MIN_SAME_ROUTE_SEPARATION_MINUTES: Minimum time between flights with same origin-destination
+- These rules prevent aircraft with identical routes from departing too close together
+
 Features:
 - 3D spatial conflict detection (lateral and vertical separation)
 - Both waypoint and enroute conflict analysis
@@ -80,13 +92,21 @@ class Waypoint:
         return self.time_total / 60.0
 
 class FlightPlan:
-    """Represents a complete flight plan with route and waypoints."""
+    """
+    Represents a complete flight plan with route and waypoints.
+    
+    FLIGHT ID SYSTEM:
+    - Each flight plan has a unique flight_id (FLT0001, FLT0002, etc.)
+    - The flight_id is used for conflict tracking and separation enforcement
+    - Route information (origin-destination) is preserved for separation rules
+    - get_route_identifier() returns flight_id if available, otherwise origin-destination
+    """
     
     def __init__(self, origin: str, destination: str, route: str = "", flight_id: str = ""):
         self.origin = origin
         self.destination = destination
         self.route = route
-        self.flight_id = flight_id
+        self.flight_id = flight_id  # Unique flight identifier (FLT0001, FLT0002, etc.)
         self.waypoints: List[Waypoint] = []
         self.departure: Optional[Waypoint] = None
         self.arrival: Optional[Waypoint] = None
@@ -114,16 +134,30 @@ class FlightPlan:
         return all_wps
     
     def get_route_identifier(self) -> str:
-        """Get the route identifier (flight ID if available, otherwise origin-destination)."""
+        """
+        Get the route identifier for conflict tracking.
+        
+        FLIGHT ID SYSTEM:
+        - Returns flight_id if available (FLT0001, FLT0002, etc.)
+        - Falls back to origin-destination format for backward compatibility
+        - Used for conflict tracking and separation enforcement
+        """
         if hasattr(self, 'flight_id') and self.flight_id:
             return self.flight_id
         return f"{self.origin}-{self.destination}"
 
 @dataclass
 class Conflict:
-    """Represents a detected conflict between two aircraft."""
-    flight1: str
-    flight2: str
+    """
+    Represents a detected conflict between two aircraft.
+    
+    FLIGHT ID SYSTEM:
+    - flight1 and flight2 contain flight IDs (FLT0001, FLT0002, etc.)
+    - Enables tracking of "first conflicts" between unique aircraft pairs
+    - Route information is preserved for separation rule enforcement
+    """
+    flight1: str  # Flight ID of first aircraft (FLT0001, FLT0002, etc.)
+    flight2: str  # Flight ID of second aircraft (FLT0001, FLT0002, etc.)
     lat1: float
     lon1: float
     lat2: float

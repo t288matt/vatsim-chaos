@@ -5,19 +5,25 @@ Animation Data Generator for ATC Conflict Analysis System
 Reads existing ATC conflict analysis files and generates animation-ready data
 for web visualization.
 
+FLIGHT ID SYSTEM:
+- Uses unique flight IDs (FLT0001, FLT0002, etc.) from conflict analysis data
+- Flight IDs are maintained throughout the animation generation process
+- Route information (origin-destination) is preserved for visualization
+- Animation data uses flight IDs for consistent identification across all components
+
 Recent Changes:
 - Removed x/y projected coordinates (Cesium only uses lat/lon/altitude)
 - Reads departure times from interpolated points metadata (not pilot_briefing.txt)
 - Simplified data structure for cleaner output
 - Eliminated circular dependency with scheduling
+- Updated to handle new flight ID system instead of origin-destination pairs
 
 Input files:
-- temp/potential_conflict_data.json (flight plans and conflicts)
+- temp/potential_conflict_data.json (flight plans and conflicts with flight IDs)
 - temp/routes_with_added_interpolated_points.json (with departure metadata)
 
 Output files:
 - animation_data.json (complete animation data, simplified structure)
-- flight_tracks.json (individual flight paths)
 - conflict_points.json (conflict locations and timing)
 """
 
@@ -26,10 +32,11 @@ import csv
 import re
 import os
 import logging
+import math
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from typing import List, Dict, Tuple, Any
-from env import MIN_ALTITUDE_THRESHOLD
+from env import MIN_ALTITUDE_THRESHOLD, LATERAL_SEPARATION_THRESHOLD, VERTICAL_SEPARATION_THRESHOLD
 from collections import defaultdict
 
 # =============================================================================
@@ -45,14 +52,6 @@ from collections import defaultdict
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def minutes_to_utc_hhmm(minutes: float) -> str:
-    # Convert minutes since event start (14:00) to UTC time
-    event_start_minutes = 14 * 60  # 14:00 = 840 minutes
-    total_minutes = int(round(minutes)) + event_start_minutes
-    hours = (total_minutes // 60) % 24
-    mins = total_minutes % 60
-    return f"{hours:02d}{mins:02d}"
-
 class AnimationDataGenerator:
     """Generates animation data from existing analysis for 3D visualization"""
     
@@ -60,6 +59,7 @@ class AnimationDataGenerator:
         self.flights = {}
         self.conflicts = []
         self.schedule = {}
+        self.event_start_time = None
         self.animation_data = {
             'metadata': {
                 'total_flights': 0,
@@ -119,7 +119,12 @@ class AnimationDataGenerator:
             for flight_id, schedule_data in departure_schedule.items():
                 self.schedule[flight_id] = schedule_data['departure_time']
             
-            logger.info(f"Loaded schedule for {len(self.schedule)} flights from interpolated points metadata")
+            if not self.schedule:
+                logger.error("No departures found in schedule!")
+                return False
+            # Find earliest departure time
+            self.event_start_time = min(self.schedule.values())
+            logger.info(f"Loaded schedule for {len(self.schedule)} flights from interpolated points metadata. Event start time: {self.event_start_time}")
             return True
         except Exception as e:
             logger.warning(f"Failed to load schedule from interpolated points: {e}")
@@ -175,10 +180,24 @@ class AnimationDataGenerator:
         xml_files = [f for f in os.listdir('.') if f.endswith('.xml')]
         target_file = None
         
-        for xml_file in xml_files:
-            if flight_id.replace('-', '') in xml_file:
-                target_file = xml_file
-                break
+        # Handle new flight ID format (FLT0001, FLT0002, etc.)
+        if flight_id.startswith('FLT'):
+            # For new flight IDs, we need to find the corresponding XML file
+            # The flight data should contain the route information
+            if flight_id in self.flights:
+                flight_data = self.flights[flight_id]
+                # Try to find XML file based on route information
+                for xml_file in xml_files:
+                    # Check if XML file contains the route information
+                    if self._xml_matches_flight_data(xml_file, flight_data):
+                        target_file = xml_file
+                        break
+        else:
+            # Handle old format (YBBN-YCOM)
+            for xml_file in xml_files:
+                if flight_id.replace('-', '') in xml_file:
+                    target_file = xml_file
+                    break
         
         if not target_file:
             logger.warning(f"No XML file found for flight {flight_id}")
@@ -261,6 +280,36 @@ class AnimationDataGenerator:
             logger.error(f"Error extracting waypoints from {target_file}: {e}")
             return []
     
+    def _xml_matches_flight_data(self, xml_file: str, flight_data: Dict) -> bool:
+        """Check if XML file matches the flight data"""
+        try:
+            tree = ET.parse(xml_file)
+            root = tree.getroot()
+            
+            # Extract origin and destination from XML
+            origin_elem = root.find('origin')
+            dest_elem = root.find('destination')
+            
+            if origin_elem is None or dest_elem is None:
+                return False
+            
+            xml_origin = origin_elem.findtext('icao_code', '')
+            xml_dest = dest_elem.findtext('icao_code', '')
+            
+            # Get route info from flight data
+            if 'waypoints' in flight_data and flight_data['waypoints']:
+                flight_origin = flight_data['waypoints'][0].get('name', '')
+                flight_dest = flight_data['waypoints'][-1].get('name', '') if len(flight_data['waypoints']) > 1 else ''
+                
+                # Check if origins and destinations match
+                return (xml_origin == flight_origin and xml_dest == flight_dest)
+            
+            return False
+            
+        except Exception as e:
+            logger.warning(f"Error checking XML match for {xml_file}: {e}")
+            return False
+    
     def generate_flight_tracks(self) -> List[Dict]:
         """Generate animation tracks for each flight from high-res interpolated points if available"""
         tracks = []
@@ -275,9 +324,24 @@ class AnimationDataGenerator:
             logger.warning(f"Interpolated data file not found: {interpolated_path}")
         
         for flight_id in self.flight_names:
-            parts = flight_id.split('-')
-            departure = parts[0] if len(parts) > 0 else ''
-            arrival = parts[1] if len(parts) > 1 else ''
+            if flight_id not in self.schedule:
+                raise ValueError(f"Missing scheduled departure for flight {flight_id}!")
+            # Handle new flight ID format (FLT0001, FLT0002, etc.)
+            if flight_id.startswith('FLT'):
+                # For new flight IDs, get route info from flight data
+                departure = ''
+                arrival = ''
+                if flight_id in self.flights:
+                    flight_data = self.flights[flight_id]
+                    if 'waypoints' in flight_data and flight_data['waypoints']:
+                        departure = flight_data['waypoints'][0].get('name', '')
+                        arrival = flight_data['waypoints'][-1].get('name', '') if len(flight_data['waypoints']) > 1 else ''
+            else:
+                # Handle old format (YBBN-YCOM)
+                parts = flight_id.split('-')
+                departure = parts[0] if len(parts) > 0 else ''
+                arrival = parts[1] if len(parts) > 1 else ''
+            
             # Use interpolated points if available
             if interpolated_data and flight_id in interpolated_data:
                 waypoints = interpolated_data[flight_id]
@@ -300,7 +364,7 @@ class AnimationDataGenerator:
                     'stage': wp.get('stage', '')
                 })
             # Use scheduled departure time if available
-            departure_time = self.schedule.get(flight_id, '14:00')
+            departure_time = self.schedule[flight_id]
             track = {
                 'flight_id': flight_id,
                 'departure': departure,
@@ -329,49 +393,105 @@ class AnimationDataGenerator:
         mins = total % 60
         return f"{hours:02d}{mins:02d}"
 
-    def generate_conflict_points(self) -> List[Dict]:
-        """Generate conflict points for animation (fixed for new structure)"""
-        conflict_points = []
-        conflict_distances = self.parse_conflict_distances()
-        for i, conflict in enumerate(self.conflicts):
-            lat = conflict.get('lat1', conflict.get('lat2', 0))
-            lon = conflict.get('lon1', conflict.get('lon2', 0))
-            flight1 = conflict.get('flight1', '')
-            flight2 = conflict.get('flight2', '')
-            location = conflict.get('waypoint1', '')
-            dist_val = conflict_distances.get((flight1, flight2, location))
-            if not dist_val:
-                dist_val = conflict_distances.get((flight2, flight1, location))
-            # --- FIX: Calculate actual UTC time for conflict ---
-            dep1 = self.schedule.get(flight1, '1400')
-            dep2 = self.schedule.get(flight2, '1400')
-            t1 = self.add_minutes_to_hhmm(dep1, conflict.get('time1', 0))
-            t2 = self.add_minutes_to_hhmm(dep2, conflict.get('time2', 0))
-            conflict_point = {
-                'id': f"conflict_{i}",
-                'location': location,
-                'lat': lat,
-                'lon': lon,
-                'altitude': conflict.get('alt1', 0),
-                'flight1': flight1,
-                'flight2': flight2,
-                'distance': dist_val if dist_val else conflict.get('distance', 0),
-                'altitude_diff': conflict.get('altitude_diff', 0),
-                'time1': t1,
-                'time2': t2,
-                'conflict_type': conflict.get('conflict_type', 'between_waypoints')
-            }
-            conflict_points.append(conflict_point)
-        return conflict_points
-    
+    def minutes_to_utc_hhmm(self, minutes: float) -> str:
+        if not self.event_start_time:
+            raise ValueError("Event start time not set!")
+        h = int(self.event_start_time[:2])
+        m = int(self.event_start_time[2:])
+        event_start_minutes = h * 60 + m
+        total_minutes = int(round(minutes)) + event_start_minutes
+        hours = (total_minutes // 60) % 24
+        mins = total_minutes % 60
+        return f"{hours:02d}{mins:02d}"
+
     def float_minutes_to_hhmm(self, minutes: float) -> str:
         """Convert float minutes to 4-digit UTC HHMM string (rounded to nearest minute)"""
-        return minutes_to_utc_hhmm(minutes)
+        return self.minutes_to_utc_hhmm(minutes)
 
+    def calculate_distance(self, lat1: float, lon1: float, alt1: float, 
+                         lat2: float, lon2: float, alt2: float) -> float:
+        """Calculate 3D distance between two points in nautical miles"""
+        # Convert to radians
+        lat1_rad = math.radians(lat1)
+        lon1_rad = math.radians(lon1)
+        lat2_rad = math.radians(lat2)
+        lon2_rad = math.radians(lon2)
+        
+        # Calculate lateral distance using haversine formula
+        dlat = lat2_rad - lat1_rad
+        dlon = lon2_rad - lon1_rad
+        a = math.sin(dlat/2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon/2)**2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+        lateral_distance = 3440.065 * c  # Convert to nautical miles
+        
+        # Calculate vertical distance
+        vertical_distance = abs(alt2 - alt1) / 6076.12  # Convert feet to nautical miles
+        
+        # Calculate 3D distance (Pythagorean theorem)
+        distance_3d = math.sqrt(lateral_distance**2 + vertical_distance**2)
+        
+        return distance_3d
+
+    def generate_conflict_points(self) -> List[Dict]:
+        """Generate conflict points for animation using interpolated route data"""
+        conflict_points = []
+        conflict_distances = self.parse_conflict_distances()
+        
+        # Load interpolated route data
+        try:
+            with open('temp/routes_with_added_interpolated_points.json', 'r') as f:
+                interpolated_routes = json.load(f)
+        except FileNotFoundError:
+            logger.error("Interpolated routes file not found")
+            return conflict_points
+        
+        # Find actual conflicts by comparing interpolated positions at same times
+        for i, conflict in enumerate(self.conflicts):
+            flight1 = conflict.get('flight1', '')
+            flight2 = conflict.get('flight2', '')
+            
+            if flight1 not in interpolated_routes or flight2 not in interpolated_routes:
+                continue
+                
+            route1 = interpolated_routes[flight1]
+            route2 = interpolated_routes[flight2]
+            
+            # Find when both flights are at the same location at the same time
+            for wp1 in route1:
+                for wp2 in route2:
+                    if wp1['time'] == wp2['time']:  # Same UTC time
+                        # Calculate distance between positions
+                        distance = self.calculate_distance(
+                            wp1['lat'], wp1['lon'], wp1['altitude'],
+                            wp2['lat'], wp2['lon'], wp2['altitude']
+                        )
+                        
+                        # Check if this is a conflict (within separation thresholds)
+                        if distance < LATERAL_SEPARATION_THRESHOLD and abs(wp1['altitude'] - wp2['altitude']) < VERTICAL_SEPARATION_THRESHOLD:
+                            conflict_point = {
+                                'id': f"conflict_{i}",
+                                'location': f"{flight1}-{flight2}",
+                                'lat': (wp1['lat'] + wp2['lat']) / 2,
+                                'lon': (wp1['lon'] + wp2['lon']) / 2,
+                                'altitude': (wp1['altitude'] + wp2['altitude']) / 2,
+                                'flight1': flight1,
+                                'flight2': flight2,
+                                'distance': distance,
+                                'altitude_diff': abs(wp1['altitude'] - wp2['altitude']),
+                                'conflict_time': wp1['time'],
+                                'conflict_type': 'interpolated_conflict'
+                            }
+                            conflict_points.append(conflict_point)
+                            break  # Found conflict for this time, move to next
+                else:
+                    continue
+                break  # Found conflict, move to next conflict
+            
+        return conflict_points
+    
     def generate_timeline(self) -> List[Dict]:
         """Generate complete animation timeline"""
         timeline = []
-        # Start with departures
         for flight_id, departure_time in self.schedule.items():
             timeline.append({
                 'time': departure_time,
@@ -454,18 +574,15 @@ class AnimationDataGenerator:
             with open('animation/animation_data.json', 'w') as f:
                 json.dump(self.animation_data, f, indent=2)
             
-            # Generate individual files for web components
-            with open('animation/flight_tracks.json', 'w') as f:
-                json.dump(tracks, f, indent=2)
+
             
-            # Removed: conflict_points.json generation, as it is not used by the frontend
-            # with open('animation/conflict_points.json', 'w') as f:
-            #     json.dump(filtered_conflicts, f, indent=2)
+            # Generate conflict points file
+            with open('animation/conflict_points.json', 'w') as f:
+                json.dump(filtered_conflicts, f, indent=2)
             
             logger.info("Animation data generated successfully!")
             logger.info(f"Generated files:")
             logger.info(f"   animation_data.json - Complete animation data")
-            logger.info(f"   flight_tracks.json - Individual flight paths")
             logger.info(f"   conflict_points.json - Conflict locations")
             
             return True

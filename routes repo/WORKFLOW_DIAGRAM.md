@@ -167,7 +167,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    OUTPUTS                                                                                        │  │
 │  │  • animation/animation_data.json (simplified, no x/y fields)                                                                    │  │
-│  │  • animation/flight_tracks.json                                                                                                 │  │
+
 │  │  • animation/conflict_points.json                                                                                               │  │
 │  │  • Ready for 3D web visualization                                                                                              │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
@@ -222,7 +222,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    FRONTEND DATA                                                                                  │  │
 │  │  • animation/animation_data.json - Complete animation data (simplified)                                                           │  │
-│  │  • animation/flight_tracks.json - Individual flight paths                                                                        │  │
+
 │  │  • animation/conflict_points.json - Conflict locations                                                                           │  │
 │  │  • animation/cesium_flight_anim.html - 3D web visualization                                                                      │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │

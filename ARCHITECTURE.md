@@ -7,6 +7,14 @@ The ATC Conflict Analysis System is a Python-based application designed to analy
 **Key Concept: First Conflicts**
 The system focuses on identifying "first conflicts" - the initial point where two aircraft first meet conflict criteria during their flights. This is critical for event planning as it represents the moment when ATC first needs to intervene between aircraft pairs, rather than tracking every subsequent conflict between the same aircraft.
 
+**Flight ID System**
+The system now uses unique flight IDs (FLT0001, FLT0002, etc.) instead of origin-destination pairs for better conflict tracking and separation enforcement. Each flight gets a sequential flight ID during XML processing, which is maintained throughout the entire workflow.
+
+**Separation Rules**
+The system enforces two key separation rules:
+1. **Departure Separation**: Minimum 2 minutes between departures from the same airport
+2. **Same Route Separation**: Minimum 5 minutes between flights with identical origin-destination
+
 ## Architecture Principles
 
 - **Modular Design**: Clear separation between data extraction, analysis, reporting, and visualization
@@ -17,6 +25,7 @@ The system focuses on identifying "first conflicts" - the initial point where tw
 - **First Conflict Priority**: Tracks only the initial conflict between aircraft pairs for ATC intervention planning
 - **Linear Data Flow**: Eliminated circular dependencies through metadata-based approach
 - **Accurate Scheduling**: Respects conflict analysis departure times instead of "most conflicts" rule
+- **Flight ID Tracking**: Uses unique flight IDs for better conflict tracking and separation enforcement
 
 ## System Components
 
@@ -98,7 +107,7 @@ The original algorithm incorrectly prioritized flights with "most conflicts" and
 **Responsibilities**:
 - Generate all analysis and schedule data into animation-ready JSON for web visualization
 - **Read departure times from interpolated points metadata (not pilot_briefing.txt)**
-- Output: `animation_data.json`, `flight_tracks.json`, `conflict_points.json`
+- Output: `animation_data.json`, `conflict_points.json`
 
 **Key Changes**:
 - **Removed x/y fields**: No longer generates projected coordinates
@@ -117,154 +126,3 @@ The original algorithm incorrectly prioritized flights with "most conflicts" and
 
 ### 6. Data Audit Layer
 **File**: `audit_conflict.py`
-
-**Responsibilities**:
-- Perform raw data integrity audit across all processing stages
-- Compare conflict data between three sources:
-  - `potential_conflict_data.json` (conflict detection output)
-  - `routes_with_added_interpolated_points.json` (backend processed data)
-  - `animation_data.json` (frontend visualization data)
-- Generate readable Markdown tables showing exact data values
-- **IMPORTANT**: Shows RAW DATA ONLY with NO CONVERSIONS for true audit integrity
-- **Rounds time values to zero decimal places for cleaner output**
-- **Enhanced with departure time column** to track scheduling accuracy
-
-**Outputs**:
-- `audit_conflict_output.txt` - Markdown-formatted audit report
-- Displays all values exactly as stored in source files
-- Groups conflicts by flight for easy comparison
-- **New departure time column** for scheduling verification
-
-## Data Flow
-
-**Updated Linear Flow (No Circular Dependencies):**
-
-1. **SimBrief XML** → Extraction → `potential_conflict_data.json`
-2. **potential_conflict_data.json** → Scheduling → `temp/routes_with_added_interpolated_points.json` (with metadata)
-3. **Interpolated points with metadata** → Animation Generation → `animation_data.json`
-4. **All Data Sources** → Audit → `audit_conflict_output.txt` (raw data verification)
-
-**Key Improvements:**
-- **Fixed scheduling algorithm** - Now respects conflict analysis departure times
-- **Eliminated circular dependency** between scheduling and animation
-- **Metadata-based approach** for departure schedule sharing
-- **Linear data flow** from analysis to visualization
-- **Enhanced audit system** with departure time tracking
-
-## Data Models
-
-### FlightPlan
-```python
-class FlightPlan:
-    origin: str           # ICAO airport code
-    destination: str      # ICAO airport code
-    route: str           # Route string
-    waypoints: List[Waypoint]
-    departure: Waypoint
-    arrival: Waypoint
-```
-
-### Waypoint
-```python
-class Waypoint:
-    name: str            # Waypoint identifier
-    lat: float          # Latitude
-    lon: float          # Longitude
-    altitude: int       # Altitude in feet
-    time_total: int     # Elapsed time in seconds
-    stage: str          # CLB/CRZ/DES
-    waypoint_type: str  # vor/ndb/wpt/airport
-```
-
-### Conflict
-```python
-{
-    'flight1': str,           # Route identifier
-    'flight2': str,           # Route identifier
-    'lat1/lon1': float,       # Conflict coordinates
-    'lat2/lon2': float,       # Conflict coordinates
-    'alt1/alt2': int,         # Aircraft altitudes
-    'distance': float,         # Lateral separation (NM)
-    'altitude_diff': int,      # Vertical separation (ft)
-    'time1/time2': float,     # Arrival times (minutes)
-    'stage1/stage2': str,     # Flight phases
-    'conflict_type': str,      # 'at waypoint' or 'between waypoints'
-    'is_waypoint': bool,      # True for waypoint conflicts
-    'time': float             # Earliest conflict time (for first conflict detection)
-}
-```
-
-### Animation Data (animation_data.json) - Updated Structure
-```json
-{
-  "metadata": {
-    "total_flights": 3,
-    "total_conflicts": 2,
-    "event_duration": 5,
-    "export_time": "2025-07-13T20:40:08.358541"
-  },
-  "flights": [
-    {
-      "flight_id": "YBDG-YSBK",
-      "departure": "YBDG",
-      "arrival": "YSBK",
-      "departure_time": "1400",
-      "waypoints": [
-        {
-          "index": 0,
-          "name": "YBDG",
-          "lat": -37.123456,
-          "lon": 147.123456,
-          "altitude": 23,
-          "UTC time": "1400",
-          "stage": ""
-        }
-      ]
-    }
-  ],
-  "conflicts": [...],
-  "timeline": [...]
-}
-```
-
-**Key Changes:**
-- **Removed x/y fields**: No longer includes projected coordinates
-- **Simplified structure**: Only essential geographic and timing data
-- **UTC time format**: Consistent HHMM string format for animation
-
-### Interpolated Points with Metadata
-```json
-{
-  "YBDG-YSBK": [...],
-  "YSSY-YSWG": [...],
-  "_metadata": {
-    "departure_schedule": {
-      "YBDG-YSBK": {
-        "departure_time": "1400",
-        "conflicts": 2
-      }
-    },
-    "event_start": "1400",
-    "event_end": "1800",
-    "total_flights": 3,
-    "total_conflicts": 4
-  }
-}
-```
-
-## Key Technical Decisions
-
-### 1. XML Parsing Strategy
-- **Choice**: `xml.etree.ElementTree` (standard library)
-- **Rationale**: No external dependencies, sufficient for SimBrief XML structure
-- **Error Handling**: Graceful degradation with detailed error messages
-
-### 2. Spatial Analysis
-- **Distance Calculation**: Haversine formula for accurate nautical mile calculations
-- **Interpolation**: Configurable spacing (default 2nm) for enroute conflict detection
-- **Coordinate System**: WGS84 lat/lon with nautical mile distances
-
-### 3. Scheduling Algorithm
-- **Previous Approach**: Prioritized flights with "most conflicts" and forced them to depart at event start time
-- **Current Approach**: Respects conflict analysis departure times and schedules flights in chronological order
-- **Rationale**: Ensures accurate departure timing based on conflict analysis results rather than arbitrary "most conflicts" rule 

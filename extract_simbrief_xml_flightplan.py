@@ -2,13 +2,22 @@
 """
 SimBrief XML Flight Plan Extractor
 
-This script parses SimBrief XML flight plan files and extracts all waypoints, coordinates, altitudes, and timing information for each flight. It supports both the main navlog and alternate navlog sections.
+This script parses SimBrief XML flight plan files and extracts all waypoints, coordinates, 
+altitudes, and timing information for each flight. It supports both the main navlog and 
+alternate navlog sections.
+
+FLIGHT ID SYSTEM:
+- Each flight is assigned a unique flight ID (FLT0001, FLT0002, etc.) during processing
+- Flight IDs are sequential and maintained throughout the entire workflow
+- Route information (origin-destination) is preserved alongside flight IDs
+- This enables better conflict tracking and separation enforcement
 
 Outputs (for each input XML file):
 - <ROUTE>_<HASH>.kml:    KML file for Google Earth visualization of the flight plan
 - <ROUTE>_<HASH>_data.json:    JSON file with all waypoints and metadata for further analysis
 
-These outputs are used as the foundation for conflict analysis, scheduling, and 3D animation in the ATC event scenario workflow.
+These outputs are used as the foundation for conflict analysis, scheduling, and 3D animation 
+in the ATC event scenario workflow.
 """
 
 import xml.etree.ElementTree as ET
@@ -54,11 +63,20 @@ class Waypoint:
         return f"{self.name}: {self.lat:.6f}, {self.lon:.6f}, {self.altitude}ft, {self.get_time_formatted()}"
 
 class FlightPlan:
+    """
+    Represents a complete flight plan with route and waypoints.
+    
+    FLIGHT ID SYSTEM:
+    - Each flight plan has a unique flight_id (FLT0001, FLT0002, etc.)
+    - The flight_id is used throughout the workflow for conflict tracking
+    - Route information (origin-destination) is preserved for separation rules
+    """
+    
     def __init__(self, origin: str, destination: str, route: str = "", flight_id: str = ""):
         self.origin = origin
         self.destination = destination
         self.route = route
-        self.flight_id = flight_id
+        self.flight_id = flight_id  # Unique flight identifier (FLT0001, FLT0002, etc.)
         self.waypoints: List[Waypoint] = []
         self.departure: Optional[Waypoint] = None
         self.arrival: Optional[Waypoint] = None
@@ -103,7 +121,21 @@ def abbreviate_waypoint_name(name: str) -> str:
     return abbreviations.get(name, name)
 
 def generate_flight_id(flight_counter: int) -> str:
-    """Generate a unique flight identifier in FLT0001 format"""
+    """
+    Generate a unique flight identifier in FLT0001 format.
+    
+    FLIGHT ID SYSTEM:
+    - Sequential numbering starting from 0001
+    - Format: FLT0001, FLT0002, FLT0003, etc.
+    - Used throughout the workflow for conflict tracking and separation enforcement
+    - Enables unique identification even for flights with same origin-destination
+    
+    Args:
+        flight_counter: Sequential counter for flight numbering
+        
+    Returns:
+        Flight ID string in FLT0001 format
+    """
     return f"FLT{flight_counter:04d}"
 
 def parse_waypoint_from_fix(fix_element) -> Optional[Waypoint]:

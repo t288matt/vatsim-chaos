@@ -163,11 +163,16 @@
       // Calculate global timeline
       let minTime = Infinity, maxTime = -Infinity;
       flights.forEach(flight => {
-        const departureMinutes = parseUTCTimeToMinutes(flight.departure_time || '1400');
+        if (flight.departure_time) {
+          const departureMinutes = parseUTCTimeToMinutes(flight.departure_time);
+          if (departureMinutes < minTime) minTime = departureMinutes;
+        }
         flight.waypoints.forEach(wp => {
-          const absoluteTime = parseUTCTimeToMinutes(wp['UTC time'] || '1400');
-          if (absoluteTime < minTime) minTime = absoluteTime;
-          if (absoluteTime > maxTime) maxTime = absoluteTime;
+          if (wp['UTC time']) {
+            const absoluteTime = parseUTCTimeToMinutes(wp['UTC time']);
+            if (absoluteTime < minTime) minTime = absoluteTime;
+            if (absoluteTime > maxTime) maxTime = absoluteTime;
+          }
         });
       });
       const start = Cesium.JulianDate.fromDate(new Date(Date.now()));
@@ -187,14 +192,19 @@
         const property = new Cesium.SampledPositionProperty();
         const altitudeProperty = new Cesium.SampledProperty(Number);
         let entityStart = Infinity, entityStop = -Infinity;
-        const departureMinutes = parseUTCTimeToMinutes(flight.departure_time || '1400');
+        if (flight.departure_time) {
+          const departureMinutes = parseUTCTimeToMinutes(flight.departure_time);
+          if (departureMinutes < entityStart) entityStart = departureMinutes;
+        }
         flight.waypoints.forEach(wp => {
-          const absoluteTime = parseUTCTimeToMinutes(wp['UTC time'] || '1400');
-          const t = Cesium.JulianDate.addSeconds(start, absoluteTime * 60, new Cesium.JulianDate());
-          property.addSample(t, Cesium.Cartesian3.fromDegrees(wp.lon, wp.lat, wp.altitude));
-          altitudeProperty.addSample(t, wp.altitude);
-          if (absoluteTime < entityStart) entityStart = absoluteTime;
-          if (absoluteTime > entityStop) entityStop = absoluteTime;
+          if (wp['UTC time']) {
+            const absoluteTime = parseUTCTimeToMinutes(wp['UTC time']);
+            const t = Cesium.JulianDate.addSeconds(start, absoluteTime * 60, new Cesium.JulianDate());
+            property.addSample(t, Cesium.Cartesian3.fromDegrees(wp.lon, wp.lat, wp.altitude));
+            altitudeProperty.addSample(t, wp.altitude);
+            if (absoluteTime < entityStart) entityStart = absoluteTime;
+            if (absoluteTime > entityStop) entityStop = absoluteTime;
+          }
         });
         const entityAvailability = new Cesium.TimeIntervalCollection([
           new Cesium.TimeInterval({
@@ -224,7 +234,8 @@
           label: {
             text: new Cesium.CallbackProperty(function(time, result) {
               const alt = altitudeProperty.getValue(time);
-              return `${flight.flight_id}\nAlt: ${alt !== undefined ? Math.round(alt) : 'N/A'} ft`;
+              const route = `${flight.departure}-${flight.arrival}`;
+              return `${flight.flight_id}\n${route}\nAlt: ${alt !== undefined ? Math.round(alt) : 'N/A'} ft`;
             }, false),
             font: fontSize + 'px sans-serif',
             fillColor: color,
@@ -276,8 +287,10 @@
       checkForDepartures(minutes, timeStr);
       
       const activeConflicts = conflicts.filter(conflict => {
-        const conflictTime = parseUTCTimeToMinutes(conflict.time1 || '1400');
-        return Math.abs(minutes - conflictTime) < 2;
+        if (!conflict.conflict_time) return false;
+        const conflictTime = parseUTCTimeToMinutes(conflict.conflict_time);
+        // Show conflict only if current time matches exactly the conflict time
+        return minutes === conflictTime;
       });
       const alertsDiv = document.getElementById('conflict-alerts');
       alertsDiv.innerHTML = '';
@@ -287,7 +300,18 @@
         // Use Alt: and Sep: fields instead of lat/long
         const alt = conflict.altitude !== undefined ? Math.round(conflict.altitude) + 'ft' : 'N/A';
         const dist = conflict.distance !== undefined ? conflict.distance + 'nm' : 'N/A';
-        alertDiv.innerHTML = `⚠️ ${conflict.flight1} vs ${conflict.flight2}  Alt: ${alt}  Dist: ${dist}`;
+        // Convert flight IDs to both flight ID and route for display
+        const getFlightInfoFromFlightId = (flightId) => {
+          const flight = flights.find(f => f.flight_id === flightId);
+          if (flight) {
+            const route = `${flight.departure}-${flight.arrival}`;
+            return `${flightId} (${route})`;
+          }
+          return flightId;
+        };
+        const flight1Info = getFlightInfoFromFlightId(conflict.flight1);
+        const flight2Info = getFlightInfoFromFlightId(conflict.flight2);
+        alertDiv.innerHTML = `⚠️ ${flight1Info} vs ${flight2Info}  Alt: ${alt}  Dist: ${dist}`;
         alertsDiv.appendChild(alertDiv);
       });
       // Set all aircraft to black by default
@@ -309,10 +333,12 @@
     
     function checkForDepartures(currentMinutes, timeStr) {
       flights.forEach(flight => {
-        const departureMinutes = parseUTCTimeToMinutes(flight.departure_time || '1400');
-        if (currentMinutes >= departureMinutes && !departedFlights.has(flight.flight_id)) {
-          departedFlights.add(flight.flight_id);
-          logDeparture(flight.flight_id, timeStr, flight.departure_time);
+        if (flight.departure_time) {
+          const departureMinutes = parseUTCTimeToMinutes(flight.departure_time);
+          if (currentMinutes >= departureMinutes && !departedFlights.has(flight.flight_id)) {
+            departedFlights.add(flight.flight_id);
+            logDeparture(flight.flight_id, timeStr, flight.departure_time);
+          }
         }
       });
     }
@@ -321,7 +347,14 @@
       const logsDiv = document.getElementById('departure-logs');
       const logEntry = document.createElement('div');
       logEntry.className = 'departure-log';
-      logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId}</span> departed (scheduled: ${scheduledTime})`;
+      // Convert flight ID to both flight ID and route for display
+      const flight = flights.find(f => f.flight_id === flightId);
+      if (flight) {
+        const route = `${flight.departure}-${flight.arrival}`;
+        logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId} (${route})</span> departed (scheduled: ${scheduledTime})`;
+      } else {
+        logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId}</span> departed (scheduled: ${scheduledTime})`;
+      }
       logsDiv.appendChild(logEntry);
       
       // Keep only last 10 entries to prevent overflow

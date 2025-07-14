@@ -14,6 +14,17 @@ ATC Conflict Scheduler
 Generates departure schedules to maximize unique aircraft pairs in conflict
 by adjusting departure times based on conflict analysis data.
 
+FLIGHT ID SYSTEM:
+- Uses unique flight IDs (FLT0001, FLT0002, etc.) for scheduling and separation
+- Flight IDs are maintained throughout the entire workflow
+- Route information (origin-destination) is preserved for separation rules
+- Enables unique identification even for flights with same origin-destination
+
+SEPARATION RULES:
+- MIN_DEPARTURE_SEPARATION_MINUTES: Minimum time between departures from same airport
+- MIN_SAME_ROUTE_SEPARATION_MINUTES: Minimum time between flights with same origin-destination
+- These rules prevent aircraft with identical routes from departing too close together
+
 Algorithm:
 1. Start with aircraft that has longest time to first conflict
 2. Use greedy selection: immediate conflicts + bonus for future potential
@@ -23,7 +34,7 @@ Algorithm:
 
 Usage:
     python generate_schedule_conflicts.py --start 14:00 --end 18:00
-    python generate_schedule_conflicts.py --start 14:00 --end 18:00 --verbose
+    python generate_schedule_conflicts.py
     python generate_schedule_conflicts.py --start 14:00 --end 18:00 --max-conflicts 10
 """
 
@@ -48,6 +59,27 @@ def minutes_to_utc_hhmm(minutes: float) -> str:
     hours = (total_minutes // 60) % 24
     mins = total_minutes % 60
     return f"{hours:02d}{mins:02d}"
+
+def extract_flight_route_info(flight_data: Dict) -> Dict[str, Dict[str, str]]:
+    """Extract origin-destination information for each flight from flight data."""
+    route_info = {}
+    
+    for flight_id, flight_info in flight_data.items():
+        if isinstance(flight_info, dict) and 'waypoints' in flight_info:
+            # Extract origin and destination from waypoints
+            waypoints = flight_info['waypoints']
+            if waypoints:
+                # First waypoint is usually departure
+                origin = waypoints[0].get('name', '')
+                # Last waypoint is usually arrival
+                destination = waypoints[-1].get('name', '') if len(waypoints) > 1 else ''
+                
+                route_info[flight_id] = {
+                    'origin': origin,
+                    'destination': destination
+                }
+    
+    return route_info
 
 class ConflictScheduler:
     """Schedules aircraft departures to maximize unique aircraft pairs in conflict."""
@@ -139,9 +171,9 @@ class ConflictScheduler:
         return score
     
     def find_optimal_departure_time(self, aircraft: str, scheduled_aircraft: Dict[str, datetime],
-                                   conflicts: List[Dict], all_aircraft: List[str], all_flight_data: Optional[Dict] = None) -> Tuple[datetime, int]:
+                                   conflicts: List[Dict], all_aircraft: List[str], route_info: Optional[Dict] = None) -> Tuple[datetime, int]:
         """Find optimal departure time that creates the most unique aircraft pairs in conflict."""
-        all_flight_data = all_flight_data or {}
+        route_info = route_info or {}
         best_departure_time = None
         best_conflict_count = 0
         # Get all conflicts for this aircraft
@@ -151,13 +183,13 @@ class ConflictScheduler:
                 aircraft_conflicts.append(conflict)
         if not aircraft_conflicts:
             # --- Integration: Use near-conflict logic for no-conflict aircraft ---
-            if all_flight_data is not None:
+            if route_info is not None:
                 near_dep = self.find_near_conflict_departure_time(
-                    aircraft, scheduled_aircraft, all_flight_data, self.start_time, self.end_time)
+                    aircraft, scheduled_aircraft, route_info, self.start_time, self.end_time)
                 if near_dep:
                     return near_dep, 0
             # Fallback
-            return self._find_fallback_departure_time(aircraft, scheduled_aircraft), 0
+            return self._find_fallback_departure_time(aircraft, scheduled_aircraft, route_info), 0
         # Try each conflict to find the best departure time
         for conflict in aircraft_conflicts:
             if conflict['flight1'] == aircraft:
@@ -178,7 +210,7 @@ class ConflictScheduler:
             calculated_departure = other_arrival_at_conflict - timedelta(minutes=conflict_time_after_departure)
             # Validate and adjust the departure time
             valid_departure = self._validate_and_adjust_departure_time(
-                calculated_departure, aircraft, scheduled_aircraft
+                calculated_departure, aircraft, scheduled_aircraft, route_info
             )
             if valid_departure:
                 # Count how many unique aircraft pairs this creates
@@ -190,11 +222,11 @@ class ConflictScheduler:
                     best_departure_time = valid_departure
         if best_departure_time is None:
             # No valid conflicts found - use fallback
-            return self._find_fallback_departure_time(aircraft, scheduled_aircraft), 0
+            return self._find_fallback_departure_time(aircraft, scheduled_aircraft, route_info), 0
         return best_departure_time, best_conflict_count
     
     def _validate_and_adjust_departure_time(self, departure_time: datetime, aircraft: str,
-                                          scheduled_aircraft: Dict[str, datetime]) -> Optional[datetime]:
+                                          scheduled_aircraft: Dict[str, datetime], flight_data: Dict = {}) -> Optional[datetime]:
         """Validate departure time and adjust if needed."""
         # Check if within event window
         if departure_time < self.start_time:
@@ -202,16 +234,19 @@ class ConflictScheduler:
         elif departure_time > self.end_time:
             departure_time = self.end_time
         
-        # Check separation rules
-        aircraft_origin = aircraft.split('-')[0]  # Extract origin airport
-        aircraft_dest = aircraft.split('-')[1] if '-' in aircraft else aircraft  # Extract destination airport
+        # Get flight route information
+        flight_data = flight_data or {}
+        aircraft_route = flight_data.get(aircraft, {})
+        aircraft_origin = aircraft_route.get('origin', '')
+        aircraft_dest = aircraft_route.get('destination', '')
         
         for scheduled_aircraft_id, scheduled_time in scheduled_aircraft.items():
-            scheduled_origin = scheduled_aircraft_id.split('-')[0]
-            scheduled_dest = scheduled_aircraft_id.split('-')[1] if '-' in scheduled_aircraft_id else scheduled_aircraft_id
+            scheduled_route = flight_data.get(scheduled_aircraft_id, {})
+            scheduled_origin = scheduled_route.get('origin', '')
+            scheduled_dest = scheduled_route.get('destination', '')
             
             # Check same airport separation (2 minutes)
-            if scheduled_origin == aircraft_origin:
+            if scheduled_origin and aircraft_origin and scheduled_origin == aircraft_origin:
                 time_diff = abs((departure_time - scheduled_time).total_seconds() / 60)
                 if time_diff < MIN_DEPARTURE_SEPARATION_MINUTES:
                     # Try to find a nearby time that respects the rule
@@ -226,7 +261,8 @@ class ConflictScheduler:
                         return None  # No valid time found
             
             # Check same route separation (5 minutes)
-            if scheduled_origin == aircraft_origin and scheduled_dest == aircraft_dest:
+            if (scheduled_origin and aircraft_origin and scheduled_dest and aircraft_dest and 
+                scheduled_origin == aircraft_origin and scheduled_dest == aircraft_dest):
                 time_diff = abs((departure_time - scheduled_time).total_seconds() / 60)
                 if time_diff < MIN_SAME_ROUTE_SEPARATION_MINUTES:
                     # Try to find a nearby time that respects the rule
@@ -242,27 +278,31 @@ class ConflictScheduler:
         
         return departure_time
     
-    def _find_fallback_departure_time(self, aircraft: str, scheduled_aircraft: Dict[str, datetime]) -> datetime:
+    def _find_fallback_departure_time(self, aircraft: str, scheduled_aircraft: Dict[str, datetime], flight_data: Dict = {}) -> datetime:
         """Find fallback departure time when no conflicts are possible."""
         # Start at event start time
         departure_time = self.start_time
         
-        # Check separation rules
-        aircraft_origin = aircraft.split('-')[0]
-        aircraft_dest = aircraft.split('-')[1] if '-' in aircraft else aircraft
+        # Get flight route information
+        flight_data = flight_data or {}
+        aircraft_route = flight_data.get(aircraft, {})
+        aircraft_origin = aircraft_route.get('origin', '')
+        aircraft_dest = aircraft_route.get('destination', '')
         
         for scheduled_aircraft_id, scheduled_time in scheduled_aircraft.items():
-            scheduled_origin = scheduled_aircraft_id.split('-')[0]
-            scheduled_dest = scheduled_aircraft_id.split('-')[1] if '-' in scheduled_aircraft_id else scheduled_aircraft_id
+            scheduled_route = flight_data.get(scheduled_aircraft_id, {})
+            scheduled_origin = scheduled_route.get('origin', '')
+            scheduled_dest = scheduled_route.get('destination', '')
             
             # Check same airport separation (2 minutes)
-            if scheduled_origin == aircraft_origin:
+            if scheduled_origin and aircraft_origin and scheduled_origin == aircraft_origin:
                 time_diff = abs((departure_time - scheduled_time).total_seconds() / 60)
                 if time_diff < MIN_DEPARTURE_SEPARATION_MINUTES:
                     departure_time = scheduled_time + timedelta(minutes=MIN_DEPARTURE_SEPARATION_MINUTES)
             
             # Check same route separation (5 minutes)
-            if scheduled_origin == aircraft_origin and scheduled_dest == aircraft_dest:
+            if (scheduled_origin and aircraft_origin and scheduled_dest and aircraft_dest and 
+                scheduled_origin == aircraft_origin and scheduled_dest == aircraft_dest):
                 time_diff = abs((departure_time - scheduled_time).total_seconds() / 60)
                 if time_diff < MIN_SAME_ROUTE_SEPARATION_MINUTES:
                     departure_time = scheduled_time + timedelta(minutes=MIN_SAME_ROUTE_SEPARATION_MINUTES)
@@ -310,6 +350,10 @@ class ConflictScheduler:
         all_flight_data = data.get('flights')
         if not isinstance(all_flight_data, dict):
             all_flight_data = {}
+        
+        # Extract route information for separation rules
+        route_info = extract_flight_route_info(all_flight_data)
+        
         if not all_aircraft:
             print("No aircraft found in conflict data")
             return {}
@@ -352,7 +396,7 @@ class ConflictScheduler:
                 best_aircraft = list(unscheduled_aircraft)[0]
             # Find optimal departure time for selected aircraft
             departure_time, conflict_count = self.find_optimal_departure_time(
-                best_aircraft, scheduled_aircraft, conflicts, all_aircraft, all_flight_data
+                best_aircraft, scheduled_aircraft, conflicts, all_aircraft, route_info
             )
             if departure_time is None:
                 # No valid departure time found - skip this aircraft

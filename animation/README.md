@@ -27,7 +27,7 @@ This directory contains the 3D animation visualization for the ATC Conflict Anal
 ## Data Files
 
 - `animation_data.json` - Complete flight and conflict data for visualization
-- `flight_tracks.json` - Individual flight path data
+
 - `conflict_points.json` - Conflict location and timing data
 
 ## Refreshing Data

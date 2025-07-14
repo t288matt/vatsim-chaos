@@ -3,6 +3,8 @@
 A Python-based system for generating chaotic, conflicting SimBrief XML flight plans to create challenging air traffic control (ATC) event scenarios. The system is designed to help the events team create situations where controllers are challenged and pilots can enjoy fun, dynamic events.
 
 **Recent Improvements:**
+- ✅ **Flight ID System** - Each flight gets a unique ID (FLT0001, FLT0002, etc.) for better tracking
+- ✅ **Enhanced Separation Rules** - 5-minute minimum separation for flights with same origin-destination
 - ✅ **Fixed scheduling algorithm** - Now respects conflict analysis departure times instead of "most conflicts" rule
 - ✅ **Corrected departure timing** - YSSY-YSWG now departs at 14:16 instead of 14:00 as intended
 - ✅ **Enhanced audit system** - Added departure time column to track scheduling accuracy
@@ -11,6 +13,25 @@ A Python-based system for generating chaotic, conflicting SimBrief XML flight pl
 - ✅ **Removed x/y projected coordinates** from animation data
 - ✅ **Linear data flow** with clear dependencies
 - ✅ **Simplified data structures** for better performance
+
+## Flight ID System
+
+The system now uses unique flight IDs (FLT0001, FLT0002, etc.) instead of origin-destination pairs for better conflict tracking and separation enforcement:
+
+- **Unique Identification**: Each flight gets a sequential flight ID during XML processing
+- **Route Preservation**: Origin-destination information is maintained alongside flight IDs
+- **Separation Rules**: Both flight IDs and routes are used for separation enforcement
+- **Conflict Tracking**: Enables tracking of "first conflicts" between unique aircraft pairs
+- **Same Route Handling**: Flights with identical origin-destination are treated as separate flights with 5-minute minimum separation
+
+## Separation Rules
+
+The system enforces two key separation rules:
+
+1. **Departure Separation**: Minimum 2 minutes between departures from the same airport
+2. **Same Route Separation**: Minimum 5 minutes between flights with identical origin-destination
+
+These rules prevent aircraft with identical routes from departing too close together while maintaining event realism.
 
 ## Purpose
 
@@ -80,7 +101,7 @@ python audit_conflict.py  # Generates audit_conflict_output.txt with raw data co
 - `pilot_briefing.txt` - Pilot conflict briefing (authoritative, includes all departure times and conflict details)
 - `temp/routes_with_added_interpolated_points.json` - Interpolated points with departure metadata
 - `animation/animation_data.json` - Animation data for Cesium (simplified structure, no x/y fields)
-- `animation/flight_tracks.json` - Flight path data
+
 - `animation/conflict_points.json` - Conflict location/timing (filtered by altitude)
 - `animation/cesium_flight_anim.html` - 3D web visualization
 - `audit_conflict_output.txt` - **Raw data audit report** (Markdown tables showing exact values across all data sources)
