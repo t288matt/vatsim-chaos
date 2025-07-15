@@ -13,15 +13,15 @@ DEPARTURE SCHEDULE:
 1402 - FLT0015 (DC3) (0 conflicts)
 1423 - FLT0018 (SF34) (2 conflicts)
 1448 - FLT0005 (C510) (3 conflicts)
-1500 - FLT0004 (TBM9) (1 conflicts)
+1449 - FLT0004 (TBM9) (1 conflicts)
 1505 - FLT0013 (B38M) (6 conflicts)
 1509 - FLT0007 (DH8D) (3 conflicts)
 1510 - FLT0010 (BE20) (2 conflicts)
 1514 - FLT0011 (DH8D) (3 conflicts)
-1516 - FLT0012 (C510) (3 conflicts)
+1521 - FLT0012 (C510) (3 conflicts)
 1521 - FLT0020 (DH8D) (2 conflicts)
 1527 - FLT0017 (A332) (1 conflicts)
-1545 - FLT0019 (DH8D) (3 conflicts)
+1533 - FLT0019 (DH8D) (3 conflicts)
 1547 - FLT0003 (PC12) (1 conflicts)
 1548 - FLT0009 (PC12) (1 conflicts)
 1555 - FLT0002 (DH8D) (1 conflicts)
@@ -80,20 +80,6 @@ FLT0007 (DH8D) conflicts:
     Distance: 2.9nm, Alt diff: 888ft
     Phase: cruise
 
-FLT0019 (DH8D) conflicts:
-  - With FLT0004 (TBM9) at -33.4807,149.5676
-    Time: 1608 (departure +23min)
-    Distance: 2.2nm, Alt diff: 0ft
-    Phase: cruise
-  - With FLT0011 (DH8D) at -33.4270,149.1353
-    Time: 1612 (departure +27min)
-    Distance: 2.7nm, Alt diff: 538ft
-    Phase: descent
-  - With FLT0013 (B38M) at -33.7330,150.2905
-    Time: 1559 (departure +14min)
-    Distance: 2.1nm, Alt diff: 800ft
-    Phase: descent
-
 FLT0011 (DH8D) conflicts:
   - With FLT0005 (C510) at -36.7673,149.9110
     Time: 1518 (departure +4min)
@@ -107,6 +93,34 @@ FLT0011 (DH8D) conflicts:
     Time: 1600 (departure +46min)
     Distance: 2.7nm, Alt diff: 538ft
     Phase: descent
+
+FLT0019 (DH8D) conflicts:
+  - With FLT0004 (TBM9) at -33.4807,149.5676
+    Time: 1556 (departure +23min)
+    Distance: 2.2nm, Alt diff: 0ft
+    Phase: cruise
+  - With FLT0011 (DH8D) at -33.4270,149.1353
+    Time: 1600 (departure +27min)
+    Distance: 2.7nm, Alt diff: 538ft
+    Phase: descent
+  - With FLT0013 (B38M) at -33.7330,150.2905
+    Time: 1547 (departure +14min)
+    Distance: 2.1nm, Alt diff: 800ft
+    Phase: descent
+
+FLT0012 (C510) conflicts:
+  - With FLT0005 (C510) at -36.7918,149.9091
+    Time: 1524 (departure +3min)
+    Distance: 1.6nm, Alt diff: 610ft
+    Phase: descent
+  - With FLT0013 (B38M) at AKMIR
+    Time: 1552 (departure +31min)
+    Distance: 0.0nm, Alt diff: 700ft
+    Phase: descent
+  - With FLT0018 (SF34) at -36.8178,149.9071
+    Time: 1524 (departure +3min)
+    Distance: 1.7nm, Alt diff: 630ft
+    Phase: climb
 
 FLT0005 (C510) conflicts:
   - With FLT0011 (DH8D) at -36.7673,149.9110
@@ -122,20 +136,6 @@ FLT0005 (C510) conflicts:
     Distance: 2.8nm, Alt diff: 60ft
     Phase: descent
 
-FLT0012 (C510) conflicts:
-  - With FLT0005 (C510) at -36.7918,149.9091
-    Time: 1519 (departure +3min)
-    Distance: 1.6nm, Alt diff: 610ft
-    Phase: descent
-  - With FLT0013 (B38M) at AKMIR
-    Time: 1547 (departure +31min)
-    Distance: 0.0nm, Alt diff: 700ft
-    Phase: descent
-  - With FLT0018 (SF34) at -36.8178,149.9071
-    Time: 1519 (departure +3min)
-    Distance: 1.7nm, Alt diff: 630ft
-    Phase: climb
-
 FLT0018 (SF34) conflicts:
   - With FLT0005 (C510) at -36.5470,149.9283
     Time: 1514 (departure +51min)
@@ -144,6 +144,16 @@ FLT0018 (SF34) conflicts:
   - With FLT0012 (C510) at -36.8178,149.9071
     Time: 1518 (departure +55min)
     Distance: 1.7nm, Alt diff: 630ft
+    Phase: climb
+
+FLT0020 (DH8D) conflicts:
+  - With FLT0013 (B38M) at -34.7096,149.6681
+    Time: 1545 (departure +24min)
+    Distance: 2.6nm, Alt diff: 519ft
+    Phase: cruise
+  - With FLT0017 (A332) at -34.4318,150.6207
+    Time: 1534 (departure +13min)
+    Distance: 1.8nm, Alt diff: 823ft
     Phase: climb
 
 FLT0010 (BE20) conflicts:
@@ -174,26 +184,16 @@ FLT0014 (F28) conflicts:
     Distance: 3.0nm, Alt diff: 700ft
     Phase: descent
 
-FLT0020 (DH8D) conflicts:
-  - With FLT0013 (B38M) at -34.7096,149.6681
-    Time: 1545 (departure +24min)
-    Distance: 2.6nm, Alt diff: 519ft
+FLT0009 (PC12) conflicts:
+  - With FLT0014 (F28) at -36.6049,146.1293
+    Time: 1614 (departure +26min)
+    Distance: 2.8nm, Alt diff: 0ft
     Phase: cruise
-  - With FLT0017 (A332) at -34.4318,150.6207
-    Time: 1534 (departure +13min)
-    Distance: 1.1nm, Alt diff: 823ft
-    Phase: climb
 
 FLT0002 (DH8D) conflicts:
   - With FLT0014 (F28) at -36.1213,146.7604
     Time: 1621 (departure +26min)
     Distance: 2.8nm, Alt diff: 0ft
-    Phase: cruise
-
-FLT0004 (TBM9) conflicts:
-  - With FLT0019 (DH8D) at -33.4807,149.5676
-    Time: 1607 (departure +67min)
-    Distance: 2.2nm, Alt diff: 0ft
     Phase: cruise
 
 FLT0003 (PC12) conflicts:
@@ -202,17 +202,17 @@ FLT0003 (PC12) conflicts:
     Distance: 2.8nm, Alt diff: 0ft
     Phase: cruise
 
+FLT0004 (TBM9) conflicts:
+  - With FLT0019 (DH8D) at -33.4807,149.5676
+    Time: 1556 (departure +67min)
+    Distance: 2.2nm, Alt diff: 0ft
+    Phase: cruise
+
 FLT0017 (A332) conflicts:
   - With FLT0020 (DH8D) at -34.4318,150.6207
     Time: 1534 (departure +7min)
-    Distance: 1.1nm, Alt diff: 823ft
+    Distance: 1.8nm, Alt diff: 823ft
     Phase: climb
-
-FLT0009 (PC12) conflicts:
-  - With FLT0014 (F28) at -36.6049,146.1293
-    Time: 1614 (departure +26min)
-    Distance: 2.8nm, Alt diff: 0ft
-    Phase: cruise
 
 FLT0006 (S22T) conflicts:
   - With FLT0008 (DH8D) at -37.5680,149.5783

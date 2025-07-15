@@ -29,14 +29,12 @@ VERTICAL_SEPARATION_THRESHOLD = 900
 # Only conflicts above this altitude are reported (filters out ground conflicts)
 MIN_ALTITUDE_THRESHOLD = 5000
 
-# Distance threshold for filtering duplicate conflicts (nautical miles)
-# Conflicts within this distance of each other are considered duplicates
-DUPLICATE_FILTER_DISTANCE = 4.0
+
 
 # No-conflict zones around airports (format: "ICAO_CODE/DISTANCE_NM")
 # Conflicts within these distances of airports are not counted
 # Example: ["YSSY/45"] means no conflicts within 45nm of Sydney Airport
-NO_CONFLICT_AIRPORT_DISTANCES = ["YSSY/35 "YSCB/15"]
+NO_CONFLICT_AIRPORT_DISTANCES = ["YSSY/35", "YSCB/15"]
 
 # =============================================================================
 # DEPARTURE SCHEDULING PARAMETERS

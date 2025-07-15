@@ -200,7 +200,7 @@ class ConflictScheduler:
                 other_aircraft = conflict['flight1']
                 conflict_time_after_departure = conflict['time2']
                 other_conflict_time = conflict['time1']
-            # Skip if other aircraft is not scheduled yet  
+            # Skip if other aircraft is not scheduled yet
             if other_aircraft not in scheduled_aircraft:
                 continue
             # Calculate departure time to make aircraft arrive at conflict point simultaneously

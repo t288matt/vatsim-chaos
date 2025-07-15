@@ -37,7 +37,7 @@ import logging
 from typing import List, Dict, Tuple, Optional, Any
 from collections import defaultdict
 from dataclasses import dataclass
-from env import LATERAL_SEPARATION_THRESHOLD, VERTICAL_SEPARATION_THRESHOLD, MIN_ALTITUDE_THRESHOLD, DUPLICATE_FILTER_DISTANCE, MIN_DEPARTURE_SEPARATION_MINUTES
+from env import LATERAL_SEPARATION_THRESHOLD, VERTICAL_SEPARATION_THRESHOLD, MIN_ALTITUDE_THRESHOLD, MIN_DEPARTURE_SEPARATION_MINUTES
 from env import INTERPOLATION_SPACING_NM
 import argparse
 import json
@@ -48,7 +48,7 @@ from typing import Dict, List, Tuple, Optional, Any, Set
 from dataclasses import dataclass
 import logging
 from env import (LATERAL_SEPARATION_THRESHOLD, VERTICAL_SEPARATION_THRESHOLD, 
-                MIN_ALTITUDE_THRESHOLD, DUPLICATE_FILTER_DISTANCE, NO_CONFLICT_AIRPORT_DISTANCES)
+                MIN_ALTITUDE_THRESHOLD, NO_CONFLICT_AIRPORT_DISTANCES)
 
 # =============================================================================
 # CONFIGURATION
@@ -86,9 +86,6 @@ def parse_no_conflict_zones() -> Dict[str, float]:
 #   - Do NOT use or enforce UTC 'HHMM' string formatting internally.
 #   - Only output files for the frontend (e.g., interpolation, animation) should convert times to UTC 'HHMM' strings.
 # =============================================================================
-
-# Route interpolation settings
-INTERPOLATION_POINTS = 10  # points between waypoints
 
 # Time optimization settings
 MAX_DEPARTURE_TIME = 120  # minutes
@@ -1052,35 +1049,7 @@ def format_location(conflict: Dict[str, Any], all_conflicts: List[Dict[str, Any]
         
         return f"{lat:.4f},{lon:.4f}"
 
-def filter_duplicate_conflicts(conflicts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """
-    Filter out conflicts that are too close to previous conflicts between the same routes.
-    
-    Args:
-        conflicts: List of conflicts to filter
-    
-    Returns:
-        Filtered list of conflicts
-    """
-    last_conflict_location = {}
-    filtered_conflicts = []
-    
-    for conflict in conflicts:
-        # Route pair key (order independent)
-        route_pair = tuple(sorted([conflict['flight1'], conflict['flight2']]))
-        lat = conflict['lat1']
-        lon = conflict['lon1']
-        prev = last_conflict_location.get(route_pair)
-        
-        if prev:
-            prev_lat, prev_lon = prev
-            if calculate_distance_nm(lat, lon, prev_lat, prev_lon) < DUPLICATE_FILTER_DISTANCE:
-                continue  # Skip this conflict, too close to previous
-        
-        filtered_conflicts.append(conflict)
-        last_conflict_location[route_pair] = (lat, lon)
-    
-    return filtered_conflicts
+
 
 def print_and_write_conflict_report(data: Dict[str, Any], output_file: str = CONFLICT_LIST_FILE) -> None:
     """
@@ -1110,8 +1079,8 @@ def print_and_write_conflict_report(data: Dict[str, Any], output_file: str = CON
         logging.info(f"Conflict report written to {output_file}")
         return
 
-    # Filter duplicate conflicts
-    filtered_conflicts = filter_duplicate_conflicts(conflicts)
+    # Use conflicts directly since "first conflict" logic already handles duplicates
+    filtered_conflicts = conflicts
     
     print(f"\nTotal First Conflicts: {len(filtered_conflicts)}\n")
     output.append("")
