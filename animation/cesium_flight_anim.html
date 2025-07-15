@@ -61,10 +61,10 @@
     <div id="departure-logs"></div>
   </div>
   <script>
-    // Auto-reload the page every 2 minutes (120,000 ms)
+    // Auto-reload the page every 3 minutes (180,000 ms)
     setTimeout(function() {
       window.location.reload();
-    }, 120000);
+    }, 180000);
   </script>
   <script>
     // Best practice: Set up Cesium viewer and timeline for animation
@@ -134,8 +134,9 @@
     }
     async function loadAnimationData() {
       try {
-        const response = await fetch('animation_data.json');
-        if (!response.ok) throw new Error('Animation data not found: ' + response.status + ' ' + response.statusText);
+        // Read from interpolated data (single source of truth)
+        const response = await fetch('../temp/routes_with_added_interpolated_points.json');
+        if (!response.ok) throw new Error('Interpolated data not found: ' + response.status + ' ' + response.statusText);
         const text = await response.text();
         let data;
         try {
@@ -145,11 +146,72 @@
           console.error('JSON parse error:', jsonErr);
           return false;
         }
-        console.log('Loaded data:', data);
-        if (data.flights && Array.isArray(data.flights)) flights = data.flights;
-        if (data.conflicts && Array.isArray(data.conflicts)) conflicts = data.conflicts;
-        console.log('Flights:', flights);
-        console.log('Conflicts:', conflicts);
+        console.log('Loaded interpolated data:', data);
+        
+        // Convert interpolated data to frontend format
+        flights = [];
+        
+        // Process each flight from interpolated data
+        for (const [flightId, flightData] of Object.entries(data)) {
+          if (flightId === '_metadata') continue; // Skip metadata
+          
+          if (flightData && typeof flightData === 'object' && flightData.route) {
+            // Convert route waypoints to frontend format
+            const waypoints = flightData.route.map((wp, index) => ({
+              index: index,
+              name: wp.name || '',
+              lat: wp.lat,
+              lon: wp.lon,
+              altitude: wp.altitude,
+              'UTC time': wp.time,
+              stage: wp.stage || ''
+            }));
+            
+            // Find departure and arrival from waypoints
+            const departure = waypoints[0]?.name || '';
+            let arrival = '';
+            for (let i = waypoints.length - 1; i >= 0; i--) {
+              if (waypoints[i].name && !waypoints[i].name.startsWith('CONFLICT_')) {
+                arrival = waypoints[i].name;
+                break;
+              }
+            }
+            
+            // Get departure time from metadata
+            const departureTime = data._metadata?.departure_schedule?.[flightId]?.departure_time || '1400';
+            
+            // Create flight object
+            const flight = {
+              flight_id: flightId,
+              departure: departure,
+              arrival: arrival,
+              departure_time: departureTime,
+              aircraft_type: flightData.aircraft_type || 'UNK',
+              waypoints: waypoints
+            };
+            
+            flights.push(flight);
+          }
+        }
+        
+        // Load conflicts from dedicated conflict points file
+        try {
+          const conflictResponse = await fetch('conflict_points.json');
+          if (conflictResponse.ok) {
+            const conflictText = await conflictResponse.text();
+            conflicts = JSON.parse(conflictText);
+            console.log('Loaded conflicts from conflict_points.json:', conflicts.length);
+          } else {
+            console.warn('Conflict points file not found, using empty conflicts array');
+            conflicts = [];
+          }
+        } catch (conflictError) {
+          console.warn('Error loading conflict points:', conflictError);
+          conflicts = [];
+        }
+        
+        console.log('Processed flights:', flights);
+        console.log('Processed unique conflicts:', conflicts);
         return true;
       } catch (error) {
         document.getElementById('info').innerHTML += '<br>❌ Data load error: ' + error.message;
@@ -414,8 +476,8 @@
           createScheduledFlights();
           createConflictMarkers(conflicts); // Call the new function here
         }
-        // Set camera to fixed rectangle (Sydney, Wagga Wagga, relevant airspace)
-        const startRect = Cesium.Rectangle.fromDegrees(144.5, -37.5, 153.5, -31.5);
+        // Set camera to fixed rectangle (Southeastern Australia - broader coverage)
+        const startRect = Cesium.Rectangle.fromDegrees(135.0, -39.0, 154.0, -29.0);
         viewer.camera.setView({ destination: startRect });
         // Remove viewer.zoomTo(viewer.entities) and other auto-zoom logic
         // Remove viewer.camera.flyTo({ destination: ausRect, duration: 1.5 });

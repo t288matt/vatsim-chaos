@@ -286,10 +286,11 @@ class AnimationDataGenerator:
         return distance_3d
 
     def generate_conflict_points(self) -> List[Dict]:
-        """Generate conflict points for animation using enhanced routes file (single source of truth)"""
+        """Generate conflict points for animation using enhanced routes file (single source of truth)
+        Deduplicate by unordered flight pair only (not by time), matching pilot briefing logic.
+        """
         conflict_points = []
-        processed_pairs = set()  # Track processed aircraft pairs to avoid duplicates
-        
+        processed_pairs = set()  # Track processed aircraft pairs to avoid duplicates (unordered pair)
         # Load enhanced routes file (single source of truth)
         try:
             with open('temp/routes_with_added_interpolated_points.json', 'r') as f:
@@ -297,30 +298,22 @@ class AnimationDataGenerator:
         except FileNotFoundError:
             logger.error("Enhanced routes file not found")
             return conflict_points
-        
         # Extract conflicts from enhanced routes data
         for flight_id, flight_data in enhanced_routes.items():
             if flight_id == '_metadata':
                 continue
-                
             if not isinstance(flight_data, dict):
                 continue
-                
             conflicts = flight_data.get('conflicts', [])
             aircraft_type = flight_data.get('aircraft_type', 'UNK')
-            
             for conflict in conflicts:
                 other_flight = conflict['other_flight']
-                
-                # Create a unique pair identifier (sorted to ensure consistency)
+                # Create a unique unordered pair identifier
                 pair_key = tuple(sorted([flight_id, other_flight]))
-                
-                # Skip if we've already processed this pair
+                # Skip if we've already processed this unordered pair
                 if pair_key in processed_pairs:
                     continue
-                
                 processed_pairs.add(pair_key)
-                
                 conflict_point = {
                     'id': f"conflict_{flight_id}_{other_flight}",
                     'location': f"{flight_id}-{other_flight}",
@@ -337,8 +330,7 @@ class AnimationDataGenerator:
                     'conflict_type': 'scheduled_conflict'
                 }
                 conflict_points.append(conflict_point)
-        
-        logger.info(f"Generated {len(conflict_points)} unique conflict points from enhanced routes data")
+        logger.info(f"Generated {len(conflict_points)} unique conflict points from enhanced routes data (deduped by unordered pair)")
         return conflict_points
     
     def generate_timeline(self) -> List[Dict]:

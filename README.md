@@ -197,6 +197,40 @@ The system focuses on **"First Conflicts"** - the initial point where two aircra
 - **KML Visualization**: Google Earth compatible files with 40 diverse colors
 - **Smart Location Format**: Shows conflicts between waypoints as "X NM [direction] of [waypoint]"
 
+## SimBrief XML Generation Guidelines
+
+### Important: Altitude Handling in SimBrief
+
+When generating XML files in SimBrief, **always explicitly set altitudes** rather than letting SimBrief auto-calculate them. If you let SimBrief auto-calculate altitudes, it may insert unexpected step climbs and descents that pilots wouldn't typically fly.
+
+**Example of SimBrief Auto-Calculated Issues:**
+- FL350 → FL360 → FL350 on north-south routes
+- Unnecessary step climbs during cruise
+- Unrealistic altitude changes that don't match pilot behavior
+
+**Best Practice:**
+1. **Set explicit altitudes** for each waypoint in SimBrief
+2. **Use realistic climb/descent profiles** (e.g., climb to FL360, cruise, then descend)
+3. **Avoid letting SimBrief insert intermediate altitude changes** during cruise
+4. **Review the flight plan** to ensure altitude changes match expected pilot behavior
+
+### Critical: Conflict Analysis Based on SimBrief Data
+
+**All conflict detection in this system is based explicitly on the climb profiles and altitudes from SimBrief XML files.** The system reads the exact altitude values and timing from your SimBrief flight plans to determine when and where aircraft will conflict.
+
+**Before submitting XML files to the app:**
+1. **Sense-check your SimBrief flight plans** - ensure altitudes and climb profiles are realistic
+2. **Verify altitude assignments** - make sure each waypoint has appropriate altitudes for the aircraft type
+3. **Review climb/descent profiles** - ensure they match expected pilot behavior for the route
+4. **Test with a few flights first** - validate that the conflict analysis produces realistic results
+
+**Why this matters:**
+- **Garbage in, garbage out** - unrealistic SimBrief altitudes will produce unrealistic conflicts
+- **Event planning depends on accuracy** - controllers need realistic conflict scenarios
+- **Pilot behavior modeling** - conflicts should reflect how pilots actually fly these routes
+
+This ensures the generated XML files contain realistic altitude profiles that match how pilots actually fly, leading to more accurate conflict analysis and event scenarios.
+
 ## System Components
 
 ### Python Scripts - Input and Output Files
