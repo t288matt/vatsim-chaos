@@ -46,6 +46,11 @@ MIN_DEPARTURE_SEPARATION_MINUTES = 2
 # This prevents aircraft with same route from departing too close together
 MIN_SAME_ROUTE_SEPARATION_MINUTES = 5
 
+# Batch size for conflict score recalculation during scheduling
+# Recalculates scores every N aircraft to balance accuracy vs performance
+# Smaller values = more accurate but slower, larger values = faster but less accurate
+BATCH_SIZE = 1
+
 # =============================================================================
 # ROUTE INTERPOLATION PARAMETERS
 # =============================================================================

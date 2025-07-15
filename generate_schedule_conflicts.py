@@ -45,7 +45,7 @@ import sys
 from datetime import datetime, timedelta
 from typing import Dict, List, Tuple, Optional, Set
 import logging
-from env import MIN_DEPARTURE_SEPARATION_MINUTES, MIN_SAME_ROUTE_SEPARATION_MINUTES
+from env import MIN_DEPARTURE_SEPARATION_MINUTES, MIN_SAME_ROUTE_SEPARATION_MINUTES, BATCH_SIZE
 
 # Configuration
 CONFLICT_ANALYSIS_FILE = "temp/potential_conflict_data.json"
@@ -369,7 +369,7 @@ class ConflictScheduler:
         unscheduled_aircraft.remove(first_aircraft)
         # logging.info(f"Scheduled first aircraft {first_aircraft} at {datetime_to_utc_hhmm(first_departure)}")
         # Step 2: Greedy scheduling for remaining aircraft
-        batch_size = 3  # Recalculate scores every 3 aircraft
+        batch_size = BATCH_SIZE  # Recalculate scores every 3 aircraft
         aircraft_scheduled_since_recalc = 0
         while unscheduled_aircraft:
             # Recalculate scores every batch_size aircraft
