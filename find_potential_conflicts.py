@@ -647,6 +647,51 @@ def add_conflict_specific_points(interpolated_data: Dict[str, List[Dict]], confl
     from copy import deepcopy
     updated_data = deepcopy(interpolated_data)
 
+    def calculate_distance_from_origin(point, origin_point=None):
+        """Calculate distance from origin for a waypoint."""
+        if origin_point is None:
+            # Use first waypoint as origin if not provided
+            return 0.0
+        return calculate_distance_nm(origin_point['lat'], origin_point['lon'], 
+                                   point['lat'], point['lon'])
+
+    def insert_by_distance(route, conflict_point):
+        """Insert conflict point at correct position based on distance from origin."""
+        if not route:
+            route.append(conflict_point)
+            return
+            
+        # Use first waypoint as origin reference
+        origin = route[0]
+        
+        # Find the actual destination (last waypoint with a name that's not a conflict)
+        destination_index = -1
+        for i in range(len(route) - 1, -1, -1):
+            waypoint = route[i]
+            if waypoint.get('name') and not waypoint.get('name', '').startswith('CONFLICT_'):
+                destination_index = i
+                break
+        
+        # Calculate distance from origin for conflict point
+        conflict_distance = calculate_distance_from_origin(conflict_point, origin)
+        
+        # Find correct insertion position based on distance, but never after destination
+        for i, waypoint in enumerate(route):
+            waypoint_distance = calculate_distance_from_origin(waypoint, origin)
+            if conflict_distance < waypoint_distance:
+                # Don't insert after the destination
+                if destination_index >= 0 and i > destination_index:
+                    continue
+                route.insert(i, conflict_point)
+                return
+        
+        # If conflict is beyond all waypoints but before destination, insert before destination
+        if destination_index >= 0:
+            route.insert(destination_index, conflict_point)
+        else:
+            # Fallback: append if no destination found
+            route.append(conflict_point)
+
     for conflict in conflicts:
         flight1 = conflict.get('flight1', '')
         flight2 = conflict.get('flight2', '')
@@ -659,15 +704,14 @@ def add_conflict_specific_points(interpolated_data: Dict[str, List[Dict]], confl
         alt1 = conflict.get('alt1', 0)
         alt2 = conflict.get('alt2', 0)
 
-        # Convert minutes after departure to UTC time for conflict points
         # Event starts at 14:00 (840 minutes), so add conflict minutes to get UTC
         event_start_minutes = 14 * 60  # 14:00 = 840 minutes
         utc_time1 = minutes_to_utc_hhmm(time1 + event_start_minutes)
         utc_time2 = minutes_to_utc_hhmm(time2 + event_start_minutes)
-        
-        # Insert conflict point for flight1
+
+        # Insert conflict point for flight1 at correct distance position
         if flight1 in updated_data:
-            updated_data[flight1].append({
+            conflict_point1 = {
                 'lat': lat1,
                 'lon': lon1,
                 'altitude': alt1,
@@ -675,10 +719,11 @@ def add_conflict_specific_points(interpolated_data: Dict[str, List[Dict]], confl
                 'name': f"CONFLICT_{flight2}",
                 'segment': 'conflict_point',
                 'interpolation_point': 999
-            })
-        # Insert conflict point for flight2
+            }
+            insert_by_distance(updated_data[flight1], conflict_point1)
+        # Insert conflict point for flight2 at correct distance position
         if flight2 in updated_data:
-            updated_data[flight2].append({
+            conflict_point2 = {
                 'lat': lat2,
                 'lon': lon2,
                 'altitude': alt2,
@@ -686,18 +731,8 @@ def add_conflict_specific_points(interpolated_data: Dict[str, List[Dict]], confl
                 'name': f"CONFLICT_{flight1}",
                 'segment': 'conflict_point',
                 'interpolation_point': 999
-            })
-    # Sort all points for each flight by time (minutes after departure)
-    def safe_time_key(x):
-        t = x.get('time', 0)
-        if isinstance(t, str):
-            try:
-                return float(t)
-            except ValueError:
-                return 0
-        return t
-    for flight_id in updated_data:
-        updated_data[flight_id].sort(key=safe_time_key)
+            }
+            insert_by_distance(updated_data[flight2], conflict_point2)
     return updated_data
 
 # =============================================================================

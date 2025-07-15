@@ -184,7 +184,15 @@ class AnimationDataGenerator:
             
             # Extract departure and arrival from waypoints
             departure = waypoints[0].get('name', '') if waypoints else ''
-            arrival = waypoints[-1].get('name', '') if waypoints else ''
+            
+            # Find the actual destination (last waypoint with a name that's not a conflict)
+            arrival = ''
+            for i in range(len(waypoints) - 1, -1, -1):
+                waypoint = waypoints[i]
+                name = waypoint.get('name', '')
+                if name and not name.startswith('CONFLICT_'):
+                    arrival = name
+                    break
             
             # Build track waypoints
             track_waypoints = []

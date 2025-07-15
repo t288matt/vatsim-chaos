@@ -24,7 +24,8 @@
       z-index: 10; 
       font-family: Arial, sans-serif; 
       max-width: 450px; 
-      max-height: 200px; 
+      max-height: 500px; 
+      height: 500px;
       overflow-y: auto;
       border-left: 3px solid #00ff88;
     }
@@ -358,15 +359,19 @@
       } else {
         logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId}</span> departed (scheduled: ${scheduledTime})`;
       }
+      
+      // Check if we're at the bottom before adding new entry
+      const wasAtBottom = logsDiv.scrollTop + logsDiv.clientHeight >= logsDiv.scrollHeight - 1;
+      
       logsDiv.appendChild(logEntry);
       
-      // Keep only last 10 entries to prevent overflow
-      while (logsDiv.children.length > 10) {
-        logsDiv.removeChild(logsDiv.firstChild);
-      }
+      // Don't remove any entries - let the scroll handle overflow naturally
+      // The commentary box will scroll when it gets full
       
-      // Auto-scroll to bottom
-      logsDiv.scrollTop = logsDiv.scrollHeight;
+      // Auto-scroll to bottom only if we were already at the bottom
+      if (wasAtBottom) {
+        logsDiv.scrollTop = logsDiv.scrollHeight;
+      }
     }
     // Highlight selected flight
     viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
