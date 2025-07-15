@@ -653,6 +653,126 @@ class ConflictScheduler:
         
         output.append("")
         
+        # Helper function to abbreviate phase names
+        def abbreviate_phase(phase):
+            if not phase:
+                return ""
+            phase_upper = phase.upper()
+            if phase_upper in ["CLIMB", "CLB"]:
+                return "CLB"
+            elif phase_upper in ["DESCENT", "DESC", "DSC"]:
+                return "DSC"
+            elif phase_upper in ["CRUISE", "CRS"]:
+                return "CRS"
+            else:
+                return phase.upper()[:3]  # Take first 3 chars if unknown
+
+        # Flights without conflict section
+        output.append("")
+        output.append("FLIGHTS WITHOUT CONFLICT:")
+        output.append("------------------------------")
+        output.append("Takeoff Time | Flight | Origin-Dest | Aircraft | Level | Route")
+        output.append("--------------------------------------------------------------------------------")
+        for flight, data in sorted(scheduled_flights.items(), key=lambda x: x[1]['departure_time']):
+            if not data['conflicts']:
+                departure_str = datetime_to_utc_hhmm(data['departure_time'])
+                flight_data = flights_dict.get(flight, {})
+                aircraft_type = flight_data.get('aircraft_type', 'UNK')
+                origin = flight_data.get('origin', 'UNK')
+                destination = flight_data.get('destination', 'UNK')
+                origin_dest = f"{origin}-{destination}"
+                route = flight_data.get('route', 'DCT')
+                level = "FL360"
+                waypoints = flight_data.get('waypoints', [])
+                if waypoints:
+                    max_alt = max((wp.get('altitude', 0) for wp in waypoints), default=36000)
+                    if max_alt > 0:
+                        if max_alt < TRANSITION_ALTITUDE_FT:
+                            level = f"{max_alt}"
+                        else:
+                            level = f"FL{max_alt//100:02d}"
+                output.append(f"{departure_str:>10} | {flight:>6} | {origin_dest:>12} | {aircraft_type:>8} | {level:>5} | {route}")
+        output.append("")
+        # Conflict log section
+        output.append("CONFLICT LOG:")
+        output.append("-" * 30)
+        output.append("Time  | FLT 1 v FLT 2 | Phase      | Altitude")
+        output.append("-" * 50)
+        
+        # Load original conflict data to get proper stage and altitude info
+        original_conflicts = {}
+        try:
+            with open('temp/potential_conflict_data.json', 'r') as f:
+                conflict_data = json.load(f)
+                for conflict in conflict_data.get('potential_conflicts', []):
+                    key = f"{conflict['flight1']}_{conflict['flight2']}"
+                    original_conflicts[key] = conflict
+        except:
+            pass
+        
+        # Collect all conflicts (avoid duplicates: only log each pair once, with the earlier flight as FLT 1)
+        conflict_rows = []
+        for flight, data in scheduled_flights.items():
+            for conflict in data['conflicts']:
+                other_flight = conflict['other_flight']
+                if flight < other_flight:
+                    # Calculate conflict time as departure_time + conflict['conflict_time']
+                    departure_time = data['departure_time']
+                    conflict_time_minutes = conflict.get('conflict_time', None)
+                    if conflict_time_minutes is not None:
+                        rounded_minutes = round(conflict_time_minutes)
+                        conflict_time = departure_time + timedelta(minutes=rounded_minutes)
+                        time_str = datetime_to_utc_hhmm(conflict_time)
+                    else:
+                        time_str = ""
+                    
+                    # Flight pair
+                    flight_pair = f"{flight} v {other_flight}"
+                    
+                    # Phase (both flights)
+                    phase1 = conflict.get('phase', '')
+                    phase2 = conflict.get('phase_other', '')
+                    
+                    # Get original conflict data for proper phases and altitude
+                    conflict_key = f"{flight}_{other_flight}"
+                    if conflict_key in original_conflicts:
+                        orig_conflict = original_conflicts[conflict_key]
+                        stage1 = orig_conflict.get('stage1', phase1)
+                        stage2 = orig_conflict.get('stage2', phase2)
+                        alt1 = orig_conflict.get('alt1', None)
+                    else:
+                        stage1 = phase1
+                        stage2 = phase2
+                        alt1 = conflict.get('altitude', None)
+                    
+                    # Abbreviate phases
+                    stage1_abbr = abbreviate_phase(stage1)
+                    stage2_abbr = abbreviate_phase(stage2)
+                    phase_display = f"{stage1_abbr}/{stage2_abbr}"
+                    
+                    # Altitude (use the same FL/ft logic as elsewhere)
+                    if alt1 is not None:
+                        if alt1 < TRANSITION_ALTITUDE_FT:
+                            alt_display = f"{alt1}ft"
+                        else:
+                            alt_display = f"FL{alt1//100:02d}"
+                    else:
+                        alt_display = ""
+                    
+                    conflict_rows.append((time_str, flight_pair, phase_display, alt_display))
+        
+        # Sort conflicts by time
+        conflict_rows.sort(key=lambda x: x[0] if x[0] else "")
+        
+        # Add conflict rows to output
+        for time_str, flight_pair, phase_display, alt_display in conflict_rows:
+            output.append(f"{time_str:<6} | {flight_pair:<13} | {phase_display:<11} | {alt_display}")
+        
+        if not conflict_rows:
+            output.append("No conflicts detected")
+        
+        output.append("")
+
         # Full flight details section
         output.append("DETAILED FLIGHT INFORMATION:")
         output.append("-" * 35)
