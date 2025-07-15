@@ -1109,12 +1109,7 @@ def print_and_write_conflict_report(data: Dict[str, Any], output_file: str = CON
 # MAIN EXECUTION
 # =============================================================================
 
-def find_xml_files() -> List[str]:
-    """Find all XML files in the current directory."""
-    xml_files = [f for f in os.listdir('.') if f.endswith('.xml')]
-    return xml_files
-
-def extract_flight_plans(xml_files: List[str]) -> List[FlightPlan]:
+def extract_flight_plans() -> List[FlightPlan]:
     """
     Extract flight plans from individual JSON files in temp directory.
     
@@ -1224,21 +1219,8 @@ def main() -> None:
     print("Find Potential Conflicts for ATC Event Scenarios")
     print("=" * 60)
     
-    # Find XML files
-    xml_files = find_xml_files()
-    if not xml_files:
-        print("No XML files found in the current directory")
-        logging.error("No XML files found in current directory")
-        return
-    
-    print(f"Found {len(xml_files)} XML files to analyze:")
-    for xml_file in xml_files:
-        print(f"   - {xml_file}")
-    
-    print("\n" + "=" * 60)
-    
-    # Extract flight plans
-    flight_plans = extract_flight_plans(xml_files)
+    # Extract flight plans from processed JSON files
+    flight_plans = extract_flight_plans()
     
     # Store all routes with interpolated points for animation accuracy
     routes_with_interpolated = {}

@@ -464,9 +464,13 @@ def main():
             import shutil
             shutil.rmtree(temp_dir)
             print("Removed existing temp directory: temp")
-        xml_files = [f for f in os.listdir('.') if f.endswith('.xml')]
+        xml_dir = "xml_files"
+        if not os.path.exists(xml_dir):
+            print(f"XML directory {xml_dir} not found")
+            exit(1)
+        xml_files = [f for f in os.listdir(xml_dir) if f.endswith('.xml')]
         if not xml_files:
-            print(f"No XML files found in the current directory")
+            print(f"No XML files found in the {xml_dir} directory")
             exit(1)
         print(f"Found {len(xml_files)} XML files to process:")
         for xml_file in xml_files:
@@ -479,12 +483,13 @@ def main():
         
         success_count = 0
         for xml_filename in xml_files:
+            xml_path = os.path.join(xml_dir, xml_filename)
             print(f"Processing {xml_filename}...")
             print("----------------------------------------")
             
             # Extract basic info first to determine flight ID
             try:
-                tree = ET.parse(xml_filename)
+                tree = ET.parse(xml_path)
                 root = tree.getroot()
                 origin_elem = root.find('origin')
                 dest_elem = root.find('destination')
@@ -502,7 +507,7 @@ def main():
                 print(f"Error reading basic flight info from {xml_filename}: {e}")
                 continue
             
-            flight_plan = extract_flight_plan_from_xml(xml_filename, flight_id)
+            flight_plan = extract_flight_plan_from_xml(xml_path, flight_id)
             if not flight_plan:
                 print(f"Failed to extract flight plan from {xml_filename}")
                 continue
