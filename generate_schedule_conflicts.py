@@ -593,7 +593,7 @@ class ConflictScheduler:
         return "\n".join(output)
     
     def generate_briefing_output(self, scheduled_flights: Dict, original_data: Dict) -> str:
-        """Generate ATC briefing document."""
+        """Generate ATC briefing document with full flight details."""
         output = []
         output.append("ATC CONFLICT EVENT BRIEFING")
         output.append("=" * 50)
@@ -653,36 +653,96 @@ class ConflictScheduler:
         
         output.append("")
         
-        # Conflict analysis with timing
-        output.append("CONFLICT ANALYSIS:")
+        # Full flight details section
+        output.append("DETAILED FLIGHT INFORMATION:")
+        output.append("-" * 35)
+        
+        for flight, data in sorted(scheduled_flights.items(), key=lambda x: x[1]['departure_time']):
+            flight_data = flights_dict.get(flight, {})
+            departure_str = datetime_to_utc_hhmm(data['departure_time'])
+            
+            output.append(f"\n{flight} - {flight_data.get('aircraft_type', 'UNK')}")
+            output.append(f"  Route: {flight_data.get('origin', 'UNK')} -> {flight_data.get('destination', 'UNK')}")
+            output.append(f"  Departure: {departure_str}")
+            output.append(f"  Aircraft: {flight_data.get('aircraft_type', 'UNK')}")
+            
+            # Flight profile with proper FL/ft display
+            waypoints = flight_data.get('waypoints', [])
+            if waypoints:
+                output.append("  Flight Profile:")
+                for i, wp in enumerate(waypoints):
+                    wp_name = wp.get('name', f'WP{i+1}')
+                    wp_alt = wp.get('altitude', 0)
+                    
+                    # Format altitude with proper FL/ft concept
+                    if wp_alt < TRANSITION_ALTITUDE_FT:
+                        alt_display = f"{wp_alt}ft"
+                    else:
+                        alt_display = f"FL{wp_alt//100:02d}"
+                    
+                    output.append(f"    {wp_name}: {alt_display}")
+            
+            # Conflict information
+            if data['conflicts']:
+                output.append("  Conflicts:")
+                for conflict in data['conflicts']:
+                    other_flight = conflict['other_flight']
+                    other_aircraft_type = flights_dict.get(other_flight, {}).get('aircraft_type', 'UNK')
+                    
+                    # Calculate conflict time
+                    departure_time = data['departure_time']
+                    conflict_time_minutes = conflict['conflict_time']
+                    rounded_minutes = round(conflict_time_minutes)
+                    rounded_time = departure_time + timedelta(minutes=rounded_minutes)
+                    conflict_time_str = datetime_to_utc_hhmm(rounded_time)
+                    
+                    # Format altitude difference with proper units
+                    alt_diff = conflict['altitude_diff']
+                    if alt_diff < TRANSITION_ALTITUDE_FT:
+                        alt_diff_display = f"{alt_diff}ft"
+                    else:
+                        alt_diff_display = f"FL{alt_diff//100:02d}"
+                    
+                    output.append(f"    - With {other_flight} ({other_aircraft_type}) at {conflict['location']}")
+                    output.append(f"      Time: {conflict_time_str} (departure +{rounded_minutes}min)")
+                    output.append(f"      Distance: {conflict['distance']:.1f}nm, Alt diff: {alt_diff_display}")
+                    output.append(f"      Phase: {conflict['phase']}")
+            else:
+                output.append("  Conflicts: None")
+        
+        output.append("")
+        
+        # Conflict analysis summary
+        output.append("CONFLICT ANALYSIS SUMMARY:")
         output.append("-" * 30)
         
         total_conflicts = 0
         for flight, data in scheduled_flights.items():
             if data['conflicts']:
-                # Get aircraft type for this flight
                 flight_aircraft_type = flights_dict.get(flight, {}).get('aircraft_type', 'UNK')
                 output.append(f"\n{flight} ({flight_aircraft_type}) conflicts:")
                 for conflict in data['conflicts']:
                     total_conflicts += 1
                     
-                    # Get aircraft type for the other flight
                     other_flight = conflict['other_flight']
                     other_aircraft_type = flights_dict.get(other_flight, {}).get('aircraft_type', 'UNK')
                     
-                    # Calculate conflict time based on departure time and flight duration to conflict
                     departure_time = data['departure_time']
                     conflict_time_minutes = conflict['conflict_time']
-                    conflict_actual_time = departure_time + timedelta(minutes=conflict_time_minutes)
-                    
-                    # Round the displayed time to nearest minute while keeping decimal precision for calculations
                     rounded_minutes = round(conflict_time_minutes)
                     rounded_time = departure_time + timedelta(minutes=rounded_minutes)
                     conflict_time_str = datetime_to_utc_hhmm(rounded_time)
                     
+                    # Format altitude difference
+                    alt_diff = conflict['altitude_diff']
+                    if alt_diff < TRANSITION_ALTITUDE_FT:
+                        alt_diff_display = f"{alt_diff}ft"
+                    else:
+                        alt_diff_display = f"FL{alt_diff//100:02d}"
+                    
                     output.append(f"  - With {other_flight} ({other_aircraft_type}) at {conflict['location']}")
                     output.append(f"    Time: {conflict_time_str} (departure +{rounded_minutes}min)")
-                    output.append(f"    Distance: {conflict['distance']:.1f}nm, Alt diff: {conflict['altitude_diff']}ft")
+                    output.append(f"    Distance: {conflict['distance']:.1f}nm, Alt diff: {alt_diff_display}")
                     output.append(f"    Phase: {conflict['phase']}")
         
         output.append(f"\nTotal conflicts: {total_conflicts}")
@@ -849,7 +909,7 @@ class ConflictScheduler:
         try:
             # ATC briefing
             briefing_text = self.generate_briefing_output(scheduled_flights, data)
-            with open(BRIEFING_OUTPUT_FILE, 'w') as f:
+            with open(BRIEFING_OUTPUT_FILE, 'w', encoding='utf-8') as f:
                 f.write(briefing_text)
 
             print("OK: Scheduling complete!")
