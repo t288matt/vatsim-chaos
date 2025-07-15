@@ -43,13 +43,146 @@ import json
 import os
 import sys
 from datetime import datetime, timedelta
-from typing import Dict, List, Tuple, Optional, Set
+from typing import Dict, List, Tuple, Optional, Set, Any
 import logging
-from env import MIN_DEPARTURE_SEPARATION_MINUTES, MIN_SAME_ROUTE_SEPARATION_MINUTES, BATCH_SIZE
+from collections import defaultdict
+from env import (MIN_DEPARTURE_SEPARATION_MINUTES, MIN_SAME_ROUTE_SEPARATION_MINUTES, BATCH_SIZE,
+                TIME_TOLERANCE_MINUTES, MAX_DEPARTURE_TIME_MINUTES, DEPARTURE_TIME_STEP_MINUTES)
+from shared_types import FlightPlan, Waypoint
 
 # Configuration
 CONFLICT_ANALYSIS_FILE = "temp/potential_conflict_data.json"
 BRIEFING_OUTPUT_FILE = "pilot_briefing.txt"
+
+# =============================================================================
+# SCHEDULING FUNCTIONS (Moved from find_potential_conflicts.py)
+# =============================================================================
+
+def optimize_departure_times(flight_plans: List[FlightPlan], potential_conflicts: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Optimize departure times to maximize conflicts.
+    Enforce: No two flights can depart from the same airport within 2 minutes of each other.
+    """
+    # Group conflicts by flight pairs
+    conflict_groups = defaultdict(list)
+    for conflict in potential_conflicts:
+        key = (conflict['flight1_idx'], conflict['flight2_idx'])
+        conflict_groups[key].append(conflict)
+    
+    # Start with first flight at time 0
+    departure_times = {0: 0}
+    conflict_scores = defaultdict(int)
+    flight_origin = {i: fp.origin for i, fp in enumerate(flight_plans)}
+    
+    # For each flight pair, find the best departure time for the second flight
+    for (flight1_idx, flight2_idx), conflicts in conflict_groups.items():
+        if flight1_idx == 0:  # First flight is our reference
+            # Find the time difference that creates the most conflicts
+            time_diffs = []
+            for conflict in conflicts:
+                time_diff = abs(conflict['time1'] - conflict['time2'])
+                time_diffs.append(time_diff)
+            
+            # Use the most common time difference, or average if multiple
+            if time_diffs:
+                suggested_time = sum(time_diffs) / len(time_diffs)
+                # Enforce 2-min separation from same-origin flights
+                origin = flight_origin[flight2_idx]
+                candidate_time = int(suggested_time)
+                while any(abs(candidate_time - t) < MIN_DEPARTURE_SEPARATION_MINUTES and flight_origin[idx] == origin for idx, t in departure_times.items() if idx != flight2_idx):
+                    candidate_time += MIN_DEPARTURE_SEPARATION_MINUTES
+                departure_times[flight2_idx] = candidate_time
+                # Count how many conflicts this creates
+                for conflict in conflicts:
+                    conflict_scores[flight2_idx] += 1
+    
+    # For remaining flights, find best departure times
+    remaining_flights = set(range(len(flight_plans))) - set(departure_times.keys())
+    for flight_idx in remaining_flights:
+        best_time = 0
+        best_score = 0
+        origin = flight_origin[flight_idx]
+        
+        for test_time in range(0, MAX_DEPARTURE_TIME_MINUTES, DEPARTURE_TIME_STEP_MINUTES):
+            # Enforce 2-min separation from same-origin flights
+            if any(abs(test_time - t) < MIN_DEPARTURE_SEPARATION_MINUTES and flight_origin[idx] == origin for idx, t in departure_times.items() if idx != flight_idx):
+                continue
+            
+            score = 0
+            for conflict in potential_conflicts:
+                if conflict['flight1_idx'] == flight_idx or conflict['flight2_idx'] == flight_idx:
+                    other_flight = conflict['flight2_idx'] if conflict['flight1_idx'] == flight_idx else conflict['flight1_idx']
+                    if other_flight in departure_times:
+                        other_time = departure_times[other_flight]
+                        flight_time = conflict['time1'] if conflict['flight1_idx'] == flight_idx else conflict['time2']
+                        other_conflict_time = conflict['time2'] if conflict['flight1_idx'] == flight_idx else conflict['time1']
+                        
+                        if conflict['flight1_idx'] == flight_idx:
+                            conflict_time = other_time + other_conflict_time
+                            suggested_departure = conflict_time - flight_time
+                        else:
+                            conflict_time = other_time + other_conflict_time
+                            suggested_departure = conflict_time - flight_time
+                        
+                        if abs(test_time - suggested_departure) < TIME_TOLERANCE_MINUTES:
+                            score += 1
+            
+            if score > best_score:
+                best_score = score
+                best_time = test_time
+        
+        departure_times[flight_idx] = int(best_time)
+        conflict_scores[flight_idx] = best_score
+    
+    return {
+        'departure_times': departure_times,
+        'conflict_scores': conflict_scores
+    }
+
+
+def generate_conflict_scenario(flight_plans: List[FlightPlan], potential_conflicts: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Generate a complete conflict scenario with departure times.
+    
+    Args:
+        flight_plans: List of flight plans
+        potential_conflicts: List of detected conflicts
+    
+    Returns:
+        Complete conflict scenario with departure schedule and actual conflicts
+    """
+    # Optimize departure times
+    optimization = optimize_departure_times(flight_plans, potential_conflicts)
+    departure_times = optimization['departure_times']
+    conflict_scores = optimization['conflict_scores']
+    
+    # Calculate potential conflicts with departure times
+    potential_conflicts_with_timing = []
+    for conflict in potential_conflicts:
+        flight1_idx = conflict['flight1_idx']
+        flight2_idx = conflict['flight2_idx']
+        if flight1_idx in departure_times and flight2_idx in departure_times:
+            # Calculate when each aircraft reaches the conflict point
+            flight1_arrival = departure_times[flight1_idx] + conflict['time1']
+            flight2_arrival = departure_times[flight2_idx] + conflict['time2']
+            potential_conflict_with_timing = dict(conflict)
+            potential_conflict_with_timing['flight1_arrival'] = flight1_arrival
+            potential_conflict_with_timing['flight2_arrival'] = flight2_arrival
+            potential_conflict_with_timing['time_diff'] = abs(flight1_arrival - flight2_arrival)
+            potential_conflicts_with_timing.append(potential_conflict_with_timing)
+    
+    return {
+        'departure_schedule': [
+            {
+                'flight': f"{flight_plans[i].origin}-{flight_plans[i].destination}",
+                'departure_time': departure_times[i],
+                'conflict_score': conflict_scores.get(i, 0)
+            }
+            for i in range(len(flight_plans))
+        ],
+        'potential_conflicts': potential_conflicts_with_timing,
+        'total_conflicts': len(potential_conflicts_with_timing)
+    }
 
 def datetime_to_utc_hhmm(dt) -> str:
     return dt.strftime('%H%M')

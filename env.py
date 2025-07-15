@@ -60,4 +60,18 @@ BATCH_SIZE = 1
 
 # Distance between interpolated route points (nautical miles)
 # Smaller values create more detailed route analysis but increase processing time
-INTERPOLATION_SPACING_NM = 1.5 
+INTERPOLATION_SPACING_NM = 1.5
+
+# =============================================================================
+# SCHEDULING OPTIMIZATION PARAMETERS
+# =============================================================================
+
+# Time tolerance for departure time optimization (minutes)
+# Allows flexibility when optimizing departure times for conflict maximization
+TIME_TOLERANCE_MINUTES = 2
+
+# Maximum departure time range for optimization (minutes)
+MAX_DEPARTURE_TIME_MINUTES = 120
+
+# Step size for departure time optimization (minutes)
+DEPARTURE_TIME_STEP_MINUTES = 5 
