@@ -46,8 +46,11 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Tuple, Optional, Set, Any
 import logging
 from collections import defaultdict
-from env import (MIN_DEPARTURE_SEPARATION_MINUTES, MIN_SAME_ROUTE_SEPARATION_MINUTES, BATCH_SIZE,
-                TIME_TOLERANCE_MINUTES, MAX_DEPARTURE_TIME_MINUTES, DEPARTURE_TIME_STEP_MINUTES)
+from env import (
+    MIN_DEPARTURE_SEPARATION_MINUTES, MIN_SAME_ROUTE_SEPARATION_MINUTES, BATCH_SIZE,
+    TIME_TOLERANCE_MINUTES, MAX_DEPARTURE_TIME_MINUTES, DEPARTURE_TIME_STEP_MINUTES,
+    TRANSITION_ALTITUDE_FT
+)
 from shared_types import FlightPlan, Waypoint
 
 # Configuration
@@ -602,15 +605,51 @@ class ConflictScheduler:
         # Flight schedule
         output.append("DEPARTURE SCHEDULE:")
         output.append("-" * 30)
+        output.append("Takeoff Time | Flight | Origin-Dest | Aircraft | Level | Route")
+        output.append("-" * 80)
         
-        # Get aircraft types from original data
-        flights_dict = original_data.get('flights', {})
+        # Load flight data from individual JSON files to get origin/destination
+        flights_dict = {}
+        temp_dir = "temp"
+        for flight in scheduled_flights.keys():
+            flight_file = os.path.join(temp_dir, f"{flight}_data.json")
+            if os.path.exists(flight_file):
+                try:
+                    with open(flight_file, 'r') as f:
+                        flight_data = json.load(f)
+                        flights_dict[flight] = flight_data
+                except Exception as e:
+                    print(f"Error loading {flight_file}: {e}")
         
         for flight, data in sorted(scheduled_flights.items(), key=lambda x: x[1]['departure_time']):
             departure_str = datetime_to_utc_hhmm(data['departure_time'])
             conflicts = len(data['conflicts'])
-            aircraft_type = flights_dict.get(flight, {}).get('aircraft_type', 'UNK')
-            output.append(f"{departure_str} - {flight} ({aircraft_type}) ({conflicts} conflicts)")
+            
+            # Get flight data from loaded files
+            flight_data = flights_dict.get(flight, {})
+            aircraft_type = flight_data.get('aircraft_type', 'UNK')
+            origin = flight_data.get('origin', 'UNK')
+            destination = flight_data.get('destination', 'UNK')
+            origin_dest = f"{origin}-{destination}"
+            
+            # Get route from flight data
+            route = flight_data.get('route', 'DCT')
+            
+            # Get level (altitude) - use cruise altitude if available
+            level = "FL360"  # Default level
+            waypoints = flight_data.get('waypoints', [])
+            if waypoints:
+                # Find the highest altitude in waypoints (cruise level)
+                max_alt = max((wp.get('altitude', 0) for wp in waypoints), default=36000)
+                if max_alt > 0:
+                    if max_alt < TRANSITION_ALTITUDE_FT:
+                        # Below transition altitude: show as plain number
+                        level = f"{max_alt}"
+                    else:
+                        # Above transition altitude: show as flight level
+                        level = f"FL{max_alt//100:02d}"
+            
+            output.append(f"{departure_str:>10} | {flight:>6} | {origin_dest:>12} | {aircraft_type:>8} | {level:>5} | {route}")
         
         output.append("")
         

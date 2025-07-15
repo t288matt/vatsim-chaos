@@ -75,3 +75,7 @@ MAX_DEPARTURE_TIME_MINUTES = 120
 
 # Step size for departure time optimization (minutes)
 DEPARTURE_TIME_STEP_MINUTES = 5 
+
+# Transition altitude for feet/flight level display in pilot briefing
+# Altitudes below this are shown in feet, above in flight levels
+TRANSITION_ALTITUDE_FT = 10500 
