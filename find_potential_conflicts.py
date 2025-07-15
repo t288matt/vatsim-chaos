@@ -39,6 +39,44 @@ from collections import defaultdict
 from dataclasses import dataclass
 from env import LATERAL_SEPARATION_THRESHOLD, VERTICAL_SEPARATION_THRESHOLD, MIN_ALTITUDE_THRESHOLD, DUPLICATE_FILTER_DISTANCE, MIN_DEPARTURE_SEPARATION_MINUTES
 from env import INTERPOLATION_SPACING_NM
+import argparse
+import json
+import os
+import sys
+from datetime import datetime, timedelta
+from typing import Dict, List, Tuple, Optional, Any, Set
+from dataclasses import dataclass
+import logging
+from env import (LATERAL_SEPARATION_THRESHOLD, VERTICAL_SEPARATION_THRESHOLD, 
+                MIN_ALTITUDE_THRESHOLD, DUPLICATE_FILTER_DISTANCE, NO_CONFLICT_AIRPORT_DISTANCES)
+
+# =============================================================================
+# CONFIGURATION
+# =============================================================================
+
+def load_airport_coordinates(json_path="airports.json") -> dict:
+    """Load airport coordinates from a JSON file."""
+    if not os.path.exists(json_path):
+        raise FileNotFoundError(f"Airport coordinates file not found: {json_path}")
+    with open(json_path, "r") as f:
+        return json.load(f)
+
+AIRPORT_COORDINATES = load_airport_coordinates()
+
+def parse_no_conflict_zones() -> Dict[str, float]:
+    """Parse NO_CONFLICT_AIRPORT_DISTANCES into airport code -> distance mapping."""
+    zones = {}
+    for zone in NO_CONFLICT_AIRPORT_DISTANCES:
+        if '/' in zone:
+            airport_code, distance_str = zone.split('/')
+            try:
+                distance = float(distance_str)
+                zones[airport_code] = distance
+            except ValueError:
+                print(f"Warning: Invalid distance format in {zone}")
+        else:
+            print(f"Warning: Invalid zone format: {zone}")
+    return zones
 
 # =============================================================================
 # ATC Conflict Detection Script
@@ -501,10 +539,71 @@ def is_conflict_valid(wp1: Waypoint, wp2: Waypoint, distance: float, altitude_di
     Returns:
         True if conflict criteria are met
     """
-    return (distance < LATERAL_SEPARATION_THRESHOLD and
-            altitude_diff < VERTICAL_SEPARATION_THRESHOLD and
-            wp1.altitude > MIN_ALTITUDE_THRESHOLD and
-            wp2.altitude > MIN_ALTITUDE_THRESHOLD)
+    # Basic conflict criteria
+    basic_conflict = (distance < LATERAL_SEPARATION_THRESHOLD and
+                     altitude_diff < VERTICAL_SEPARATION_THRESHOLD and
+                     wp1.altitude > MIN_ALTITUDE_THRESHOLD and
+                     wp2.altitude > MIN_ALTITUDE_THRESHOLD)
+    
+    if not basic_conflict:
+        return False
+    
+    # Check if conflict is within no-conflict zones around airports
+    no_conflict_zones = parse_no_conflict_zones()
+    
+    for airport_code, max_distance in no_conflict_zones.items():
+        if airport_code in AIRPORT_COORDINATES:
+            airport_lat, airport_lon = AIRPORT_COORDINATES[airport_code]
+            
+            # Check if either waypoint is within the no-conflict zone
+            airport_lat = AIRPORT_COORDINATES[airport_code]["lat"]
+            airport_lon = AIRPORT_COORDINATES[airport_code]["lon"]
+            dist1 = calculate_distance_nm(wp1.lat, wp1.lon, airport_lat, airport_lon)
+            dist2 = calculate_distance_nm(wp2.lat, wp2.lon, airport_lat, airport_lon)
+            
+            if dist1 < max_distance or dist2 < max_distance:
+                return False  # Conflict is within no-conflict zone
+    
+    return True
+
+def is_conflict_valid_segment(seg1: Dict, seg2: Dict, distance: float, altitude_diff: int) -> bool:
+    """
+    Check if a potential conflict between route segments meets the criteria.
+    
+    Args:
+        seg1, seg2: Route segments to check
+        distance: Lateral separation in nautical miles
+        altitude_diff: Vertical separation in feet
+    
+    Returns:
+        True if conflict criteria are met
+    """
+    # Basic conflict criteria
+    basic_conflict = (distance < LATERAL_SEPARATION_THRESHOLD and
+                     altitude_diff < VERTICAL_SEPARATION_THRESHOLD and
+                     seg1['altitude'] > MIN_ALTITUDE_THRESHOLD and
+                     seg2['altitude'] > MIN_ALTITUDE_THRESHOLD)
+    
+    if not basic_conflict:
+        return False
+    
+    # Check if conflict is within no-conflict zones around airports
+    no_conflict_zones = parse_no_conflict_zones()
+    
+    for airport_code, max_distance in no_conflict_zones.items():
+        if airport_code in AIRPORT_COORDINATES:
+            airport_lat, airport_lon = AIRPORT_COORDINATES[airport_code]
+            
+            # Check if either segment is within the no-conflict zone
+            airport_lat = AIRPORT_COORDINATES[airport_code]["lat"]
+            airport_lon = AIRPORT_COORDINATES[airport_code]["lon"]
+            dist1 = calculate_distance_nm(seg1['lat'], seg1['lon'], airport_lat, airport_lon)
+            dist2 = calculate_distance_nm(seg2['lat'], seg2['lon'], airport_lat, airport_lon)
+            
+            if dist1 < max_distance or dist2 < max_distance:
+                return False  # Conflict is within no-conflict zone
+    
+    return True
 
 def find_potential_conflicts(flight_plans: List[FlightPlan]) -> List[Dict[str, Any]]:
     """
@@ -588,10 +687,8 @@ def find_potential_conflicts(flight_plans: List[FlightPlan]) -> List[Dict[str, A
                     distance = calculate_distance_nm(seg1['lat'], seg1['lon'], seg2['lat'], seg2['lon'])
                     altitude_diff = abs(seg1['altitude'] - seg2['altitude'])
                     
-                    if (distance < LATERAL_SEPARATION_THRESHOLD and
-                        altitude_diff < VERTICAL_SEPARATION_THRESHOLD and
-                        seg1['altitude'] > MIN_ALTITUDE_THRESHOLD and
-                        seg2['altitude'] > MIN_ALTITUDE_THRESHOLD):
+                    # Use the same conflict validation logic for segments
+                    if is_conflict_valid_segment(seg1, seg2, distance, altitude_diff):
                         
                         segment_conflicts += 1
                         phase1 = get_phase_for_time(waypoints1, seg1['time'])

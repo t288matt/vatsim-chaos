@@ -33,6 +33,11 @@ MIN_ALTITUDE_THRESHOLD = 5000
 # Conflicts within this distance of each other are considered duplicates
 DUPLICATE_FILTER_DISTANCE = 4.0
 
+# No-conflict zones around airports (format: "ICAO_CODE/DISTANCE_NM")
+# Conflicts within these distances of airports are not counted
+# Example: ["YSSY/45"] means no conflicts within 45nm of Sydney Airport
+NO_CONFLICT_AIRPORT_DISTANCES = ["YSSY/35 "YSCB/15"]
+
 # =============================================================================
 # DEPARTURE SCHEDULING PARAMETERS
 # =============================================================================

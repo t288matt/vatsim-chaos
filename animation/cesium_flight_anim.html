@@ -29,6 +29,22 @@
       overflow-y: auto;
       border-left: 3px solid #00ff88;
     }
+    #conflict-commentary-box { 
+      position: absolute; 
+      bottom: 10px; 
+      left: 10px; 
+      background: rgba(0,0,0,0.8); 
+      color: #00ff88; 
+      padding: 12px; 
+      border-radius: 6px; 
+      z-index: 10; 
+      font-family: Arial, sans-serif; 
+      max-width: 450px; 
+      max-height: 500px; 
+      height: 500px;
+      overflow-y: auto;
+      border-left: 3px solid #00ff88;
+    }
     #commentary-box h4 { margin: 0 0 8px 0; color: #00ff88; font-size: 14px; }
     .departure-log { 
       font-size: 11px; 
@@ -38,6 +54,15 @@
     }
     .departure-time { color: #ffff00; font-weight: bold; }
     .flight-id { color: #00ffff; }
+    .conflict-log { 
+      font-size: 11px; 
+      margin: 2px 0; 
+      padding: 2px 0; 
+      border-bottom: 1px solid rgba(0,255,136,0.3);
+    }
+    .conflict-time { color: #ffff00; font-weight: bold; }
+    .conflict-flights { color: #00ffff; }
+    .conflict-distance { color: #ffff00; }
   </style>
 </head>
 <body>
@@ -59,6 +84,10 @@
   <div id="commentary-box">
     <h4>📢 Flight Commentary</h4>
     <div id="departure-logs"></div>
+  </div>
+  <div id="conflict-commentary-box">
+    <h4>⚠️ Conflict Commentary</h4>
+    <div id="conflict-logs"></div>
   </div>
   <script>
     // Auto-reload the page every 3 minutes (180,000 ms)
@@ -92,6 +121,7 @@
     let selectedFlightId = null;
     let departedFlights = new Set(); // Track which flights have departed
     let lastUpdateTime = 0; // Track last update time to avoid duplicate logs
+    let loggedConflicts = new Set(); // Track which conflicts have been logged
     document.getElementById('toggle-labels').onclick = () => {
       labelVisible = !labelVisible;
       flightEntities.forEach(e => {
@@ -198,8 +228,11 @@
         try {
           const conflictResponse = await fetch('conflict_points.json');
           if (conflictResponse.ok) {
-            const conflictText = await conflictResponse.text();
-            conflicts = JSON.parse(conflictText);
+            const conflictData = await conflictResponse.json();
+            conflicts = conflictData;
+            console.log('Loaded conflicts:', conflicts);
+            
+
             console.log('Loaded conflicts from conflict_points.json:', conflicts.length);
           } else {
             console.warn('Conflict points file not found, using empty conflicts array');
@@ -358,6 +391,29 @@
         // Show conflict only if current time matches exactly the conflict time
         return minutes === conflictTime;
       });
+      
+      // Log new conflicts to commentary
+      activeConflicts.forEach(conflict => {
+        const conflictKey = `${conflict.flight1}_${conflict.flight2}_${conflict.conflict_time}`;
+        if (!loggedConflicts.has(conflictKey)) {
+          loggedConflicts.add(conflictKey);
+          
+          // Add conflict to commentary
+          const conflictLogsContainer = document.getElementById('conflict-logs');
+          const conflictTime = minutesToTimeString(minutes);
+          const conflictLog = document.createElement('div');
+          conflictLog.className = 'conflict-log';
+          conflictLog.innerHTML = `
+            <span class="conflict-time">${conflictTime}</span> - 
+            <span class="conflict-flights">${conflict.flight1} vs ${conflict.flight2}</span><br>
+            <span class="conflict-distance">Distance: ${conflict.distance.toFixed(1)}nm, Alt: ${conflict.altitude}ft</span>
+          `;
+          conflictLogsContainer.appendChild(conflictLog);
+          
+          // Auto-scroll to bottom
+          conflictLogsContainer.scrollTop = conflictLogsContainer.scrollHeight;
+        }
+      });
       const alertsDiv = document.getElementById('conflict-alerts');
       alertsDiv.innerHTML = '';
       activeConflicts.forEach(conflict => {
@@ -419,9 +475,9 @@
       if (flight) {
         const route = `${flight.departure}-${flight.arrival}`;
         const acftType = flight.aircraft_type || 'UNK';
-        logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId} (${acftType}) (${route})</span> departed (scheduled: ${scheduledTime})`;
+        logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId} (${acftType}) (${route})</span> departed`;
       } else {
-        logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId}</span> departed (scheduled: ${scheduledTime})`;
+        logEntry.innerHTML = `<span class="departure-time">${currentTime}</span> - <span class="flight-id">${flightId}</span> departed`;
       }
       
       // Check if we're at the bottom before adding new entry
