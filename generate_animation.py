@@ -59,6 +59,7 @@ class AnimationDataGenerator:
         self.conflicts = []
         self.schedule = {}
         self.event_start_time = None
+        self.event_end_time = None
         self.animation_data = {
             'metadata': {
                 'total_flights': 0,
@@ -95,9 +96,18 @@ class AnimationDataGenerator:
             if not self.schedule:
                 logger.error("No departures found in schedule!")
                 return False
-            # Find earliest departure time
-            self.event_start_time = min(self.schedule.values())
-            logger.info(f"Loaded schedule for {len(self.schedule)} flights from interpolated points metadata. Event start time: {self.event_start_time}")
+            
+            # Use event start and end times from metadata if available
+            if 'event_start' in routes['_metadata'] and 'event_end' in routes['_metadata']:
+                self.event_start_time = routes['_metadata']['event_start']
+                self.event_end_time = routes['_metadata']['event_end']
+                logger.info(f"Using event times from metadata: {self.event_start_time} - {self.event_end_time}")
+            else:
+                # Fallback to earliest departure time
+                self.event_start_time = min(self.schedule.values())
+                logger.info(f"Using earliest departure time as event start: {self.event_start_time}")
+            
+            logger.info(f"Loaded schedule for {len(self.schedule)} flights from interpolated points metadata.")
             return True
         except Exception as e:
             logger.warning(f"Failed to load schedule from interpolated points: {e}")
@@ -379,7 +389,9 @@ class AnimationDataGenerator:
             self.animation_data['metadata'].update({
                 'total_flights': len(tracks),
                 'total_conflicts': len(filtered_conflicts),
-                'event_duration': len(timeline)
+                'event_duration': len(timeline),
+                'event_start': self.event_start_time,
+                'event_end': self.event_end_time
             })
             
             self.animation_data['flights'] = tracks

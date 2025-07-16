@@ -84,6 +84,14 @@ def audit_conflicts():
         out.write('For each flight, all conflicts it is involved in are listed.\n')
         out.write('Columns: Source | Flight | Aircraft Type | Departure Time | Time (UTC) | Lat | Lon | Alt | Altitude Diff | Distance\n')
         out.write('Note: Departure Time column shows scheduled departure times to verify scheduling algorithm accuracy.\n\n')
+        
+        # Display event time window from metadata
+        if '_metadata' in interp:
+            metadata = interp['_metadata']
+            if 'event_start' in metadata and 'event_end' in metadata:
+                out.write(f'## Event Time Window: {metadata["event_start"]} - {metadata["event_end"]}\n\n')
+            if 'total_flights' in metadata and 'total_conflicts' in metadata:
+                out.write(f'## Summary: {metadata["total_flights"]} flights, {metadata["total_conflicts"]} conflicts\n\n')
         for flight in sorted(flight_conflicts.keys()):
             out.write(f'## Flight: {flight}\n')
             for idx, c, this_flight in flight_conflicts[flight]:
