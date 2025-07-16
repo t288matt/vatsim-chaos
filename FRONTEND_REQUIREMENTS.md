@@ -88,7 +88,7 @@ Web-based user interface for the ATC Conflict Analysis System, providing a brows
 ### 3. Map Visualization (Right Panel)
 
 #### Cesium Integration
-- **Embedded viewer**: Use existing `cesium_flight_anim.html` as embedded component
+- **Embedded viewer**: Use existing `animation.html` as embedded component
 - **Full-screen map**: Map takes up the majority of the right panel
 - **Responsive design**: Map resizes with browser window
 - **Interactive controls**: Maintain all existing Cesium controls and features

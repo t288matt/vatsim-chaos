@@ -116,7 +116,7 @@ python generate_schedule_conflicts.py --start 14:00 --end 18:00
 python generate_animation.py
 
 # 8. Open the visualization
-Open animation/cesium_flight_anim.html in your browser
+Open animation/animation.html in your browser
 
 # 9. Run data integrity audit (optional)
 python audit_conflict.py  # Generates audit_conflict_output.txt with raw data comparison
@@ -132,7 +132,7 @@ python audit_conflict.py  # Generates audit_conflict_output.txt with raw data co
 - `animation/animation_data.json` - Animation data for Cesium (simplified structure, no x/y fields)
 
 - `animation/conflict_points.json` - Conflict location/timing (filtered by altitude)
-- `animation/cesium_flight_anim.html` - 3D web visualization
+- `animation/animation.html` - 3D web visualization
 - `audit_conflict_output.txt` - **Raw data audit report** (Markdown tables showing exact values across all data sources)
 
 ## System Architecture
@@ -284,7 +284,7 @@ This ensures the generated XML files contain realistic altitude profiles that ma
 
 ### Visualization
 - `merged_flightplans.kml` - Combined KML file for Google Earth viewing
-- `animation/cesium_flight_anim.html` - 3D animated web visualization (CesiumJS)
+- `animation/animation.html` - 3D animated web visualization (CesiumJS)
 - 40 diverse colors for easy route identification
 
 ## Web Visualization Features

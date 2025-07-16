@@ -224,7 +224,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │  │  • animation/animation_data.json - Complete animation data (simplified)                                                           │  │
 
 │  │  • animation/conflict_points.json - Conflict locations                                                                           │  │
-│  │  • animation/cesium_flight_anim.html - 3D web visualization                                                                      │  │
+│  │  • animation/animation.html - 3D web visualization                                                                      │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │

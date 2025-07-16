@@ -160,7 +160,7 @@ The original algorithm incorrectly prioritized flights with "most conflicts" and
 - **Eliminated XML dependency**: Now uses only the single source of truth
 
 ### 5. Visualization Layer
-**Files**: `merge_kml_flightplans.py`, `animation/cesium_flight_anim.html`
+**Files**: `merge_kml_flightplans.py`, `animation/animation.html`
 
 **Responsibilities**:
 - Merge KML files for Google Earth
