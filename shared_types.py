@@ -110,7 +110,13 @@ class FlightPlan:
             all_waypoints.append(self.departure)
         all_waypoints.extend(self.waypoints)
         if self.arrival:
-            all_waypoints.append(self.arrival)
+            # Check if the last waypoint is already the destination airport
+            if self.waypoints and self.waypoints[-1].name == self.arrival.name:
+                # Skip adding arrival waypoint if it's already the last waypoint
+                # This prevents duplicate destination waypoints with wrong timestamps
+                pass
+            else:
+                all_waypoints.append(self.arrival)
         return all_waypoints
     
     def get_route_identifier(self) -> str:

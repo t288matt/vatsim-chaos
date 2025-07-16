@@ -94,7 +94,7 @@ def parse_waypoint_from_fix(fix_element) -> Optional[Waypoint]:
         print(f"Error parsing waypoint {ident}: {e}")
         return None
 
-def parse_airport_info(airport_element) -> Optional[Waypoint]:
+def parse_airport_info(airport_element, is_arrival: bool = False) -> Optional[Waypoint]:
     """Parse airport information from origin/destination elements"""
     try:
         icao = airport_element.findtext('icao_code', '')
@@ -116,7 +116,10 @@ def parse_airport_info(airport_element) -> Optional[Waypoint]:
         lon = float(lon_str)
         elevation = int(float(elevation_str))
         
-        return Waypoint(name, lat, lon, elevation, 0, "DEP", "airport")
+        # For arrival airports, we'll set the time later when we know the actual arrival time
+        # For now, use 0 as placeholder - it will be corrected in the flight plan processing
+        stage = "ARR" if is_arrival else "DEP"
+        return Waypoint(name, lat, lon, elevation, 0, stage, "airport")
         
     except (ValueError, TypeError) as e:
         print(f"Error parsing airport {icao}: {e}")
@@ -162,7 +165,7 @@ def extract_flight_plan_from_xml(xml_file: str, flight_id: str = "") -> Optional
         
         # Parse arrival airport
         if dest_elem:
-            arrival = parse_airport_info(dest_elem)
+            arrival = parse_airport_info(dest_elem, is_arrival=True)
             if arrival:
                 flight_plan.set_arrival(arrival)
                 print(f"Arrival: {arrival}")
@@ -176,15 +179,15 @@ def extract_flight_plan_from_xml(xml_file: str, flight_id: str = "") -> Optional
                 if waypoint:
                     flight_plan.add_waypoint(waypoint)
                     print(f"  - {waypoint}")
-        # Do NOT parse alternate navlog waypoints anymore
-        # alt_navlog = root.find('alternate_navlog')
-        # if alt_navlog is not None:
-        #     print(f"\nParsing alternate navlog waypoints...")
-        #     for fix in alt_navlog.findall('fix'):
-        #         waypoint = parse_waypoint_from_fix(fix)
-        #         if waypoint:
-        #             flight_plan.add_waypoint(waypoint)
-        #             print(f"  - {waypoint}")
+        
+        # Set correct arrival time based on the last waypoint
+        if flight_plan.arrival and flight_plan.waypoints:
+            last_waypoint = flight_plan.waypoints[-1]
+            # If the last waypoint is the destination airport, use its time
+            if last_waypoint.name == flight_plan.arrival.name:
+                flight_plan.arrival.time_total = last_waypoint.time_total
+                flight_plan.arrival.altitude = last_waypoint.altitude
+                print(f"Updated arrival time to match last waypoint: {flight_plan.arrival}")
         
         return flight_plan
         
