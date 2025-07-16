@@ -165,7 +165,7 @@
     async function loadAnimationData() {
       try {
         // Read from interpolated data (single source of truth)
-        const response = await fetch('../temp/routes_with_added_interpolated_points.json');
+        const response = await fetch('/temp/routes_with_added_interpolated_points.json');
         if (!response.ok) throw new Error('Interpolated data not found: ' + response.status + ' ' + response.statusText);
         const text = await response.text();
         let data;

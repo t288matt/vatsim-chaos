@@ -231,6 +231,22 @@ When generating XML files in SimBrief, **always explicitly set altitudes** rathe
 
 This ensures the generated XML files contain realistic altitude profiles that match how pilots actually fly, leading to more accurate conflict analysis and event scenarios.
 
+## System Limitations
+
+### ⚠️ **Same Origin-Destination Flights Not Supported**
+
+**Current Limitation**: The system currently filters out flights with identical origin and destination airports. If you have multiple flights with the same origin-destination pair, only the first one will be processed and the rest will be filtered out.
+
+**Why This Happens**: The system uses origin-destination pairs as unique identifiers in some parts of the workflow. When multiple flights have the same route, the system cannot distinguish between them and filters out duplicates.
+
+**Workaround**: If you need multiple flights on the same route:
+1. **Use different aircraft types** - This helps distinguish between flights
+2. **Add intermediate waypoints** - Modify one flight to include an intermediate waypoint
+3. **Use different altitudes** - Ensure the flights have different cruise altitudes
+4. **Contact the development team** - This limitation may be addressed in future versions
+
+**Example**: If you have two YSSY-YSWG flights, only one will be processed.
+
 ## System Components
 
 ### Python Scripts - Input and Output Files

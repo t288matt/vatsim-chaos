@@ -25,95 +25,7 @@ import json
 import os
 from typing import List, Dict, Optional, Tuple
 from datetime import datetime, timedelta
-
-class Waypoint:
-    def __init__(self, name: str, lat: float, lon: float, altitude: int, 
-                 time_total: int = 0, stage: str = "", waypoint_type: str = ""):
-        self.name = name
-        self.lat = lat
-        self.lon = lon
-        self.altitude = altitude
-        self.time_total = time_total  # Total time in seconds or minutes
-        self.stage = stage  # CLB, CRZ, DES
-        self.waypoint_type = waypoint_type  # vor, ndb, wpt, etc.
-        
-    def get_time_formatted(self) -> str:
-        """Convert total minutes from departure to 4-digit UTC HHMM format"""
-        # SimBrief XML gives time_total in minutes (e.g., 1359 = 13 minutes 59 seconds)
-        total_minutes = self.time_total
-        if self.time_total > 10000:  # Heuristic: treat as seconds
-            total_minutes = self.time_total // 60
-        hours = (total_minutes // 60) % 24
-        minutes = total_minutes % 60
-        return f"{hours:02d}{minutes:02d}"
-    
-    def to_dict(self) -> Dict:
-        return {
-            'name': self.name,
-            'lat': self.lat,
-            'lon': self.lon,
-            'altitude': self.altitude,
-            'elapsed_time': self.get_time_formatted(),
-            'time_seconds': self.time_total,
-            'stage': self.stage,
-            'type': self.waypoint_type
-        }
-    
-    def __str__(self):
-        return f"{self.name}: {self.lat:.6f}, {self.lon:.6f}, {self.altitude}ft, {self.get_time_formatted()}"
-
-class FlightPlan:
-    """
-    Represents a complete flight plan with route and waypoints.
-    
-    FLIGHT ID SYSTEM:
-    - Each flight plan has a unique flight_id (FLT0001, FLT0002, etc.)
-    - The flight_id is used throughout the workflow for conflict tracking
-    - Route information (origin-destination) is preserved for separation rules
-    - Aircraft type is extracted from SimBrief XML and included for display purposes
-    """
-    
-    def __init__(self, origin: str, destination: str, route: str = "", flight_id: str = "", aircraft_type: str = "UNK"):
-        self.origin = origin
-        self.destination = destination
-        self.route = route
-        self.flight_id = flight_id  # Unique flight identifier (FLT0001, FLT0002, etc.)
-        self.aircraft_type = aircraft_type  # Aircraft type (e.g., "A320", "B737", "DH8D")
-        self.waypoints: List[Waypoint] = []
-        self.departure: Optional[Waypoint] = None
-        self.arrival: Optional[Waypoint] = None
-        
-    def add_waypoint(self, waypoint: Waypoint):
-        self.waypoints.append(waypoint)
-    
-    def set_departure(self, waypoint: Waypoint):
-        self.departure = waypoint
-        
-    def set_arrival(self, waypoint: Waypoint):
-        self.arrival = waypoint
-    
-    def get_all_waypoints(self) -> List[Waypoint]:
-        """Get all waypoints including departure and arrival"""
-        all_wps = []
-        if self.departure:
-            all_wps.append(self.departure)
-        all_wps.extend(self.waypoints)
-        if self.arrival:
-            all_wps.append(self.arrival)
-        return all_wps
-    
-    def to_dict(self) -> Dict:
-        return {
-            'origin': self.origin,
-            'destination': self.destination,
-            'route': self.route,
-            'flight_id': self.flight_id,
-            'aircraft_type': self.aircraft_type,
-            'departure': self.departure.to_dict() if self.departure else None,
-            'waypoints': [wp.to_dict() for wp in self.waypoints],
-            'arrival': self.arrival.to_dict() if self.arrival else None,
-            'all_waypoints': [wp.to_dict() for wp in self.get_all_waypoints()]
-        }
+from shared_types import FlightPlan, Waypoint
 
 def abbreviate_waypoint_name(name: str) -> str:
     """Abbreviate common waypoint names for cleaner display"""
@@ -399,7 +311,7 @@ def create_kml_from_flight_plan(flight_plan: FlightPlan, filename: str) -> str:
         <h3>{waypoint.name}</h3>
         <p><strong>Coordinates:</strong> {waypoint.lat:.6f}, {waypoint.lon:.6f}</p>
         <p><strong>Altitude:</strong> {waypoint.altitude} ft</p>
-        <p><strong>Time:</strong> {waypoint.get_time_formatted()}</p>
+        <p><strong>Time:</strong> {waypoint.get_time_formatted_simbrief()}</p>
         <p><strong>Stage:</strong> {waypoint.stage}</p>
         <p><strong>Type:</strong> {waypoint.waypoint_type}</p>
         ]]>
@@ -452,7 +364,7 @@ def save_flight_data(flight_plan: FlightPlan, base_filename: str):
     if all_waypoints:
         print(f"\nWaypoints:")
         for i, wp in enumerate(all_waypoints):
-            print(f"   {i+1:2d}. {wp.name:12s} {wp.lat:8.4f}, {wp.lon:8.4f} {wp.altitude:6d}ft {wp.get_time_formatted()} (elapsed)")
+            print(f"   {i+1:2d}. {wp.name:12s} {wp.lat:8.4f}, {wp.lon:8.4f} {wp.altitude:6d}ft {wp.get_time_formatted_simbrief()} (elapsed)")
 
 def main():
     """Main function to process all SimBrief XML files in the directory"""
