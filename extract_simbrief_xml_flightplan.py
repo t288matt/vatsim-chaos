@@ -338,8 +338,8 @@ def create_kml_from_flight_plan(flight_plan: FlightPlan, filename: str) -> str:
 def save_flight_data(flight_plan: FlightPlan, base_filename: str):
     """Save flight plan data to JSON and KML files in temp directory"""
     
-    # Create temp directory if it doesn't exist
-    temp_dir = "temp"
+    # Create temp directory if it doesn't exist (use /tmp for Docker compatibility)
+    temp_dir = "/tmp/flight_processing"
     if not os.path.exists(temp_dir):
         os.makedirs(temp_dir)
         print(f"Created temp directory: {temp_dir}")
@@ -381,12 +381,16 @@ def main():
         print("SimBrief XML Flight Plan Extractor")
         print("=" * 50)
         
-        # Clean up temp directory
-        temp_dir = "temp"
+        # Clean up temp directory (use /tmp for Docker compatibility)
+        temp_dir = "/tmp/flight_processing"
         if os.path.exists(temp_dir):
             import shutil
-            shutil.rmtree(temp_dir)
-            print("Removed existing temp directory: temp")
+            try:
+                shutil.rmtree(temp_dir)
+                print("Removed existing temp directory: /tmp/flight_processing")
+            except OSError as e:
+                print(f"Warning: Could not remove temp directory: {e}")
+                # Continue anyway, the directory will be recreated
         
         # Determine which files to process
         if args.files:
