@@ -1,4 +1,4 @@
-// File Manager - Handles file uploads and library management
+// File Manager - Handles file uploads and flight plan library management
 class FileManager {
     constructor() {
         this.uploadArea = document.getElementById('uploadArea');
@@ -154,7 +154,7 @@ class FileManager {
                 this.showUploadStatus(`${result.uploaded.length} files uploaded successfully!`, 'success');
                 this.showMessage(`${result.uploaded.length} files uploaded successfully!`, 'success');
                 
-                // Reload file library
+                // Reload flight plan library
                 await this.loadFileLibrary();
                 
                 // Validate uploaded files with retry logic
@@ -318,16 +318,21 @@ class FileManager {
             // Re-render the file list after validation
             this.renderFileList();
             
+            // Select all files by default
+            this.selectAll();
+            
             // Check for duplicate routes after loading files
             await this.checkForDuplicateRoutes();
         } catch (error) {
-            console.error('Error loading file library:', error);
-            this.showMessage('Error loading file library: ' + error.message, 'error');
+            console.error('Error loading flight plan library:', error);
+            this.showMessage('Error loading flight plan library: ' + error.message, 'error');
             
             // Edge case: Show cached files if available
             if (this.files.length > 0) {
                 this.showMessage('Showing cached file list. Some files may not be up to date.', 'warning');
                 this.renderFileList();
+                // Select all files even in error case
+                this.selectAll();
             }
         }
     }
@@ -563,7 +568,7 @@ class FileManager {
                 // Remove from selected files if it was selected
                 this.selectedFiles.delete(filename);
                 
-                // Reload the file library to update the list
+                // Reload the flight plan library to update the list
                 await this.loadFileLibrary();
             } else {
                 const error = await response.json();
