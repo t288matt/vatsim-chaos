@@ -89,12 +89,7 @@
     <h4>⚠️ Conflict Commentary</h4>
     <div id="conflict-logs"></div>
   </div>
-  <script>
-    // Auto-reload the page every 3 minutes (180,000 ms)
-    setTimeout(function() {
-      window.location.reload();
-    }, 180000);
-  </script>
+
   <script>
     // Best practice: Set up Cesium viewer and timeline for animation
     window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/';
@@ -277,7 +272,7 @@
       viewer.clock.startTime = start.clone();
       viewer.clock.stopTime = stop.clone();
       viewer.clock.currentTime = start.clone();
-      viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+      viewer.clock.clockRange = Cesium.ClockRange.LOOP;
       viewer.clock.multiplier = 1;
       viewer.clock.multiplier = 48;
       viewer.timeline.zoomTo(start, stop);
@@ -532,11 +527,77 @@
           createScheduledFlights();
           createConflictMarkers(conflicts); // Call the new function here
         }
-        // Set camera to fixed rectangle (Southeastern Australia - broader coverage)
-        const startRect = Cesium.Rectangle.fromDegrees(135.0, -39.0, 154.0, -29.0);
-        viewer.camera.setView({ destination: startRect });
-        // Remove viewer.zoomTo(viewer.entities) and other auto-zoom logic
-        // Remove viewer.camera.flyTo({ destination: ausRect, duration: 1.5 });
+        // Calculate camera view to cover 90% of origin and destination airports
+        let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
+        let hasValidCoordinates = false;
+        
+        // Collect all unique airports from flights
+        const airports = new Set();
+        flights.forEach(flight => {
+          if (flight.departure) airports.add(flight.departure);
+          if (flight.arrival) airports.add(flight.arrival);
+        });
+        
+        // Get coordinates for each airport from waypoints
+        airports.forEach(airport => {
+          flights.forEach(flight => {
+            if (flight.waypoints && flight.waypoints.length > 0) {
+              // Find departure airport coordinates (first waypoint)
+              if (flight.departure === airport && flight.waypoints[0]) {
+                const wp = flight.waypoints[0];
+                if (wp.lon !== undefined && wp.lat !== undefined) {
+                  minLon = Math.min(minLon, wp.lon);
+                  maxLon = Math.max(maxLon, wp.lon);
+                  minLat = Math.min(minLat, wp.lat);
+                  maxLat = Math.max(maxLat, wp.lat);
+                  hasValidCoordinates = true;
+                }
+              }
+              // Find arrival airport coordinates (last waypoint)
+              if (flight.arrival === airport && flight.waypoints[flight.waypoints.length - 1]) {
+                const wp = flight.waypoints[flight.waypoints.length - 1];
+                if (wp.lon !== undefined && wp.lat !== undefined) {
+                  minLon = Math.min(minLon, wp.lon);
+                  maxLon = Math.max(maxLon, wp.lon);
+                  minLat = Math.min(minLat, wp.lat);
+                  maxLat = Math.max(maxLat, wp.lat);
+                  hasValidCoordinates = true;
+                }
+              }
+            }
+          });
+        });
+        
+        if (hasValidCoordinates) {
+          // Add 10% padding on each side to ensure 90% coverage
+          const lonPadding = (maxLon - minLon) * 0.1;
+          const latPadding = (maxLat - minLat) * 0.1;
+          
+          // Ensure minimum view size for very close airports
+          const minLonRange = 0.1; // Minimum 0.1 degrees longitude
+          const minLatRange = 0.1; // Minimum 0.1 degrees latitude
+          
+          const lonRange = Math.max(maxLon - minLon, minLonRange);
+          const latRange = Math.max(maxLat - minLat, minLatRange);
+          
+          const finalMinLon = minLon - lonPadding;
+          const finalMaxLon = maxLon + lonPadding;
+          const finalMinLat = minLat - latPadding;
+          const finalMaxLat = maxLat + latPadding;
+          
+          const dynamicRect = Cesium.Rectangle.fromDegrees(
+            finalMinLon, finalMinLat, finalMaxLon, finalMaxLat
+          );
+          viewer.camera.setView({ destination: dynamicRect });
+          
+          console.log(`Camera set to cover airports: ${Array.from(airports).join(', ')}`);
+          console.log(`View rectangle: ${finalMinLon.toFixed(2)}°E to ${finalMaxLon.toFixed(2)}°E, ${finalMinLat.toFixed(2)}°S to ${finalMaxLat.toFixed(2)}°S`);
+        } else {
+          // Fallback to default view if no valid coordinates found
+          const startRect = Cesium.Rectangle.fromDegrees(135.0, -39.0, 154.0, -29.0);
+          viewer.camera.setView({ destination: startRect });
+          console.log('No valid airport coordinates found, using default view');
+        }
         function animationFrameUpdate() {
           updateUI();
           requestAnimationFrame(animationFrameUpdate);

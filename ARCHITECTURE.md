@@ -168,6 +168,24 @@ The original algorithm incorrectly prioritized flights with "most conflicts" and
 - Animate aircraft with real-time altitude labels, conflict points, and alerts
 - Timeline controls and camera auto-zoom
 - Dynamic data loading from JSON (no server required)
+- **Dynamic camera positioning**: Automatically calculates optimal view to cover 90% of origin and destination airports globally
+
+**Dynamic Camera Positioning**:
+- **Global Coverage**: Works for any flight routes worldwide, not limited to specific regions
+- **Automatic Calculation**: Analyzes all departure and arrival airports from flight data
+- **90% Coverage**: Ensures airports are well within the view with 10% padding
+- **Adaptive Zoom**: Automatically adjusts zoom level based on airport distances
+- **Minimum View Size**: Prevents excessive zoom for very close airports
+- **Fallback Support**: Uses default view if coordinates aren't available
+- **Console Logging**: Shows covered airports and view coordinates for debugging
+
+**Camera Algorithm**:
+1. Collects all unique departure and arrival airports from flights
+2. Extracts coordinates from first waypoint (departure) and last waypoint (arrival)
+3. Calculates minimum/maximum longitude/latitude bounds
+4. Adds 10% padding for 90% coverage
+5. Ensures minimum view size (0.1° longitude/latitude)
+6. Sets camera view to cover all airports with appropriate zoom level
 
 ### 6. Data Audit Layer
 **File**: `audit_conflict.py`
