@@ -62,7 +62,7 @@ services:
       - VALIDATION_CACHE_TIMEOUT_SEC=3600
       
       # File System Settings
-      - UPLOAD_FOLDER=/app/uploads
+      - UPLOAD_FOLDER=/app/xml_files
       - TEMP_FOLDER=/app/temp
       - ANIMATION_FOLDER=/app/animation
       
