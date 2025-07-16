@@ -23,6 +23,8 @@ in the ATC event scenario workflow.
 import xml.etree.ElementTree as ET
 import json
 import os
+import sys
+import argparse
 from typing import List, Dict, Optional, Tuple
 from datetime import datetime, timedelta
 from shared_types import FlightPlan, Waypoint
@@ -367,26 +369,53 @@ def save_flight_data(flight_plan: FlightPlan, base_filename: str):
             print(f"   {i+1:2d}. {wp.name:12s} {wp.lat:8.4f}, {wp.lon:8.4f} {wp.altitude:6d}ft {wp.get_time_formatted_simbrief()} (elapsed)")
 
 def main():
-    """Main function to process all SimBrief XML files in the directory"""
+    """Main function to process SimBrief XML files"""
+    parser = argparse.ArgumentParser(description='Extract flight plans from SimBrief XML files')
+    parser.add_argument('--files', nargs='+', help='Specific XML files to process (optional)')
+    args = parser.parse_args()
+    
     try:
         print("SimBrief XML Flight Plan Extractor")
         print("=" * 50)
+        
+        # Clean up temp directory
         temp_dir = "temp"
         if os.path.exists(temp_dir):
             import shutil
             shutil.rmtree(temp_dir)
             print("Removed existing temp directory: temp")
-        xml_dir = "xml_files"
-        if not os.path.exists(xml_dir):
-            print(f"XML directory {xml_dir} not found")
-            exit(1)
-        xml_files = [f for f in os.listdir(xml_dir) if f.endswith('.xml')]
-        if not xml_files:
-            print(f"No XML files found in the {xml_dir} directory")
-            exit(1)
-        print(f"Found {len(xml_files)} XML files to process:")
-        for xml_file in xml_files:
-            print(f"   - {xml_file}")
+        
+        # Determine which files to process
+        if args.files:
+            # Process specific files provided as arguments
+            xml_files = []
+            for file_path in args.files:
+                if os.path.exists(file_path):
+                    xml_files.append(file_path)
+                else:
+                    print(f"Warning: File not found: {file_path}")
+            
+            if not xml_files:
+                print("No valid XML files provided")
+                exit(1)
+                
+            print(f"Processing {len(xml_files)} specified XML files:")
+            for xml_file in xml_files:
+                print(f"   - {xml_file}")
+        else:
+            # Process all XML files in xml_files directory (backward compatibility)
+            xml_dir = "xml_files"
+            if not os.path.exists(xml_dir):
+                print(f"XML directory {xml_dir} not found")
+                exit(1)
+            xml_files = [os.path.join(xml_dir, f) for f in os.listdir(xml_dir) if f.endswith('.xml')]
+            if not xml_files:
+                print(f"No XML files found in the {xml_dir} directory")
+                exit(1)
+            print(f"Processing all {len(xml_files)} XML files in {xml_dir}:")
+            for xml_file in xml_files:
+                print(f"   - {os.path.basename(xml_file)}")
+        
         print("\n" + "=" * 50)
         
         # Track flights with same origin-destination to generate unique IDs
@@ -394,8 +423,8 @@ def main():
         flight_counter = 1  # Global flight counter for unique IDs
         
         success_count = 0
-        for xml_filename in xml_files:
-            xml_path = os.path.join(xml_dir, xml_filename)
+        for xml_path in xml_files:
+            xml_filename = os.path.basename(xml_path)
             print(f"Processing {xml_filename}...")
             print("----------------------------------------")
             
@@ -429,6 +458,7 @@ def main():
             save_flight_data(flight_plan, base_filename)
             print(f"Successfully processed {xml_filename} as {flight_id}")
             success_count += 1
+        
         if success_count == 0:
             print("No flight plans were successfully processed. Exiting.")
             exit(1)

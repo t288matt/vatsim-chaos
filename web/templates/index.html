@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATC Conflict Analysis System</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <!-- Cache bust: 2025-07-16-13:40 -->
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 ATC Conflict Analysis System</h1>
+        <p>Upload XML files, process conflicts, and view results in 3D</p>
+    </div>
+    
+    <div class="main-container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="file-upload-section">
+                <h3>📁 File Management</h3>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <p>📤 Drag & drop XML files here</p>
+                        <p>or click to browse</p>
+                        <input type="file" id="fileInput" multiple accept=".xml" style="display: none;">
+                    </div>
+                </div>
+                <div class="upload-status" id="uploadStatus"></div>
+            </div>
+            
+            <div class="file-library-section">
+                <h3>📚 File Library</h3>
+                <div class="file-controls">
+                    <button id="selectAllBtn" class="control-btn">Select All</button>
+                    <button id="selectNoneBtn" class="control-btn">Select None</button>
+                    <button id="revalidateAllBtn" class="control-btn">🔄 Re-validate All</button>
+                </div>
+                <div class="file-list" id="fileList">
+                    <!-- Dynamic file list with checkboxes -->
+                </div>
+                <div class="selection-summary" id="selectionSummary">
+                    No files selected
+                </div>
+            </div>
+            
+            <div class="controls-section">
+                <button id="processBtn" class="process-button">🚀 Process Analysis</button>
+                <button id="briefingBtn" class="briefing-button" disabled>📋 Pilot Briefing</button>
+            </div>
+            
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <h3>🔄 Processing Status</h3>
+                <div id="progressContainer"></div>
+            </div>
+        </div>
+        
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="map-container" id="mapContainer">
+                <!-- Cesium map will be embedded here -->
+                <div class="map-loading" id="mapLoading">
+                    <p>Loading 3D map...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for pilot briefing -->
+    <div id="briefingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📋 Pilot Briefing</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="briefingContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="printBriefingBtn" class="modal-btn">🖨️ Print</button>
+                <button id="downloadBriefingBtn" class="modal-btn">📥 Download</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Message overlay -->
+    <div id="messageOverlay" class="message-overlay" style="display: none;">
+        <div class="message-content">
+            <span id="messageText"></span>
+            <button id="messageCloseBtn" class="message-close">×</button>
+        </div>
+    </div>
+    
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/fileManager.js"></script>
+    <script src="/static/js/processor.js"></script>
+    <script src="/static/js/mapViewer.js"></script>
+</body>
+</html> 

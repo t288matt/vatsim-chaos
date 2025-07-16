@@ -434,16 +434,16 @@
       });
       // Set all aircraft to black by default
       flightEntities.forEach(entity => {
-        if (entity.model) {
-          entity.model.color = Cesium.Color.BLACK.withAlpha(0.8);
+        if (entity.billboard) {
+          entity.billboard.color = Cesium.Color.BLACK.withAlpha(0.8);
         }
       });
       // Set aircraft involved in active conflicts to red
       activeConflicts.forEach(conflict => {
         [conflict.flight1, conflict.flight2].forEach(flightId => {
           const entity = flightEntities.find(e => e.id === flightId);
-          if (entity && entity.model) {
-            entity.model.color = Cesium.Color.RED.withAlpha(0.8);
+          if (entity && entity.billboard) {
+            entity.billboard.color = Cesium.Color.RED.withAlpha(0.8);
           }
         });
       });

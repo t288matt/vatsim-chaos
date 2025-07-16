@@ -4,6 +4,10 @@
 
 The ATC Conflict Analysis System is a Python-based application designed to analyze SimBrief XML flight plans and identify potential air traffic conflicts for event scenario creation. The system helps the events team build challenging events for controllers and fun, dynamic events for pilots. It processes multiple flight plans simultaneously, detects conflicts using 3D spatial analysis, and generates both detailed reports and visual outputs.
 
+**Dual Interface Support**:
+- **Command Line Interface**: Direct script execution for batch processing and automation
+- **Web Interface**: Browser-based interface (`web/` directory) for interactive file upload, validation, and processing with real-time progress tracking
+
 **Key Concept: First Conflicts**
 The system focuses on identifying "first conflicts" - the initial point where two aircraft first meet conflict criteria during their flights. This is critical for event planning as it represents the moment when ATC first needs to intervene between aircraft pairs, rather than tracking every subsequent conflict between the same aircraft.
 
@@ -55,6 +59,7 @@ generate_animation.py → reads single source of truth
 - **Accurate Scheduling**: Respects conflict analysis departure times instead of "most conflicts" rule
 - **Flight ID Tracking**: Uses unique flight IDs for better conflict tracking and separation enforcement
 - **Single Source of Truth**: One comprehensive JSON file contains all flight data, conflicts, and scheduling
+- **Backend-Centric Validation**: Web interface relies on backend for XML parsing and route validation due to browser limitations
 
 ## System Components
 
@@ -189,3 +194,39 @@ The original algorithm incorrectly prioritized flights with "most conflicts" and
 
 ### 6. Data Audit Layer
 **File**: `audit_conflict.py`
+
+### 7. Web Interface Layer
+**Directory**: `web/`
+
+**Responsibilities**:
+- Provide browser-based interface for file upload and processing
+- Handle XML file validation and duplicate route detection
+- Manage processing workflow and progress tracking
+- Serve animation files and pilot briefing
+- **Frontend-Backend Dependency**: Frontend relies on backend for XML validation
+
+**Key Components**:
+- **Flask Backend** (`app.py`): REST API endpoints for file management and processing
+- **HTML/CSS/JavaScript Frontend**: Modern responsive interface
+- **File Manager** (`fileManager.js`): Handles uploads, validation, and file selection
+- **Processor** (`processor.js`): Manages workflow execution and progress
+- **Map Viewer** (`mapViewer.js`): 3D visualization integration
+
+**Frontend-Backend Validation Architecture**:
+- **Backend XML Parsing**: Uses `extract_simbrief_xml_flightplan.py` for consistent validation
+- **Route Duplicate Detection**: Backend checks for same origin-destination pairs across files
+- **Frontend Dependencies**: Frontend cannot parse XML independently due to browser limitations
+- **Validation Flow**: Frontend → Backend API → XML parsing → Route analysis → Frontend display
+- **Error Handling**: Comprehensive edge case handling for network issues, file validation, and processing timeouts
+
+**Validation Endpoints**:
+- `/validate-same-routes` (POST): Checks for duplicate origin-destination pairs
+- `/validate/<filename>` (GET): Validates individual XML file structure
+- `/files` (GET): Lists uploaded files with metadata
+- `/process` (POST): Executes the complete analysis workflow
+
+**User Experience Features**:
+- **Visual Indicators**: Duplicate routes highlighted in file list
+- **Warning Dialogs**: Detailed explanations of system limitations
+- **Progress Tracking**: Real-time processing status updates
+- **Error Recovery**: Automatic retry logic and graceful failure handling
