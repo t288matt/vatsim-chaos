@@ -62,6 +62,17 @@ The system now uses unique flight IDs (FLT0001, FLT0002, etc.) instead of origin
 - **Conflict Tracking**: Enables tracking of "first conflicts" between unique aircraft pairs
 - **Same Route Handling**: Flights with identical origin-destination are treated as separate flights with 5-minute minimum separation
 
+## Altitude Handling
+
+The system uses a consistent altitude approach across backend and frontend:
+
+- **Backend Processing**: All altitudes are stored and processed in feet (e.g., 2000ft, 36000ft)
+- **Frontend Display**: Altitudes are displayed using the transition altitude from `env.py` (TRANSITION_ALTITUDE_FT = 10500)
+  - Below transition altitude: Displayed in feet (e.g., "8500ft")
+  - At or above transition altitude: Displayed as flight levels (e.g., "FL350")
+- **Translation Logic**: Frontend JavaScript converts feet to appropriate display format based on transition altitude
+- **Configuration**: Transition altitude can be modified in `env.py` to match local aviation standards
+
 ## Separation Rules
 
 The system enforces two key separation rules:

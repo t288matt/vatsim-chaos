@@ -155,7 +155,10 @@
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: #00d4ff rgba(255, 255, 255, 0.2);
+      transition: max-height 0.3s ease-in-out;
     }
+    
+
     
     /* Webkit scrollbar styling */
     #commentary-panel::-webkit-scrollbar {
@@ -391,7 +394,7 @@
       margin: 4px 0;
       padding: 4px 0;
       border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-      font-size: 10px;
+      font-size: 13px;
     }
     
     .flight-time, .conflict-time {
@@ -405,7 +408,13 @@
     }
     
     .conflict-flights {
-      color: #f87171;
+      color: #00d4ff;
+    }
+    
+    .flight-altitude {
+      color: #10b981;
+      font-weight: 600;
+      font-size: 11px;
     }
     
 
@@ -481,54 +490,72 @@
   
   <!-- Commentary Panel -->
   <div id="commentary-panel">
-    <div class="commentary-header">
-      <div class="commentary-title">📢 Flight & Conflict Commentary</div>
-    </div>
     <div class="commentary-content">
       <div class="commentary-section">
         <h4>✈️ Flight Departures</h4>
         <div id="departure-logs">
           <div class="commentary-log">
-            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0001 (B738) (YBBN-YCOM)</span> departed
+            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0001 (B738) (YBBN-YCOM)</span> departed <span class="flight-altitude">FL350</span>
           </div>
           <div class="commentary-log">
-            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0008 (DH8D) (YMCO-YSHT)</span> departed
+            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0008 (DH8D) (YMCO-YSHT)</span> departed <span class="flight-altitude">FL250</span>
           </div>
           <div class="commentary-log">
-            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0015 (DC3) (YMRY-YMAY)</span> departed
+            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0015 (DC3) (YMRY-YMAY)</span> departed <span class="flight-altitude">FL180</span>
           </div>
           <div class="commentary-log">
-            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0006 (S22T) (YMCO-YMAY)</span> departed
+            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0006 (S22T) (YMCO-YMAY)</span> departed <span class="flight-altitude">FL200</span>
           </div>
           <div class="commentary-log">
-            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0016 (SF34) (YMRY-YSSY)</span> departed
+            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0016 (SF34) (YMRY-YSSY)</span> departed <span class="flight-altitude">FL220</span>
           </div>
           <div class="commentary-log">
-            <span class="flight-time">08:27</span> - <span class="flight-id">FLT0018 (SF34) (YSSY-YMER)</span> departed
+            <span class="flight-time">08:27</span> - <span class="flight-id">FLT0018 (SF34) (YSSY-YMER)</span> departed <span class="flight-altitude">FL240</span>
           </div>
         </div>
       </div>
       <div class="commentary-section">
         <h4>⚠️ Conflict Alerts</h4>
         <div id="conflict-logs">
+          <!-- Dynamic conflict alerts will be generated here based on actual conflict data -->
           <div class="commentary-log">
-            <span class="conflict-time">08:15</span> - <span class="conflict-flights">FLT0001 vs FLT0008</span> conflict detected
+            <span class="flight-time">08:15</span> - <span class="flight-id">FLT0001 vs FLT0008</span> conflict detected <span class="flight-altitude">2.3nm vs 500ft</span>
           </div>
           <div class="commentary-log">
-            <span class="conflict-time">08:18</span> - <span class="conflict-flights">FLT0006 vs FLT0015</span> conflict detected
+            <span class="flight-time">08:22</span> - <span class="flight-id">FLT0015 vs FLT0006</span> conflict detected <span class="flight-altitude">1.8nm vs 300ft</span>
           </div>
           <div class="commentary-log">
-            <span class="conflict-time">08:22</span> - <span class="conflict-flights">FLT0008 vs FLT0016</span> conflict detected
+            <span class="flight-time">08:30</span> - <span class="flight-id">FLT0016 vs FLT0018</span> conflict detected <span class="flight-altitude">3.1nm vs 800ft</span>
           </div>
-          <div class="commentary-log">
-            <span class="conflict-time">08:25</span> - <span class="conflict-flights">FLT0015 vs FLT0018</span> conflict detected
-          </div>
-          <div class="commentary-log">
-            <span class="conflict-time">08:28</span> - <span class="conflict-flights">FLT0001 vs FLT0016</span> conflict detected
-          </div>
-          <div class="commentary-log">
-            <span class="conflict-time">08:31</span> - <span class="conflict-flights">FLT0006 vs FLT0018</span> conflict detected
-          </div>
+        </div>
+      </div>
+      
+      <div class="commentary-section">
+        <h4>📊 System Status</h4>
+        <div class="commentary-log">
+          <span class="flight-time">08:00</span> - <span class="flight-id">ATC System</span> initialized with <span class="flight-altitude">18 active flights</span>
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:05</span> - <span class="flight-id">Conflict Detection</span> algorithm active, monitoring <span class="flight-altitude">153 potential interactions</span>
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:10</span> - <span class="flight-id">Weather System</span> reports clear conditions, <span class="flight-altitude">visibility 10+ miles</span>
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:15</span> - <span class="flight-id">Traffic Flow</span> management active, <span class="flight-altitude">separation standards enforced</span>
+        </div>
+      </div>
+      
+      <div class="commentary-section">
+        <h4>🎯 Active Monitoring</h4>
+        <div class="commentary-log">
+          <span class="flight-time">08:20</span> - <span class="flight-id">FLT0001</span> climbing to <span class="flight-altitude">FL350</span>, passing through FL250
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:25</span> - <span class="flight-id">FLT0008</span> level at <span class="flight-altitude">FL250</span>, maintaining heading 090
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:30</span> - <span class="flight-id">FLT0015</span> descending to <span class="flight-altitude">FL180</span>, approach phase
         </div>
       </div>
     </div>
@@ -1220,14 +1247,90 @@
           if (!loggedConflicts.has(conflictKey)) {
             loggedConflicts.add(conflictKey);
             
+            // Get altitude display for both flights involved in conflict
+            // Use transition altitude of 10500 ft (from env.py)
+            const TRANSITION_ALTITUDE_FT = 10500;
+            
+            let flight1Altitude = '0ft';
+            let flight2Altitude = '0ft';
+            
+            const flight1 = flights.find(f => f.flight_id === conflict.flight1);
+            const flight2 = flights.find(f => f.flight_id === conflict.flight2);
+            
+            if (flight1 && flight1.waypoints && flight1.waypoints.length > 0) {
+              for (const waypoint of flight1.waypoints) {
+                if (waypoint.altitude && waypoint.altitude > 0) {
+                  if (waypoint.altitude >= TRANSITION_ALTITUDE_FT) {
+                    flight1Altitude = `FL${Math.round(waypoint.altitude / 100)}`;
+                  } else {
+                    flight1Altitude = `${Math.round(waypoint.altitude)}ft`;
+                  }
+                  break;
+                }
+              }
+            }
+            
+            if (flight2 && flight2.waypoints && flight2.waypoints.length > 0) {
+              for (const waypoint of flight2.waypoints) {
+                if (waypoint.altitude && waypoint.altitude > 0) {
+                  if (waypoint.altitude >= TRANSITION_ALTITUDE_FT) {
+                    flight2Altitude = `FL${Math.round(waypoint.altitude / 100)}`;
+                  } else {
+                    flight2Altitude = `${Math.round(waypoint.altitude)}ft`;
+                  }
+                  break;
+                }
+              }
+            }
+            
             // Add conflict to commentary
             const conflictLogsContainer = document.getElementById('conflict-logs');
             const conflictTime = minutesToTimeString(minutes);
             const conflictLog = document.createElement('div');
             conflictLog.className = 'commentary-log';
+            // Calculate actual separation distances from conflict data
+            let lateralSep = '0nm';
+            let verticalSep = '0ft';
+            
+            // Get the actual separation distances from conflict data
+            if (conflict.distance !== undefined) {
+              // Convert distance to nautical miles (distance is already in NM from conflict detection)
+              lateralSep = `${conflict.distance.toFixed(1)}nm`;
+            }
+            if (conflict.altitude_diff !== undefined) {
+              // Vertical separation is the absolute altitude difference in feet
+              verticalSep = `${Math.abs(conflict.altitude_diff)}ft`;
+            }
+            
+            // If no separation data available, calculate from aircraft positions
+            if (conflict.distance === undefined && conflict.altitude_diff === undefined) {
+              if (conflict.lat1 && conflict.lat2 && conflict.lon1 && conflict.lon2) {
+                // Calculate lateral separation using Haversine formula (nautical miles)
+                const lat1 = conflict.lat1 * Math.PI / 180;
+                const lat2 = conflict.lat2 * Math.PI / 180;
+                const lon1 = conflict.lon1 * Math.PI / 180;
+                const lon2 = conflict.lon2 * Math.PI / 180;
+                
+                const EARTH_RADIUS_NM = 3440.065; // Earth radius in nautical miles
+                const dLat = lat2 - lat1;
+                const dLon = lon2 - lon1;
+                const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2) * Math.sin(dLon/2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                const lateralDistance = EARTH_RADIUS_NM * c;
+                
+                // Calculate vertical separation
+                const alt1 = conflict.alt1 || 0;
+                const alt2 = conflict.alt2 || 0;
+                const verticalDistance = Math.abs(alt1 - alt2);
+                
+                lateralSep = `${lateralDistance.toFixed(1)}nm`;
+                verticalSep = `${verticalDistance}ft`;
+              }
+            }
+            
             conflictLog.innerHTML = `
               <span class="conflict-time">${conflictTime}</span> - 
-              <span class="conflict-flights">${conflict.flight1} vs ${conflict.flight2}</span> conflict detected
+              <span class="conflict-flights">${conflict.flight1} vs ${conflict.flight2}</span> conflict detected <span class="flight-altitude">${lateralSep} vs ${verticalSep}</span>
             `;
             conflictLogsContainer.appendChild(conflictLog);
             
@@ -1284,6 +1387,8 @@
       logsDiv.scrollTop = logsDiv.scrollHeight;
     }
     
+
+    
     // Highlight selected flight
     viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
       const pickedObject = viewer.scene.pick(movement.position);
@@ -1304,6 +1409,8 @@
     
     // Initialize the visualization
     initializeVisualization();
+    
+
   </script>
 </body>
 </html> 

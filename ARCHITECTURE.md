@@ -14,6 +14,14 @@ The system focuses on identifying "first conflicts" - the initial point where tw
 **Flight ID System**
 The system now uses unique flight IDs (FLT0001, FLT0002, etc.) instead of origin-destination pairs for better conflict tracking and separation enforcement. Each flight gets a sequential flight ID during XML processing, which is maintained throughout the entire workflow.
 
+**Altitude Handling**
+The system uses a consistent altitude approach across backend and frontend:
+- **Backend**: All altitudes are stored and processed in feet (e.g., 2000ft, 36000ft)
+- **Frontend**: Altitudes are displayed using the transition altitude from `env.py` (TRANSITION_ALTITUDE_FT = 10500)
+  - Below transition altitude: Displayed in feet (e.g., "8500ft")
+  - At or above transition altitude: Displayed as flight levels (e.g., "FL350")
+- **Translation Logic**: Frontend JavaScript converts feet to appropriate display format based on transition altitude
+
 **Separation Rules**
 The system enforces two key separation rules:
 1. **Departure Separation**: Minimum 2 minutes between departures from the same airport
