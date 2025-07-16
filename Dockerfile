@@ -24,6 +24,10 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p /app/uploads /app/temp /app/xml_files /app/logs
 
+# Fix the upload folder configuration to use environment variables
+RUN sed -i "s|UPLOAD_FOLDER = '../xml_files'|UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER', '/app/xml_files')|g" /app/web/config.py && \
+    sed -i "1i import os" /app/web/config.py
+
 # Set environment variables
 ENV FLASK_APP=web/app.py
 ENV FLASK_ENV=production
