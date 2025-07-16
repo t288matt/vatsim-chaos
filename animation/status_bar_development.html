@@ -26,6 +26,7 @@
       position: absolute; 
       top: 0; 
       left: 0; 
+      bottom: 200px; /* Stop at the top of the commentary panel */
     }
     
     /* Status Bar */
@@ -1054,12 +1055,7 @@
       viewer.timeline.zoomTo(start, stop);
       viewer.clock.shouldAnimate = true;
       
-      // Ensure animation continues looping
-      viewer.clock.onTick.addEventListener(function(clock) {
-        if (clock.currentTime.secondsOfDay >= clock.stopTime.secondsOfDay) {
-          clock.currentTime = clock.startTime.clone();
-        }
-      });
+
       
       // Create flight entities with animated paths and 3D models
       flights.forEach((flight, idx) => {

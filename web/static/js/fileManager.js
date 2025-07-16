@@ -29,27 +29,6 @@ class FileManager {
         // File selection controls
         this.selectAllBtn.addEventListener('click', this.selectAll.bind(this));
         this.selectNoneBtn.addEventListener('click', this.selectNone.bind(this));
-        
-        // Re-validate all button
-        const revalidateAllBtn = document.getElementById('revalidateAllBtn');
-        console.log('[INIT] Re-validate button found:', revalidateAllBtn);
-        if (revalidateAllBtn) {
-            revalidateAllBtn.addEventListener('click', this.revalidateAllFiles.bind(this));
-            console.log('[INIT] Re-validate button event listener added');
-        } else {
-            console.warn('[INIT] Re-validate button not found in DOM, creating fallback');
-            // Create fallback button
-            const fileControls = document.querySelector('.file-controls');
-            if (fileControls) {
-                const fallbackBtn = document.createElement('button');
-                fallbackBtn.id = 'revalidateAllBtn';
-                fallbackBtn.className = 'control-btn';
-                fallbackBtn.textContent = '🔄 Re-validate All';
-                fallbackBtn.addEventListener('click', this.revalidateAllFiles.bind(this));
-                fileControls.appendChild(fallbackBtn);
-                console.log('[INIT] Fallback re-validate button created');
-            }
-        }
     }
     
     handleDragOver(e) {
@@ -493,25 +472,7 @@ class FileManager {
         return div;
     }
     
-    async revalidateAllFiles() {
-        console.log('[REVALIDATE] Starting re-validation of all files...');
-        
-        // Clear the validation cache
-        this.fileValidationCache.clear();
-        console.log('[REVALIDATE] Cleared validation cache');
-        
-        // Re-validate all files
-        for (const file of this.files) {
-            console.log(`[REVALIDATE] Validating file: ${file.name}`);
-            await this.validateFileWithRetry(file.name);
-        }
-        
-        // Re-render the file list
-        this.renderFileList();
-        
-        console.log('[REVALIDATE] Re-validation complete');
-        this.showMessage('All files have been re-validated', 'success');
-    }
+
     
     selectAll() {
         this.files.forEach(file => {
