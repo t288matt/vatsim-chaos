@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATC Conflict Animation - Status Bar Design</title>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body, #cesiumContainer { 
+      width: 100%; 
+      height: 100%; 
+      margin: 0; 
+      padding: 0; 
+      overflow: hidden; 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0f;
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+    }
+    
+    #cesiumContainer { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+    }
+    
+    /* Status Bar */
+    #status-bar { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      right: 0;
+      background: rgba(15, 52, 96, 0.95); 
+      color: #ffffff; 
+      padding: 8px 16px; 
+      z-index: 20; 
+      font-family: 'Inter', sans-serif;
+      border-bottom: 2px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #e6e6e6;
+    }
+    
+    .status-item strong {
+      color: #00d4ff;
+      font-weight: 600;
+    }
+    
+    .status-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .control-btn {
+      background: rgba(0, 212, 255, 0.2);
+      border: 1px solid #00d4ff;
+      color: #00d4ff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: all 0.2s;
+    }
+    
+    .control-btn:hover {
+      background: rgba(0, 212, 255, 0.3);
+    }
+    
+    /* Commentary Panel */
+    #commentary-panel { 
+      position: absolute; 
+      bottom: 0; 
+      left: 0; 
+      right: 0;
+      background: rgba(15, 52, 96, 0.95); 
+      color: #ffffff; 
+      padding: 12px 16px; 
+      z-index: 15; 
+      font-family: 'Inter', sans-serif; 
+      border-top: 2px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      max-height: 200px;
+      overflow-y: auto;
+      transform: translateY(calc(100% - 40px));
+      transition: transform 0.3s ease;
+    }
+    
+    #commentary-panel.expanded {
+      transform: translateY(0);
+    }
+    
+    .commentary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    
+    .commentary-title {
+      color: #00d4ff;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    
+    .expand-icon {
+      color: #00d4ff;
+      font-size: 16px;
+      transition: transform 0.3s ease;
+    }
+    
+    .expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+    
+    .commentary-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      font-size: 11px;
+    }
+    
+    .commentary-section h4 {
+      color: #00d4ff;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      text-transform: uppercase;
+    }
+    
+    .commentary-log {
+      margin: 4px 0;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+      font-size: 10px;
+    }
+    
+    .flight-time, .conflict-time {
+      color: #fbbf24;
+      font-weight: 600;
+    }
+    
+    .flight-id, .conflict-flights {
+      color: #00d4ff;
+      font-weight: 500;
+    }
+    
+    .conflict-flights {
+      color: #f87171;
+    }
+    
+    .conflict-distance {
+      color: #fbbf24;
+      font-weight: 500;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 52, 96, 0.3);
+      border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #00d4ff;
+      border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff6b35;
+    }
+    
+    /* Loading */
+    #loading { 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+      background: rgba(15, 52, 96, 0.95); 
+      color: #00d4ff; 
+      padding: 16px; 
+      border-radius: 8px; 
+      z-index: 30;
+      border: 1px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div id="loading">Loading ATC Conflict Animation...</div>
+  
+  <!-- Status Bar -->
+  <div id="status-bar">
+    <div class="status-left">
+      <div class="status-item">
+        <span>🎯</span>
+        <strong>Event:</strong> <span id="event-time">08:00-11:00</span>
+      </div>
+      <div class="status-item">
+        <strong>Flights:</strong> <span id="flight-count">21</span>
+      </div>
+      <div class="status-item">
+        <strong>Conflicts:</strong> <span id="conflict-count">23</span>
+      </div>
+      <div class="status-item">
+        <strong>Time:</strong> <span id="current-time">08:34</span>
+      </div>
+    </div>
+    <div class="status-controls">
+      <button class="control-btn" id="toggle-labels">Toggle Labels</button>
+      <button class="control-btn" id="settings-btn">⚙ Settings</button>
+    </div>
+  </div>
+  
+  <!-- Commentary Panel -->
+  <div id="commentary-panel">
+    <div class="commentary-header" id="commentary-toggle">
+      <div class="commentary-title">📢 Flight & Conflict Commentary</div>
+      <div class="expand-icon">▼</div>
+    </div>
+    <div class="commentary-content">
+      <div class="commentary-section">
+        <h4>✈️ Flight Departures</h4>
+        <div id="departure-logs">
+          <div class="commentary-log">
+            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0001 (B738) (YBBN-YCOM)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0008 (DH8D) (YMCO-YSHT)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0015 (DC3) (YMRY-YMAY)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0006 (S22T) (YMCO-YMAY)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0016 (SF34) (YMRY-YSSY)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:27</span> - <span class="flight-id">FLT0018 (SF34) (YSSY-YMER)</span> departed
+          </div>
+        </div>
+      </div>
+      <div class="commentary-section">
+        <h4>⚠️ Conflict Alerts</h4>
+        <div id="conflict-logs">
+          <div class="commentary-log">
+            <span class="conflict-time">08:15</span> - <span class="conflict-flights">FLT0001 vs FLT0008</span><br>
+            <span class="conflict-distance">Distance: 2.3nm, Alt: 8500ft</span>
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:18</span> - <span class="conflict-flights">FLT0006 vs FLT0015</span><br>
+            <span class="conflict-distance">Distance: 1.8nm, Alt: 7200ft</span>
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:22</span> - <span class="conflict-flights">FLT0008 vs FLT0016</span><br>
+            <span class="conflict-distance">Distance: 3.1nm, Alt: 9100ft</span>
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:25</span> - <span class="conflict-flights">FLT0015 vs FLT0018</span><br>
+            <span class="conflict-distance">Distance: 2.7nm, Alt: 7800ft</span>
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:28</span> - <span class="conflict-flights">FLT0001 vs FLT0016</span><br>
+            <span class="conflict-distance">Distance: 1.9nm, Alt: 6500ft</span>
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:31</span> - <span class="conflict-flights">FLT0006 vs FLT0018</span><br>
+            <span class="conflict-distance">Distance: 2.4nm, Alt: 8400ft</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Cesium viewer
+    window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/';
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      timeline: false,
+      animation: false,
+      baseLayerPicker: false
+    });
+    
+    viewer.imageryLayers.removeAll();
+    viewer.imageryLayers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider({
+      url: 'https://a.tile.openstreetmap.org/'
+    }));
+    
+    // Commentary panel toggle
+    document.getElementById('commentary-toggle').addclick = function() {
+      const panel = document.getElementById('commentary-panel');
+      panel.classList.toggle('expanded');
+    };
+    
+    // Settings button (placeholder)
+    document.getElementById('settings-btn').onclick = function() {
+      alert('Settings panel would open here');
+    };
+    
+    // Toggle labels button (placeholder)
+    document.getElementById('toggle-labels').onclick = function() {
+      alert('Flight labels toggled');
+    };
+    
+    // Hide loading after a delay
+    setTimeout(() => {
+      document.getElementById('loading').style.display = 'none';
+    }, 2000);
+  </script>
+</body>
+</html> 

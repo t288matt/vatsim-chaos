@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATC Conflict Animation - Corner Widgets Design</title>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body, #cesiumContainer { 
+      width: 100%; 
+      height: 100%; 
+      margin: 0; 
+      padding: 0; 
+      overflow: hidden; 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0f;
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+    }
+    
+    #cesiumContainer { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+    }
+    
+    /* Corner Widgets */
+    .widget {
+      position: absolute;
+      background: rgba(15, 52, 96, 0.95);
+      border: 1.5px solid #00d4ff;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      z-index: 20;
+      transition: all 0.3s ease;
+    }
+    
+    .widget:hover {
+      background: rgba(15, 52, 96, 0.98);
+      transform: scale(1.02);
+    }
+    
+    /* Info Widget (Top-Left) */
+    #info-widget {
+      top: 16px;
+      left: 16px;
+      padding: 12px;
+      min-width: 140px;
+    }
+    
+    .widget-title {
+      color: #00d4ff;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 4px 0;
+      font-size: 10px;
+    }
+    
+    .info-label {
+      color: #e6e6e6;
+      font-weight: 500;
+    }
+    
+    .info-value {
+      color: #00d4ff;
+      font-weight: 600;
+    }
+    
+    /* Controls Widget (Top-Right) */
+    #controls-widget {
+      top: 16px;
+      right: 16px;
+      padding: 12px;
+      min-width: 120px;
+    }
+    
+    .control-item {
+      margin: 6px 0;
+      font-size: 10px;
+    }
+    
+    .control-label {
+      color: #00d4ff;
+      font-weight: 500;
+      margin-bottom: 2px;
+      display: block;
+    }
+    
+    .control-slider {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      outline: none;
+      -webkit-appearance: none;
+      margin: 2px 0;
+    }
+    
+    .control-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #00d4ff;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1px solid #fff;
+    }
+    
+    .control-value {
+      color: #e6e6e6;
+      font-size: 9px;
+      text-align: right;
+    }
+    
+    /* Commentary Widget (Bottom-Right) */
+    #commentary-widget {
+      bottom: 16px;
+      right: 16px;
+      padding: 12px;
+      width: 280px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .commentary-section {
+      margin-bottom: 12px;
+    }
+    
+    .commentary-section h4 {
+      color: #00d4ff;
+      font-size: 10px;
+      font-weight: 600;
+      margin: 0 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    
+    .commentary-log {
+      margin: 3px 0;
+      padding: 3px 0;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+      font-size: 9px;
+      line-height: 1.3;
+    }
+    
+    .flight-time, .conflict-time {
+      color: #fbbf24;
+      font-weight: 600;
+    }
+    
+    .flight-id {
+      color: #00d4ff;
+      font-weight: 500;
+    }
+    
+    .conflict-flights {
+      color: #f87171;
+      font-weight: 500;
+    }
+    
+    .conflict-distance {
+      color: #fbbf24;
+      font-weight: 500;
+      font-size: 8px;
+    }
+    
+    /* Custom scrollbar for commentary */
+    #commentary-widget::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    #commentary-widget::-webkit-scrollbar-track {
+      background: rgba(15, 52, 96, 0.3);
+      border-radius: 2px;
+    }
+    
+    #commentary-widget::-webkit-scrollbar-thumb {
+      background: #00d4ff;
+      border-radius: 2px;
+    }
+    
+    #commentary-widget::-webkit-scrollbar-thumb:hover {
+      background: #ff6b35;
+    }
+    
+    /* Loading */
+    #loading { 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+      background: rgba(15, 52, 96, 0.95); 
+      color: #00d4ff; 
+      padding: 16px; 
+      border-radius: 8px; 
+      z-index: 30;
+      border: 1px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div id="loading">Loading ATC Conflict Animation...</div>
+  
+  <!-- Info Widget (Top-Left) -->
+  <div class="widget" id="info-widget">
+    <div class="widget-title">🎯 Event Info</div>
+    <div class="info-item">
+      <span class="info-label">Event:</span>
+      <span class="info-value" id="event-time">08:00-11:00</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Flights:</span>
+      <span class="info-value" id="flight-count">21</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Conflicts:</span>
+      <span class="info-value" id="conflict-count">23</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Time:</span>
+      <span class="info-value" id="current-time">08:34</span>
+    </div>
+  </div>
+  
+  <!-- Controls Widget (Top-Right) -->
+  <div class="widget" id="controls-widget">
+    <div class="widget-title">⚙ Controls</div>
+    <div class="control-item">
+      <label class="control-label">Aircraft Size</label>
+      <input type="range" class="control-slider" id="acft-size" min="64" max="1024" value="250" step="16">
+      <div class="control-value" id="acft-size-val">250</div>
+    </div>
+    <div class="control-item">
+      <label class="control-label">Font Size</label>
+      <input type="range" class="control-slider" id="font-size" min="3" max="32" value="16" step="1">
+      <div class="control-value" id="font-size-val">16px</div>
+    </div>
+    <div class="control-item">
+      <label class="control-label">Sim Speed</label>
+      <input type="range" class="control-slider" id="speed-slider" min="-120" max="120" value="48" step="1">
+      <div class="control-value" id="speed-val">48x</div>
+    </div>
+    <button class="control-btn" id="toggle-labels" style="width: 100%; margin-top: 6px; padding: 4px; font-size: 9px; background: rgba(0, 212, 255, 0.2); border: 1px solid #00d4ff; color: #00d4ff; border-radius: 4px; cursor: pointer;">Toggle Labels</button>
+  </div>
+  
+  <!-- Commentary Widget (Bottom-Right) -->
+  <div class="widget" id="commentary-widget">
+    <div class="widget-title">📢 Commentary</div>
+    <div class="commentary-section">
+      <h4>✈️ Flight Departures</h4>
+      <div id="departure-logs">
+        <div class="commentary-log">
+          <span class="flight-time">08:00</span> - <span class="flight-id">FLT0001 (B738) (YBBN-YCOM)</span> departed
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:00</span> - <span class="flight-id">FLT0008 (DH8D) (YMCO-YSHT)</span> departed
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:00</span> - <span class="flight-id">FLT0015 (DC3) (YMRY-YMAY)</span> departed
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:02</span> - <span class="flight-id">FLT0006 (S22T) (YMCO-YMAY)</span> departed
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:02</span> - <span class="flight-id">FLT0016 (SF34) (YMRY-YSSY)</span> departed
+        </div>
+        <div class="commentary-log">
+          <span class="flight-time">08:27</span> - <span class="flight-id">FLT0018 (SF34) (YSSY-YMER)</span> departed
+        </div>
+      </div>
+    </div>
+    <div class="commentary-section">
+      <h4>⚠️ Conflict Alerts</h4>
+      <div id="conflict-logs">
+        <div class="commentary-log">
+          <span class="conflict-time">08:15</span> - <span class="conflict-flights">FLT0001 vs FLT0008</span><br>
+          <span class="conflict-distance">Distance: 2.3nm, Alt: 8500ft</span>
+        </div>
+        <div class="commentary-log">
+          <span class="conflict-time">08:18</span> - <span class="conflict-flights">FLT0006 vs FLT0015</span><br>
+          <span class="conflict-distance">Distance: 1.8nm, Alt: 7200ft</span>
+        </div>
+        <div class="commentary-log">
+          <span class="conflict-time">08:22</span> - <span class="conflict-flights">FLT0008 vs FLT0016</span><br>
+          <span class="conflict-distance">Distance: 3.1nm, Alt: 9100ft</span>
+        </div>
+        <div class="commentary-log">
+          <span class="conflict-time">08:25</span> - <span class="conflict-flights">FLT0015 vs FLT0018</span><br>
+          <span class="conflict-distance">Distance: 2.7nm, Alt: 7800ft</span>
+        </div>
+        <div class="commentary-log">
+          <span class="conflict-time">08:28</span> - <span class="conflict-flights">FLT0001 vs FLT0016</span><br>
+          <span class="conflict-distance">Distance: 1.9nm, Alt: 6500ft</span>
+        </div>
+        <div class="commentary-log">
+          <span class="conflict-time">08:31</span> - <span class="conflict-flights">FLT0006 vs FLT0018</span><br>
+          <span class="conflict-distance">Distance: 2.4nm, Alt: 8400ft</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Cesium viewer
+    window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/';
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      timeline: false,
+      animation: false,
+      baseLayerPicker: false
+    });
+    
+    viewer.imageryLayers.removeAll();
+    viewer.imageryLayers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider({
+      url: 'https://a.tile.openstreetmap.org/'
+    }));
+    
+    // Control sliders
+    document.getElementById('acft-size').oninput = function() {
+      const value = parseInt(this.value);
+      document.getElementById('acft-size-val').textContent = value;
+    };
+    
+    document.getElementById('font-size').oninput = function() {
+      const value = parseInt(this.value);
+      document.getElementById('font-size-val').textContent = value + 'px';
+    };
+    
+    document.getElementById('speed-slider').oninput = function() {
+      const value = parseInt(this.value);
+      document.getElementById('speed-val').textContent = value + 'x';
+    };
+    
+    // Toggle labels button
+    document.getElementById('toggle-labels').onclick = function() {
+      alert('Flight labels toggled');
+    };
+    
+    // Hide loading after a delay
+    setTimeout(() => {
+      document.getElementById('loading').style.display = 'none';
+    }, 2000);
+  </script>
+</body>
+</html> 

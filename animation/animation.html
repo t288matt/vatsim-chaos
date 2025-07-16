@@ -660,9 +660,8 @@
           const departureMinutes = parseUTCTimeToMinutes(flight.departure_time);
           if (departureMinutes < entityStart) entityStart = departureMinutes;
         }
-        // Reverse waypoints so aircraft starts at origin and moves to destination
-        const reversedWaypoints = flight.waypoints.slice().reverse();
-        reversedWaypoints.forEach(wp => {
+        // Use waypoints in original order (no reversal needed)
+        flight.waypoints.forEach(wp => {
           if (wp['UTC time']) {
             const absoluteTime = parseUTCTimeToMinutes(wp['UTC time']);
             const t = Cesium.JulianDate.addSeconds(start, absoluteTime * 60, new Cesium.JulianDate());

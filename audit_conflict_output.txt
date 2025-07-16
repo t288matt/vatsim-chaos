@@ -79,9 +79,9 @@ Note: Departure Time column shows scheduled departure times to verify scheduling
 ### Conflict with FLT0008 (Conflict 10)
 | Source                   | Flight       | Aircraft Type | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | FLT0006      | S22T         | 0800           | 4            | -37.56804  | 149.57827  |    5600 |              0 | 0.61      |
-| interpolated_points      | FLT0006      | S22T         | 0800           | 0804         | -37.56804  | 149.57827  |    5600 |              0 | N/A       |
-| animation_data           | FLT0006      | S22T         | 0800           | 0804         | -37.56804  | 149.57827  |    5600 |              0 | N/A       |
+| potential_conflict_data  | FLT0006      | S22T         | 0802           | 4            | -37.56804  | 149.57827  |    5600 |              0 | 0.61      |
+| interpolated_points      | FLT0006      | S22T         | 0802           | 0806         | -37.56804  | 149.57827  |    5600 |              0 | N/A       |
+| animation_data           | FLT0006      | S22T         | 0802           | 0806         | -37.56804  | 149.57827  |    5600 |              0 | N/A       |
 
 ## Flight: FLT0007
 ### Conflict with FLT0001 (Conflict 1)
@@ -109,9 +109,9 @@ Note: Departure Time column shows scheduled departure times to verify scheduling
 ### Conflict with FLT0006 (Conflict 10)
 | Source                   | Flight       | Aircraft Type | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | FLT0008      | DH8D         | 0802           | 4            | -37.55926  | 149.57183  |    5600 |              0 | 0.61      |
-| interpolated_points      | FLT0008      | DH8D         | 0802           | 0806         | -37.55926  | 149.57183  |    5600 |              0 | N/A       |
-| animation_data           | FLT0008      | DH8D         | 0802           | 0806         | -37.55926  | 149.57183  |    5600 |              0 | N/A       |
+| potential_conflict_data  | FLT0008      | DH8D         | 0800           | 4            | -37.55926  | 149.57183  |    5600 |              0 | 0.61      |
+| interpolated_points      | FLT0008      | DH8D         | 0800           | 0804         | -37.55926  | 149.57183  |    5600 |              0 | N/A       |
+| animation_data           | FLT0008      | DH8D         | 0800           | 0804         | -37.55926  | 149.57183  |    5600 |              0 | N/A       |
 
 ## Flight: FLT0009
 ### Conflict with FLT0014 (Conflict 13)
@@ -278,23 +278,23 @@ Note: Departure Time column shows scheduled departure times to verify scheduling
 ### Conflict with FLT0005 (Conflict 9)
 | Source                   | Flight       | Aircraft Type | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | FLT0018      | SF34         | 0829           | 26           | -36.55884  | 149.98497  |   11111 |             60 | 2.82      |
-| interpolated_points      | FLT0018      | SF34         | 0829           | 0919         | -36.55884  | 149.98497  |   11111 |              0 | N/A       |
-| animation_data           | FLT0018      | SF34         | 0829           | 0919         | -36.55884  | 149.98497  |   11111 |              0 | N/A       |
+| potential_conflict_data  | FLT0018      | SF34         | 0827           | 26           | -36.55884  | 149.98497  |   11111 |             60 | 2.82      |
+| interpolated_points      | FLT0018      | SF34         | 0827           | 0917         | -36.55884  | 149.98497  |   11111 |              0 | N/A       |
+| animation_data           | FLT0018      | SF34         | 0827           | 0917         | -36.55884  | 149.98497  |   11111 |              0 | N/A       |
 
 ### Conflict with FLT0011 (Conflict 16)
 | Source                   | Flight       | Aircraft Type | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | FLT0018      | SF34         | 0829           | 4            | -36.79572  | 149.92795  |    5370 |            746 | 2.63      |
-| interpolated_points      | FLT0018      | SF34         | 0829           | 0924         | -36.79572  | 149.92795  |    5370 |              0 | N/A       |
-| animation_data           | FLT0018      | SF34         | 0829           | 0924         | -36.79572  | 149.92795  |    5370 |              0 | N/A       |
+| potential_conflict_data  | FLT0018      | SF34         | 0827           | 4            | -36.79572  | 149.92795  |    5370 |            746 | 2.63      |
+| interpolated_points      | FLT0018      | SF34         | 0827           | 0922         | -36.79572  | 149.92795  |    5370 |              0 | N/A       |
+| animation_data           | FLT0018      | SF34         | 0827           | 0922         | -36.79572  | 149.92795  |    5370 |              0 | N/A       |
 
 ### Conflict with FLT0012 (Conflict 19)
 | Source                   | Flight       | Aircraft Type | Departure Time | Time (UTC)   | Lat        | Lon        | Alt     | Altitude Diff  | Distance  |
 |:----------------------:|:----------:|:----------:|:------------:|:----------:|:--------:|:--------:|:-----:|:------------:|:-------:|
-| potential_conflict_data  | FLT0018      | SF34         | 0829           | 3            | -36.79572  | 149.92795  |    5370 |            630 | 1.66      |
-| interpolated_points      | FLT0018      | SF34         | 0829           | 0924         | -36.79572  | 149.92795  |    5370 |              0 | N/A       |
-| animation_data           | FLT0018      | SF34         | 0829           | 0924         | -36.79572  | 149.92795  |    5370 |              0 | N/A       |
+| potential_conflict_data  | FLT0018      | SF34         | 0827           | 3            | -36.79572  | 149.92795  |    5370 |            630 | 1.66      |
+| interpolated_points      | FLT0018      | SF34         | 0827           | 0922         | -36.79572  | 149.92795  |    5370 |              0 | N/A       |
+| animation_data           | FLT0018      | SF34         | 0827           | 0922         | -36.79572  | 149.92795  |    5370 |              0 | N/A       |
 
 ## Flight: FLT0019
 ### Conflict with FLT0004 (Conflict 6)

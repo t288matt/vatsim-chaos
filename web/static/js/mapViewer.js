@@ -9,9 +9,9 @@ class MapViewer {
     }
     
     initializeMap() {
-        // Create iframe to embed the existing animation.html
+        // Create iframe to embed the status bar development animation
         this.cesiumIframe = document.createElement('iframe');
-        this.cesiumIframe.src = '/animation/animation.html';
+        this.cesiumIframe.src = '/animation/status_bar_development.html';
         this.cesiumIframe.style.width = '100%';
         this.cesiumIframe.style.height = '100%';
         this.cesiumIframe.style.border = 'none';
@@ -37,7 +37,7 @@ class MapViewer {
     
     refreshMap() {
         if (this.cesiumIframe) {
-            // Reload the iframe to refresh the map with new data
+            // Reload the iframe to refresh the status bar animation with new data
             this.mapLoading.style.display = 'block';
             this.cesiumIframe.src = this.cesiumIframe.src;
             

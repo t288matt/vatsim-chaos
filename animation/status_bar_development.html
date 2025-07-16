@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATC Conflict Animation - Status Bar Development</title>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body, #cesiumContainer { 
+      width: 100%; 
+      height: 100%; 
+      margin: 0; 
+      padding: 0; 
+      overflow: hidden; 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0f;
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+    }
+    
+    #cesiumContainer { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+    }
+    
+    /* Status Bar */
+    #status-bar { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      right: 0;
+      background: rgba(15, 52, 96, 0.95); 
+      color: #ffffff; 
+      padding: 8px 16px; 
+      z-index: 20; 
+      font-family: 'Inter', sans-serif;
+      border-bottom: 2px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #e6e6e6;
+    }
+    
+    .status-item strong {
+      color: #00d4ff;
+      font-weight: 600;
+    }
+    
+    .status-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .control-btn {
+      background: rgba(0, 212, 255, 0.2);
+      border: 1px solid #00d4ff;
+      color: #00d4ff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: all 0.2s;
+    }
+    
+    .control-btn:hover {
+      background: rgba(0, 212, 255, 0.3);
+    }
+    
+    /* Speed Control */
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 52, 96, 0.8);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #00d4ff;
+    }
+    
+    .speed-label {
+      font-size: 11px;
+      color: #ffffff;
+      font-weight: 500;
+    }
+    
+    .speed-slider {
+      width: 80px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    
+    .speed-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #00d4ff;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    
+    .speed-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: #00d4ff;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+    
+    #speed-value {
+      font-size: 11px;
+      color: #00d4ff;
+      font-weight: 600;
+      min-width: 30px;
+      text-align: center;
+    }
+    
+    /* Commentary Panel */
+    #commentary-panel { 
+      position: absolute; 
+      bottom: 0; 
+      left: 0; 
+      right: 0;
+      background: rgba(15, 52, 96, 0.95); 
+      color: #ffffff; 
+      padding: 12px 16px; 
+      z-index: 15; 
+      font-family: 'Inter', sans-serif; 
+      border-top: 2px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      max-height: 200px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #00d4ff rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Webkit scrollbar styling */
+    #commentary-panel::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    #commentary-panel::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    
+    #commentary-panel::-webkit-scrollbar-thumb {
+      background: #00d4ff;
+      border-radius: 4px;
+    }
+    
+    #commentary-panel::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 212, 255, 0.8);
+    }
+    
+    /* Settings Panel */
+    #settings-panel {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(15, 52, 96, 0.98);
+      border: 2px solid #00d4ff;
+      border-radius: 12px;
+      padding: 24px;
+      z-index: 25;
+      backdrop-filter: blur(15px);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      min-width: 320px;
+      display: none;
+      cursor: move;
+      user-select: none;
+    }
+    
+    #settings-panel.dragging {
+      cursor: grabbing;
+    }
+    
+    .settings-header {
+      cursor: grab;
+    }
+    
+    .settings-header:active {
+      cursor: grabbing;
+    }
+    
+    #settings-panel.visible {
+      display: block;
+    }
+    
+    .settings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+      padding-bottom: 12px;
+    }
+    
+    .settings-title {
+      color: #00d4ff;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      color: #00d4ff;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    
+    .close-btn:hover {
+      background: rgba(0, 212, 255, 0.2);
+    }
+    
+    .settings-section {
+      margin-bottom: 20px;
+    }
+    
+    .settings-section h3 {
+      color: #00d4ff;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 0 12px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+      font-size: 12px;
+    }
+    
+    .setting-label {
+      color: #e6e6e6;
+      font-weight: 500;
+    }
+    
+    .setting-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .setting-slider {
+      width: 120px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    
+    .setting-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #00d4ff;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #fff;
+    }
+    
+    .setting-value {
+      color: #00d4ff;
+      font-weight: 600;
+      min-width: 40px;
+      text-align: right;
+    }
+    
+    .setting-toggle {
+      background: rgba(0, 212, 255, 0.2);
+      border: 1px solid #00d4ff;
+      color: #00d4ff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: all 0.2s;
+    }
+    
+    .setting-toggle:hover {
+      background: rgba(0, 212, 255, 0.3);
+    }
+    
+    .setting-toggle.active {
+      background: #00d4ff;
+      color: #0a0a0f;
+    }
+    
+    .commentary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .commentary-title {
+      color: #00d4ff;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    
+    .commentary-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      font-size: 14px;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+    
+    .commentary-section {
+      overflow-y: auto;
+      max-height: 120px;
+    }
+    
+    #departure-logs, #conflict-logs {
+      overflow-y: auto;
+      max-height: 100px;
+      scrollbar-width: thin;
+      scrollbar-color: #00d4ff rgba(255, 255, 255, 0.2);
+    }
+    
+    #departure-logs::-webkit-scrollbar,
+    #conflict-logs::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    #departure-logs::-webkit-scrollbar-track,
+    #conflict-logs::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+    
+    #departure-logs::-webkit-scrollbar-thumb,
+    #conflict-logs::-webkit-scrollbar-thumb {
+      background: #00d4ff;
+      border-radius: 3px;
+    }
+    
+    #departure-logs::-webkit-scrollbar-thumb:hover,
+    #conflict-logs::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 212, 255, 0.8);
+    }
+    
+    .commentary-section h4 {
+      color: #00d4ff;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      text-transform: uppercase;
+    }
+    
+    .commentary-log {
+      margin: 4px 0;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+      font-size: 10px;
+    }
+    
+    .flight-time, .conflict-time {
+      color: #fbbf24;
+      font-weight: 600;
+    }
+    
+    .flight-id, .conflict-flights {
+      color: #00d4ff;
+      font-weight: 500;
+    }
+    
+    .conflict-flights {
+      color: #f87171;
+    }
+    
+
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 52, 96, 0.3);
+      border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #00d4ff;
+      border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff6b35;
+    }
+    
+    /* Loading */
+    #loading { 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+      background: rgba(15, 52, 96, 0.95); 
+      color: #00d4ff; 
+      padding: 16px; 
+      border-radius: 8px; 
+      z-index: 30;
+      border: 1px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div id="loading">Loading ATC Conflict Animation...</div>
+  
+  <!-- Status Bar -->
+  <div id="status-bar">
+    <div class="status-left">
+      <div class="status-item">
+        <strong>Flights:</strong> <span id="flight-count">21</span> active
+      </div>
+      <div class="status-item">
+        <strong>Active:</strong> <span id="active-flights">6</span> in air
+      </div>
+      <div class="status-item">
+        <strong>Conflicts:</strong> <span id="conflict-count">23</span>
+      </div>
+      <div class="status-item">
+        <strong>Time:</strong> <span id="current-time">08:34</span>
+      </div>
+    </div>
+    <div class="status-controls">
+      <button class="control-btn" id="pause-btn">⏸ Pause</button>
+      <div class="speed-control">
+        <span class="speed-label">Speed:</span>
+        <input type="range" id="speed-slider" min="1" max="120" value="48" class="speed-slider">
+        <span id="speed-value">48x</span>
+      </div>
+      <button class="control-btn" id="settings-btn">⚙ Settings</button>
+    </div>
+  </div>
+  
+  <!-- Commentary Panel -->
+  <div id="commentary-panel">
+    <div class="commentary-header">
+      <div class="commentary-title">📢 Flight & Conflict Commentary</div>
+    </div>
+    <div class="commentary-content">
+      <div class="commentary-section">
+        <h4>✈️ Flight Departures</h4>
+        <div id="departure-logs">
+          <div class="commentary-log">
+            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0001 (B738) (YBBN-YCOM)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0008 (DH8D) (YMCO-YSHT)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0015 (DC3) (YMRY-YMAY)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0006 (S22T) (YMCO-YMAY)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0016 (SF34) (YMRY-YSSY)</span> departed
+          </div>
+          <div class="commentary-log">
+            <span class="flight-time">08:27</span> - <span class="flight-id">FLT0018 (SF34) (YSSY-YMER)</span> departed
+          </div>
+        </div>
+      </div>
+      <div class="commentary-section">
+        <h4>⚠️ Conflict Alerts</h4>
+        <div id="conflict-logs">
+          <div class="commentary-log">
+            <span class="conflict-time">08:15</span> - <span class="conflict-flights">FLT0001 vs FLT0008</span> conflict detected
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:18</span> - <span class="conflict-flights">FLT0006 vs FLT0015</span> conflict detected
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:22</span> - <span class="conflict-flights">FLT0008 vs FLT0016</span> conflict detected
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:25</span> - <span class="conflict-flights">FLT0015 vs FLT0018</span> conflict detected
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:28</span> - <span class="conflict-flights">FLT0001 vs FLT0016</span> conflict detected
+          </div>
+          <div class="commentary-log">
+            <span class="conflict-time">08:31</span> - <span class="conflict-flights">FLT0006 vs FLT0018</span> conflict detected
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Settings Panel -->
+  <div id="settings-panel">
+    <div class="settings-header">
+      <div class="settings-title">⚙️ Settings</div>
+      <button class="close-btn" id="close-settings">×</button>
+    </div>
+    
+    <div class="settings-section">
+      <h3>Display Controls</h3>
+      <div class="setting-item">
+        <span class="setting-label">Aircraft Size</span>
+        <div class="setting-control">
+          <input type="range" class="setting-slider" id="acft-size" min="64" max="1024" value="250" step="16">
+          <span class="setting-value" id="acft-size-val">250</span>
+        </div>
+      </div>
+      <div class="setting-item">
+        <span class="setting-label">Font Size</span>
+        <div class="setting-control">
+          <input type="range" class="setting-slider" id="font-size" min="8" max="24" value="12" step="1">
+          <span class="setting-value" id="font-size-val">12px</span>
+        </div>
+      </div>
+      <div class="setting-item">
+        <span class="setting-label">Simulation Speed</span>
+        <div class="setting-control">
+          <input type="range" class="setting-slider" id="sim-speed" min="-120" max="120" value="48" step="1">
+          <span class="setting-value" id="sim-speed-val">48x</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-section">
+      <h3>Display Options</h3>
+      <div class="setting-item">
+        <span class="setting-label">Show Flight Labels</span>
+        <button class="setting-toggle active" id="toggle-labels">ON</button>
+      </div>
+      <div class="setting-item">
+        <span class="setting-label">Show Conflict Alerts</span>
+        <button class="setting-toggle active" id="toggle-conflicts">ON</button>
+      </div>
+      <div class="setting-item">
+        <span class="setting-label">Show Flight Paths</span>
+        <button class="setting-toggle" id="toggle-paths">OFF</button>
+      </div>
+    </div>
+    
+    <div class="settings-section">
+      <h3>Animation</h3>
+      <div class="setting-item">
+        <span class="setting-label">Auto-Play</span>
+        <button class="setting-toggle active" id="toggle-autoplay">ON</button>
+      </div>
+      <div class="setting-item">
+        <span class="setting-label">Loop Animation</span>
+        <button class="setting-toggle active" id="toggle-loop">ON</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Cesium viewer with same settings as animation.html
+    window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/';
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      timeline: true,
+      animation: true,
+      shouldAnimate: true,
+      baseLayerPicker: false
+    });
+    
+    viewer.clock.multiplier = 48;
+    viewer.imageryLayers.removeAll();
+    viewer.imageryLayers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider({
+      url: 'https://a.tile.openstreetmap.org/'
+    }));
+    
+    // Flight colors array (same as animation.html)
+    const flightColors = [
+      Cesium.Color.YELLOW, Cesium.Color.CYAN, Cesium.Color.LIME, Cesium.Color.ORANGE, 
+      Cesium.Color.MAGENTA, Cesium.Color.RED, Cesium.Color.BLUE, Cesium.Color.GREEN,
+      Cesium.Color.GOLD, Cesium.Color.AQUA, Cesium.Color.VIOLET, Cesium.Color.ROSE
+    ];
+    
+    // Global variables (same as animation.html)
+    let flights = [];
+    let conflicts = [];
+    let flightEntities = [];
+    let labelVisible = true;
+    let selectedFlightId = null;
+    let departedFlights = new Set();
+    let lastUpdateTime = 0;
+    let loggedConflicts = new Set();
+    let eventStartTime = null;
+    let eventEndTime = null;
+    let acftSize = 512;
+    let fontSize = 16;
+    
+    // Settings panel functionality
+    document.getElementById('settings-btn').onclick = function() {
+      document.getElementById('settings-panel').classList.add('visible');
+    };
+    
+    document.getElementById('close-settings').onclick = function() {
+      document.getElementById('settings-panel').classList.remove('visible');
+    };
+    
+    // Close settings when clicking outside
+    document.addEventListener('click', function(event) {
+      const settingsPanel = document.getElementById('settings-panel');
+      const settingsBtn = document.getElementById('settings-btn');
+      if (settingsPanel.classList.contains('visible') && 
+          !settingsPanel.contains(event.target) && 
+          !settingsBtn.contains(event.target)) {
+        settingsPanel.classList.remove('visible');
+      }
+    });
+    
+    // Draggable settings panel functionality
+    let isDragging = false;
+    let dragOffset = { x: 0, y: 0 };
+    
+    const settingsPanel = document.getElementById('settings-panel');
+    const settingsHeader = document.querySelector('.settings-header');
+    
+    // Mouse down event - start dragging
+    settingsHeader.addEventListener('mousedown', function(e) {
+      if (e.target.closest('.close-btn')) return; // Don't drag when clicking close button
+      
+      isDragging = true;
+      settingsPanel.classList.add('dragging');
+      
+      const rect = settingsPanel.getBoundingClientRect();
+      dragOffset.x = e.clientX - rect.left;
+      dragOffset.y = e.clientY - rect.top;
+      
+      e.preventDefault();
+    });
+    
+    // Mouse move event - update position
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      
+      const newX = e.clientX - dragOffset.x;
+      const newY = e.clientY - dragOffset.y;
+      
+      // Keep panel within viewport bounds
+      const panelRect = settingsPanel.getBoundingClientRect();
+      const maxX = window.innerWidth - panelRect.width;
+      const maxY = window.innerHeight - panelRect.height;
+      
+      const boundedX = Math.max(0, Math.min(newX, maxX));
+      const boundedY = Math.max(0, Math.min(newY, maxY));
+      
+      settingsPanel.style.left = boundedX + 'px';
+      settingsPanel.style.top = boundedY + 'px';
+      settingsPanel.style.transform = 'none'; // Remove centering transform
+    });
+    
+    // Mouse up event - stop dragging
+    document.addEventListener('mouseup', function() {
+      if (isDragging) {
+        isDragging = false;
+        settingsPanel.classList.remove('dragging');
+      }
+    });
+    
+    // Reset position when settings panel is opened
+    document.getElementById('settings-btn').addEventListener('click', function() {
+      // Reset to center position when opening
+      settingsPanel.style.left = '50%';
+      settingsPanel.style.top = '50%';
+      settingsPanel.style.transform = 'translate(-50%, -50%)';
+    });
+    
+    // Settings sliders (same functionality as animation.html)
+    document.getElementById('acft-size').oninput = function() {
+      acftSize = parseInt(this.value);
+      document.getElementById('acft-size-val').textContent = acftSize;
+      flightEntities.forEach(e => {
+        if (e.model) {
+          e.model.minimumPixelSize = acftSize;
+          e.model.maximumScale = acftSize * 3;
+        }
+      });
+    };
+    
+    document.getElementById('font-size').oninput = function() {
+      fontSize = parseInt(this.value);
+      document.getElementById('font-size-val').textContent = fontSize + 'px';
+      flightEntities.forEach(e => {
+        if (e.label) {
+          e.label.font = fontSize + 'px sans-serif';
+        }
+      });
+    };
+    
+    document.getElementById('sim-speed').oninput = function() {
+      const speed = parseInt(this.value);
+      document.getElementById('sim-speed-val').textContent = speed + 'x';
+      viewer.clock.multiplier = speed;
+    };
+    
+    // Toggle buttons
+    function setupToggleButton(buttonId) {
+      const button = document.getElementById(buttonId);
+      button.onclick = function() {
+        const isActive = this.classList.contains('active');
+        this.classList.toggle('active');
+        this.textContent = isActive ? 'OFF' : 'ON';
+      };
+    }
+    
+    setupToggleButton('toggle-labels');
+    setupToggleButton('toggle-conflicts');
+    setupToggleButton('toggle-paths');
+    setupToggleButton('toggle-autoplay');
+    setupToggleButton('toggle-loop');
+    
+    // Pause button functionality
+    let isPaused = false;
+    document.getElementById('pause-btn').onclick = function() {
+      isPaused = !isPaused;
+      if (isPaused) {
+        viewer.clock.shouldAnimate = false;
+        this.textContent = '▶ Play';
+      } else {
+        viewer.clock.shouldAnimate = true;
+        this.textContent = '⏸ Pause';
+      }
+    };
+    
+    // Speed slider functionality
+    document.getElementById('speed-slider').oninput = function() {
+      const speed = parseInt(this.value);
+      document.getElementById('speed-value').textContent = speed + 'x';
+      viewer.clock.multiplier = speed;
+    };
+    
+    // Toggle labels functionality (same as animation.html)
+    document.getElementById('toggle-labels').onclick = () => {
+      labelVisible = !labelVisible;
+      flightEntities.forEach(e => {
+        e.label.show = labelVisible;
+      });
+    };
+    
+    // Load animation data and initialize visualization
+    async function loadAnimationData() {
+      try {
+        // Read from interpolated data (same as animation.html)
+        const response = await fetch('/temp/routes_with_added_interpolated_points.json');
+        if (!response.ok) throw new Error('Interpolated data not found: ' + response.status + ' ' + response.statusText);
+        const text = await response.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (jsonErr) {
+          console.error('JSON parse error:', jsonErr);
+          return false;
+        }
+        console.log('Loaded interpolated data:', data);
+        
+        // Load event times from metadata
+        if (data._metadata) {
+          if (data._metadata.event_start) {
+            eventStartTime = data._metadata.event_start;
+            console.log('Loaded event start time from metadata:', eventStartTime);
+          }
+          if (data._metadata.event_end) {
+            eventEndTime = data._metadata.event_end;
+            console.log('Loaded event end time from metadata:', eventEndTime);
+          }
+        }
+        
+        // Update event time display
+        const eventTimeElement = document.getElementById('event-time');
+        if (eventTimeElement && eventStartTime && eventEndTime) {
+          const startTimeFormatted = eventStartTime.substring(0, 2) + ':' + eventStartTime.substring(2, 4);
+          const endTimeFormatted = eventEndTime.substring(0, 2) + ':' + eventEndTime.substring(2, 4);
+          eventTimeElement.textContent = `${startTimeFormatted}-${endTimeFormatted}`;
+        } else if (eventTimeElement) {
+          eventTimeElement.textContent = 'Loading...';
+        }
+        
+        // Convert interpolated data to frontend format (same as animation.html)
+        flights = [];
+        
+        // Process each flight from interpolated data
+        for (const [flightId, flightData] of Object.entries(data)) {
+          if (flightId === '_metadata') continue; // Skip metadata
+          
+          if (flightData && typeof flightData === 'object' && flightData.route) {
+            // Convert route waypoints to frontend format
+            const waypoints = flightData.route.map((wp, index) => ({
+              index: index,
+              name: wp.name || '',
+              lat: wp.lat,
+              lon: wp.lon,
+              altitude: wp.altitude,
+              'UTC time': wp.time,
+              stage: wp.stage || ''
+            }));
+            
+            // Find departure and arrival from waypoints
+            const departure = waypoints[0]?.name || '';
+            let arrival = '';
+            for (let i = waypoints.length - 1; i >= 0; i--) {
+              if (waypoints[i].name && !waypoints[i].name.startsWith('CONFLICT_')) {
+                arrival = waypoints[i].name;
+                break;
+              }
+            }
+            
+            // Get departure time from metadata
+            const departureTime = data._metadata?.departure_schedule?.[flightId]?.departure_time || null;
+            
+            // Create flight object
+            const flight = {
+              flight_id: flightId,
+              departure: departure,
+              arrival: arrival,
+              departure_time: departureTime,
+              aircraft_type: flightData.aircraft_type || 'UNK',
+              waypoints: waypoints
+            };
+            
+            flights.push(flight);
+          }
+        }
+        
+        // Load conflicts from dedicated conflict points file
+        try {
+          const conflictResponse = await fetch('/temp/potential_conflict_data.json');
+          if (conflictResponse.ok) {
+            const conflictData = await conflictResponse.json();
+            conflicts = conflictData.potential_conflicts || [];
+            console.log('Loaded conflicts:', conflicts);
+          } else {
+            console.warn('Conflict points file not found, using empty conflicts array');
+            conflicts = [];
+          }
+        } catch (conflictError) {
+          console.warn('Error loading conflict points:', conflictError);
+          conflicts = [];
+        }
+        
+        console.log('Processed flights:', flights);
+        console.log('Processed unique conflicts:', conflicts);
+        return true;
+      } catch (error) {
+        console.error('Data load error:', error);
+        return false;
+      }
+    }
+    
+    // Initialize visualization
+    async function initializeVisualization() {
+      document.getElementById('loading').style.display = 'block';
+      try {
+        const animationLoaded = await loadAnimationData();
+        if (animationLoaded) {
+          createScheduledFlights();
+          createConflictMarkers(conflicts);
+        } else {
+          // Demo data if no real data available
+          flights = [
+            {
+              flight_id: 'Demo Flight 1',
+              departure_time: null,
+              waypoints: [
+                { lon: 151.177, lat: -33.946, altitude: 0, utc_time: '1400' },
+                { lon: 153.117, lat: -27.384, altitude: 10000, utc_time: '1410' },
+                { lon: 144.843, lat: -37.673, altitude: 0, utc_time: '1420' }
+              ]
+            }
+          ];
+          createScheduledFlights();
+          createConflictMarkers(conflicts);
+        }
+        
+        // Calculate camera view to cover all flight routes
+        let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
+        let hasValidCoordinates = false;
+        
+        // Get coordinates from all flight waypoints
+        flights.forEach(flight => {
+          if (flight.waypoints && flight.waypoints.length > 0) {
+            flight.waypoints.forEach(point => {
+              if (point.lon !== undefined && point.lat !== undefined) {
+                minLon = Math.min(minLon, point.lon);
+                maxLon = Math.max(maxLon, point.lon);
+                minLat = Math.min(minLat, point.lat);
+                maxLat = Math.max(maxLat, point.lat);
+                hasValidCoordinates = true;
+              }
+            });
+          }
+        });
+        
+        if (hasValidCoordinates) {
+          // Add 10% padding on each side to ensure 90% coverage
+          const lonPadding = (maxLon - minLon) * 0.1;
+          const latPadding = (maxLat - minLat) * 0.1;
+          
+          // Ensure minimum view size for very close airports
+          const minLonRange = 0.1; // Minimum 0.1 degrees longitude
+          const minLatRange = 0.1; // Minimum 0.1 degrees latitude
+          
+          const lonRange = Math.max(maxLon - minLon, minLonRange);
+          const latRange = Math.max(maxLat - minLat, minLatRange);
+          
+          const finalMinLon = minLon - lonPadding;
+          const finalMaxLon = maxLon + lonPadding;
+          const finalMinLat = minLat - latPadding;
+          const finalMaxLat = maxLat + latPadding;
+          
+          const dynamicRect = Cesium.Rectangle.fromDegrees(
+            finalMinLon, finalMinLat, finalMaxLon, finalMaxLat
+          );
+          viewer.camera.setView({ 
+            destination: dynamicRect,
+            orientation: {
+              heading: Cesium.Math.toRadians(0),
+              pitch: Cesium.Math.toRadians(-90),
+              roll: 0.0
+            }
+          });
+          
+                  console.log(`Camera set to cover all flight routes`);
+        console.log(`View rectangle: ${finalMinLon.toFixed(2)}°E to ${finalMaxLon.toFixed(2)}°E, ${finalMinLat.toFixed(2)}°S to ${finalMaxLat.toFixed(2)}°S`);
+        console.log(`Number of flights: ${flights.length}`);
+        console.log(`Flight entities created: ${flightEntities.length}`);
+          
+          // Auto-zoom to fit all flight entities in view while maintaining perpendicular orientation
+          viewer.camera.flyTo({
+            destination: viewer.camera.computeViewRectangle(),
+            orientation: {
+              heading: Cesium.Math.toRadians(0),
+              pitch: Cesium.Math.toRadians(-90),
+              roll: 0.0
+            },
+            duration: 1.0
+          });
+        } else {
+          // Fallback to default view if no valid coordinates found
+          const startRect = Cesium.Rectangle.fromDegrees(135.0, -39.0, 154.0, -29.0);
+          viewer.camera.setView({ 
+            destination: startRect,
+            orientation: {
+              heading: Cesium.Math.toRadians(0),
+              pitch: Cesium.Math.toRadians(-90),
+              roll: 0.0
+            }
+          });
+          console.log('No valid airport coordinates found, using default view');
+          
+          // Auto-zoom to fit all flight entities in view while maintaining perpendicular orientation
+          viewer.camera.flyTo({
+            destination: viewer.camera.computeViewRectangle(),
+            orientation: {
+              heading: Cesium.Math.toRadians(0),
+              pitch: Cesium.Math.toRadians(-90),
+              roll: 0.0
+            },
+            duration: 1.0
+          });
+        }
+        
+        function animationFrameUpdate() {
+          updateUI();
+          requestAnimationFrame(animationFrameUpdate);
+        }
+        requestAnimationFrame(animationFrameUpdate);
+        updateUI();
+      } catch (error) {
+        console.error('Visualization error:', error);
+      } finally {
+        document.getElementById('loading').style.display = 'none';
+      }
+    }
+    
+    // Helper functions (same as animation.html)
+    function parseUTCTimeToMinutes(utcTimeStr) {
+      if (!eventStartTime) {
+        console.error('Event start time not loaded from metadata');
+        return 0;
+      }
+      const hours = parseInt(utcTimeStr.substring(0, 2));
+      const minutes = parseInt(utcTimeStr.substring(2, 4));
+      const eventStartHours = parseInt(eventStartTime.substring(0, 2));
+      const eventStartMinutes = parseInt(eventStartTime.substring(2, 4));
+      const eventStart = eventStartHours * 60 + eventStartMinutes;
+      return (hours * 60 + minutes) - eventStart;
+    }
+    
+    function minutesToTimeString(minutes) {
+      if (!eventStartTime) {
+        console.error('Event start time not loaded from metadata');
+        return '00:00';
+      }
+      const eventStartHours = parseInt(eventStartTime.substring(0, 2));
+      const eventStartMinutes = parseInt(eventStartTime.substring(2, 4));
+      const totalMinutes = (eventStartHours * 60 + eventStartMinutes) + minutes;
+      const hours = Math.floor(totalMinutes / 60);
+      const mins = totalMinutes % 60;
+      return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+    }
+    
+    function createScheduledFlights() {
+      viewer.entities.removeAll();
+      flightEntities = [];
+      if (flights.length === 0) return;
+      
+      // Calculate global timeline
+      let minTime = Infinity, maxTime = -Infinity;
+      flights.forEach(flight => {
+        if (flight.departure_time) {
+          const departureMinutes = parseUTCTimeToMinutes(flight.departure_time);
+          if (departureMinutes < minTime) minTime = departureMinutes;
+        }
+        flight.waypoints.forEach(wp => {
+          if (wp['UTC time']) {
+            const absoluteTime = parseUTCTimeToMinutes(wp['UTC time']);
+            if (absoluteTime < minTime) minTime = absoluteTime;
+            if (absoluteTime > maxTime) maxTime = absoluteTime;
+          }
+        });
+      });
+      
+      const start = Cesium.JulianDate.fromDate(new Date(Date.now()));
+      const stop = Cesium.JulianDate.addSeconds(start, (maxTime - minTime) * 60, new Cesium.JulianDate());
+      
+      // Set currentTime to the start of the first flight (minTime)
+      viewer.clock.startTime = start.clone();
+      viewer.clock.stopTime = stop.clone();
+      viewer.clock.currentTime = start.clone();
+      viewer.clock.clockRange = Cesium.ClockRange.LOOP;
+      viewer.clock.multiplier = 48;
+      viewer.timeline.zoomTo(start, stop);
+      viewer.clock.shouldAnimate = true;
+      
+      // Ensure animation continues looping
+      viewer.clock.onTick.addEventListener(function(clock) {
+        if (clock.currentTime.secondsOfDay >= clock.stopTime.secondsOfDay) {
+          clock.currentTime = clock.startTime.clone();
+        }
+      });
+      
+      // Create flight entities with animated paths and 3D models
+      flights.forEach((flight, idx) => {
+        const color = flightColors[idx % flightColors.length];
+        const property = new Cesium.SampledPositionProperty();
+        const altitudeProperty = new Cesium.SampledProperty(Number);
+        let entityStart = Infinity, entityStop = -Infinity;
+        
+        if (flight.departure_time) {
+          const departureMinutes = parseUTCTimeToMinutes(flight.departure_time);
+          if (departureMinutes < entityStart) entityStart = departureMinutes;
+        }
+        
+        // Use waypoints in original order (no reversal needed)
+        flight.waypoints.forEach(wp => {
+          if (wp['UTC time']) {
+            const absoluteTime = parseUTCTimeToMinutes(wp['UTC time']);
+            const t = Cesium.JulianDate.addSeconds(start, absoluteTime * 60, new Cesium.JulianDate());
+            property.addSample(t, Cesium.Cartesian3.fromDegrees(wp.lon, wp.lat, wp.altitude));
+            altitudeProperty.addSample(t, wp.altitude);
+            if (absoluteTime < entityStart) entityStart = absoluteTime;
+            if (absoluteTime > entityStop) entityStop = absoluteTime;
+          }
+        });
+        
+        const entityAvailability = new Cesium.TimeIntervalCollection([
+          new Cesium.TimeInterval({
+            start: Cesium.JulianDate.addSeconds(start, entityStart * 60, new Cesium.JulianDate()),
+            stop: Cesium.JulianDate.addSeconds(start, entityStop * 60, new Cesium.JulianDate())
+          })
+        ]);
+        
+        const entity = viewer.entities.add({
+          id: flight.flight_id,
+          availability: entityAvailability,
+          position: property,
+          orientation: new Cesium.VelocityOrientationProperty(property),
+          model: {
+            uri: 'https://cesium.com/downloads/cesiumjs/releases/1.115/Apps/SampleData/models/CesiumAir/Cesium_Air.glb',
+            minimumPixelSize: acftSize,
+            maximumScale: acftSize * 3,
+            color: Cesium.Color.BLACK.withAlpha(0.8),
+            colorBlendMode: Cesium.ColorBlendMode.MIX
+          },
+          path: {
+            resolution: 1,
+            material: color,
+            width: 2,
+            leadTime: 0,
+            trailTime: 60
+          },
+          label: {
+            text: new Cesium.CallbackProperty(function(time, result) {
+              const alt = altitudeProperty.getValue(time);
+              const route = `${flight.departure}-${flight.arrival}`;
+              const acftType = flight.aircraft_type || 'UNK';
+              return `${flight.flight_id} (${acftType})\n${route}\nAlt: ${alt !== undefined ? Math.round(alt) : 'N/A'} ft`;
+            }, false),
+            font: fontSize + 'px sans-serif',
+            fillColor: color,
+            outlineColor: Cesium.Color.BLACK,
+            outlineWidth: 2,
+            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+            verticalOrigin: Cesium.VerticalOrigin.CENTER,
+            pixelOffset: new Cesium.Cartesian2(30, 40),
+            show: labelVisible
+          }
+        });
+        
+        flightEntities.push(entity);
+      });
+    }
+    
+    function createConflictMarkers(conflictPoints) {
+      if (!Array.isArray(conflictPoints)) {
+        console.warn('Conflict points is not an array:', conflictPoints);
+        return;
+      }
+      
+      conflictPoints.forEach((conflict, index) => {
+        // Use the midpoint between the two conflict points
+        const lat = (conflict.lat1 + conflict.lat2) / 2;
+        const lon = (conflict.lon1 + conflict.lon2) / 2;
+        const altitude = Math.max(conflict.alt1, conflict.alt2);
+        
+        const position = Cesium.Cartesian3.fromDegrees(lon, lat, altitude);
+        viewer.entities.add({
+          id: `conflict_marker_${index}`,
+          position: position,
+          point: {
+            pixelSize: 7.5,
+            color: Cesium.Color.RED,
+            outlineColor: Cesium.Color.WHITE,
+            outlineWidth: 3,
+            heightReference: Cesium.HeightReference.NONE
+          }
+        });
+      });
+    }
+    
+    function updateUI() {
+      document.getElementById('flight-count').textContent = flights.length;
+      document.getElementById('conflict-count').textContent = conflicts.length;
+      
+      const currentTime = viewer.clock.currentTime;
+      const seconds = Cesium.JulianDate.secondsDifference(currentTime, viewer.clock.startTime);
+      const minutes = Math.floor(seconds / 60);
+      const timeStr = minutesToTimeString(minutes);
+      document.getElementById('current-time').textContent = timeStr;
+      
+      // Calculate active flights (flights currently in the air)
+      let activeFlights = 0;
+      flights.forEach(flight => {
+        if (flight.departure_time) {
+          const departureMinutes = parseUTCTimeToMinutes(flight.departure_time);
+          if (minutes >= departureMinutes) {
+            activeFlights++;
+          }
+        }
+      });
+      document.getElementById('active-flights').textContent = activeFlights;
+      
+      // Check for new departures
+      checkForDepartures(minutes, timeStr);
+      
+      const activeConflicts = conflicts.filter(conflict => {
+        if (!conflict.time) return false;
+        // Conflict time is in minutes from event start
+        const conflictTime = conflict.time;
+        return Math.abs(minutes - conflictTime) <= 0.5;
+      });
+      
+      // Log new conflicts to commentary
+      activeConflicts.forEach(conflict => {
+                  const conflictKey = `${conflict.flight1}_${conflict.flight2}_${conflict.time}`;
+          if (!loggedConflicts.has(conflictKey)) {
+            loggedConflicts.add(conflictKey);
+            
+            // Add conflict to commentary
+            const conflictLogsContainer = document.getElementById('conflict-logs');
+            const conflictTime = minutesToTimeString(minutes);
+            const conflictLog = document.createElement('div');
+            conflictLog.className = 'commentary-log';
+            conflictLog.innerHTML = `
+              <span class="conflict-time">${conflictTime}</span> - 
+              <span class="conflict-flights">${conflict.flight1} vs ${conflict.flight2}</span> conflict detected
+            `;
+            conflictLogsContainer.appendChild(conflictLog);
+            
+            // Auto-scroll to bottom
+            conflictLogsContainer.scrollTop = conflictLogsContainer.scrollHeight;
+          }
+      });
+      
+      // Set all aircraft to black by default
+      flightEntities.forEach(entity => {
+        if (entity.model) {
+          entity.model.color = Cesium.Color.BLACK.withAlpha(0.8);
+        }
+      });
+      
+      // Set aircraft involved in active conflicts to red
+      activeConflicts.forEach(conflict => {
+        [conflict.flight1, conflict.flight2].forEach(flightId => {
+          const entity = flightEntities.find(e => e.id === flightId);
+          if (entity && entity.model) {
+            entity.model.color = Cesium.Color.RED.withAlpha(0.8);
+          }
+        });
+      });
+    }
+    
+    function checkForDepartures(currentMinutes, timeStr) {
+      flights.forEach(flight => {
+        if (flight.departure_time) {
+          const departureMinutes = parseUTCTimeToMinutes(flight.departure_time);
+          if (currentMinutes >= departureMinutes && !departedFlights.has(flight.flight_id)) {
+            departedFlights.add(flight.flight_id);
+            logDeparture(flight.flight_id, timeStr, flight.departure_time);
+          }
+        }
+      });
+    }
+    
+    function logDeparture(flightId, currentTime, scheduledTime) {
+      const logsDiv = document.getElementById('departure-logs');
+      const logEntry = document.createElement('div');
+      logEntry.className = 'commentary-log';
+      
+      const flight = flights.find(f => f.flight_id === flightId);
+      if (flight) {
+        const route = `${flight.departure}-${flight.arrival}`;
+        const acftType = flight.aircraft_type || 'UNK';
+        logEntry.innerHTML = `<span class="flight-time">${currentTime}</span> - <span class="flight-id">${flightId} (${acftType}) (${route})</span> departed`;
+      } else {
+        logEntry.innerHTML = `<span class="flight-time">${currentTime}</span> - <span class="flight-id">${flightId}</span> departed`;
+      }
+      
+      logsDiv.appendChild(logEntry);
+      logsDiv.scrollTop = logsDiv.scrollHeight;
+    }
+    
+    // Highlight selected flight
+    viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
+      const pickedObject = viewer.scene.pick(movement.position);
+      if (Cesium.defined(pickedObject) && pickedObject.id && pickedObject.id.id) {
+        const flightId = pickedObject.id.id;
+        selectedFlightId = flightId;
+        flightEntities.forEach(e => {
+          if (e.id === flightId) {
+            e.path.material = Cesium.Color.WHITE;
+            e.path.width = 6;
+          } else {
+            e.path.material = flightColors.find(c => c.equals(e.path.material)) || Cesium.Color.YELLOW;
+            e.path.width = 2;
+          }
+        });
+      }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    
+    // Initialize the visualization
+    initializeVisualization();
+  </script>
+</body>
+</html> 
