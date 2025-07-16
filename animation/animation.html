@@ -83,16 +83,7 @@
       font-size: 12px;  /* VATSIM Radar text size */
     }
     
-    .conflict-alert { 
-      background: rgba(46, 26, 26, 0.8); 
-      border-left: 3px solid #f87171; 
-      padding: 6px 10px; 
-      margin: 6px 0; 
-      border-radius: 4px;
-      color: #f87171;
-      font-weight: 500;
-      font-size: 11px;  /* VATSIM Radar small text */
-    }
+
     
     /* VATSIM Radar-style commentary boxes */
     #commentary-box { 
@@ -317,6 +308,55 @@
       transform: scale(1.1);
     }
     
+    /* Add/modify styles for unified control panel and pause button */
+    #controls .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px 12px 12px 12px;
+      background: rgba(15, 52, 96, 0.95);
+      border-radius: 10px;
+      border: 1.5px solid #00d4ff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.18);
+      min-width: 220px;
+    }
+    #controls label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      color: #00d4ff;
+      font-size: 12px;
+      margin-bottom: 0;
+    }
+    .speed-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 2px;
+    }
+    .pause-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+      box-shadow: 0 2px 8px rgba(0, 212, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s;
+      padding: 0;
+    }
+    .pause-btn:hover {
+      background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+    }
+    .pause-btn svg {
+      pointer-events: none;
+    }
+    
 
   </style>
 </head>
@@ -329,17 +369,34 @@
     <p><strong>Flights:</strong> <span id="flight-count">0</span> active</p>
     <p><strong>Conflicts:</strong> <span id="conflict-count">0</span> detected</p>
     <p><strong>Current Time:</strong> <span id="current-time">14:00</span></p>
-    <div id="conflict-alerts"></div>
     <button id="toggle-labels">Toggle Flight Labels</button>
   </div>
   <div id="controls">
-    <label>Aircraft Size: <input id="acft-size" type="range" min="64" max="1024" value="250" step="16"> <span id="acft-size-val">250</span></label>
-    <label>Font Size: <input id="font-size" type="range" min="3" max="32" value="16" step="1"> <span id="font-size-val">16</span> px</label>
-    <div class="sim-controls">
-      <div class="speed-control">
-        <label>Sim Speed: <span id="speed-val">48x</span></label>
-        <input id="speed-slider" type="range" min="-120" max="120" value="48" step="1">
-      </div>
+    <div class="control-group">
+      <label>Aircraft Size:
+        <input id="acft-size" type="range" min="64" max="1024" value="250" step="16">
+        <span id="acft-size-val">250</span>
+      </label>
+      <label>Font Size:
+        <input id="font-size" type="range" min="3" max="32" value="16" step="1">
+        <span id="font-size-val">16</span> px
+      </label>
+      <label>Sim Speed: <span id="speed-val">48x</span>
+        <div class="speed-row">
+          <input id="speed-slider" type="range" min="-120" max="120" value="48" step="1">
+          <button id="pause-btn" title="Pause/Resume Simulation" class="pause-btn">
+            <svg id="pause-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="9" r="9" fill="#00d4ff"/>
+              <rect x="5" y="4.5" width="2.5" height="9" rx="1" fill="#16213e"/>
+              <rect x="10.5" y="4.5" width="2.5" height="9" rx="1" fill="#16213e"/>
+            </svg>
+            <svg id="play-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:none;position:absolute;left:0;top:0;" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="9" r="9" fill="#00d4ff"/>
+              <polygon points="6,4.5 13,9 6,13.5" fill="#16213e"/>
+            </svg>
+          </button>
+        </div>
+      </label>
     </div>
   </div>
   <div id="commentary-box">
@@ -719,29 +776,6 @@
           conflictLogsContainer.scrollTop = conflictLogsContainer.scrollHeight;
         }
       });
-      const alertsDiv = document.getElementById('conflict-alerts');
-      alertsDiv.innerHTML = '';
-      activeConflicts.forEach(conflict => {
-        const alertDiv = document.createElement('div');
-        alertDiv.className = 'conflict-alert';
-        // Use Alt: and Sep: fields instead of lat/long
-        const alt = conflict.altitude !== undefined ? Math.round(conflict.altitude) + 'ft' : 'N/A';
-        const dist = conflict.distance !== undefined ? conflict.distance + 'nm' : 'N/A';
-        // Convert flight IDs to both flight ID and route for display
-        const getFlightInfoFromFlightId = (flightId) => {
-          const flight = flights.find(f => f.flight_id === flightId);
-          if (flight) {
-            const route = `${flight.departure}-${flight.arrival}`;
-            const acftType = flight.aircraft_type || 'UNK';
-            return `${flightId} (${acftType}) (${route})`;
-          }
-          return flightId;
-        };
-        const flight1Info = getFlightInfoFromFlightId(conflict.flight1);
-        const flight2Info = getFlightInfoFromFlightId(conflict.flight2);
-        alertDiv.innerHTML = `⚠️ ${flight1Info} vs ${flight2Info}  Alt: ${alt}  Dist: ${dist}`;
-        alertsDiv.appendChild(alertDiv);
-      });
       // Set all aircraft to black by default
       flightEntities.forEach(entity => {
         if (entity.model) {
@@ -960,6 +994,22 @@
     }
     
     initializeVisualization();
+    // --- Add Pause Button Logic ---
+    const pauseBtn = document.getElementById('pause-btn');
+    const pauseIcon = document.getElementById('pause-icon');
+    const playIcon = document.getElementById('play-icon');
+    let isPaused = false;
+    pauseBtn.onclick = function() {
+      isPaused = !isPaused;
+      viewer.clock.shouldAnimate = !isPaused;
+      if (isPaused) {
+        pauseIcon.style.display = 'none';
+        playIcon.style.display = 'block';
+      } else {
+        pauseIcon.style.display = 'block';
+        playIcon.style.display = 'none';
+      }
+    };
   </script>
 </body>
 </html> 
