@@ -27,21 +27,7 @@ body {
     overflow: hidden;
 }
 
-.header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(0,212,255,0.1) 50%, transparent 70%);
-    animation: shimmer 3s ease-in-out infinite;
-}
 
-@keyframes shimmer {
-    0%, 100% { transform: translateX(-100%); }
-    50% { transform: translateX(100%); }
-}
 
 .header h1 {
     font-size: 24px;  /* VATSIM Radar title size */
@@ -116,7 +102,7 @@ body {
 .upload-area {
     border: 2px dashed #00d4ff;
     border-radius: 8px;
-    padding: 12px 16px;
+    padding: 6px 16px;
     text-align: center;
     background: rgba(15, 52, 96, 0.2);
     cursor: pointer;
@@ -846,7 +832,7 @@ body {
     margin: 5% auto;
     border-radius: 12px;
     width: 90%;
-    max-width: 800px;
+    max-width: 1200px;
     max-height: 80vh;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     overflow: hidden;

@@ -65,7 +65,7 @@ class Processor {
         this.processingStartTime = Date.now();
         this.retryCount = 0;
         this.processBtn.disabled = true;
-        this.processBtn.textContent = '🔄 Processing...';
+        this.processBtn.textContent = '🔄 Generating...';
         
         // Show progress section
         this.progressSection.style.display = 'block';
@@ -479,7 +479,7 @@ class Processor {
         this.processingStartTime = null;
         this.retryCount = 0;
         this.processBtn.disabled = false;
-        this.processBtn.textContent = '🚀 Process Analysis';
+        this.processBtn.textContent = '🚀 Generate Schedule';
         
         // Clear status check interval
         if (this.statusCheckInterval) {

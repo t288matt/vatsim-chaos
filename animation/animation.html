@@ -321,6 +321,8 @@
     let departedFlights = new Set(); // Track which flights have departed
     let lastUpdateTime = 0; // Track last update time to avoid duplicate logs
     let loggedConflicts = new Set(); // Track which conflicts have been logged
+    let eventStartTime = null; // Will be loaded from metadata
+    let eventEndTime = null; // Will be loaded from metadata
     document.getElementById('toggle-labels').onclick = () => {
       labelVisible = !labelVisible;
       flightEntities.forEach(e => {
@@ -349,14 +351,26 @@
       });
     };
     function parseUTCTimeToMinutes(utcTimeStr) {
-      // Convert UTC "HHMM" string to minutes since event start (14:00)
+      // Convert UTC "HHMM" string to minutes since event start
+      if (!eventStartTime) {
+        console.error('Event start time not loaded from metadata');
+        return 0;
+      }
       const hours = parseInt(utcTimeStr.substring(0, 2));
       const minutes = parseInt(utcTimeStr.substring(2, 4));
-      const eventStart = 14 * 60;
+      const eventStartHours = parseInt(eventStartTime.substring(0, 2));
+      const eventStartMinutes = parseInt(eventStartTime.substring(2, 4));
+      const eventStart = eventStartHours * 60 + eventStartMinutes;
       return (hours * 60 + minutes) - eventStart;
     }
     function minutesToTimeString(minutes) {
-      const totalMinutes = 14 * 60 + minutes;
+      if (!eventStartTime) {
+        console.error('Event start time not loaded from metadata');
+        return '00:00';
+      }
+      const eventStartHours = parseInt(eventStartTime.substring(0, 2));
+      const eventStartMinutes = parseInt(eventStartTime.substring(2, 4));
+      const totalMinutes = (eventStartHours * 60 + eventStartMinutes) + minutes;
       const hours = Math.floor(totalMinutes / 60);
       const mins = totalMinutes % 60;
       return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
@@ -376,6 +390,28 @@
           return false;
         }
         console.log('Loaded interpolated data:', data);
+        
+        // Load event times from metadata
+        if (data._metadata) {
+          if (data._metadata.event_start) {
+            eventStartTime = data._metadata.event_start;
+            console.log('Loaded event start time from metadata:', eventStartTime);
+          }
+          if (data._metadata.event_end) {
+            eventEndTime = data._metadata.event_end;
+            console.log('Loaded event end time from metadata:', eventEndTime);
+          }
+        }
+        
+        // Update event time display
+        const eventTimeElement = document.getElementById('event-time');
+        if (eventTimeElement && eventStartTime && eventEndTime) {
+          const startTimeFormatted = eventStartTime.substring(0, 2) + ':' + eventStartTime.substring(2, 4);
+          const endTimeFormatted = eventEndTime.substring(0, 2) + ':' + eventEndTime.substring(2, 4);
+          eventTimeElement.textContent = `${startTimeFormatted}-${endTimeFormatted}`;
+        } else if (eventTimeElement) {
+          eventTimeElement.textContent = 'Loading...';
+        }
         
         // Convert interpolated data to frontend format
         flights = [];
@@ -407,7 +443,7 @@
             }
             
             // Get departure time from metadata
-            const departureTime = data._metadata?.departure_schedule?.[flightId]?.departure_time || '1400';
+            const departureTime = data._metadata?.departure_schedule?.[flightId]?.departure_time || null;
             
             // Create flight object
             const flight = {
@@ -720,7 +756,7 @@
           flights = [
             {
               flight_id: 'Demo Flight 1',
-              departure_time: '1400',
+              departure_time: null,
               waypoints: [
                 { lon: 151.177, lat: -33.946, altitude: 0, utc_time: '1400' },
                 { lon: 153.117, lat: -27.384, altitude: 10000, utc_time: '1410' },

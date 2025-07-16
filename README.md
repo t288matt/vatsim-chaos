@@ -14,6 +14,15 @@ A Python-based system for generating chaotic, conflicting SimBrief XML flight pl
 - ✅ **Linear data flow** with clear dependencies
 - ✅ **Simplified data structures** for better performance
 - ✅ **Single Source of Truth** - One comprehensive JSON file contains all flight data, conflicts, and scheduling
+- ✅ **VATSIM Radar-style UI** - Modern dark theme with glass morphism effects and professional ATC styling
+- ✅ **Frontend Time Controls** - Event time parameters moved from backend to frontend for better user control
+- ✅ **File Management Enhancements** - Added file deletion functionality with trash can icons
+- ✅ **Animation Time Fix** - Fixed event start/end times not being passed through to animation display
+- ✅ **Pilot Briefing Fix** - Fixed white text on white background issue in briefing modal
+- ✅ **Process Button State** - Button remains disabled until files are selected
+- ✅ **UI Text Updates** - Changed "Process Analysis" to "Generate Schedule" and "Analysis Time Window" to "Event Time"
+- ✅ **Default Time Updates** - Changed default event time from 10:00-18:00 to 08:00-11:00
+- ✅ **Upload Area Optimization** - Reduced upload box height for better space utilization
 
 ## Single Source of Truth Architecture
 
@@ -79,8 +88,27 @@ This system enables event organizers to:
 - Python 3.6+
 - SimBrief XML flight plan files
 
-### Master Workflow (Recommended)
-The easiest way to run the complete analysis is using the master script:
+### Web Interface (Recommended)
+The easiest way to use the system is through the modern web interface:
+
+```bash
+# Start the web server
+cd web
+python app.py
+
+# Open in browser: http://localhost:5000
+```
+
+The web interface provides:
+- **Drag-and-drop file upload** with validation
+- **File library management** with selection controls
+- **Event time configuration** (default: 08:00-11:00)
+- **Real-time processing** with progress tracking
+- **3D visualization** with Cesium integration
+- **Pilot briefing** with export options
+
+### Command Line Workflow
+For advanced users or automation:
 
 ```bash
 # Run complete workflow (extract → analyze → report → merge → schedule → frontend)
@@ -130,10 +158,26 @@ python audit_conflict.py  # Generates audit_conflict_output.txt with raw data co
 - `pilot_briefing.txt` - Pilot conflict briefing (authoritative, includes all departure times and conflict details)
 - `temp/routes_with_added_interpolated_points.json` - Interpolated points with departure metadata
 - `animation/animation_data.json` - Animation data for Cesium (simplified structure, no x/y fields)
-
 - `animation/conflict_points.json` - Conflict location/timing (filtered by altitude)
 - `animation/animation.html` - 3D web visualization
 - `audit_conflict_output.txt` - **Raw data audit report** (Markdown tables showing exact values across all data sources)
+
+### Recent Fixes and Improvements
+
+#### UI/UX Enhancements
+- **VATSIM Radar-style Interface**: Modern dark theme with glass morphism effects
+- **Frontend Time Controls**: Event time parameters moved from backend to frontend
+- **File Management**: Added file deletion functionality with trash can icons
+- **Button State Management**: Process button remains disabled until files are selected
+- **Text Updates**: Changed "Process Analysis" to "Generate Schedule" and "Analysis Time Window" to "Event Time"
+- **Default Times**: Updated default event time from 10:00-18:00 to 08:00-11:00
+- **Upload Optimization**: Reduced upload box height for better space utilization
+
+#### Technical Fixes
+- **Animation Time Display**: Fixed event start/end times not being passed through to animation interface
+- **Pilot Briefing Display**: Fixed white text on white background issue in briefing modal
+- **Time Parameter Flow**: Ensured UTC time parameters are passed correctly through the entire processing pipeline
+- **Metadata Integration**: Animation now uses event start/end times from metadata instead of hardcoded defaults
 
 ## System Architecture
 
@@ -237,6 +281,37 @@ The system cannot process multiple flights with identical origin-destination pai
 
 **To avoid this limitation:**
 - Remove duplicate files with the same origin and destination.
+
+## Web Interface
+
+### Modern ATC-Style Interface
+The system now features a modern web interface inspired by VATSIM Radar with:
+
+- **Dark Aviation Theme** - Professional dark color scheme with aviation blue accents
+- **Glass Morphism Effects** - Modern translucent panels with backdrop blur
+- **Responsive Design** - Optimized for different screen sizes
+- **File Management** - Drag-and-drop upload with validation and file library
+- **Event Time Controls** - Frontend time parameter controls (08:00-11:00 default)
+- **Real-time Processing** - Live progress tracking with step-by-step status
+- **3D Visualization** - Cesium-based 3D map integration
+- **Pilot Briefing Modal** - Formatted briefing display with print/download options
+
+### Key Features
+- **File Upload**: Drag-and-drop XML file upload with validation
+- **File Library**: Manage uploaded files with selection controls and deletion
+- **Event Time Window**: Set custom start/end times for conflict generation
+- **Generate Schedule**: Process selected files to create conflict scenarios
+- **3D Map View**: Interactive Cesium-based visualization of flight paths
+- **Pilot Briefing**: Access formatted conflict briefing with export options
+
+### Interface Components
+- **Flight Plan Upload**: Upload and validate SimBrief XML files
+- **Event Time**: Configure the time window for conflict generation (default: 08:00-11:00)
+- **File Library**: Select and manage uploaded files with validation status
+- **Generate Schedule**: Process selected files to create conflict scenarios
+- **Processing Status**: Real-time progress tracking with step indicators
+- **3D Map**: Interactive visualization of flight paths and conflicts
+- **Pilot Briefing**: Access and export formatted conflict information
 
 ## System Components
 

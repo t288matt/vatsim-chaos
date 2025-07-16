@@ -188,7 +188,20 @@ def generate_conflict_scenario(flight_plans: List[FlightPlan], potential_conflic
     }
 
 def datetime_to_utc_hhmm(dt) -> str:
+    """Convert datetime object to HHMM format (UTC time)"""
     return dt.strftime('%H%M')
+
+def time_str_to_utc_hhmm(time_str: str) -> str:
+    """Convert time string in HH:MM format directly to HHMM format (UTC time)"""
+    # Remove any colons and ensure 4-digit format
+    time_str = time_str.replace(':', '')
+    if len(time_str) == 3:  # e.g., "700" -> "0700"
+        time_str = '0' + time_str
+    elif len(time_str) == 2:  # e.g., "70" -> "0700"
+        time_str = '0' + time_str + '00'
+    elif len(time_str) == 1:  # e.g., "7" -> "0700"
+        time_str = '0' + time_str + '00'
+    return time_str
 
 def minutes_to_utc_hhmm(minutes: float) -> str:
     total_minutes = int(round(minutes))
@@ -221,6 +234,8 @@ class ConflictScheduler:
     """Schedules aircraft departures to maximize unique aircraft pairs in conflict."""
     
     def __init__(self, start_time: str, end_time: str, verbose: bool = False):
+        self.start_time_str = start_time
+        self.end_time_str = end_time
         self.start_time = self._parse_time(start_time)
         self.end_time = self._parse_time(end_time)
         self.verbose = verbose
@@ -984,8 +999,8 @@ class ConflictScheduler:
             # Add departure schedule metadata
             new_routes['_metadata'] = {
                 'departure_schedule': {},
-                'event_start': datetime_to_utc_hhmm(self.start_time),
-                'event_end': datetime_to_utc_hhmm(self.end_time),
+                'event_start': time_str_to_utc_hhmm(self.start_time_str),
+                'event_end': time_str_to_utc_hhmm(self.end_time_str),
                 'total_flights': len(scheduled_flights),
                 'total_conflicts': sum(len(data.get('conflicts', [])) for data in scheduled_flights.values())
             }
@@ -1005,7 +1020,7 @@ class ConflictScheduler:
         """Run the complete conflict scheduling process."""
         print("ATC Conflict Scheduler")
         print("=" * 40)
-        print(f"Event Window: {datetime_to_utc_hhmm(self.start_time)} - {datetime_to_utc_hhmm(self.end_time)}")
+        print(f"Event Window: {time_str_to_utc_hhmm(self.start_time_str)} - {time_str_to_utc_hhmm(self.end_time_str)}")
         print(f"Duration: {self.event_duration} minutes")
         print()
         

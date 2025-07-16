@@ -495,6 +495,18 @@ class FileManager {
         } else {
             this.selectionSummary.textContent = `${count} files selected`;
         }
+        
+        // Update Process Analysis button state
+        const processBtn = document.getElementById('processBtn');
+        if (processBtn) {
+            if (count === 0) {
+                processBtn.disabled = true;
+                processBtn.textContent = '🚀 Generate Schedule';
+            } else {
+                processBtn.disabled = false;
+                processBtn.textContent = '🚀 Generate Schedule';
+            }
+        }
     }
     
     getSelectedFiles() {
