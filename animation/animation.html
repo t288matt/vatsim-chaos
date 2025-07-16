@@ -267,6 +267,57 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #ff6b35;
     }
+    
+    /* Simulation Controls */
+    .sim-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(15, 52, 96, 0.8);
+      border-radius: 8px;
+      border: 1px solid #00d4ff;
+    }
+    
+    .speed-control {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .speed-control label {
+      color: #00d4ff;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .speed-control input[type="range"] {
+      width: 120px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    
+    .speed-control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #00d4ff;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .speed-control input[type="range"]::-webkit-slider-thumb:hover {
+      background: #ff6b35;
+      transform: scale(1.1);
+    }
+    
+
   </style>
 </head>
 <body>
@@ -282,8 +333,14 @@
     <button id="toggle-labels">Toggle Flight Labels</button>
   </div>
   <div id="controls">
-    <label>Aircraft Size: <input id="acft-size" type="range" min="64" max="1024" value="512" step="16"> <span id="acft-size-val">512</span></label>
+    <label>Aircraft Size: <input id="acft-size" type="range" min="64" max="1024" value="250" step="16"> <span id="acft-size-val">250</span></label>
     <label>Font Size: <input id="font-size" type="range" min="3" max="32" value="16" step="1"> <span id="font-size-val">16</span> px</label>
+    <div class="sim-controls">
+      <div class="speed-control">
+        <label>Sim Speed: <span id="speed-val">48x</span></label>
+        <input id="speed-slider" type="range" min="-120" max="120" value="48" step="1">
+      </div>
+    </div>
   </div>
   <div id="commentary-box">
     <h4>📢 Flight Commentary</h4>
@@ -303,6 +360,7 @@
       shouldAnimate: true,
       baseLayerPicker: false
     });
+    
     viewer.clock.multiplier = 48;
     viewer.imageryLayers.removeAll();
     viewer.imageryLayers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider({
@@ -350,6 +408,16 @@
         }
       });
     };
+    
+    // Simulation speed control
+    
+    document.getElementById('speed-slider').oninput = function() {
+      const speed = parseInt(this.value);
+      document.getElementById('speed-val').textContent = speed + 'x';
+      viewer.clock.multiplier = speed;
+    };
+    
+
     function parseUTCTimeToMinutes(utcTimeStr) {
       // Convert UTC "HHMM" string to minutes since event start
       if (!eventStartTime) {
@@ -517,6 +585,14 @@
       viewer.clock.multiplier = 48;
       viewer.timeline.zoomTo(start, stop);
       viewer.clock.shouldAnimate = true;
+      
+      // Ensure animation continues looping
+      viewer.clock.onTick.addEventListener(function(clock) {
+        if (clock.currentTime.secondsOfDay >= clock.stopTime.secondsOfDay) {
+          // Reset to start time to ensure continuous looping
+          clock.currentTime = clock.startTime.clone();
+        }
+      });
       // Create flight entities with animated paths and 3D models
       flights.forEach((flight, idx) => {
         const color = flightColors[idx % flightColors.length];
@@ -577,20 +653,14 @@
             outlineWidth: 2,
             style: Cesium.LabelStyle.FILL_AND_OUTLINE,
             verticalOrigin: Cesium.VerticalOrigin.CENTER,
-            pixelOffset: new Cesium.Cartesian2(60, 80), // Move label lower below the plane
+            pixelOffset: new Cesium.Cartesian2(30, 40), // Move label closer to the plane
             show: labelVisible
           }
         });
         flightEntities.push(entity);
       });
 
-      // Remove camera auto-zoom logic so map does not move on first flight start
-      // if (minLat < maxLat && minLon < maxLon && (maxLat - minLat > 0.01) && (maxLon - minLon > 0.01)) {
-      //   viewer.zoomTo(viewer.entities);
-      // } else {
-      //   const ausRect = Cesium.Rectangle.fromDegrees(110, -45, 155, -10);
-      //   viewer.camera.flyTo({ destination: ausRect, duration: 1.5 });
-      // }
+      
     }
     function createConflictMarkers(conflictPoints) {
       conflictPoints.forEach((conflict, index) => {
@@ -599,7 +669,7 @@
           id: `conflict_marker_${index}`,
           position: position,
           point: {
-            pixelSize: 15,
+            pixelSize: 7.5,
             color: Cesium.Color.RED,
             outlineColor: Cesium.Color.WHITE,
             outlineWidth: 3,
@@ -623,8 +693,8 @@
       const activeConflicts = conflicts.filter(conflict => {
         if (!conflict.conflict_time) return false;
         const conflictTime = parseUTCTimeToMinutes(conflict.conflict_time);
-        // Show conflict only if current time matches exactly the conflict time
-        return minutes === conflictTime;
+        // Show conflict for 1 minute around the conflict time (30 seconds before and 30 seconds after)
+        return Math.abs(minutes - conflictTime) <= 0.5;
       });
       
       // Log new conflicts to commentary
@@ -674,16 +744,16 @@
       });
       // Set all aircraft to black by default
       flightEntities.forEach(entity => {
-        if (entity.billboard) {
-          entity.billboard.color = Cesium.Color.BLACK.withAlpha(0.8);
+        if (entity.model) {
+          entity.model.color = Cesium.Color.BLACK.withAlpha(0.8);
         }
       });
       // Set aircraft involved in active conflicts to red
       activeConflicts.forEach(conflict => {
         [conflict.flight1, conflict.flight2].forEach(flightId => {
           const entity = flightEntities.find(e => e.id === flightId);
-          if (entity && entity.billboard) {
-            entity.billboard.color = Cesium.Color.RED.withAlpha(0.8);
+          if (entity && entity.model) {
+            entity.model.color = Cesium.Color.RED.withAlpha(0.8);
           }
         });
       });
@@ -828,16 +898,53 @@
           const dynamicRect = Cesium.Rectangle.fromDegrees(
             finalMinLon, finalMinLat, finalMaxLon, finalMaxLat
           );
-          viewer.camera.setView({ destination: dynamicRect });
+          viewer.camera.setView({ 
+            destination: dynamicRect,
+            orientation: {
+              heading: Cesium.Math.toRadians(0),
+              pitch: Cesium.Math.toRadians(-90),
+              roll: 0.0
+            }
+          });
           
           console.log(`Camera set to cover airports: ${Array.from(airports).join(', ')}`);
           console.log(`View rectangle: ${finalMinLon.toFixed(2)}°E to ${finalMaxLon.toFixed(2)}°E, ${finalMinLat.toFixed(2)}°S to ${finalMaxLat.toFixed(2)}°S`);
+          
+          // Auto-zoom to fit all flight entities in view while maintaining perpendicular orientation
+          viewer.camera.flyTo({
+            destination: viewer.camera.computeViewRectangle(),
+            orientation: {
+              heading: Cesium.Math.toRadians(0),
+              pitch: Cesium.Math.toRadians(-90),
+              roll: 0.0
+            },
+            duration: 1.0
+          });
         } else {
           // Fallback to default view if no valid coordinates found
           const startRect = Cesium.Rectangle.fromDegrees(135.0, -39.0, 154.0, -29.0);
-          viewer.camera.setView({ destination: startRect });
+          viewer.camera.setView({ 
+            destination: startRect,
+            orientation: {
+              heading: Cesium.Math.toRadians(0),
+              pitch: Cesium.Math.toRadians(-90),
+              roll: 0.0
+            }
+          });
           console.log('No valid airport coordinates found, using default view');
+          
+          // Auto-zoom to fit all flight entities in view while maintaining perpendicular orientation
+          viewer.camera.flyTo({
+            destination: viewer.camera.computeViewRectangle(),
+            orientation: {
+              heading: Cesium.Math.toRadians(0),
+              pitch: Cesium.Math.toRadians(-90),
+              roll: 0.0
+            },
+            duration: 1.0
+          });
         }
+        
         function animationFrameUpdate() {
           updateUI();
           requestAnimationFrame(animationFrameUpdate);
