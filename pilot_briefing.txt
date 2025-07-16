@@ -8,68 +8,68 @@ DEPARTURE SCHEDULE:
 ------------------------------
 Takeoff Time | Flight | Origin-Dest | Aircraft | Level | Route
 --------------------------------------------------------------------------------
-      0800 | FLT0014 |    YBBN-YCOM |     B738 | FL360 | DCT BN H91 IGDAM H652 TESAT H65 CB DCT COM DCT
-      0800 | FLT0015 |    YMCO-YSHT |     DH8D | FL240 | DCT OTKED
-      0800 | FLT0013 |    YSNW-YWLM |     EC35 |  7000 | DCT NWA W144 RIC DCT RIC V665 MAKOR V402 WLM DCT
-      0800 | FLT0012 |    YMRY-YMAY |      DC3 | 10000 | DCT COM DCT
-      0802 | FLT0005 |    YMCO-YMAY |     S22T |  8000 | DCT OTKED W859 VALDU W795 AY DCT
-      0802 | FLT0018 |    YMRY-YSSY |     SF34 | FL160 | DCT URBOB W40 AKMIR W113 TESAT DCT
-      0829 | FLT0019 |    YSSY-YMER |     SF34 | FL180 | WOL2 WOL H20 NWA W436 MER DCT
-      0853 | FLT0004 |    YGLB-YMER |     C510 | FL210 | DCT BOPKU W151 MER DCT
-      0903 | FLT0002 |    YBDG-YWSL |     PC12 | FL190 | DCT MNG W649 ESL DCT
-      0904 | FLT0007 |    YMEN-YMAY |     PC12 | FL230 | DCT ESDAN DCT ML H129 DOSEL W569 AY DCT
-      0905 | FLT0017 |    YMES-YSRI |     B38M | FL200 | DCT ESL W290 CB W122 AKMIR W713 KADOM W368 RIC DCT
-      0909 | FLT0006 |    YMCO-YSCB |     DH8D | FL200 | DCT COM DCT MENZI DCT CB DCT
-      0910 | FLT0016 |    YMER-YMML |     BE20 | FL200 | DCT MER W441 TEMIS V169 BOYSE BOYS9A
-      0911 | FLT0001 |    YBDG-YSBK |     DH8D | FL230 | DCT AY W335 IGDEL DCT AKMIR W817 DARGI Y20 BK DCT
-      0911 | FLT0010 |    YMMB-YSWG |      F28 | FL190 | DCT MB W188 TEMIS W696 LUTVU W465 AY W638 WG DCT
-      0916 | FLT0003 |    YCFS-YSWG |     TBM9 | FL120 | DCT YBTH DCT BOGUD DCT
-      0919 | FLT0008 |    YMER-YORG |     BE9L | FL220 | DCT MAKKA DCT
-      0921 | FLT0009 |    YMER-YSBK |     C510 | FL240 | DCT MER W151 ATGOD W40 AKMIR W817 DARGI Y20 BK DCT
-      0921 | FLT0021 |    YSSY-YSWG |     DH8D | FL200 | DCT TESAT V169 EXETA W10 WG DCT
-      1000 | FLT0020 |    YSSY-YORG |     DH8D | FL120 | DCT KADOM W595 VIRUR DCT
-      1005 | FLT0011 |    YSWG-YSSY |     DH8D | FL210 | DCT WG DCT HAPPI DCT AKMIR DCT WELSH DCT ODALE DCT KABLO DCT MITSA DCT ANKUB DCT TESAT DCT
+      0800 | FLT0001 |    YBBN-YCOM |     B738 | FL360 | DCT BN H91 IGDAM H652 TESAT H65 CB DCT COM DCT
+      0800 | FLT0006 |    YMCO-YMAY |     S22T |  8000 | DCT OTKED W859 VALDU W795 AY DCT
+      0800 | FLT0017 |    YSNW-YWLM |     EC35 |  7000 | DCT NWA W144 RIC DCT RIC V665 MAKOR V402 WLM DCT
+      0800 | FLT0016 |    YMRY-YSSY |     SF34 | FL160 | DCT URBOB W40 AKMIR W113 TESAT DCT
+      0802 | FLT0008 |    YMCO-YSHT |     DH8D | FL240 | DCT OTKED
+      0802 | FLT0015 |    YMRY-YMAY |      DC3 | 10000 | DCT COM DCT
+      0827 | FLT0018 |    YSSY-YMER |     SF34 | FL180 | WOL2 WOL H20 NWA W436 MER DCT
+      0853 | FLT0005 |    YGLB-YMER |     C510 | FL210 | DCT BOPKU W151 MER DCT
+      0905 | FLT0013 |    YMES-YSRI |     B38M | FL200 | DCT ESL W290 CB W122 AKMIR W713 KADOM W368 RIC DCT
+      0909 | FLT0007 |    YMCO-YSCB |     DH8D | FL200 | DCT COM DCT MENZI DCT CB DCT
+      0910 | FLT0010 |    YMER-YMML |     BE20 | FL200 | DCT MER W441 TEMIS V169 BOYSE BOYS9A
+      0911 | FLT0002 |    YBDG-YSBK |     DH8D | FL230 | DCT AY W335 IGDEL DCT AKMIR W817 DARGI Y20 BK DCT
+      0916 | FLT0004 |    YCFS-YSWG |     TBM9 | FL120 | DCT YBTH DCT BOGUD DCT
+      0919 | FLT0011 |    YMER-YORG |     BE9L | FL220 | DCT MAKKA DCT
+      0921 | FLT0012 |    YMER-YSBK |     C510 | FL240 | DCT MER W151 ATGOD W40 AKMIR W817 DARGI Y20 BK DCT
+      0921 | FLT0020 |    YSSY-YSWG |     DH8D | FL200 | DCT TESAT V169 EXETA W10 WG DCT
+      0947 | FLT0003 |    YBDG-YWSL |     PC12 | FL190 | DCT MNG W649 ESL DCT
+      0948 | FLT0009 |    YMEN-YMAY |     PC12 | FL230 | DCT ESDAN DCT ML H129 DOSEL W569 AY DCT
+      0956 | FLT0014 |    YMMB-YSWG |      F28 | FL190 | DCT MB W188 TEMIS W696 LUTVU W465 AY W638 WG DCT
+      1000 | FLT0019 |    YSSY-YORG |     DH8D | FL120 | DCT KADOM W595 VIRUR DCT
+      1005 | FLT0021 |    YSWG-YSSY |     DH8D | FL210 | DCT WG DCT HAPPI DCT AKMIR DCT WELSH DCT ODALE DCT KABLO DCT MITSA DCT ANKUB DCT TESAT DCT
 
 
 FLIGHTS WITHOUT CONFLICT:
 ------------------------------
 Takeoff Time | Flight | Origin-Dest | Aircraft | Level | Route
 --------------------------------------------------------------------------------
-      0800 | FLT0013 |    YSNW-YWLM |     EC35 |  7000 | DCT NWA W144 RIC DCT RIC V665 MAKOR V402 WLM DCT
-      0800 | FLT0012 |    YMRY-YMAY |      DC3 | 10000 | DCT COM DCT
-      0802 | FLT0018 |    YMRY-YSSY |     SF34 | FL160 | DCT URBOB W40 AKMIR W113 TESAT DCT
+      0800 | FLT0017 |    YSNW-YWLM |     EC35 |  7000 | DCT NWA W144 RIC DCT RIC V665 MAKOR V402 WLM DCT
+      0800 | FLT0016 |    YMRY-YSSY |     SF34 | FL160 | DCT URBOB W40 AKMIR W113 TESAT DCT
+      0802 | FLT0015 |    YMRY-YMAY |      DC3 | 10000 | DCT COM DCT
 
 CONFLICT LOG:
 ------------------------------
 Time  | FLT 1 v FLT 2 | Phase      | Altitude
 --------------------------------------------------
-0806   | FLT0005 v FLT0015 | CLB/CLB     | 5600ft
-0919   | FLT0004 v FLT0019 | DSC/DSC     | FL111
-0922   | FLT0006 v FLT0016 | CRS/CLB     | FL200
-0922   | FLT0004 v FLT0008 | DSC/CLB     | 5968ft
-0922   | FLT0010 v FLT0016 | CRS/DSC     | FL190
-0923   | FLT0008 v FLT0009 | CLB/CLB     | 6116ft
-0923   | FLT0008 v FLT0019 | CLB/DSC     | 6116ft
-0923   | FLT0004 v FLT0009 | DSC/CLB     | 5390ft
-0923   | FLT0002 v FLT0010 | CRS/CRS     | FL190
-0924   | FLT0009 v FLT0019 | CLB/DSC     | 6000ft
-0930   | FLT0007 v FLT0010 | CRS/CRS     | FL190
-0931   | FLT0006 v FLT0017 | CRS/CRS     | FL198
-0933   | FLT0014 v FLT0017 | DSC/CRS     | FL189
-0934   | FLT0006 v FLT0014 | DSC/DSC     | FL164
-0937   | FLT0001 v FLT0010 | CRS/CRS     | FL190
-0945   | FLT0017 v FLT0021 | CRS/CRS     | FL194
-0952   | FLT0009 v FLT0017 | DSC/CRS     | FL197
-0959   | FLT0017 v FLT0020 | DSC/CRS     | FL112
-1002   | FLT0001 v FLT0008 | CRS/CRS     | FL218
-1009   | FLT0011 v FLT0021 | CLB/DSC     | 5250ft
-1023   | FLT0003 v FLT0020 | CRS/CRS     | FL120
-1028   | FLT0008 v FLT0020 | DSC/DSC     | 6861ft
+0804   | FLT0006 v FLT0008 | CLB/CLB     | 5600ft
+0919   | FLT0005 v FLT0018 | DSC/DSC     | FL111
+0922   | FLT0007 v FLT0010 | CRS/CLB     | FL200
+0922   | FLT0005 v FLT0011 | DSC/CLB     | 5968ft
+0923   | FLT0011 v FLT0012 | CLB/CLB     | 6116ft
+0923   | FLT0011 v FLT0018 | CLB/DSC     | 6116ft
+0923   | FLT0005 v FLT0012 | DSC/CLB     | 5390ft
+0924   | FLT0012 v FLT0018 | CLB/DSC     | 6000ft
+0931   | FLT0007 v FLT0013 | CRS/CRS     | FL198
+0933   | FLT0001 v FLT0013 | DSC/CRS     | FL189
+0935   | FLT0001 v FLT0007 | DSC/DSC     | FL156
+0937   | FLT0002 v FLT0014 | CRS/CRS     | FL190
+0945   | FLT0013 v FLT0020 | CRS/CRS     | FL194
+0952   | FLT0012 v FLT0013 | DSC/CRS     | FL197
+0959   | FLT0013 v FLT0019 | DSC/CRS     | FL112
+1002   | FLT0002 v FLT0011 | CRS/CRS     | FL218
+1006   | FLT0010 v FLT0014 | DSC/CRS     | FL197
+1007   | FLT0003 v FLT0014 | CRS/CRS     | FL190
+1009   | FLT0020 v FLT0021 | DSC/CLB     | 5391ft
+1014   | FLT0009 v FLT0014 | CRS/CRS     | FL190
+1023   | FLT0004 v FLT0019 | CRS/CRS     | FL120
+1028   | FLT0011 v FLT0019 | DSC/DSC     | 6861ft
 
 DETAILED FLIGHT INFORMATION:
 -----------------------------------
 
-FLT0014 - B738
+FLT0001 - B738
   Route: YBBN -> YCOM
   Departure: 0800
   Aircraft: B738
@@ -94,31 +94,33 @@ FLT0014 - B738
     COM: 5600ft
     YCOM: 5600ft
   Conflicts:
-    - With FLT0006 (DH8D) at -36.0251,149.0524
+    - With FLT0007 (DH8D) at -35.9882,149.0387
       Time: 0935 (departure +95min)
       Distance: 2.3nm, Alt diff: 858ft
       Phase: descent
-    - With FLT0017 (B38M) at -35.8664,149.0658
+    - With FLT0013 (B38M) at -35.8664,149.0658
       Time: 0933 (departure +93min)
       Distance: 3.0nm, Alt diff: 446ft
       Phase: descent
 
-FLT0015 - DH8D
-  Route: YMCO -> YSHT
+FLT0006 - S22T
+  Route: YMCO -> YMAY
   Departure: 0800
-  Aircraft: DH8D
+  Aircraft: S22T
   Flight Profile:
     OTKED: 1600ft
-    TOC: FL240
-    TOD: FL240
-    YSHT: 2900ft
+    TOC: 8000ft
+    VALDU: 8000ft
+    TOD: 8000ft
+    AY: 3000ft
+    YMAY: 3000ft
   Conflicts:
-    - With FLT0005 (S22T) at -37.5680,149.5783
-      Time: 0805 (departure +5min)
+    - With FLT0008 (DH8D) at -37.5680,149.5783
+      Time: 0804 (departure +4min)
       Distance: 0.6nm, Alt diff: 0ft
       Phase: climb
 
-FLT0013 - EC35
+FLT0017 - EC35
   Route: YSNW -> YWLM
   Departure: 0800
   Aircraft: EC35
@@ -138,37 +140,9 @@ FLT0013 - EC35
     YWLM: 2500ft
   Conflicts: None
 
-FLT0012 - DC3
-  Route: YMRY -> YMAY
-  Departure: 0800
-  Aircraft: DC3
-  Flight Profile:
-    TOC: 10000ft
-    COM: 10000ft
-    TOD: 10000ft
-    YMAY: 3000ft
-  Conflicts: None
-
-FLT0005 - S22T
-  Route: YMCO -> YMAY
-  Departure: 0802
-  Aircraft: S22T
-  Flight Profile:
-    OTKED: 1600ft
-    TOC: 8000ft
-    VALDU: 8000ft
-    TOD: 8000ft
-    AY: 3000ft
-    YMAY: 3000ft
-  Conflicts:
-    - With FLT0015 (DH8D) at -37.5680,149.5783
-      Time: 0806 (departure +4min)
-      Distance: 0.6nm, Alt diff: 0ft
-      Phase: climb
-
-FLT0018 - SF34
+FLT0016 - SF34
   Route: YMRY -> YSSY
-  Departure: 0802
+  Departure: 0800
   Aircraft: SF34
   Flight Profile:
     URBOB: 1500ft
@@ -182,9 +156,35 @@ FLT0018 - SF34
     YSSY: 2500ft
   Conflicts: None
 
-FLT0019 - SF34
+FLT0008 - DH8D
+  Route: YMCO -> YSHT
+  Departure: 0802
+  Aircraft: DH8D
+  Flight Profile:
+    OTKED: 1600ft
+    TOC: FL240
+    TOD: FL240
+    YSHT: 2900ft
+  Conflicts:
+    - With FLT0006 (S22T) at -37.5680,149.5783
+      Time: 0807 (departure +5min)
+      Distance: 0.6nm, Alt diff: 0ft
+      Phase: climb
+
+FLT0015 - DC3
+  Route: YMRY -> YMAY
+  Departure: 0802
+  Aircraft: DC3
+  Flight Profile:
+    TOC: 10000ft
+    COM: 10000ft
+    TOD: 10000ft
+    YMAY: 3000ft
+  Conflicts: None
+
+FLT0018 - SF34
   Route: YSSY -> YMER
-  Departure: 0829
+  Departure: 0827
   Aircraft: SF34
   Flight Profile:
     ANKUB: 8700ft
@@ -196,20 +196,20 @@ FLT0019 - SF34
     MER: 2500ft
     YMER: 2500ft
   Conflicts:
-    - With FLT0004 (C510) at -36.5470,149.9283
-      Time: 0920 (departure +51min)
+    - With FLT0005 (C510) at -36.5470,149.9283
+      Time: 0918 (departure +51min)
       Distance: 2.8nm, Alt diff: 60ft
       Phase: descent
-    - With FLT0008 (BE9L) at -36.7904,149.8736
-      Time: 0924 (departure +55min)
+    - With FLT0011 (BE9L) at -36.7904,149.8736
+      Time: 0922 (departure +55min)
       Distance: 2.6nm, Alt diff: 746ft
       Phase: climb
-    - With FLT0009 (C510) at -36.8178,149.9071
-      Time: 0924 (departure +55min)
+    - With FLT0012 (C510) at -36.8178,149.9071
+      Time: 0922 (departure +55min)
       Distance: 1.7nm, Alt diff: 630ft
       Phase: climb
 
-FLT0004 - C510
+FLT0005 - C510
   Route: YGLB -> YMER
   Departure: 0853
   Aircraft: C510
@@ -220,56 +220,20 @@ FLT0004 - C510
     MER: 2500ft
     YMER: 2500ft
   Conflicts:
-    - With FLT0008 (BE9L) at -36.7673,149.9110
+    - With FLT0011 (BE9L) at -36.7673,149.9110
       Time: 0922 (departure +29min)
       Distance: 2.3nm, Alt diff: 148ft
       Phase: descent
-    - With FLT0009 (C510) at -36.7918,149.9091
+    - With FLT0012 (C510) at -36.7918,149.9091
       Time: 0923 (departure +30min)
       Distance: 1.6nm, Alt diff: 610ft
       Phase: descent
-    - With FLT0019 (SF34) at -36.5470,149.9283
+    - With FLT0018 (SF34) at -36.5470,149.9283
       Time: 0919 (departure +26min)
       Distance: 2.8nm, Alt diff: 60ft
       Phase: descent
 
-FLT0002 - PC12
-  Route: YBDG -> YWSL
-  Departure: 0903
-  Aircraft: PC12
-  Flight Profile:
-    TOC: FL190
-    MNG: FL190
-    TOD: FL190
-    ESL: 2900ft
-    YWSL: 2600ft
-  Conflicts:
-    - With FLT0010 (F28) at -37.2378,145.7515
-      Time: 0923 (departure +20min)
-      Distance: 2.8nm, Alt diff: 0ft
-      Phase: cruise
-
-FLT0007 - PC12
-  Route: YMEN -> YMAY
-  Departure: 0904
-  Aircraft: PC12
-  Flight Profile:
-    ESDAN: 1800ft
-    ML: FL110
-    TOC: FL230
-    DOSEL: FL230
-    BOGES: FL190
-    TOD: FL190
-    VEGRU: FL168
-    AY: 3000ft
-    YMAY: 3000ft
-  Conflicts:
-    - With FLT0010 (F28) at -36.6049,146.1293
-      Time: 0930 (departure +26min)
-      Distance: 2.8nm, Alt diff: 0ft
-      Phase: cruise
-
-FLT0017 - B38M
+FLT0013 - B38M
   Route: YMES -> YSRI
   Departure: 0905
   Aircraft: B38M
@@ -285,28 +249,28 @@ FLT0017 - B38M
     RIC: 2600ft
     YSRI: 2600ft
   Conflicts:
-    - With FLT0006 (DH8D) at -36.3304,148.9643
-      Time: 0928 (departure +23min)
-      Distance: 2.9nm, Alt diff: 888ft
-      Phase: cruise
-    - With FLT0009 (C510) at AKMIR
-      Time: 0951 (departure +46min)
-      Distance: 0.0nm, Alt diff: 700ft
-      Phase: descent
-    - With FLT0014 (B738) at -35.8664,149.0658
+    - With FLT0001 (B738) at -35.8664,149.0658
       Time: 0933 (departure +28min)
       Distance: 3.0nm, Alt diff: 446ft
       Phase: descent
-    - With FLT0020 (DH8D) at -33.7330,150.2905
+    - With FLT0007 (DH8D) at -36.3304,148.9643
+      Time: 0928 (departure +23min)
+      Distance: 2.9nm, Alt diff: 888ft
+      Phase: cruise
+    - With FLT0012 (C510) at AKMIR
+      Time: 0951 (departure +46min)
+      Distance: 0.0nm, Alt diff: 700ft
+      Phase: descent
+    - With FLT0019 (DH8D) at -33.7330,150.2905
       Time: 0959 (departure +54min)
       Distance: 2.1nm, Alt diff: 800ft
       Phase: descent
-    - With FLT0021 (DH8D) at -34.7096,149.6681
+    - With FLT0020 (DH8D) at -34.7096,149.6681
       Time: 0945 (departure +40min)
       Distance: 2.6nm, Alt diff: 519ft
       Phase: cruise
 
-FLT0006 - DH8D
+FLT0007 - DH8D
   Route: YMCO -> YSCB
   Departure: 0909
   Aircraft: DH8D
@@ -318,20 +282,20 @@ FLT0006 - DH8D
     CB: 4400ft
     YSCB: 4400ft
   Conflicts:
-    - With FLT0014 (B738) at -36.0251,149.0524
+    - With FLT0001 (B738) at -35.9882,149.0387
       Time: 0934 (departure +25min)
       Distance: 2.3nm, Alt diff: 858ft
       Phase: descent
-    - With FLT0016 (BE20) at -36.9884,149.3436
+    - With FLT0010 (BE20) at -36.9884,149.3436
       Time: 0922 (departure +13min)
       Distance: 2.7nm, Alt diff: 881ft
       Phase: cruise
-    - With FLT0017 (B38M) at -36.3304,148.9643
+    - With FLT0013 (B38M) at -36.3304,148.9643
       Time: 0931 (departure +22min)
       Distance: 2.9nm, Alt diff: 888ft
       Phase: cruise
 
-FLT0016 - BE20
+FLT0010 - BE20
   Route: YMER -> YMML
   Departure: 0910
   Aircraft: BE20
@@ -350,16 +314,16 @@ FLT0016 - BE20
     AKDEL: 3200ft
     YMML: 2900ft
   Conflicts:
-    - With FLT0006 (DH8D) at -36.9884,149.3436
+    - With FLT0007 (DH8D) at -36.9884,149.3436
       Time: 0922 (departure +12min)
       Distance: 2.7nm, Alt diff: 881ft
       Phase: cruise
-    - With FLT0010 (F28) at -37.3405,145.7062
+    - With FLT0014 (F28) at -37.2937,145.6847
       Time: 1006 (departure +56min)
       Distance: 3.0nm, Alt diff: 700ft
-      Phase: cruise
+      Phase: descent
 
-FLT0001 - DH8D
+FLT0002 - DH8D
   Route: YBDG -> YSBK
   Departure: 0911
   Aircraft: DH8D
@@ -378,50 +342,16 @@ FLT0001 - DH8D
     BK: 2500ft
     YSBK: 2500ft
   Conflicts:
-    - With FLT0008 (BE9L) at -34.7432,149.3605
+    - With FLT0011 (BE9L) at -34.7432,149.3605
       Time: 1002 (departure +51min)
       Distance: 2.3nm, Alt diff: 117ft
       Phase: cruise
-    - With FLT0010 (F28) at -36.1213,146.7604
+    - With FLT0014 (F28) at -36.1213,146.7604
       Time: 0937 (departure +26min)
       Distance: 2.8nm, Alt diff: 0ft
       Phase: cruise
 
-FLT0010 - F28
-  Route: YMMB -> YSWG
-  Departure: 0911
-  Aircraft: F28
-  Flight Profile:
-    MB: 3000ft
-    LEKUN: FL135
-    COLDS: FL160
-    TOC: FL190
-    LACEY: FL190
-    TEMIS: FL190
-    LUTVU: FL190
-    AY: FL190
-    TOD: FL190
-    WG: 3200ft
-    YSWG: 3200ft
-  Conflicts:
-    - With FLT0001 (DH8D) at -36.1213,146.7604
-      Time: 0936 (departure +25min)
-      Distance: 2.8nm, Alt diff: 0ft
-      Phase: cruise
-    - With FLT0002 (PC12) at -37.2378,145.7515
-      Time: 0923 (departure +12min)
-      Distance: 2.8nm, Alt diff: 0ft
-      Phase: cruise
-    - With FLT0007 (PC12) at -36.6049,146.1293
-      Time: 0930 (departure +19min)
-      Distance: 2.8nm, Alt diff: 0ft
-      Phase: cruise
-    - With FLT0016 (BE20) at -37.3405,145.7062
-      Time: 0922 (departure +11min)
-      Distance: 3.0nm, Alt diff: 700ft
-      Phase: cruise
-
-FLT0003 - TBM9
+FLT0004 - TBM9
   Route: YCFS -> YSWG
   Departure: 0916
   Aircraft: TBM9
@@ -432,12 +362,12 @@ FLT0003 - TBM9
     TOD: FL120
     YSWG: 3200ft
   Conflicts:
-    - With FLT0020 (DH8D) at -33.4807,149.5676
+    - With FLT0019 (DH8D) at -33.4807,149.5676
       Time: 1023 (departure +67min)
       Distance: 2.2nm, Alt diff: 0ft
       Phase: cruise
 
-FLT0008 - BE9L
+FLT0011 - BE9L
   Route: YMER -> YORG
   Departure: 0919
   Aircraft: BE9L
@@ -447,28 +377,28 @@ FLT0008 - BE9L
     TOD: FL220
     YORG: 5600ft
   Conflicts:
-    - With FLT0001 (DH8D) at -34.7432,149.3605
+    - With FLT0002 (DH8D) at -34.7432,149.3605
       Time: 1002 (departure +43min)
       Distance: 2.3nm, Alt diff: 117ft
       Phase: cruise
-    - With FLT0004 (C510) at -36.7673,149.9110
+    - With FLT0005 (C510) at -36.7673,149.9110
       Time: 0923 (departure +4min)
       Distance: 2.3nm, Alt diff: 148ft
       Phase: descent
-    - With FLT0009 (C510) at -36.7904,149.8736
+    - With FLT0012 (C510) at -36.7904,149.8736
       Time: 0923 (departure +4min)
       Distance: 2.3nm, Alt diff: 116ft
       Phase: climb
-    - With FLT0019 (SF34) at -36.7904,149.8736
+    - With FLT0018 (SF34) at -36.7904,149.8736
       Time: 0923 (departure +4min)
       Distance: 2.6nm, Alt diff: 746ft
       Phase: climb
-    - With FLT0020 (DH8D) at -33.4262,149.1351
+    - With FLT0019 (DH8D) at -33.4262,149.1351
       Time: 1028 (departure +69min)
       Distance: 2.7nm, Alt diff: 347ft
       Phase: descent
 
-FLT0009 - C510
+FLT0012 - C510
   Route: YMER -> YSBK
   Departure: 0921
   Aircraft: C510
@@ -486,24 +416,24 @@ FLT0009 - C510
     BK: 2500ft
     YSBK: 2500ft
   Conflicts:
-    - With FLT0004 (C510) at -36.7918,149.9091
+    - With FLT0005 (C510) at -36.7918,149.9091
       Time: 0924 (departure +3min)
       Distance: 1.6nm, Alt diff: 610ft
       Phase: descent
-    - With FLT0008 (BE9L) at -36.7904,149.8736
+    - With FLT0011 (BE9L) at -36.7904,149.8736
       Time: 0924 (departure +3min)
       Distance: 2.3nm, Alt diff: 116ft
       Phase: climb
-    - With FLT0017 (B38M) at AKMIR
+    - With FLT0013 (B38M) at AKMIR
       Time: 0952 (departure +31min)
       Distance: 0.0nm, Alt diff: 700ft
       Phase: descent
-    - With FLT0019 (SF34) at -36.8178,149.9071
+    - With FLT0018 (SF34) at -36.8178,149.9071
       Time: 0924 (departure +3min)
       Distance: 1.7nm, Alt diff: 630ft
       Phase: climb
 
-FLT0021 - DH8D
+FLT0020 - DH8D
   Route: YSSY -> YSWG
   Departure: 0921
   Aircraft: DH8D
@@ -517,16 +447,86 @@ FLT0021 - DH8D
     WG: 3200ft
     YSWG: 3200ft
   Conflicts:
-    - With FLT0011 (DH8D) at -35.1152,147.6084
-      Time: 1009 (departure +48min)
-      Distance: 2.0nm, Alt diff: 141ft
-      Phase: climb
-    - With FLT0017 (B38M) at -34.7096,149.6681
+    - With FLT0013 (B38M) at -34.7096,149.6681
       Time: 0945 (departure +24min)
       Distance: 2.6nm, Alt diff: 519ft
       Phase: cruise
+    - With FLT0021 (DH8D) at -35.1279,147.6462
+      Time: 1009 (departure +48min)
+      Distance: 2.0nm, Alt diff: 141ft
+      Phase: descent
 
-FLT0020 - DH8D
+FLT0003 - PC12
+  Route: YBDG -> YWSL
+  Departure: 0947
+  Aircraft: PC12
+  Flight Profile:
+    TOC: FL190
+    MNG: FL190
+    TOD: FL190
+    ESL: 2900ft
+    YWSL: 2600ft
+  Conflicts:
+    - With FLT0014 (F28) at -37.2378,145.7515
+      Time: 1007 (departure +20min)
+      Distance: 2.8nm, Alt diff: 0ft
+      Phase: cruise
+
+FLT0009 - PC12
+  Route: YMEN -> YMAY
+  Departure: 0948
+  Aircraft: PC12
+  Flight Profile:
+    ESDAN: 1800ft
+    ML: FL110
+    TOC: FL230
+    DOSEL: FL230
+    BOGES: FL190
+    TOD: FL190
+    VEGRU: FL168
+    AY: 3000ft
+    YMAY: 3000ft
+  Conflicts:
+    - With FLT0014 (F28) at -36.6049,146.1293
+      Time: 1014 (departure +26min)
+      Distance: 2.8nm, Alt diff: 0ft
+      Phase: cruise
+
+FLT0014 - F28
+  Route: YMMB -> YSWG
+  Departure: 0956
+  Aircraft: F28
+  Flight Profile:
+    MB: 3000ft
+    LEKUN: FL135
+    COLDS: FL160
+    TOC: FL190
+    LACEY: FL190
+    TEMIS: FL190
+    LUTVU: FL190
+    AY: FL190
+    TOD: FL190
+    WG: 3200ft
+    YSWG: 3200ft
+  Conflicts:
+    - With FLT0002 (DH8D) at -36.1213,146.7604
+      Time: 1021 (departure +25min)
+      Distance: 2.8nm, Alt diff: 0ft
+      Phase: cruise
+    - With FLT0003 (PC12) at -37.2378,145.7515
+      Time: 1008 (departure +12min)
+      Distance: 2.8nm, Alt diff: 0ft
+      Phase: cruise
+    - With FLT0009 (PC12) at -36.6049,146.1293
+      Time: 1015 (departure +19min)
+      Distance: 2.8nm, Alt diff: 0ft
+      Phase: cruise
+    - With FLT0010 (BE20) at -37.2937,145.6847
+      Time: 1007 (departure +11min)
+      Distance: 3.0nm, Alt diff: 700ft
+      Phase: descent
+
+FLT0019 - DH8D
   Route: YSSY -> YORG
   Departure: 1000
   Aircraft: DH8D
@@ -538,20 +538,20 @@ FLT0020 - DH8D
     VIRUR: 5600ft
     YORG: 5600ft
   Conflicts:
-    - With FLT0003 (TBM9) at -33.4807,149.5676
+    - With FLT0004 (TBM9) at -33.4807,149.5676
       Time: 1023 (departure +23min)
       Distance: 2.2nm, Alt diff: 0ft
       Phase: cruise
-    - With FLT0008 (BE9L) at -33.4262,149.1351
+    - With FLT0011 (BE9L) at -33.4262,149.1351
       Time: 1027 (departure +27min)
       Distance: 2.7nm, Alt diff: 347ft
       Phase: descent
-    - With FLT0017 (B38M) at -33.7330,150.2905
+    - With FLT0013 (B38M) at -33.7330,150.2905
       Time: 1014 (departure +14min)
       Distance: 2.1nm, Alt diff: 800ft
       Phase: descent
 
-FLT0011 - DH8D
+FLT0021 - DH8D
   Route: YSWG -> YSSY
   Departure: 1005
   Aircraft: DH8D
@@ -569,223 +569,223 @@ FLT0011 - DH8D
     TESAT: 2500ft
     YSSY: 2500ft
   Conflicts:
-    - With FLT0021 (DH8D) at -35.1152,147.6084
+    - With FLT0020 (DH8D) at -35.1279,147.6462
       Time: 1009 (departure +4min)
       Distance: 2.0nm, Alt diff: 141ft
-      Phase: climb
+      Phase: descent
 
 CONFLICT ANALYSIS SUMMARY:
 ------------------------------
 
-FLT0014 (B738) conflicts:
-  - With FLT0006 (DH8D) at -36.0251,149.0524
+FLT0001 (B738) conflicts:
+  - With FLT0007 (DH8D) at -35.9882,149.0387
     Time: 0935 (departure +95min)
     Distance: 2.3nm, Alt diff: 858ft
     Phase: descent
-  - With FLT0017 (B38M) at -35.8664,149.0658
+  - With FLT0013 (B38M) at -35.8664,149.0658
     Time: 0933 (departure +93min)
     Distance: 3.0nm, Alt diff: 446ft
     Phase: descent
 
-FLT0017 (B38M) conflicts:
-  - With FLT0006 (DH8D) at -36.3304,148.9643
-    Time: 0928 (departure +23min)
-    Distance: 2.9nm, Alt diff: 888ft
-    Phase: cruise
-  - With FLT0009 (C510) at AKMIR
-    Time: 0951 (departure +46min)
-    Distance: 0.0nm, Alt diff: 700ft
-    Phase: descent
-  - With FLT0014 (B738) at -35.8664,149.0658
+FLT0013 (B38M) conflicts:
+  - With FLT0001 (B738) at -35.8664,149.0658
     Time: 0933 (departure +28min)
     Distance: 3.0nm, Alt diff: 446ft
     Phase: descent
-  - With FLT0020 (DH8D) at -33.7330,150.2905
+  - With FLT0007 (DH8D) at -36.3304,148.9643
+    Time: 0928 (departure +23min)
+    Distance: 2.9nm, Alt diff: 888ft
+    Phase: cruise
+  - With FLT0012 (C510) at AKMIR
+    Time: 0951 (departure +46min)
+    Distance: 0.0nm, Alt diff: 700ft
+    Phase: descent
+  - With FLT0019 (DH8D) at -33.7330,150.2905
     Time: 0959 (departure +54min)
     Distance: 2.1nm, Alt diff: 800ft
     Phase: descent
-  - With FLT0021 (DH8D) at -34.7096,149.6681
+  - With FLT0020 (DH8D) at -34.7096,149.6681
     Time: 0945 (departure +40min)
     Distance: 2.6nm, Alt diff: 519ft
     Phase: cruise
 
-FLT0006 (DH8D) conflicts:
-  - With FLT0014 (B738) at -36.0251,149.0524
+FLT0007 (DH8D) conflicts:
+  - With FLT0001 (B738) at -35.9882,149.0387
     Time: 0934 (departure +25min)
     Distance: 2.3nm, Alt diff: 858ft
     Phase: descent
-  - With FLT0016 (BE20) at -36.9884,149.3436
+  - With FLT0010 (BE20) at -36.9884,149.3436
     Time: 0922 (departure +13min)
     Distance: 2.7nm, Alt diff: 881ft
     Phase: cruise
-  - With FLT0017 (B38M) at -36.3304,148.9643
+  - With FLT0013 (B38M) at -36.3304,148.9643
     Time: 0931 (departure +22min)
     Distance: 2.9nm, Alt diff: 888ft
     Phase: cruise
 
-FLT0009 (C510) conflicts:
-  - With FLT0004 (C510) at -36.7918,149.9091
+FLT0012 (C510) conflicts:
+  - With FLT0005 (C510) at -36.7918,149.9091
     Time: 0924 (departure +3min)
     Distance: 1.6nm, Alt diff: 610ft
     Phase: descent
-  - With FLT0008 (BE9L) at -36.7904,149.8736
+  - With FLT0011 (BE9L) at -36.7904,149.8736
     Time: 0924 (departure +3min)
     Distance: 2.3nm, Alt diff: 116ft
     Phase: climb
-  - With FLT0017 (B38M) at AKMIR
+  - With FLT0013 (B38M) at AKMIR
     Time: 0952 (departure +31min)
     Distance: 0.0nm, Alt diff: 700ft
     Phase: descent
-  - With FLT0019 (SF34) at -36.8178,149.9071
+  - With FLT0018 (SF34) at -36.8178,149.9071
     Time: 0924 (departure +3min)
     Distance: 1.7nm, Alt diff: 630ft
     Phase: climb
 
-FLT0008 (BE9L) conflicts:
-  - With FLT0001 (DH8D) at -34.7432,149.3605
+FLT0011 (BE9L) conflicts:
+  - With FLT0002 (DH8D) at -34.7432,149.3605
     Time: 1002 (departure +43min)
     Distance: 2.3nm, Alt diff: 117ft
     Phase: cruise
-  - With FLT0004 (C510) at -36.7673,149.9110
+  - With FLT0005 (C510) at -36.7673,149.9110
     Time: 0923 (departure +4min)
     Distance: 2.3nm, Alt diff: 148ft
     Phase: descent
-  - With FLT0009 (C510) at -36.7904,149.8736
+  - With FLT0012 (C510) at -36.7904,149.8736
     Time: 0923 (departure +4min)
     Distance: 2.3nm, Alt diff: 116ft
     Phase: climb
-  - With FLT0019 (SF34) at -36.7904,149.8736
+  - With FLT0018 (SF34) at -36.7904,149.8736
     Time: 0923 (departure +4min)
     Distance: 2.6nm, Alt diff: 746ft
     Phase: climb
-  - With FLT0020 (DH8D) at -33.4262,149.1351
+  - With FLT0019 (DH8D) at -33.4262,149.1351
     Time: 1028 (departure +69min)
     Distance: 2.7nm, Alt diff: 347ft
     Phase: descent
 
-FLT0004 (C510) conflicts:
-  - With FLT0008 (BE9L) at -36.7673,149.9110
-    Time: 0922 (departure +29min)
-    Distance: 2.3nm, Alt diff: 148ft
-    Phase: descent
-  - With FLT0009 (C510) at -36.7918,149.9091
-    Time: 0923 (departure +30min)
-    Distance: 1.6nm, Alt diff: 610ft
-    Phase: descent
-  - With FLT0019 (SF34) at -36.5470,149.9283
-    Time: 0919 (departure +26min)
-    Distance: 2.8nm, Alt diff: 60ft
-    Phase: descent
-
-FLT0019 (SF34) conflicts:
-  - With FLT0004 (C510) at -36.5470,149.9283
-    Time: 0920 (departure +51min)
-    Distance: 2.8nm, Alt diff: 60ft
-    Phase: descent
-  - With FLT0008 (BE9L) at -36.7904,149.8736
-    Time: 0924 (departure +55min)
-    Distance: 2.6nm, Alt diff: 746ft
-    Phase: climb
-  - With FLT0009 (C510) at -36.8178,149.9071
-    Time: 0924 (departure +55min)
-    Distance: 1.7nm, Alt diff: 630ft
-    Phase: climb
-
-FLT0020 (DH8D) conflicts:
-  - With FLT0003 (TBM9) at -33.4807,149.5676
+FLT0019 (DH8D) conflicts:
+  - With FLT0004 (TBM9) at -33.4807,149.5676
     Time: 1023 (departure +23min)
     Distance: 2.2nm, Alt diff: 0ft
     Phase: cruise
-  - With FLT0008 (BE9L) at -33.4262,149.1351
+  - With FLT0011 (BE9L) at -33.4262,149.1351
     Time: 1027 (departure +27min)
     Distance: 2.7nm, Alt diff: 347ft
     Phase: descent
-  - With FLT0017 (B38M) at -33.7330,150.2905
+  - With FLT0013 (B38M) at -33.7330,150.2905
     Time: 1014 (departure +14min)
     Distance: 2.1nm, Alt diff: 800ft
     Phase: descent
 
-FLT0021 (DH8D) conflicts:
-  - With FLT0011 (DH8D) at -35.1152,147.6084
-    Time: 1009 (departure +48min)
-    Distance: 2.0nm, Alt diff: 141ft
+FLT0018 (SF34) conflicts:
+  - With FLT0005 (C510) at -36.5470,149.9283
+    Time: 0918 (departure +51min)
+    Distance: 2.8nm, Alt diff: 60ft
+    Phase: descent
+  - With FLT0011 (BE9L) at -36.7904,149.8736
+    Time: 0922 (departure +55min)
+    Distance: 2.6nm, Alt diff: 746ft
     Phase: climb
-  - With FLT0017 (B38M) at -34.7096,149.6681
-    Time: 0945 (departure +24min)
-    Distance: 2.6nm, Alt diff: 519ft
-    Phase: cruise
+  - With FLT0012 (C510) at -36.8178,149.9071
+    Time: 0922 (departure +55min)
+    Distance: 1.7nm, Alt diff: 630ft
+    Phase: climb
 
-FLT0001 (DH8D) conflicts:
-  - With FLT0008 (BE9L) at -34.7432,149.3605
+FLT0005 (C510) conflicts:
+  - With FLT0011 (BE9L) at -36.7673,149.9110
+    Time: 0922 (departure +29min)
+    Distance: 2.3nm, Alt diff: 148ft
+    Phase: descent
+  - With FLT0012 (C510) at -36.7918,149.9091
+    Time: 0923 (departure +30min)
+    Distance: 1.6nm, Alt diff: 610ft
+    Phase: descent
+  - With FLT0018 (SF34) at -36.5470,149.9283
+    Time: 0919 (departure +26min)
+    Distance: 2.8nm, Alt diff: 60ft
+    Phase: descent
+
+FLT0010 (BE20) conflicts:
+  - With FLT0007 (DH8D) at -36.9884,149.3436
+    Time: 0922 (departure +12min)
+    Distance: 2.7nm, Alt diff: 881ft
+    Phase: cruise
+  - With FLT0014 (F28) at -37.2937,145.6847
+    Time: 1006 (departure +56min)
+    Distance: 3.0nm, Alt diff: 700ft
+    Phase: descent
+
+FLT0014 (F28) conflicts:
+  - With FLT0002 (DH8D) at -36.1213,146.7604
+    Time: 1021 (departure +25min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+  - With FLT0003 (PC12) at -37.2378,145.7515
+    Time: 1008 (departure +12min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+  - With FLT0009 (PC12) at -36.6049,146.1293
+    Time: 1015 (departure +19min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+  - With FLT0010 (BE20) at -37.2937,145.6847
+    Time: 1007 (departure +11min)
+    Distance: 3.0nm, Alt diff: 700ft
+    Phase: descent
+
+FLT0002 (DH8D) conflicts:
+  - With FLT0011 (BE9L) at -34.7432,149.3605
     Time: 1002 (departure +51min)
     Distance: 2.3nm, Alt diff: 117ft
     Phase: cruise
-  - With FLT0010 (F28) at -36.1213,146.7604
+  - With FLT0014 (F28) at -36.1213,146.7604
     Time: 0937 (departure +26min)
     Distance: 2.8nm, Alt diff: 0ft
     Phase: cruise
 
-FLT0010 (F28) conflicts:
-  - With FLT0001 (DH8D) at -36.1213,146.7604
-    Time: 0936 (departure +25min)
-    Distance: 2.8nm, Alt diff: 0ft
+FLT0020 (DH8D) conflicts:
+  - With FLT0013 (B38M) at -34.7096,149.6681
+    Time: 0945 (departure +24min)
+    Distance: 2.6nm, Alt diff: 519ft
     Phase: cruise
-  - With FLT0002 (PC12) at -37.2378,145.7515
-    Time: 0923 (departure +12min)
+  - With FLT0021 (DH8D) at -35.1279,147.6462
+    Time: 1009 (departure +48min)
+    Distance: 2.0nm, Alt diff: 141ft
+    Phase: descent
+
+FLT0009 (PC12) conflicts:
+  - With FLT0014 (F28) at -36.6049,146.1293
+    Time: 1014 (departure +26min)
     Distance: 2.8nm, Alt diff: 0ft
-    Phase: cruise
-  - With FLT0007 (PC12) at -36.6049,146.1293
-    Time: 0930 (departure +19min)
-    Distance: 2.8nm, Alt diff: 0ft
-    Phase: cruise
-  - With FLT0016 (BE20) at -37.3405,145.7062
-    Time: 0922 (departure +11min)
-    Distance: 3.0nm, Alt diff: 700ft
     Phase: cruise
 
-FLT0016 (BE20) conflicts:
-  - With FLT0006 (DH8D) at -36.9884,149.3436
-    Time: 0922 (departure +12min)
-    Distance: 2.7nm, Alt diff: 881ft
-    Phase: cruise
-  - With FLT0010 (F28) at -37.3405,145.7062
-    Time: 1006 (departure +56min)
-    Distance: 3.0nm, Alt diff: 700ft
-    Phase: cruise
-
-FLT0003 (TBM9) conflicts:
-  - With FLT0020 (DH8D) at -33.4807,149.5676
+FLT0004 (TBM9) conflicts:
+  - With FLT0019 (DH8D) at -33.4807,149.5676
     Time: 1023 (departure +67min)
     Distance: 2.2nm, Alt diff: 0ft
     Phase: cruise
 
-FLT0011 (DH8D) conflicts:
-  - With FLT0021 (DH8D) at -35.1152,147.6084
+FLT0003 (PC12) conflicts:
+  - With FLT0014 (F28) at -37.2378,145.7515
+    Time: 1007 (departure +20min)
+    Distance: 2.8nm, Alt diff: 0ft
+    Phase: cruise
+
+FLT0021 (DH8D) conflicts:
+  - With FLT0020 (DH8D) at -35.1279,147.6462
     Time: 1009 (departure +4min)
     Distance: 2.0nm, Alt diff: 141ft
-    Phase: climb
+    Phase: descent
 
-FLT0007 (PC12) conflicts:
-  - With FLT0010 (F28) at -36.6049,146.1293
-    Time: 0930 (departure +26min)
-    Distance: 2.8nm, Alt diff: 0ft
-    Phase: cruise
-
-FLT0002 (PC12) conflicts:
-  - With FLT0010 (F28) at -37.2378,145.7515
-    Time: 0923 (departure +20min)
-    Distance: 2.8nm, Alt diff: 0ft
-    Phase: cruise
-
-FLT0015 (DH8D) conflicts:
-  - With FLT0005 (S22T) at -37.5680,149.5783
-    Time: 0805 (departure +5min)
+FLT0006 (S22T) conflicts:
+  - With FLT0008 (DH8D) at -37.5680,149.5783
+    Time: 0804 (departure +4min)
     Distance: 0.6nm, Alt diff: 0ft
     Phase: climb
 
-FLT0005 (S22T) conflicts:
-  - With FLT0015 (DH8D) at -37.5680,149.5783
-    Time: 0806 (departure +4min)
+FLT0008 (DH8D) conflicts:
+  - With FLT0006 (S22T) at -37.5680,149.5783
+    Time: 0807 (departure +5min)
     Distance: 0.6nm, Alt diff: 0ft
     Phase: climb
 

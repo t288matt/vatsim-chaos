@@ -338,8 +338,8 @@ def create_kml_from_flight_plan(flight_plan: FlightPlan, filename: str) -> str:
 def save_flight_data(flight_plan: FlightPlan, base_filename: str):
     """Save flight plan data to JSON and KML files in temp directory"""
     
-    # Create temp directory if it doesn't exist (use /tmp for Docker compatibility)
-    temp_dir = "/tmp/flight_processing"
+    # Create temp directory if it doesn't exist
+    temp_dir = "temp"
     if not os.path.exists(temp_dir):
         os.makedirs(temp_dir)
         print(f"Created temp directory: {temp_dir}")
@@ -381,16 +381,26 @@ def main():
         print("SimBrief XML Flight Plan Extractor")
         print("=" * 50)
         
-        # Clean up temp directory (use /tmp for Docker compatibility)
-        temp_dir = "/tmp/flight_processing"
+        # Clean up temp directory contents (keep directory structure)
+        temp_dir = "temp"
         if os.path.exists(temp_dir):
             import shutil
             try:
-                shutil.rmtree(temp_dir)
-                print("Removed existing temp directory: /tmp/flight_processing")
+                # Delete contents but keep the directory
+                for item in os.listdir(temp_dir):
+                    item_path = os.path.join(temp_dir, item)
+                    try:
+                        if os.path.isfile(item_path):
+                            os.remove(item_path)
+                        elif os.path.isdir(item_path):
+                            shutil.rmtree(item_path)
+                    except OSError as e:
+                        print(f"Warning: Could not delete {item}: {e}")
+                        # Continue with other files
+                print("Cleared existing temp directory contents")
             except OSError as e:
-                print(f"Warning: Could not remove temp directory: {e}")
-                # Continue anyway, the directory will be recreated
+                print(f"Warning: Could not clear temp directory contents: {e}")
+                # Continue anyway, the directory will be recreated if needed
         
         # Determine which files to process
         if args.files:

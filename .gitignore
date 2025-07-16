@@ -7,6 +7,7 @@ event_schedule.csv
 # Temporary data and analysis files
 temp/
 *.json
+!airports.json
 *.xml
 
 # Python cache files

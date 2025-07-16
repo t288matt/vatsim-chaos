@@ -43,11 +43,14 @@ Thumbs.db
 # Project specific
 temp/
 *.kml
-*.json
 pilot_briefing.txt
 conflict_list.txt
 audit_conflict_output.txt
 merged_flightplans.kml
+
+# JSON files - exclude most but keep airports.json
+*.json
+!airports.json
 
 # Documentation
 *.md
