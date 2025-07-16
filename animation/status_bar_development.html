@@ -465,16 +465,16 @@
   <div id="status-bar">
     <div class="status-left">
       <div class="status-item">
-        <strong>Flights:</strong> <span id="flight-count">21</span> active
+        <strong>Flights:</strong> <span id="flight-count">0</span> active
       </div>
       <div class="status-item">
-        <strong>Active:</strong> <span id="active-flights">6</span> in air
+        <strong>Active:</strong> <span id="active-flights">0</span> in air
       </div>
       <div class="status-item">
-        <strong>Conflicts:</strong> <span id="conflict-count">23</span>
+        <strong>Conflicts:</strong> <span id="conflict-count">0</span>
       </div>
       <div class="status-item">
-        <strong>Time:</strong> <span id="current-time">08:34</span>
+        <strong>Time:</strong> <span id="current-time">00:00</span>
       </div>
     </div>
     <div class="status-controls">
@@ -494,68 +494,27 @@
       <div class="commentary-section">
         <h4>✈️ Flight Departures</h4>
         <div id="departure-logs">
-          <div class="commentary-log">
-            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0001 (B738) (YBBN-YCOM)</span> departed <span class="flight-altitude">FL350</span>
-          </div>
-          <div class="commentary-log">
-            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0008 (DH8D) (YMCO-YSHT)</span> departed <span class="flight-altitude">FL250</span>
-          </div>
-          <div class="commentary-log">
-            <span class="flight-time">08:00</span> - <span class="flight-id">FLT0015 (DC3) (YMRY-YMAY)</span> departed <span class="flight-altitude">FL180</span>
-          </div>
-          <div class="commentary-log">
-            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0006 (S22T) (YMCO-YMAY)</span> departed <span class="flight-altitude">FL200</span>
-          </div>
-          <div class="commentary-log">
-            <span class="flight-time">08:02</span> - <span class="flight-id">FLT0016 (SF34) (YMRY-YSSY)</span> departed <span class="flight-altitude">FL220</span>
-          </div>
-          <div class="commentary-log">
-            <span class="flight-time">08:27</span> - <span class="flight-id">FLT0018 (SF34) (YSSY-YMER)</span> departed <span class="flight-altitude">FL240</span>
-          </div>
+          <!-- Dynamic departure logs will be generated here based on actual flight data -->
         </div>
       </div>
       <div class="commentary-section">
         <h4>⚠️ Conflict Alerts</h4>
         <div id="conflict-logs">
           <!-- Dynamic conflict alerts will be generated here based on actual conflict data -->
-          <div class="commentary-log">
-            <span class="flight-time">08:15</span> - <span class="flight-id">FLT0001 vs FLT0008</span> conflict detected <span class="flight-altitude">2.3nm vs 500ft</span>
-          </div>
-          <div class="commentary-log">
-            <span class="flight-time">08:22</span> - <span class="flight-id">FLT0015 vs FLT0006</span> conflict detected <span class="flight-altitude">1.8nm vs 300ft</span>
-          </div>
-          <div class="commentary-log">
-            <span class="flight-time">08:30</span> - <span class="flight-id">FLT0016 vs FLT0018</span> conflict detected <span class="flight-altitude">3.1nm vs 800ft</span>
-          </div>
         </div>
       </div>
       
       <div class="commentary-section">
         <h4>📊 System Status</h4>
-        <div class="commentary-log">
-          <span class="flight-time">08:00</span> - <span class="flight-id">ATC System</span> initialized with <span class="flight-altitude">18 active flights</span>
-        </div>
-        <div class="commentary-log">
-          <span class="flight-time">08:05</span> - <span class="flight-id">Conflict Detection</span> algorithm active, monitoring <span class="flight-altitude">153 potential interactions</span>
-        </div>
-        <div class="commentary-log">
-          <span class="flight-time">08:10</span> - <span class="flight-id">Weather System</span> reports clear conditions, <span class="flight-altitude">visibility 10+ miles</span>
-        </div>
-        <div class="commentary-log">
-          <span class="flight-time">08:15</span> - <span class="flight-id">Traffic Flow</span> management active, <span class="flight-altitude">separation standards enforced</span>
+        <div id="system-status">
+          <!-- Dynamic system status will be generated here based on actual data -->
         </div>
       </div>
       
       <div class="commentary-section">
         <h4>🎯 Active Monitoring</h4>
-        <div class="commentary-log">
-          <span class="flight-time">08:20</span> - <span class="flight-id">FLT0001</span> climbing to <span class="flight-altitude">FL350</span>, passing through FL250
-        </div>
-        <div class="commentary-log">
-          <span class="flight-time">08:25</span> - <span class="flight-id">FLT0008</span> level at <span class="flight-altitude">FL250</span>, maintaining heading 090
-        </div>
-        <div class="commentary-log">
-          <span class="flight-time">08:30</span> - <span class="flight-id">FLT0015</span> descending to <span class="flight-altitude">FL180</span>, approach phase
+        <div id="active-monitoring">
+          <!-- Dynamic active monitoring will be generated here based on actual flight data -->
         </div>
       </div>
     </div>
@@ -894,11 +853,12 @@
         
         // Load conflicts from dedicated conflict points file
         try {
-          const conflictResponse = await fetch('/temp/potential_conflict_data.json');
+          const conflictResponse = await fetch('conflict_points.json');
           if (conflictResponse.ok) {
             const conflictData = await conflictResponse.json();
-            conflicts = conflictData.potential_conflicts || [];
+            conflicts = conflictData;
             console.log('Loaded conflicts:', conflicts);
+            console.log('Loaded conflicts from conflict_points.json:', conflicts.length);
           } else {
             console.warn('Conflict points file not found, using empty conflicts array');
             conflicts = [];
@@ -926,18 +886,9 @@
           createScheduledFlights();
           createConflictMarkers(conflicts);
         } else {
-          // Demo data if no real data available
-          flights = [
-            {
-              flight_id: 'Demo Flight 1',
-              departure_time: null,
-              waypoints: [
-                { lon: 151.177, lat: -33.946, altitude: 0, utc_time: '1400' },
-                { lon: 153.117, lat: -27.384, altitude: 10000, utc_time: '1410' },
-                { lon: 144.843, lat: -37.673, altitude: 0, utc_time: '1420' }
-              ]
-            }
-          ];
+          console.warn('No animation data available');
+          flights = [];
+          conflicts = [];
           createScheduledFlights();
           createConflictMarkers(conflicts);
         }
@@ -1189,12 +1140,7 @@
       }
       
       conflictPoints.forEach((conflict, index) => {
-        // Use the midpoint between the two conflict points
-        const lat = (conflict.lat1 + conflict.lat2) / 2;
-        const lon = (conflict.lon1 + conflict.lon2) / 2;
-        const altitude = Math.max(conflict.alt1, conflict.alt2);
-        
-        const position = Cesium.Cartesian3.fromDegrees(lon, lat, altitude);
+        const position = Cesium.Cartesian3.fromDegrees(conflict.lon, conflict.lat, conflict.altitude);
         viewer.entities.add({
           id: `conflict_marker_${index}`,
           position: position,
@@ -1209,9 +1155,63 @@
       });
     }
     
+    function updateSystemStatus() {
+      const systemStatusContainer = document.getElementById('system-status');
+      if (!systemStatusContainer) return;
+      
+      // Clear existing content
+      systemStatusContainer.innerHTML = '';
+      
+      // Only show system status if we have data
+      if (flights.length > 0 || conflicts.length > 0) {
+        const currentTime = viewer.clock.currentTime;
+        const seconds = Cesium.JulianDate.secondsDifference(currentTime, viewer.clock.startTime);
+        const minutes = Math.floor(seconds / 60);
+        const timeStr = minutesToTimeString(minutes);
+        
+        // Create system status entries
+        const statusEntries = [
+          {
+            time: timeStr,
+            system: 'ATC System',
+            message: `initialized with ${flights.length} active flights`
+          },
+          {
+            time: timeStr,
+            system: 'Conflict Detection',
+            message: `algorithm active, monitoring ${conflicts.length} potential interactions`
+          },
+          {
+            time: timeStr,
+            system: 'Weather System',
+            message: 'reports clear conditions, visibility 10+ miles'
+          },
+          {
+            time: timeStr,
+            system: 'Traffic Flow',
+            message: 'management active, separation standards enforced'
+          }
+        ];
+        
+        // Add status entries to the container
+        statusEntries.forEach(entry => {
+          const statusLog = document.createElement('div');
+          statusLog.className = 'commentary-log';
+          statusLog.innerHTML = `
+            <span class="flight-time">${entry.time}</span> - 
+            <span class="flight-id">${entry.system}</span> ${entry.message}
+          `;
+          systemStatusContainer.appendChild(statusLog);
+        });
+      }
+    }
+    
     function updateUI() {
       document.getElementById('flight-count').textContent = flights.length;
       document.getElementById('conflict-count').textContent = conflicts.length;
+      
+      // Update system status dynamically
+      updateSystemStatus();
       
       const currentTime = viewer.clock.currentTime;
       const seconds = Cesium.JulianDate.secondsDifference(currentTime, viewer.clock.startTime);
@@ -1235,15 +1235,15 @@
       checkForDepartures(minutes, timeStr);
       
       const activeConflicts = conflicts.filter(conflict => {
-        if (!conflict.time) return false;
+        if (!conflict.conflict_time) return false;
         // Conflict time is in minutes from event start
-        const conflictTime = conflict.time;
+        const conflictTime = parseUTCTimeToMinutes(conflict.conflict_time);
         return Math.abs(minutes - conflictTime) <= 0.5;
       });
       
       // Log new conflicts to commentary
       activeConflicts.forEach(conflict => {
-                  const conflictKey = `${conflict.flight1}_${conflict.flight2}_${conflict.time}`;
+                  const conflictKey = `${conflict.flight1}_${conflict.flight2}_${conflict.conflict_time}`;
           if (!loggedConflicts.has(conflictKey)) {
             loggedConflicts.add(conflictKey);
             

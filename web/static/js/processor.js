@@ -155,25 +155,21 @@ class Processor {
                     `${route.origin}-${route.destination} (${route.count} files: ${route.files.join(', ')})`
                 ).join('\n');
                 
-                const errorMessage = `⚠️ SYSTEM LIMITATION: Same Origin-Destination Routes Detected\n\n` +
+                const errorMessage = `⚠️ DUPLICATE ROUTES DETECTED\n\n` +
                     `The system cannot process multiple flights with identical origin-destination pairs.\n\n` +
                     `Duplicate routes found:\n${duplicateDetails}\n\n` +
+                    `Please delete duplicate files before generating schedule.\n\n` +
                     `To resolve this:\n` +
+                    `• Delete duplicate files\n` +
                     `• Use different aircraft types\n` +
                     `• Add intermediate waypoints to one flight\n` +
-                    `• Use different cruise altitudes\n` +
-                    `• Remove duplicate files\n\n` +
-                    `Only the first flight with each route will be processed.`;
+                    `• Use different cruise altitudes`;
                 
-                const proceed = confirm(errorMessage + '\n\nDo you want to continue with only the first flight per route?');
-                if (!proceed) {
-                    return {
-                        canProcess: false,
-                        error: 'Processing cancelled due to duplicate routes.'
-                    };
-                } else {
-                    this.showMessage('⚠️ Processing will continue with only the first flight per route. Some files will be ignored.', 'warning');
-                }
+                this.showMessage('⚠️ Please delete duplicate files before generating schedule.', 'error');
+                return {
+                    canProcess: false,
+                    error: 'Processing blocked due to duplicate routes. Please delete duplicates first.'
+                };
             }
         } catch (error) {
             console.error('Route validation error:', error);

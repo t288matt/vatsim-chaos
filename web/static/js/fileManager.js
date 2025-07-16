@@ -363,14 +363,48 @@ class FileManager {
                     `${route.origin}-${route.destination} (${route.count} files)`
                 ).join(', ');
                 
-                this.showMessage(`⚠️ Duplicate routes detected: ${duplicateDetails}. Only the first file per route will be processed.`, 'warning');
+                this.showMessage(`⚠️ Duplicate routes detected: ${duplicateDetails}. Please delete duplicate files before generating schedule.`, 'warning');
                 
                 // Mark duplicate files visually
                 this.markDuplicateFiles(routeValidation.duplicate_routes);
+                
+                // Disable the Generate Schedule button
+                this.disableGenerateScheduleButton(routeValidation.duplicate_routes);
+            } else {
+                // No duplicates found, enable the button
+                this.enableGenerateScheduleButton();
             }
         } catch (error) {
             console.error('Error checking for duplicate routes:', error);
         }
+    }
+    
+    disableGenerateScheduleButton(duplicateRoutes) {
+        const processBtn = document.getElementById('processBtn');
+        if (processBtn) {
+            processBtn.disabled = true;
+            processBtn.textContent = '🚫 Generate Schedule (Duplicates Detected)';
+            processBtn.title = 'Please delete duplicate files before generating schedule';
+            
+            // Add visual styling for disabled state
+            processBtn.classList.add('disabled-duplicates');
+        }
+        
+        // Store duplicate routes info for reference
+        this.duplicateRoutes = duplicateRoutes;
+    }
+    
+    enableGenerateScheduleButton() {
+        const processBtn = document.getElementById('processBtn');
+        if (processBtn) {
+            processBtn.disabled = false;
+            processBtn.textContent = '🚀 Generate Schedule';
+            processBtn.title = '';
+            processBtn.classList.remove('disabled-duplicates');
+        }
+        
+        // Clear duplicate routes info
+        this.duplicateRoutes = null;
     }
     
     markDuplicateFiles(duplicateRoutes) {
@@ -507,9 +541,20 @@ class FileManager {
             if (count === 0) {
                 processBtn.disabled = true;
                 processBtn.textContent = '🚀 Generate Schedule';
+                processBtn.classList.remove('disabled-duplicates');
             } else {
-                processBtn.disabled = false;
-                processBtn.textContent = '🚀 Generate Schedule';
+                // Check if there are duplicate routes before enabling
+                if (this.duplicateRoutes && this.duplicateRoutes.length > 0) {
+                    processBtn.disabled = true;
+                    processBtn.textContent = '🚫 Generate Schedule (Duplicates Detected)';
+                    processBtn.title = 'Please delete duplicate files before generating schedule';
+                    processBtn.classList.add('disabled-duplicates');
+                } else {
+                    processBtn.disabled = false;
+                    processBtn.textContent = '🚀 Generate Schedule';
+                    processBtn.title = '';
+                    processBtn.classList.remove('disabled-duplicates');
+                }
             }
         }
     }
@@ -570,6 +615,9 @@ class FileManager {
                 
                 // Reload the flight plan library to update the list
                 await this.loadFileLibrary();
+                
+                // Re-check for duplicate routes after deletion
+                await this.checkForDuplicateRoutes();
             } else {
                 const error = await response.json();
                 throw new Error(error.error || 'Delete failed');
