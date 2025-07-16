@@ -171,6 +171,45 @@ def list_files():
     
     return jsonify(files)
 
+@app.route('/delete-file/<filename>', methods=['DELETE'])
+def delete_file(filename):
+    """Delete a specific XML file from the upload directory"""
+    logger.info(f"Delete request for file: {filename}")
+    
+    try:
+        # Get absolute path to xml_files directory
+        parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        filepath = os.path.join(parent_dir, 'xml_files', filename)
+        
+        # Security check: ensure the file is within the upload directory
+        upload_dir = os.path.join(parent_dir, 'xml_files')
+        if not os.path.abspath(filepath).startswith(os.path.abspath(upload_dir)):
+            logger.error(f"Security violation: Attempt to delete file outside upload directory: {filename}")
+            return jsonify({'error': 'Invalid file path'}), 403
+        
+        # Check if file exists
+        if not os.path.exists(filepath):
+            logger.warning(f"Delete requested for non-existent file: {filename}")
+            return jsonify({'error': 'File not found'}), 404
+        
+        # Check if file is actually an XML file
+        if not filename.lower().endswith('.xml'):
+            logger.warning(f"Delete requested for non-XML file: {filename}")
+            return jsonify({'error': 'Only XML files can be deleted'}), 400
+        
+        # Delete the file
+        os.remove(filepath)
+        logger.info(f"File deleted successfully: {filename}")
+        
+        return jsonify({'success': True, 'message': f'File {filename} deleted successfully'})
+        
+    except OSError as e:
+        logger.error(f"Error deleting file {filename}: {e}")
+        return jsonify({'error': f'Failed to delete file: {str(e)}'}), 500
+    except Exception as e:
+        logger.error(f"Unexpected error deleting file {filename}: {e}")
+        return jsonify({'error': 'An unexpected error occurred'}), 500
+
 @app.route('/validate/<filename>', methods=['GET'])
 def validate_file(filename):
     """Validate XML file structure using shared types"""
@@ -339,6 +378,8 @@ def process_files():
     
     data = request.get_json()
     selected_files = data.get('files', [])
+    start_time = data.get('startTime', '14:00')
+    end_time = data.get('endTime', '18:00')
     
     if not selected_files:
         logger.warning("Processing requested with no files selected")
@@ -355,15 +396,16 @@ def process_files():
         return jsonify({'error': 'Insufficient disk space for processing'}), 507
     
     logger.info(f"Starting processing for {len(selected_files)} files: {selected_files}")
+    logger.info(f"Time window: {start_time} - {end_time}")
     
     # Start processing in background thread
-    thread = threading.Thread(target=run_processing, args=(selected_files,))
+    thread = threading.Thread(target=run_processing, args=(selected_files, start_time, end_time))
     thread.daemon = True
     thread.start()
     
     return jsonify({'message': 'Processing started'})
 
-def run_processing(selected_files):
+def run_processing(selected_files, start_time='14:00', end_time='18:00'):
     global processing_status
     
     processing_status = {
@@ -424,7 +466,7 @@ def run_processing(selected_files):
         # Step 4: Schedule conflicts
         logger.info("Step 4: Scheduling conflicts")
         processing_status['current_step'] = 3
-        result = subprocess.run(['python', 'generate_schedule_conflicts.py', '--start', '14:00', '--end', '18:00'], check=True, timeout=300, capture_output=True, text=True)
+        result = subprocess.run(['python', 'generate_schedule_conflicts.py', '--start', start_time, '--end', end_time], check=True, timeout=300, capture_output=True, text=True)
         logger.info(f"Step 4 completed: {result.returncode}")
         
         # Step 5: Export animation data

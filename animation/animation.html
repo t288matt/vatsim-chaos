@@ -5,64 +5,268 @@
   <title>ATC Conflict Animation - Dynamic Scheduling</title>
   <script src="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Cesium.js"></script>
   <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    html, body, #cesiumContainer { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; }
-    #cesiumContainer { position: absolute; top: 0; left: 0; }
-    #info { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: #fff; padding: 12px; border-radius: 6px; z-index: 10; font-family: Arial, sans-serif; }
-    #info h3 { margin: 0 0 8px 0; color: #00ff88; }
-    #info p { margin: 4px 0; font-size: 12px; }
-    #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: #00ff88; padding: 20px; border-radius: 8px; z-index: 20; }
-    .conflict-alert { background: rgba(255,0,0,0.3); border-left: 3px solid #ff4444; padding: 4px; margin: 2px 0; }
+    html, body, #cesiumContainer { 
+      width: 100%; 
+      height: 100%; 
+      margin: 0; 
+      padding: 0; 
+      overflow: hidden; 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0f;
+      font-size: 13px;  /* VATSIM Radar base font size */
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+    }
+    
+    #cesiumContainer { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+    }
+    
+    /* VATSIM Radar-style info panel */
+    #info { 
+      position: absolute; 
+      top: 20px; 
+      left: 20px; 
+      background: rgba(15, 52, 96, 0.9); 
+      color: #ffffff; 
+      padding: 20px; 
+      border-radius: 12px; 
+      z-index: 10; 
+      font-family: 'Inter', sans-serif;
+      border: 2px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      min-width: 280px;
+    }
+    
+    #info h3 { 
+      margin: 0 0 12px 0; 
+      color: #00d4ff; 
+      font-size: 14px;  /* VATSIM Radar section title */
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    
+    #info p { 
+      margin: 6px 0; 
+      font-size: 12px;  /* VATSIM Radar text size */
+      font-weight: 400;
+      color: #e6e6e6;
+    }
+    
+    #info strong {
+      color: #00d4ff;
+      font-weight: 600;
+    }
+    
+    #loading { 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+      background: rgba(15, 52, 96, 0.95); 
+      color: #00d4ff; 
+      padding: 16px; 
+      border-radius: 8px; 
+      z-index: 20;
+      border: 1px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      font-size: 12px;  /* VATSIM Radar text size */
+    }
+    
+    .conflict-alert { 
+      background: rgba(46, 26, 26, 0.8); 
+      border-left: 3px solid #f87171; 
+      padding: 6px 10px; 
+      margin: 6px 0; 
+      border-radius: 4px;
+      color: #f87171;
+      font-weight: 500;
+      font-size: 11px;  /* VATSIM Radar small text */
+    }
+    
+    /* VATSIM Radar-style commentary boxes */
     #commentary-box { 
       position: absolute; 
-      bottom: 10px; 
-      right: 10px; 
-      background: rgba(0,0,0,0.8); 
-      color: #00ff88; 
-      padding: 12px; 
-      border-radius: 6px; 
+      bottom: 16px; 
+      right: 16px; 
+      background: rgba(15, 52, 96, 0.9); 
+      color: #ffffff; 
+      padding: 16px; 
+      border-radius: 8px; 
       z-index: 10; 
-      font-family: Arial, sans-serif; 
-      max-width: 450px; 
-      max-height: 500px; 
-      height: 500px;
+      font-family: 'Inter', sans-serif; 
+      max-width: 400px; 
+      max-height: 400px; 
+      height: 400px;
       overflow-y: auto;
-      border-left: 3px solid #00ff88;
+      border: 1px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
+    
     #conflict-commentary-box { 
       position: absolute; 
-      bottom: 10px; 
-      left: 10px; 
-      background: rgba(0,0,0,0.8); 
-      color: #00ff88; 
-      padding: 12px; 
-      border-radius: 6px; 
+      bottom: 16px; 
+      left: 16px; 
+      background: rgba(15, 52, 96, 0.9); 
+      color: #ffffff; 
+      padding: 16px; 
+      border-radius: 8px; 
       z-index: 10; 
-      font-family: Arial, sans-serif; 
-      max-width: 450px; 
-      max-height: 500px; 
-      height: 500px;
+      font-family: 'Inter', sans-serif; 
+      max-width: 400px; 
+      max-height: 400px; 
+      height: 400px;
       overflow-y: auto;
-      border-left: 3px solid #00ff88;
+      border: 1px solid #f87171;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    #commentary-box h4 { margin: 0 0 8px 0; color: #00ff88; font-size: 14px; }
+    
+    #commentary-box h4, #conflict-commentary-box h4 { 
+      margin: 0 0 12px 0; 
+      color: #00d4ff; 
+      font-size: 14px;  /* VATSIM Radar section title */
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    
+    #conflict-commentary-box h4 {
+      color: #f87171;
+    }
+    
     .departure-log { 
-      font-size: 11px; 
-      margin: 2px 0; 
-      padding: 2px 0; 
-      border-bottom: 1px solid rgba(0,255,136,0.3);
+      font-size: 12px;  /* VATSIM Radar text size */
+      margin: 4px 0; 
+      padding: 6px 0; 
+      border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+      font-weight: 400;
     }
-    .departure-time { color: #ffff00; font-weight: bold; }
-    .flight-id { color: #00ffff; }
+    
+    .departure-time { 
+      color: #fbbf24; 
+      font-weight: 600; 
+    }
+    
+    .flight-id { 
+      color: #00d4ff; 
+      font-weight: 500;
+    }
+    
     .conflict-log { 
-      font-size: 11px; 
-      margin: 2px 0; 
-      padding: 2px 0; 
-      border-bottom: 1px solid rgba(0,255,136,0.3);
+      font-size: 12px;  /* VATSIM Radar text size */
+      margin: 4px 0; 
+      padding: 6px 0; 
+      border-bottom: 1px solid rgba(248, 113, 113, 0.3);
+      font-weight: 400;
     }
-    .conflict-time { color: #ffff00; font-weight: bold; }
-    .conflict-flights { color: #00ffff; }
-    .conflict-distance { color: #ffff00; }
+    
+    .conflict-time { 
+      color: #fbbf24; 
+      font-weight: 600; 
+    }
+    
+    .conflict-flights { 
+      color: #f87171; 
+      font-weight: 500;
+    }
+    
+    .conflict-distance { 
+      color: #fbbf24; 
+      font-weight: 500;
+    }
+    
+    /* VATSIM Radar-style controls */
+    #controls { 
+      position: absolute; 
+      top: 16px; 
+      right: 16px; 
+      z-index: 20; 
+      background: rgba(15, 52, 96, 0.9); 
+      color: #ffffff; 
+      padding: 2px; 
+      border-radius: 8px; 
+      border: 1px solid #00d4ff;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      min-width: 28px;
+    }
+    
+    #controls label {
+      display: block;
+      margin: 2px 0;
+      font-weight: 500;
+      color: #00d4ff;
+      font-size: 11px;  /* VATSIM Radar button text */
+      letter-spacing: 0.02em;
+    }
+    
+    #controls input[type="range"] {
+      width: 100%;
+      margin: 1px 0;
+      accent-color: #00d4ff;
+    }
+    
+    #controls span {
+      color: #ffffff;
+      font-weight: 400;
+      margin-left: 8px;
+      font-size: 11px;  /* VATSIM Radar button text */
+    }
+    
+    /* VATSIM Radar-style button */
+    #toggle-labels {
+      background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+      color: #16213e;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 11px;  /* VATSIM Radar button text */
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+      margin-top: 8px;
+    }
+    
+    #toggle-labels:hover {
+      background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 52, 96, 0.3);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #00d4ff;
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff6b35;
+    }
   </style>
 </head>
 <body>
@@ -77,8 +281,8 @@
     <div id="conflict-alerts"></div>
     <button id="toggle-labels">Toggle Flight Labels</button>
   </div>
-  <div id="controls" style="position:absolute;top:10px;right:10px;z-index:20;background:rgba(0,0,0,0.7);color:#fff;padding:10px;border-radius:6px;">
-    <label>Aircraft Size: <input id="acft-size" type="range" min="64" max="1024" value="512" step="16"> <span id="acft-size-val">512</span></label><br>
+  <div id="controls">
+    <label>Aircraft Size: <input id="acft-size" type="range" min="64" max="1024" value="512" step="16"> <span id="acft-size-val">512</span></label>
     <label>Font Size: <input id="font-size" type="range" min="3" max="32" value="16" step="1"> <span id="font-size-val">16</span> px</label>
   </div>
   <div id="commentary-box">

@@ -26,40 +26,15 @@ class App {
         document.addEventListener('DOMContentLoaded', () => {
             console.log('ATC Conflict Analysis System initialized');
         });
-        
-        // Message overlay close button
-        document.getElementById('messageCloseBtn').addEventListener('click', () => {
-            this.hideMessage();
-        });
     }
     
     showMessage(message, type = 'info') {
-        const overlay = document.getElementById('messageOverlay');
-        const content = document.querySelector('.message-content');
-        const text = document.getElementById('messageText');
-        
-        // Remove existing classes
-        content.className = 'message-content';
-        
-        // Add type-specific class
-        content.classList.add(type);
-        
-        // Set message text
-        text.textContent = message;
-        
-        // Show overlay
-        overlay.style.display = 'block';
-        
-        // Auto-hide after 5 seconds for success/info messages
-        if (type === 'success' || type === 'info') {
-            setTimeout(() => {
-                this.hideMessage();
-            }, 5000);
-        }
+        // Simple console logging instead of overlay
+        console.log(`[${type.toUpperCase()}] ${message}`);
     }
     
     hideMessage() {
-        document.getElementById('messageOverlay').style.display = 'none';
+        // No-op since we removed the overlay
     }
 }
 
@@ -100,10 +75,20 @@ class BriefingManager {
     async showBriefing() {
         try {
             const response = await fetch('/briefing');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
             const briefing = await response.json();
             
             if (briefing.error) {
                 app.showMessage(briefing.error, 'error');
+                return;
+            }
+            
+            if (!briefing.content) {
+                app.showMessage('No briefing content received', 'error');
                 return;
             }
             

@@ -6,205 +6,290 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f9fa;
-    color: #333;
-    line-height: 1.6;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0f;
+    color: #ffffff;
+    line-height: 1.4;
+    font-weight: 400;
+    font-size: 13px;  /* VATSIM Radar base font size */
+    letter-spacing: 0.01em;
 }
 
 /* Header */
 .header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     color: white;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    border-bottom: 2px solid #00d4ff;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(0,212,255,0.1) 50%, transparent 70%);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
 }
 
 .header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    font-weight: 300;
+    font-size: 24px;  /* VATSIM Radar title size */
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1;
 }
 
 .header p {
-    font-size: 1.1rem;
+    font-size: 14px;  /* VATSIM Radar subtitle size */
     opacity: 0.9;
+    color: #00d4ff;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
 }
 
 /* Main Layout */
 .main-container {
     display: flex;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 100px);
     margin: 0;
     padding: 0;
+    background: #0a0a0f;
+    gap: 0;
 }
 
 /* Left Panel */
 .left-panel {
-    width: 400px;
-    background: white;
-    border-right: 1px solid #e9ecef;
-    padding: 20px;
+    width: 400px;  /* VATSIM Radar panel width */
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    border-right: 2px solid #00d4ff;
+    padding: 16px;  /* VATSIM Radar padding */
     overflow-y: auto;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.left-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00d4ff, transparent);
 }
 
 /* File Upload Section */
 .file-upload-section {
-    margin-bottom: 30px;
+    margin-bottom: 20px;  /* VATSIM Radar spacing */
+    background: rgba(15, 52, 96, 0.3);
+    border-radius: 8px;  /* VATSIM Radar border radius */
+    padding: 16px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .file-upload-section h3 {
-    color: #495057;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
+    color: #00d4ff;
+    margin-bottom: 12px;
+    font-size: 14px;  /* VATSIM Radar section title */
     font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .upload-area {
-    border: 2px dashed #dee2e6;
-    border-radius: 12px;
-    padding: 40px 20px;
+    border: 2px dashed #00d4ff;
+    border-radius: 8px;
+    padding: 12px 16px;
     text-align: center;
-    background: #f8f9fa;
+    background: rgba(15, 52, 96, 0.2);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    backdrop-filter: blur(5px);
 }
 
 .upload-area:hover {
-    border-color: #007bff;
-    background: #f0f8ff;
+    border-color: #ff6b35;
+    background: rgba(255, 107, 53, 0.1);
+    transform: scale(1.01);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
 }
 
 .upload-area.dragover {
-    border-color: #28a745;
-    background: #f0fff0;
-    transform: scale(1.02);
+    border-color: #4ade80;
+    background: rgba(74, 222, 128, 0.1);
+    transform: scale(1.01);
+    box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
 }
 
 .upload-content p {
-    margin: 5px 0;
-    color: #6c757d;
-    font-size: 1rem;
+    margin: 4px 0;
+    color: #ffffff;
+    font-size: 12px;  /* VATSIM Radar text size */
+    font-weight: 400;
 }
 
 /* Add retry button styles */
 .retry-btn {
-    background: #007bff;
-    color: white;
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    color: #16213e;
     border: none;
     padding: 8px 16px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 0.9rem;
-    margin-top: 10px;
-    transition: background 0.3s ease;
+    font-size: 11px;  /* VATSIM Radar button text */
+    margin-top: 12px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
 }
 
 .retry-btn:hover {
-    background: #0056b3;
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
 }
 
 /* Processing time display */
 .processing-time {
     text-align: center;
-    color: #6c757d;
-    font-size: 0.9rem;
-    margin-top: 10px;
+    color: #00d4ff;
+    font-size: 11px;  /* VATSIM Radar small text */
+    margin-top: 12px;
     padding: 8px;
-    background: #f8f9fa;
-    border-radius: 4px;
+    background: rgba(15, 52, 96, 0.4);
+    border-radius: 6px;
+    border: 1px solid #00d4ff;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
 }
 
 /* Upload status enhancements */
 .upload-status {
-    padding: 10px 15px;
+    padding: 12px 16px;
     border-radius: 6px;
-    margin: 10px 0;
+    margin: 12px 0;
     font-weight: 500;
     display: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid;
+    font-size: 12px;  /* VATSIM Radar status text */
 }
 
 .upload-status.info {
-    background: #d1ecf1;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
+    background: rgba(15, 52, 96, 0.4);
+    color: #00d4ff;
+    border-color: #00d4ff;
 }
 
 .upload-status.success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+    background: rgba(26, 46, 26, 0.4);
+    color: #4ade80;
+    border-color: #4ade80;
 }
 
 .upload-status.error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    background: rgba(46, 26, 26, 0.4);
+    color: #f87171;
+    border-color: #f87171;
 }
 
 .upload-status.warning {
-    background: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeaa7;
+    background: rgba(46, 42, 26, 0.4);
+    color: #fbbf24;
+    border-color: #fbbf24;
 }
 
 /* File Library Section */
 .file-library-section {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    background: rgba(15, 52, 96, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .file-library-section h3 {
-    color: #495057;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
+    color: #00d4ff;
+    margin-bottom: 12px;
+    font-size: 14px;  /* VATSIM Radar section title */
     font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .file-controls {
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 8px;
+    margin-bottom: 12px;
 }
 
 .control-btn {
-    padding: 8px 16px;
-    background: #6c757d;
-    color: white;
-    border: none;
+    padding: 6px 12px;
+    background: rgba(15, 52, 96, 0.6);
+    color: #00d4ff;
+    border: 1px solid #00d4ff;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.3s ease;
+    font-size: 11px;  /* VATSIM Radar button text */
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(5px);
 }
 
 .control-btn:hover {
-    background: #5a6268;
+    background: #00d4ff;
+    color: #16213e;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
 }
 
 .file-list {
-    max-height: 300px;
+    max-height: 280px;  /* VATSIM Radar list height */
     overflow-y: auto;
-    border: 1px solid #dee2e6;
+    border: 1px solid #00d4ff;
     border-radius: 8px;
-    background: white;
-    margin-bottom: 10px;
+    background: rgba(15, 52, 96, 0.2);
+    margin-bottom: 12px;
+    backdrop-filter: blur(5px);
 }
 
 .file-item {
     display: flex;
     align-items: center;
-    padding: 2px 8px;
-    border-bottom: 1px solid #e9ecef;
-    background: white;
-    align-items: center;
-    transition: background 0.2s ease;
+    padding: 6px 10px;
+    border-bottom: 1px solid rgba(26, 26, 46, 0.5);
+    background: rgba(15, 52, 96, 0.1);
+    transition: all 0.3s ease;
 }
 
 .file-item:hover {
-    background: #f8f9fa;
+    background: rgba(26, 33, 62, 0.4);
+    transform: translateX(2px);
 }
 
 .file-item:last-child {
@@ -212,31 +297,96 @@ body {
 }
 
 .file-item input[type="checkbox"] {
-    margin-right: 12px;
-    transform: scale(1.2);
+    margin-right: 10px;
+    transform: scale(1.1);
+    accent-color: #00d4ff;
 }
 
 /* Add validation status styles */
 .validation-status {
     margin-left: 8px;
-    font-size: 14px;
+    font-size: 10px;  /* VATSIM Radar small text */
     padding: 2px 6px;
-    border-radius: 3px;
+    border-radius: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
 }
 
 .validation-status.valid {
-    color: #28a745;
-    background: #d4edda;
+    color: #4ade80;
+    background: rgba(26, 46, 26, 0.4);
+    border: 1px solid #4ade80;
 }
 
 .validation-status.invalid {
-    color: #dc3545;
-    background: #f8d7da;
+    color: #f87171;
+    background: rgba(46, 26, 26, 0.4);
+    border: 1px solid #f87171;
 }
 
 .validation-status.pending {
-    color: #ffc107;
-    background: #fff3cd;
+    color: #fbbf24;
+    background: rgba(46, 42, 26, 0.4);
+    border: 1px solid #fbbf24;
+}
+
+/* New validation indicators (smaller) */
+.validation-indicator {
+    margin-left: auto;
+    font-size: 8px;
+    font-weight: bold;
+    padding: 1px 3px;
+    border-radius: 2px;
+    min-width: 12px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    margin-right: 8px;
+}
+
+.validation-indicator.valid {
+    background: rgba(26, 46, 26, 0.4);
+    color: #4ade80;
+    border: 1px solid #4ade80;
+}
+
+.validation-indicator.invalid {
+    background: rgba(46, 26, 26, 0.4);
+    color: #f87171;
+    border: 1px solid #f87171;
+}
+
+.validation-indicator.pending {
+    background: rgba(46, 42, 26, 0.4);
+    color: #fbbf24;
+    border: 1px solid #fbbf24;
+}
+
+/* Delete button styles */
+.delete-btn {
+    background: none;
+    border: none;
+    color: #f87171;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    margin-left: 4px;
+    opacity: 0.7;
+    min-width: 20px;
+    text-align: center;
+}
+
+.delete-btn:hover {
+    background: rgba(248, 113, 113, 0.2);
+    color: #f87171;
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.delete-btn:active {
+    transform: scale(0.95);
 }
 
 /* Enhanced file item styling */
@@ -247,121 +397,193 @@ body {
     padding: 4px 8px;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.2s;
-    font-size: 0.85em; /* Reduced from default */
+    transition: all 0.3s ease;
+    color: #ffffff;
+    font-weight: 400;
+    flex: 1;
+    font-size: 12px;  /* VATSIM Radar text size */
 }
 
 .file-item label:hover {
-    background-color: #f8f9fa;
+    background-color: rgba(0, 212, 255, 0.1);
 }
 
 .file-item input[type="checkbox"]:checked + label {
-    background-color: #e3f2fd;
-    border-left: 3px solid #2196f3;
+    background-color: rgba(0, 212, 255, 0.2);
+    border-left: 3px solid #00d4ff;
+    padding-left: 12px;
 }
 
-/* File info layout */
 .file-item .filename {
     flex: 1;
     font-weight: 500;
-    color: #333;
+    color: #ffffff;
+    font-size: 12px;  /* VATSIM Radar text size */
 }
 
 .file-item .filesize {
-    color: #6c757d;
-    font-size: 0.9em;
+    color: #00d4ff;
+    font-size: 10px;  /* VATSIM Radar small text */
     margin: 0 8px;
+    font-weight: 400;
 }
 
 .file-item .upload-date {
-    color: #6c757d;
-    font-size: 0.9em;
+    color: #00d4ff;
+    font-size: 10px;  /* VATSIM Radar small text */
     margin: 0 8px;
+    font-weight: 400;
 }
 
-/* Enhanced file item states */
 .file-item.disabled {
-    opacity: 0.6;
-    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .file-item.error {
-    border-left: 3px solid #dc3545;
-    background: #f8d7da;
+    border-left: 3px solid #f87171;
+    background: rgba(46, 26, 26, 0.3);
 }
 
 .file-item.warning {
-    border-left: 3px solid #ffc107;
-    background: #fff3cd;
+    border-left: 3px solid #fbbf24;
+    background: rgba(46, 42, 26, 0.3);
 }
 
-/* Duplicate route indicators */
 .file-item.duplicate-route {
-    background-color: #ffe5e5 !important; /* light red */
-    border-left: 4px solid #e53935;      /* strong red */
-    position: relative;
+    border-left: 3px solid #fbbf24;
+    background: rgba(46, 42, 26, 0.3);
 }
+
 .duplicate-route .filename::before {
-    content: '\26A0\FE0F '; /* warning icon */
-    color: #e53935;
-    font-size: 1em;
+    content: "⚠️ ";
     margin-right: 4px;
+    font-size: 0.8em;
 }
 
 .file-item.duplicate-route label {
-    color: #856404;
+    color: #fbbf24;
 }
 
 .file-item.duplicate-route .filename {
-    font-weight: 600;
+    color: #fbbf24;
 }
 
 /* System limitation warning */
 .system-limitation-warning {
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
-    color: #856404;
-    padding: 15px;
+    background: rgba(46, 42, 26, 0.4);
+    border: 1px solid #fbbf24;
+    color: #fbbf24;
+    padding: 12px;
     border-radius: 6px;
-    margin: 10px 0;
-    font-size: 0.9rem;
+    margin: 12px 0;
+    backdrop-filter: blur(10px);
+    font-size: 11px;  /* VATSIM Radar warning text */
 }
 
 .system-limitation-warning h4 {
-    margin: 0 0 10px 0;
-    color: #856404;
+    margin: 0 0 8px 0;
+    color: #fbbf24;
     font-weight: 600;
+    font-size: 12px;  /* VATSIM Radar warning title */
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
 }
 
 .system-limitation-warning ul {
-    margin: 10px 0;
-    padding-left: 20px;
+    margin: 0;
+    padding-left: 16px;
 }
 
 .system-limitation-warning li {
-    margin: 5px 0;
+    margin: 3px 0;
+    font-weight: 400;
 }
 
-/* Route validation status */
 .route-validation-status {
-    display: inline-block;
-    margin-left: 8px;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 0.8rem;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 10px;  /* VATSIM Radar small text */
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-top: 8px;
+    backdrop-filter: blur(5px);
 }
 
 .route-validation-status.duplicate {
-    background: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeaa7;
+    background: rgba(46, 42, 26, 0.4);
+    color: #fbbf24;
+    border: 1px solid #fbbf24;
 }
 
 .route-validation-status.unique {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+    background: rgba(26, 46, 26, 0.4);
+    color: #4ade80;
+    border: 1px solid #4ade80;
+}
+
+/* Time Controls */
+.time-controls {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(15, 52, 96, 0.2);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.time-controls h4 {
+    color: #00d4ff;
+    margin: 0 0 8px 0;
+    font-size: 12px;  /* VATSIM Radar small text */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.time-inputs {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.time-input {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.time-input label {
+    color: #00d4ff;
+    font-size: 10px;  /* VATSIM Radar small text */
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.time-field {
+    background: rgba(15, 52, 96, 0.4);
+    border: 1px solid #00d4ff;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 4px 8px;
+    font-size: 11px;  /* VATSIM Radar button text */
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.time-field:focus {
+    outline: none;
+    border-color: #ff6b35;
+    box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+}
+
+.time-field::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
 }
 
 /* Responsive file list */
@@ -380,106 +602,140 @@ body {
 
 .selection-summary {
     padding: 10px;
-    background: #e9ecef;
+    background: rgba(15, 52, 96, 0.4);
     border-radius: 6px;
-    font-size: 0.9rem;
-    color: #495057;
+    font-size: 11px;  /* VATSIM Radar small text */
+    color: #ffffff;
     text-align: center;
+    font-weight: 500;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    backdrop-filter: blur(5px);
+    margin-bottom: 12px;
 }
 
 /* Controls Section */
 .controls-section {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    background: rgba(15, 52, 96, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .process-button {
     width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    padding: 10px;
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    color: #16213e;
+    border: 1px solid #00d4ff;
+    border-radius: 6px;
+    font-size: 11px;  /* VATSIM Radar button text */
     font-weight: 600;
     cursor: pointer;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0,123,255,0.3);
+    box-shadow: 0 2px 8px rgba(0,212,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
 }
 
 .process-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,123,255,0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,212,255,0.4);
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+    color: white;
 }
 
 .process-button:disabled {
-    background: #6c757d;
+    background: #0f3460;
+    color: #6c757d;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+    border-color: #6c757d;
 }
 
 /* Processing button states */
 .process-button.processing {
-    background: #6c757d;
-    cursor: not-allowed;
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    color: white;
 }
 
 .process-button.error {
-    background: #dc3545;
+    background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+    color: white;
 }
 
 .process-button.success {
-    background: #28a745;
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    color: #16213e;
 }
 
 .briefing-button {
     width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 8px;
+    background: #0f3460;
+    color: #00d4ff;
+    border: 1px solid #00d4ff;
+    border-radius: 6px;
+    font-size: 11px;  /* VATSIM Radar button text */
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(40,167,69,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(0,212,255,0.3);
 }
 
 .briefing-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(40,167,69,0.4);
+    background: #00d4ff;
+    color: #16213e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,212,255,0.4);
 }
 
 .briefing-button:disabled {
-    background: #6c757d;
+    background: #0f3460;
+    color: #6c757d;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+    border-color: #6c757d;
 }
 
 /* Progress Section */
 .progress-section {
-    margin-top: 20px;
-    padding: 20px;
-    background: #f8f9fa;
+    margin-top: 16px;
+    padding: 16px;
+    background: rgba(15, 52, 96, 0.4);
     border-radius: 8px;
-    border: 1px solid #dee2e6;
+    border: 1px solid #00d4ff;
+    backdrop-filter: blur(10px);
 }
 
 .progress-section h3 {
-    color: #495057;
-    margin-bottom: 15px;
-    font-size: 1.1rem;
+    color: #00d4ff;
+    margin-bottom: 12px;
+    font-size: 14px;  /* VATSIM Radar section title */
     font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .progress-step {
     display: flex;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #e9ecef;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(26, 26, 46, 0.5);
+    transition: all 0.3s ease;
+}
+
+.progress-step:hover {
+    background: rgba(0, 212, 255, 0.05);
+    border-radius: 4px;
+    padding-left: 8px;
 }
 
 .progress-step:last-child {
@@ -487,56 +743,63 @@ body {
 }
 
 .step-icon {
-    margin-right: 12px;
-    font-size: 1.2rem;
-    width: 24px;
+    margin-right: 10px;
+    font-size: 1.1rem;
+    width: 20px;
     text-align: center;
+    color: #00d4ff;
 }
 
 .step-text {
     flex: 1;
-    font-size: 0.9rem;
-    color: #6c757d;
+    font-size: 12px;  /* VATSIM Radar text size */
+    color: #ffffff;
+    font-weight: 400;
 }
 
 .progress-step.completed .step-text {
-    color: #28a745;
+    color: #4ade80;
     font-weight: 600;
 }
 
 .progress-step.current .step-text {
-    color: #007bff;
+    color: #00d4ff;
     font-weight: 600;
 }
 
 /* Enhanced error states */
 .progress-error {
-    background: #f8d7da;
-    border: 1px solid #f5c6cb;
+    background: rgba(46, 26, 26, 0.4);
+    border: 1px solid #f87171;
     border-radius: 6px;
-    padding: 15px;
-    margin: 10px 0;
-    color: #721c24;
+    padding: 12px;
+    margin: 12px 0;
+    color: #f87171;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    font-size: 11px;  /* VATSIM Radar error text */
 }
 
 .progress-error .step-icon {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    color: #f87171;
 }
 
 .progress-error .step-text {
     font-weight: 500;
     text-align: center;
+    font-size: 11px;  /* VATSIM Radar error text */
 }
 
 /* Right Panel */
 .right-panel {
     flex: 1;
     position: relative;
-    background: #f8f9fa;
+    background: #0a0a0f;
+    border-left: 3px solid #00d4ff;
 }
 
 .map-container {
@@ -551,8 +814,11 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: #6c757d;
-    font-size: 1.1rem;
+    color: #00d4ff;
+    font-size: 1.3rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    font-weight: 600;
+    letter-spacing: 0.05em;
 }
 
 #cesiumIframe {
@@ -617,6 +883,24 @@ body {
     padding: 20px;
     max-height: 60vh;
     overflow-y: auto;
+    color: #333333;
+    background-color: #ffffff;
+}
+
+.briefing-content {
+    color: #333333;
+    background-color: #ffffff;
+}
+
+.briefing-content pre {
+    color: #333333 !important;
+    background-color: #ffffff !important;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    margin: 0;
+    padding: 0;
 }
 
 .modal-footer {
@@ -643,50 +927,7 @@ body {
     background: #0056b3;
 }
 
-/* Message Overlay */
-.message-overlay {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 2000;
-    max-width: 400px;
-}
 
-.message-content {
-    background: white;
-    border-radius: 8px;
-    padding: 15px 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    border-left: 4px solid #007bff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.message-content.success {
-    border-left-color: #28a745;
-}
-
-.message-content.error {
-    border-left-color: #dc3545;
-}
-
-.message-content.warning {
-    border-left-color: #ffc107;
-}
-
-.message-close {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #6c757d;
-    margin-left: 15px;
-}
-
-.message-close:hover {
-    color: #495057;
-}
 
 /* Loading states */
 .loading {

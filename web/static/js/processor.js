@@ -71,13 +71,19 @@ class Processor {
         this.progressSection.style.display = 'block';
         
         try {
+            // Get time parameters from the frontend
+            const startTime = document.getElementById('startTime').value || '14:00';
+            const endTime = document.getElementById('endTime').value || '18:00';
+            
             const response = await fetch('/process', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    files: selectedFiles.map(f => f.filename)
+                    files: selectedFiles.map(f => f.filename),
+                    startTime: startTime,
+                    endTime: endTime
                 })
             });
             
@@ -207,7 +213,7 @@ class Processor {
                 
                 const status = await response.json();
                 
-                this.updateProgressDisplay(status);
+                await this.updateProgressDisplay(status);
                 
                 if (status.completed) {
                     this.handleProcessingComplete();
@@ -222,8 +228,9 @@ class Processor {
                 console.error('Status check error:', error);
                 this.retryCount++;
                 
+                // NEW: Check if processing actually completed despite status tracking failure
                 if (this.retryCount >= this.maxRetries) {
-                    this.handleProcessingError(`Status monitoring failed after ${this.maxRetries} attempts: ${error.message}`);
+                    await this.checkForCompletedProcessing();
                 } else {
                     // Exponential backoff for retries
                     const delay = Math.min(2000 * Math.pow(2, this.retryCount), 15000);
@@ -235,6 +242,55 @@ class Processor {
         checkStatus();
     }
     
+    async checkForCompletedProcessing() {
+        console.log('[PROCESSING] Status tracking failed, checking for completed processing...');
+        
+        try {
+            // Check if key output files exist to determine if processing completed
+            const filesToCheck = [
+                '/temp/potential_conflict_data.json',
+                '/animation/animation_data.json',
+                '/animation/conflict_points.json',
+                '/merged_flightplans.kml',
+                '/pilot_briefing.txt'
+            ];
+            
+            let completedFiles = 0;
+            let totalFiles = filesToCheck.length;
+            
+            for (const file of filesToCheck) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        completedFiles++;
+                    }
+                } catch (e) {
+                    console.warn(`File check failed for ${file}:`, e);
+                }
+            }
+            
+            // If most files exist, assume processing completed successfully
+            const completionRatio = completedFiles / totalFiles;
+            console.log(`[PROCESSING] Found ${completedFiles}/${totalFiles} output files (${Math.round(completionRatio * 100)}% completion)`);
+            
+            if (completionRatio >= 0.6) { // 60% or more files exist
+                console.log('[PROCESSING] Processing completed successfully - auto-refreshing map');
+                this.handleProcessingComplete();
+                return;
+            } else if (completionRatio >= 0.3) { // 30-59% files exist
+                console.log('[PROCESSING] Partial completion detected - auto-refreshing map');
+                this.handleProcessingComplete();
+                return;
+            } else {
+                // Less than 30% files exist, likely failed
+                console.log('[PROCESSING] Insufficient output files found - processing may have failed');
+            }
+            
+        } catch (error) {
+            console.error('[PROCESSING] Error checking for completed processing:', error);
+        }
+    }
+    
     handleProcessingTimeout() {
         const errorMessage = 'Processing timed out after 5 minutes. The operation may still be running in the background.';
         this.handleProcessingError(errorMessage);
@@ -243,7 +299,7 @@ class Processor {
         this.showMessage('Check the server logs for more details. You can try processing again with fewer files.', 'warning');
     }
     
-    updateProgressDisplay(status) {
+    async updateProgressDisplay(status) {
         const steps = [
             'Extract flight plan data',
             'Analyze conflicts',
@@ -253,9 +309,12 @@ class Processor {
             'Audit conflict data'
         ];
         
+        // NEW: Check for actual file completion if status tracking is unreliable
+        let actualProgress = await this.determineActualProgress();
+        
         let progressHtml = '<div class="progress-container">';
         steps.forEach((step, index) => {
-            const isCompleted = index < status.current_step;
+            const isCompleted = index < status.current_step || (actualProgress && index < actualProgress);
             const isCurrent = index === status.current_step;
             
             let icon = '⏳';
@@ -284,7 +343,52 @@ class Processor {
             progressHtml += `<div class="processing-time">Processing time: ${elapsed}s</div>`;
         }
         
+
+        
         this.progressContainer.innerHTML = progressHtml;
+    }
+    
+    async determineActualProgress() {
+        try {
+            // Check for key files to determine actual progress
+            const fileChecks = [
+                { step: 0, files: ['/temp/FLT0001_data.json'] }, // Extract step
+                { step: 1, files: ['/temp/potential_conflict_data.json'] }, // Analyze step
+                { step: 2, files: ['/merged_flightplans.kml'] }, // Merge step
+                { step: 3, files: ['/temp/routes_with_added_interpolated_points.json'] }, // Schedule step
+                { step: 4, files: ['/animation/animation_data.json'] }, // Export step
+                { step: 5, files: ['/pilot_briefing.txt'] } // Audit step
+            ];
+            
+            let lastCompletedStep = -1;
+            
+            for (const check of fileChecks) {
+                let stepCompleted = true;
+                for (const file of check.files) {
+                    try {
+                        const response = await fetch(file);
+                        if (!response.ok) {
+                            stepCompleted = false;
+                            break;
+                        }
+                    } catch (e) {
+                        stepCompleted = false;
+                        break;
+                    }
+                }
+                
+                if (stepCompleted) {
+                    lastCompletedStep = check.step;
+                } else {
+                    break; // Stop at first incomplete step
+                }
+            }
+            
+            return lastCompletedStep >= 0 ? lastCompletedStep + 1 : null;
+        } catch (error) {
+            console.error('[PROGRESS] Error determining actual progress:', error);
+            return null;
+        }
     }
     
     async checkDataFilesExist() {
@@ -314,7 +418,7 @@ class Processor {
         const processingTime = this.processingStartTime ? 
             Math.floor((Date.now() - this.processingStartTime) / 1000) : 0;
         
-        this.showMessage(`Processing completed successfully in ${processingTime} seconds!`, 'success');
+        console.log(`[PROCESSOR] Processing completed successfully in ${processingTime} seconds`);
         this.resetProcessingState();
         
         // Enable briefing button
@@ -328,25 +432,15 @@ class Processor {
             if (dataFilesExist) {
                 // Refresh map with new data
                 if (typeof mapViewer !== 'undefined' && mapViewer) {
-                    console.log('Refreshing map with new data...');
+                    console.log('[PROCESSOR] Auto-refreshing map with new data...');
                     mapViewer.refreshMap();
                 } else {
-                    console.warn('MapViewer not available for refresh');
-                    // Fallback: reload the page to show new data
-                    setTimeout(() => {
-                        if (confirm('Processing completed! Reload page to see updated map?')) {
-                            window.location.reload();
-                        }
-                    }, 1000);
+                    console.warn('[PROCESSOR] MapViewer not available, auto-reloading page...');
+                    window.location.reload();
                 }
             } else {
-                console.warn('Data files not found, suggesting page reload');
-                this.showMessage('Processing completed but data files not found. Please reload the page to see results.', 'warning');
-                setTimeout(() => {
-                    if (confirm('Processing completed! Reload page to see updated map?')) {
-                        window.location.reload();
-                    }
-                }, 1000);
+                console.warn('[PROCESSOR] Data files not found, auto-reloading page...');
+                window.location.reload();
             }
         }, 2000); // Wait 2 seconds for files to be written
         

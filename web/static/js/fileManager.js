@@ -412,26 +412,25 @@ class FileManager {
             error: validation.error
         });
         
-        let validationIcon = '';
-        let validationClass = '';
-        
+        // Show validation status with color coding but smaller
+        let validationIndicator = '';
         if (validation.valid) {
-            validationIcon = '✅';
-            validationClass = 'valid';
+            validationIndicator = '<span class="validation-indicator valid" title="Valid XML">✓</span>';
         } else if (validation.error && validation.error !== 'Not validated') {
-            validationIcon = '❌';
-            validationClass = 'invalid';
+            validationIndicator = '<span class="validation-indicator invalid" title="Invalid XML">✗</span>';
         } else {
-            validationIcon = '⏳';
-            validationClass = 'pending';
+            validationIndicator = '<span class="validation-indicator pending" title="Not validated">?</span>';
         }
         
         div.innerHTML = `
             <input type="checkbox" id="file_${file.id}" ${isSelected ? 'checked' : ''}>
             <label for="file_${file.id}">
                 <span class="filename">${this.escapeHtml(file.name)}</span>
-                <span class="validation-status ${validationClass}">${validationIcon}</span>
+                ${validationIndicator}
             </label>
+            <button class="delete-btn" title="Delete file" data-filename="${this.escapeHtml(file.name)}">
+                🗑️
+            </button>
         `;
         
         const checkbox = div.querySelector('input[type="checkbox"]');
@@ -442,6 +441,14 @@ class FileManager {
                 this.selectedFiles.delete(file.id);
             }
             this.updateSelectionSummary();
+        });
+        
+        // Add delete functionality
+        const deleteBtn = div.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.deleteFile(file.name);
         });
         
         return div;
@@ -519,6 +526,41 @@ class FileManager {
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+    
+    async deleteFile(filename) {
+        if (!confirm(`Are you sure you want to delete "${filename}"? This action cannot be undone.`)) {
+            return;
+        }
+        
+        try {
+            console.log(`[DELETE] Attempting to delete file: ${filename}`);
+            
+            const response = await fetch(`/delete-file/${encodeURIComponent(filename)}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                console.log(`[DELETE] File deleted successfully: ${filename}`);
+                this.showMessage(`File "${filename}" deleted successfully`, 'success');
+                
+                // Remove from selected files if it was selected
+                this.selectedFiles.delete(filename);
+                
+                // Reload the file library to update the list
+                await this.loadFileLibrary();
+            } else {
+                const error = await response.json();
+                throw new Error(error.error || 'Delete failed');
+            }
+        } catch (error) {
+            console.error(`[DELETE] Error deleting file ${filename}:`, error);
+            this.showMessage(`Failed to delete file "${filename}": ${error.message}`, 'error');
+        }
     }
     
     escapeHtml(text) {
