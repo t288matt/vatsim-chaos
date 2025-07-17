@@ -1,6 +1,6 @@
 # ATC Conflict Generation System
 
-An application for generating an event schedule that maximises ATC conflicts. The app takes in SimBrief XML flight plans in xml format and an event timeframe and calculates takeoff times for each flight to create challenging air traffic control (ATC) event scenarios. The system is designed for an events team to create situations where controllers are challenged and pilots can enjoy fun, dynamic events. 
+An application for VATSIM events teams thath generates an event schedule to maximises ATC conflicts. The objecitve of the app is to generate as many conflict as possible. The app takes in SimBrief XML flight plans in xml format and calculates takeoff times for each flight to create challenging air traffic control (ATC) event scenarios. The system is designed for an events team to create situations where controllers are challenged and pilots can enjoy fun, dynamic events. 
 
 For event designers it provides:
 - a simple interface for adding simbrief flight plans (pilots dont need simbrief but need to be able to accurately fly a route)
@@ -37,6 +37,10 @@ For event designers it provides:
 *Live conflict detection interface with real-time flight tracking, departure alerts, and conflict warnings.*
 
 
+## Demonstration
+
+https://github.com/t288matt/vatsim-chaos/assets/123456789/demo.mp4
+
 ### The Data Flow:
 ```
 XML files → Analyse and identify potential conflicts → generate start times per flight that optimises for conflicts create pilot schedule - animate
@@ -51,11 +55,11 @@ The system now uses unique flight IDs (FLT0001, FLT0002, etc.) instead of origin
 - **Conflict Tracking**: Enables tracking of "first conflicts" between unique aircraft pairs
 
 
-## Docker Installation (Recommended)
 
-### Option 1: Minimal Setup (Recommended)
 
-If you only need to run the application and don't need the source code:
+## Installation 
+
+Installation take 5 minutes in a docker environment and can be run on a Raspberry Pi through to AWS
 
 ```bash
 # Download just the docker-compose.yml
