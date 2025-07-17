@@ -1,6 +1,43 @@
 # ATC Conflict Generation System
 
-A Python-based system for generating chaotic, conflicting SimBrief XML flight plans to create challenging air traffic control (ATC) event scenarios. The system is designed to help the events team create situations where controllers are challenged and pilots can enjoy fun, dynamic events.
+An application for generating an event schedule that maximises ATC conflicts. The app takes in SimBrief XML flight plans in xml format and an event timeframe and calculates takeoff times for each flight to create challenging air traffic control (ATC) event scenarios. The system is designed to help the events team create situations where controllers are challenged and pilots can enjoy fun, dynamic events. 
+
+For event designers it provides:
+- a simple interface for adding simbrief flight plans (pilots dont need simbrief)
+- an animation of the conflicts allowing them to visualise what will happen during the event and add/remove routes accordingly
+- a pilot schedule including origin, route, altitude, acft type, takeoff time
+- a conflict schedule that can be used to ensure a good even distributoin of conflicts over time and controller
+
+## System Screenshots
+
+### Web Interface
+![Flight Plan Upload Interface](https://github.com/t288matt/vatsim-chaos/raw/main/images/web-interface.png)
+
+*The modern web interface allows users to upload SimBrief XML files, configure event times, and manage flight plans with drag-and-drop functionality.*
+
+### Conflict Analysis Results
+![Conflict Log](https://github.com/t288matt/vatsim-chaos/raw/main/images/conflict-log.png)
+
+*Detailed conflict log showing detected ATC conflicts with timing, flight pairs, phases, and altitudes.*
+
+### Pilot Briefing Report
+![Pilot Briefing](https://github.com/t288matt/vatsim-chaos/raw/main/images/pilot-briefing.png)
+
+*Comprehensive pilot briefing with departure schedule, aircraft details, routes, and flight levels.*
+
+### 3D Flight Visualization
+![Flight Map](https://github.com/t288matt/vatsim-chaos/raw/main/images/flight-map.png)
+
+*Real-time 3D visualization showing aircraft positions, flight paths, and conflict points on an interactive map.*
+
+### Live Conflict Detection
+![Conflict Detection Interface](https://github.com/t288matt/vatsim-chaos/raw/main/images/conflict-detection.png)
+
+*Live conflict detection interface with real-time flight tracking, departure alerts, and conflict warnings.*
+
+
+
+
 
 **Recent Improvements:**
 - ✅ **Flight ID System** - Each flight gets a unique ID (FLT0001, FLT0002, etc.) for better tracking
