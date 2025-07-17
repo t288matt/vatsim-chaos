@@ -12,6 +12,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     git \
     curl \
+    gcc \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
