@@ -1,16 +1,119 @@
 # ATC Conflict Generation System - User Guide
 
 ## Table of Contents
-1. [System Overview](#system-overview)
-2. [Key Concepts and Definitions](#key-concepts-and-definitions)
-3. [Getting Started](#getting-started)
-4. [Web Interface Guide](#web-interface-guide)
-5. [Command Line Usage](#command-line-usage)
-6. [SimBrief XML Guidelines](#simbrief-xml-guidelines)
-7. [Understanding Conflict Analysis](#understanding-conflict-analysis)
-8. [Output Files and Results](#output-files-and-results)
-9. [Troubleshooting](#troubleshooting)
-10. [Advanced Features](#advanced-features)
+1. [Quick Start Guide](#quick-start-guide)
+2. [System Overview](#system-overview)
+3. [Key Concepts and Definitions](#key-concepts-and-definitions)
+4. [Getting Started](#getting-started)
+5. [Web Interface Guide](#web-interface-guide)
+6. [Command Line Usage](#command-line-usage)
+7. [SimBrief XML Guidelines](#simbrief-xml-guidelines)
+8. [Understanding Conflict Analysis](#understanding-conflict-analysis)
+9. [Output Files and Results](#output-files-and-results)
+10. [Troubleshooting](#troubleshooting)
+11. [Advanced Features](#advanced-features)
+
+---
+
+## Quick Start Guide
+
+### 🚀 Get Up and Running in 5 Minutes
+
+This quick start guide will have you generating ATC conflicts in minutes!
+
+#### **Step 1: Start the System**
+```bash
+# Navigate to the web directory
+cd web
+
+# Start the web server
+python app.py
+```
+
+#### **Step 2: Open Your Browser**
+- Go to the provided URL (e.g., `http://your-server-url`)
+- You'll see the ATC Conflict Generation interface
+
+#### **Step 3: Upload Flight Plans**
+- **Drag and drop** SimBrief XML files into the upload area
+- Or **click to browse** and select files
+- System automatically validates your files
+
+#### **Step 4: Configure Event Time**
+- Set **Start Time** (default: 08:00)
+- Set **End Time** (default: 11:00)
+- Times are in UTC
+
+#### **Step 5: Generate Conflicts**
+- **Select files** from the library (use checkboxes)
+- Click **"Generate Schedule"** button
+- Watch real-time progress as the system:
+  - Extracts flight data
+  - Analyzes 3D conflicts
+  - Creates departure schedule
+  - Generates visualization data
+
+#### **Step 6: View Results**
+- **3D Map**: Interactive flight visualization with Cesium
+- **Pilot Briefing**: Detailed conflict report (click "Pilot Briefing" button)
+- **Export Options**: Print or download results
+
+### 📋 What You'll Get
+
+**Conflict Analysis:**
+- 3D spatial conflict detection
+- Realistic ATC scenarios
+- Departure schedule optimization
+
+**Visualization:**
+- Interactive 3D map with aircraft animation
+- Conflict point highlighting
+- Timeline controls for playback
+
+**Reports:**
+- Pilot briefing with all conflict details
+- Departure schedule
+- Export options for printing/sharing
+
+### ⚡ Pro Tips
+
+**For Best Results:**
+- Use 10-50 flight plans for optimal conflict density
+- Set event times to 3-4 hours for realistic scenarios
+- Mix different aircraft types and routes
+- Avoid duplicate origin-destination pairs
+
+**File Requirements:**
+- SimBrief XML format only
+- Maximum 16MB per file
+- Valid flight plan structure required
+
+### 🔧 Troubleshooting Quick Fixes
+
+**"No files selected" error:**
+- Make sure you've uploaded XML files
+- Check that files appear in the library
+- Select files using checkboxes
+
+**"Processing failed" error:**
+- Check file format (must be SimBrief XML)
+- Ensure files contain valid flight data
+- Try with fewer files first
+
+**Map not loading:**
+- Refresh the page
+- Check browser console for errors
+- Ensure JavaScript is enabled
+
+### 🎯 Next Steps
+
+Once you've generated your first conflicts:
+1. **Review the 3D visualization** to understand conflict patterns
+2. **Read the pilot briefing** for detailed analysis
+3. **Export results** for event planning
+4. **Experiment with different file combinations** to optimize scenarios
+
+---
 
 ## System Overview
 
@@ -92,7 +195,7 @@ The system enforces two key separation rules:
    ```
 
 2. **Open Your Browser:**
-   Navigate to `http://localhost:5000`
+   Navigate to the provided URL (e.g., `http://your-server-url`)
 
 3. **Upload Flight Plans:**
    - Drag and drop SimBrief XML files into the upload area
