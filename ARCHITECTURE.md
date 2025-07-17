@@ -64,7 +64,7 @@ generate_animation.py → reads single source of truth
 - **Event-Focused**: Optimised for event scenario workflows
 - **First Conflict Priority**: Tracks only the initial conflict between aircraft pairs for ATC intervention planning
 - **Linear Data Flow**: Eliminated circular dependencies through metadata-based approach
-- **Accurate Scheduling**: Respects conflict generation departure times instead of "most conflicts" rule
+- **Accurate Scheduling**: Respects conflict analysis departure times instead of "most conflicts" rule
 - **Flight ID Tracking**: Uses unique flight IDs for better conflict tracking and separation enforcement
 - **Single Source of Truth**: One comprehensive JSON file contains all flight data, conflicts, and scheduling
 - **Backend-Centric Validation**: Web interface relies on backend for XML parsing and route validation due to browser limitations
@@ -77,11 +77,11 @@ generate_animation.py → reads single source of truth
 |--------|-------------|--------------|
 | **execute.py** | None (master script) | None (orchestrates other scripts) |
 | **extract_simbrief_xml_flightplan.py** | `*.xml` (SimBrief XML files in root directory) | `temp/*_data.json` (individual flight data)<br>`temp/*.kml` (individual KML files) |
-| **find_potential_conflicts.py** | `*.xml` (SimBrief XML files)<br>`temp/*_data.json` (individual flight data) | `temp/potential_conflict_data.json` (conflict generation)<br>`conflict_list.txt` (formatted conflict report)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) |
+| **find_potential_conflicts.py** | `*.xml` (SimBrief XML files)<br>`temp/*_data.json` (individual flight data) | `temp/potential_conflict_data.json` (conflict analysis)<br>`conflict_list.txt` (formatted conflict report)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) |
 | **merge_kml_flightplans.py** | `temp/*.kml` (individual KML files) | `merged_flightplans.kml` (merged KML for Google Earth) |
-| **generate_schedule_conflicts.py** | `temp/potential_conflict_data.json` (conflict generation)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) | `pilot_briefing.txt` (pilot briefing)<br>`temp/routes_with_added_interpolated_points.json` (updated with schedule metadata) |
+| **generate_schedule_conflicts.py** | `temp/potential_conflict_data.json` (conflict analysis)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) | `pilot_briefing.txt` (pilot briefing)<br>`temp/routes_with_added_interpolated_points.json` (updated with schedule metadata) |
 | **generate_animation.py** | `temp/routes_with_added_interpolated_points.json` (single source of truth) | `animation/animation_data.json` (complete animation data)<br>`animation/conflict_points.json` (conflict locations) |
-| **audit_conflict.py** | `temp/potential_conflict_data.json` (conflict generation)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes)<br>`animation/animation_data.json` (animation data) | `audit_conflict_output.txt` (data integrity audit report) |
+| **audit_conflict.py** | `temp/potential_conflict_data.json` (conflict analysis)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes)<br>`animation/animation_data.json` (animation data) | `audit_conflict_output.txt` (data integrity audit report) |
 | **animation/validate_animation_data.py** | `animation/animation_data.json` (animation data) | Console output (validation results) |
 
 ### 1. Data Extraction Layer
@@ -102,7 +102,7 @@ generate_animation.py → reads single source of truth
 - JSON data files for structured analysis
 - 40-colour visualisation scheme for route identification
 
-### 2. Conflict Generation Engine
+### 2. Conflict Analysis Engine
 **File**: `find_potential_conflicts.py`
 
 **Responsibilities**:
@@ -132,7 +132,7 @@ generate_animation.py → reads single source of truth
 
 **Responsibilities**:
 - Read potential_conflict_data.json
-- **Load conflict generation departure times** and respect intended scheduling
+- **Load conflict analysis departure times** and respect intended scheduling
 - **Sort flights by intended departure time** (earliest first)
 - **Schedule flights at their intended times** instead of forcing "most conflicts" flight to depart first
 - Add departure schedule metadata to interpolated points file
@@ -140,13 +140,13 @@ generate_animation.py → reads single source of truth
 - Use interpolated points directly for position interpolation (no circular dependency)
 
 **Key Changes**:
-- **Fixed scheduling algorithm**: Now uses conflict generation departure times instead of "most conflicts" rule
+- **Fixed scheduling algorithm**: Now uses conflict analysis departure times instead of "most conflicts" rule
 - **Eliminated circular dependency**: No longer depends on animation_data.json
 - **Metadata approach**: Adds departure schedule to `temp/routes_with_added_interpolated_points.json`
 - **Direct interpolation**: Uses interpolated points file for conflict position calculations
 
 **Previous Issue**:
-The original algorithm incorrectly prioritized flights with "most conflicts" and forced them to depart at event start time, ignoring the intended departure times from conflict generation.
+The original algorithm incorrectly prioritized flights with "most conflicts" and forced them to depart at event start time, ignoring the intended departure times from conflict analysis.
 
 **Current Fix**:
 - **YMES-YSRI**: 14:00 (as intended)

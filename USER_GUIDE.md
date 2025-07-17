@@ -7,7 +7,7 @@
 4. [Web Interface Guide](#web-interface-guide)
 5. [Command Line Usage](#command-line-usage)
 6. [SimBrief XML Guidelines](#simbrief-xml-guidelines)
-7. [Understanding Conflict Generation](#understanding-conflict-generation)
+7. [Understanding Conflict Analysis](#understanding-conflict-analysis)
 8. [Output Files and Results](#output-files-and-results)
 9. [Troubleshooting](#troubleshooting)
 10. [Advanced Features](#advanced-features)
@@ -326,7 +326,7 @@ python audit_conflict.py
 4. **Review Flight Plans**: Ensure altitude changes match expected pilot behavior
 
 ### Why This Matters
-- **Conflict Generation Accuracy**: All conflict detection is based on SimBrief altitudes
+- **Conflict Analysis Accuracy**: All conflict detection is based on SimBrief altitudes
 - **Event Realism**: Controllers need realistic conflict scenarios
 - **Pilot Behavior Modeling**: Conflicts should reflect actual pilot behavior
 
@@ -336,7 +336,7 @@ The system cannot process multiple flights with identical origin-destination pai
 
 **Solution**: Remove duplicate files with the same origin and destination.
 
-## Understanding Conflict Generation
+## Understanding Conflict Analysis
 
 ### Conflict Detection Methods
 
@@ -402,7 +402,7 @@ Phase: Both aircraft in climb phase
 ### Core Analysis Files
 
 #### `temp/potential_conflict_data.json`
-**Purpose**: Detailed conflict generation with all technical data
+**Purpose**: Detailed conflict analysis with all technical data
 **Content**:
 - Flight information (ID, origin, destination, aircraft type)
 - Waypoint data with coordinates, altitudes, and timing
@@ -515,7 +515,7 @@ Phase: Both aircraft in climb phase
 - Try refreshing the page
 - Verify that processing completed successfully
 
-#### Conflict Generation Issues
+#### Conflict Analysis Issues
 **Problem**: No conflicts detected or unrealistic conflicts
 **Solutions**:
 - Review SimBrief XML files for realistic altitude profiles

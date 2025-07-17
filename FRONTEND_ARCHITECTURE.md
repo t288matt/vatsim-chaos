@@ -46,7 +46,7 @@ The ATC Conflict Generation System frontend is a modern, responsive web applicat
 │  │   File Upload   │  │      Processing Engine          │  │
 │  │   & Validation  │  │                                 │  │
 │  │                 │  │ • execute.py workflow          │  │
-│  │ • XML Validation│  │ • Conflict Generation            │  │
+│  │ • XML Validation│  │ • Conflict Analysis            │  │
 │  │ • Size Limits   │  │ • Schedule Generation          │  │
 │  │ • Duplicate Chk │  │ • Animation Export             │  │
 │  └─────────────────┘  └─────────────────────────────────┘  │

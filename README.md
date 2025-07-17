@@ -5,7 +5,7 @@ A Python-based system for generating chaotic, conflicting SimBrief XML flight pl
 **Recent Improvements:**
 - ✅ **Flight ID System** - Each flight gets a unique ID (FLT0001, FLT0002, etc.) for better tracking
 - ✅ **Enhanced Separation Rules** - 5-minute minimum separation for flights with same origin-destination
-- ✅ **Fixed scheduling algorithm** - Now respects conflict generation departure times instead of "most conflicts" rule
+- ✅ **Fixed scheduling algorithm** - Now respects conflict analysis departure times instead of "most conflicts" rule
 - ✅ **Corrected departure timing** - YSSY-YSWG now departs at 14:16 instead of 14:00 as intended
 - ✅ **Enhanced audit system** - Added departure time column to track scheduling accuracy
 - ✅ **Eliminated circular dependency** between scheduling and animation
@@ -88,10 +88,10 @@ This system enables event organisers to:
 - **Parse SimBrief XML flight plans** and analyse multiple routes
 - **Intentionally generate and identify conflicts** between aircraft to maximise ATC workload and event excitement
 - **Focus on "First Conflicts"** - the initial point where two aircraft first meet conflict criteria, representing the moment ATC first needs to intervene
-- **Provide detailed conflict generation** with location, timing, and phase information
+- **Provide detailed conflict analysis** with location, timing, and phase information
 - **Detect conflicts both at waypoints and between waypoints** for comprehensive event realism
 - **Generate KML files** for Google Earth visualisation with diverse colour schemes
-- **Schedule departures accurately** based on conflict generation results
+- **Schedule departures accurately** based on conflict analysis results
 
 ## Quick Start
 
@@ -257,7 +257,7 @@ python execute.py
 # 2. Extract flight plan data and generate KML files
 python extract_simbrief_xml_flightplan.py
 
-# 3. Run conflict generation on all XML files
+# 3. Run conflict analysis on all XML files
 python find_potential_conflicts.py
 
 # 4. Generate readable conflict report
@@ -318,7 +318,7 @@ potential_conflict_data.json → routes_with_metadata.json → animation_data.js
 ```
 
 ### Key Improvements
-- **Fixed scheduling algorithm** - Now uses conflict generation departure times instead of "most conflicts" rule
+- **Fixed scheduling algorithm** - Now uses conflict analysis departure times instead of "most conflicts" rule
 - **Eliminated circular dependency** between scheduling and animation
 - **Metadata-based approach** for departure schedule sharing
 - **Simplified data structures** (removed x/y projected coordinates)
@@ -327,14 +327,14 @@ potential_conflict_data.json → routes_with_metadata.json → animation_data.js
 ## Scheduling Algorithm
 
 ### Previous Issue
-The original scheduling algorithm incorrectly prioritized flights with "most conflicts" and forced them to depart at event start time, ignoring the intended departure times from conflict generation.
+The original scheduling algorithm incorrectly prioritized flights with "most conflicts" and forced them to depart at event start time, ignoring the intended departure times from conflict analysis.
 
 ### Current Fix
 The scheduling algorithm now:
-1. **Loads conflict generation data** to get intended departure times
+1. **Loads conflict analysis data** to get intended departure times
 2. **Sorts flights by intended departure time** (earliest first)
 3. **Schedules flights at their intended times** instead of forcing the "most conflicts" flight to depart first
-4. **Respects conflict generation results** (e.g., YSSY-YSWG at 14:16)
+4. **Respects conflict analysis results** (e.g., YSSY-YSWG at 14:16)
 
 ### Example Results
 - **YMES-YSRI**: 14:00 (as intended)
@@ -387,7 +387,7 @@ When generating XML files in SimBrief, **always explicitly set altitudes** rathe
 3. **Avoid letting SimBrief insert intermediate altitude changes** during cruise
 4. **Review the flight plan** to ensure altitude changes match expected pilot behavior
 
-### Critical: Conflict Generation Based on SimBrief Data
+### Critical: Conflict Analysis Based on SimBrief Data
 
 **All conflict detection in this system is based explicitly on the climb profiles and altitudes from SimBrief XML files.** The system reads the exact altitude values and timing from your SimBrief flight plans to determine when and where aircraft will conflict.
 
@@ -395,14 +395,14 @@ When generating XML files in SimBrief, **always explicitly set altitudes** rathe
 1. **Sense-check your SimBrief flight plans** - ensure altitudes and climb profiles are realistic
 2. **Verify altitude assignments** - make sure each waypoint has appropriate altitudes for the aircraft type
 3. **Review climb/descent profiles** - ensure they match expected pilot behavior for the route
-4. **Test with a few flights first** - validate that the conflict generation produces realistic results
+4. **Test with a few flights first** - validate that the conflict analysis produces realistic results
 
 **Why this matters:**
 - **Garbage in, garbage out** - unrealistic SimBrief altitudes will produce unrealistic conflicts
 - **Event planning depends on accuracy** - controllers need realistic conflict scenarios
 - **Pilot behavior modeling** - conflicts should reflect how pilots actually fly these routes
 
-This ensures the generated XML files contain realistic altitude profiles that match how pilots actually fly, leading to more accurate conflict generation and event scenarios.
+This ensures the generated XML files contain realistic altitude profiles that match how pilots actually fly, leading to more accurate conflict analysis and event scenarios.
 
 ### System Limitation: Same Origin-Destination Routes
 
@@ -450,11 +450,11 @@ The system now features a modern web interface inspired by VATSIM Radar with:
 |--------|-------------|--------------|
 | **execute.py** | None (master script) | None (orchestrates other scripts) |
 | **extract_simbrief_xml_flightplan.py** | `*.xml` (SimBrief XML files in root directory) | `temp/*_data.json` (individual flight data)<br>`temp/*.kml` (individual KML files) |
-| **find_potential_conflicts.py** | `*.xml` (SimBrief XML files)<br>`temp/*_data.json` (individual flight data) | `temp/potential_conflict_data.json` (conflict generation)<br>`conflict_list.txt` (formatted conflict report)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) |
+| **find_potential_conflicts.py** | `*.xml` (SimBrief XML files)<br>`temp/*_data.json` (individual flight data) | `temp/potential_conflict_data.json` (conflict analysis)<br>`conflict_list.txt` (formatted conflict report)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) |
 | **merge_kml_flightplans.py** | `temp/*.kml` (individual KML files) | `merged_flightplans.kml` (merged KML for Google Earth) |
-| **generate_schedule_conflicts.py** | `temp/potential_conflict_data.json` (conflict generation)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) | `pilot_briefing.txt` (pilot briefing)<br>`temp/routes_with_added_interpolated_points.json` (updated with schedule metadata) |
+| **generate_schedule_conflicts.py** | `temp/potential_conflict_data.json` (conflict analysis)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes) | `pilot_briefing.txt` (pilot briefing)<br>`temp/routes_with_added_interpolated_points.json` (updated with schedule metadata) |
 | **generate_animation.py** | `temp/routes_with_added_interpolated_points.json` (single source of truth) | `animation/animation_data.json` (complete animation data)<br>`animation/conflict_points.json` (conflict locations) |
-| **audit_conflict.py** | `temp/potential_conflict_data.json` (conflict generation)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes)<br>`animation/animation_data.json` (animation data) | `audit_conflict_output.txt` (data integrity audit report) |
+| **audit_conflict.py** | `temp/potential_conflict_data.json` (conflict analysis)<br>`temp/routes_with_added_interpolated_points.json` (interpolated routes)<br>`animation/animation_data.json` (animation data) | `audit_conflict_output.txt` (data integrity audit report) |
 | **animation/validate_animation_data.py** | `animation/animation_data.json` (animation data) | Console output (validation results) |
 
 ### Core Analysis
@@ -466,7 +466,7 @@ The system now features a modern web interface inspired by VATSIM Radar with:
 ### Data Processing
 - `extract_simbrief_xml_flightplan.py` - Converts SimBrief XML to KML for visualization
 - `merge_kml_flightplans.py` - Merges individual KML files into a single file
-- `generate_schedule_conflicts.py` - Generates event schedule and adds metadata to interpolated points (FIXED: now respects conflict generation departure times)
+- `generate_schedule_conflicts.py` - Generates event schedule and adds metadata to interpolated points (FIXED: now respects conflict analysis departure times)
 - `generate_animation.py` - Generates animation data for web visualization (simplified structure)
 - `audit_conflict.py` - **Raw data integrity audit** across all processing stages (shows exact values with NO CONVERSIONS, includes departure time column)
 
@@ -554,12 +554,12 @@ Columns: Source | Flight | Departure Time | Time (UTC) | Lat | Lon | Alt | Altit
 ```
 
 This allows verification that:
-- **Scheduling algorithm** correctly uses conflict generation departure times
+- **Scheduling algorithm** correctly uses conflict analysis departure times
 - **Animation data** reflects the correct scheduled times
 - **All data sources** are consistent across the workflow
 
 ### Data Sources Tracked
-1. **potential_conflict_data.json** - Raw conflict generation results
+1. **potential_conflict_data.json** - Raw conflict analysis results
 2. **interpolated_points** - Backend processed data with metadata
 3. **animation_data.json** - Frontend visualization data
 
