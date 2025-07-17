@@ -3,7 +3,7 @@ version: '3.8'
 services:
   atc-conflict:
     container_name: vatsim-chaos
-    build: .
+    image: ghcr.io/t288matt/vatsim-chaos:latest
     ports:
       - "5000:5000"  # Web interface
       - "8000:8000"  # Animation server
