@@ -39,7 +39,7 @@ For event designers it provides:
 
 ## Demonstration
 
-[![Demo Video](https://img.youtube.com/vi/8QOuduHmhN8/0.jpg)](https://youtu.be/8QOuduHmhN8)
+[![Demo Video](https://img.youtube.com/vi/rzn2yKRdwt0/0.jpg)](https://youtu.be/rzn2yKRdwt0)
 
 ### The Data Flow:
 ```
