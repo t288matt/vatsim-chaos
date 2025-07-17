@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document details all edge cases handled by the ATC Conflict Analysis System web interface. The system implements comprehensive error handling, validation, and recovery mechanisms to ensure robust operation under various failure conditions.
+This document details all edge cases handled by the ATC Conflict Generation System web interface. The system implements comprehensive error handling, validation, and recovery mechanisms to ensure robust operation under various failure conditions.
 
 ## File Upload Edge Cases
 

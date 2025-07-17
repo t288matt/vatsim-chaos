@@ -1,4 +1,4 @@
-# ATC Conflict Analysis System - User Guide
+# ATC Conflict Generation System - User Guide
 
 ## Table of Contents
 1. [System Overview](#system-overview)
@@ -7,14 +7,14 @@
 4. [Web Interface Guide](#web-interface-guide)
 5. [Command Line Usage](#command-line-usage)
 6. [SimBrief XML Guidelines](#simbrief-xml-guidelines)
-7. [Understanding Conflict Analysis](#understanding-conflict-analysis)
+7. [Understanding Conflict Generation](#understanding-conflict-generation)
 8. [Output Files and Results](#output-files-and-results)
 9. [Troubleshooting](#troubleshooting)
 10. [Advanced Features](#advanced-features)
 
 ## System Overview
 
-The ATC Conflict Analysis System is designed to help event organizers create challenging air traffic control (ATC) scenarios by analyzing SimBrief XML flight plans and identifying potential conflicts between aircraft. The system generates realistic conflict scenarios that challenge controllers while providing fun, dynamic events for pilots.
+The ATC Conflict Generation System is designed to help event organisers create challenging air traffic control (ATC) scenarios by analysing SimBrief XML flight plans and identifying potential conflicts between aircraft. The system generates realistic conflict scenarios that challenge controllers while providing fun, dynamic events for pilots.
 
 ### Purpose
 - **Event Planning**: Create scenarios where controllers are challenged and pilots enjoy dynamic events
@@ -326,7 +326,7 @@ python audit_conflict.py
 4. **Review Flight Plans**: Ensure altitude changes match expected pilot behavior
 
 ### Why This Matters
-- **Conflict Analysis Accuracy**: All conflict detection is based on SimBrief altitudes
+- **Conflict Generation Accuracy**: All conflict detection is based on SimBrief altitudes
 - **Event Realism**: Controllers need realistic conflict scenarios
 - **Pilot Behavior Modeling**: Conflicts should reflect actual pilot behavior
 
@@ -336,7 +336,7 @@ The system cannot process multiple flights with identical origin-destination pai
 
 **Solution**: Remove duplicate files with the same origin and destination.
 
-## Understanding Conflict Analysis
+## Understanding Conflict Generation
 
 ### Conflict Detection Methods
 
@@ -402,7 +402,7 @@ Phase: Both aircraft in climb phase
 ### Core Analysis Files
 
 #### `temp/potential_conflict_data.json`
-**Purpose**: Detailed conflict analysis with all technical data
+**Purpose**: Detailed conflict generation with all technical data
 **Content**:
 - Flight information (ID, origin, destination, aircraft type)
 - Waypoint data with coordinates, altitudes, and timing
@@ -515,7 +515,7 @@ Phase: Both aircraft in climb phase
 - Try refreshing the page
 - Verify that processing completed successfully
 
-#### Conflict Analysis Issues
+#### Conflict Generation Issues
 **Problem**: No conflicts detected or unrealistic conflicts
 **Solutions**:
 - Review SimBrief XML files for realistic altitude profiles
@@ -681,4 +681,4 @@ Chaos2/
 
 ---
 
-*This user guide covers all aspects of the ATC Conflict Analysis System. For technical details, refer to the README.md and ARCHITECTURE.md files.* 
+*This user guide covers all aspects of the ATC Conflict Generation System. For technical details, refer to the README.md and ARCHITECTURE.md files.* 

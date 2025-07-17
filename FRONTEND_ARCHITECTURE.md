@@ -1,8 +1,8 @@
-# ATC Conflict Analysis System - Frontend Architecture
+# ATC Conflict Generation System - Frontend Architecture
 
 ## System Overview
 
-The ATC Conflict Analysis System frontend is a modern, responsive web application built with vanilla HTML/CSS/JavaScript that provides an intuitive interface for uploading SimBrief XML flight plans, processing conflicts, and visualizing results in 3D space.
+The ATC Conflict Generation System frontend is a modern, responsive web application built with vanilla HTML/CSS/JavaScript that provides an intuitive interface for uploading SimBrief XML flight plans, processing conflicts, and visualizing results in 3D space.
 
 ## Architecture Principles
 
@@ -46,7 +46,7 @@ The ATC Conflict Analysis System frontend is a modern, responsive web applicatio
 │  │   File Upload   │  │      Processing Engine          │  │
 │  │   & Validation  │  │                                 │  │
 │  │                 │  │ • execute.py workflow          │  │
-│  │ • XML Validation│  │ • Conflict Analysis            │  │
+│  │ • XML Validation│  │ • Conflict Generation            │  │
 │  │ • Size Limits   │  │ • Schedule Generation          │  │
 │  │ • Duplicate Chk │  │ • Animation Export             │  │
 │  └─────────────────┘  └─────────────────────────────────┘  │
@@ -576,4 +576,4 @@ class Logger {
 
 ## Conclusion
 
-This frontend architecture provides a solid foundation for the ATC Conflict Analysis System, balancing simplicity with functionality while maintaining high performance and security standards. The modular design allows for easy maintenance and future enhancements while the comprehensive testing and monitoring ensure reliable operation in production environments. 
+This frontend architecture provides a solid foundation for the ATC Conflict Generation System, balancing simplicity with functionality while maintaining high performance and security standards. The modular design allows for easy maintenance and future enhancements while the comprehensive testing and monitoring ensure reliable operation in production environments. 

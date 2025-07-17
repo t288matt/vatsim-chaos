@@ -1,4 +1,4 @@
-# Workflow Diagram: ATC Conflict Analysis System
+# Workflow Diagram: ATC Conflict Generation System
 
 ## System Overview
 This workflow diagram illustrates the complete process flow from SimBrief XML input to final visualization outputs.
@@ -11,7 +11,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                    ATC CONFLICT ANALYSIS WORKFLOW                                                                        │
+│                                    ATC CONFLICT GENERATION WORKFLOW                                                                        │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -62,7 +62,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
                                     │
                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                    STEP 2: CONFLICT ANALYSIS                                                                           │
+│                                    STEP 2: CONFLICT GENERATION                                                                           │
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                    find_potential_conflicts.py                                                                                │  │
@@ -208,7 +208,7 @@ This workflow diagram illustrates the complete process flow from SimBrief XML in
 │                                                                                                                                    │
 │  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  │
 │  │                                    ANALYSIS REPORTS                                                                               │  │
-│  │  • conflict_list.txt - Detailed conflict analysis                                                                                │  │
+│  │  • conflict_list.txt - Detailed conflict generation                                                                                │  │
 │  │  • temp/potential_conflict_data.json - Raw analysis data                                                                         │  │
 │  │  • audit_conflict_output.txt - Data integrity audit                                                                              │  │
 │  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  │
@@ -261,7 +261,7 @@ pilot_briefing.txt  animation_data.json
 
 ### After (Linear Flow):
 ```
-Conflict Analysis → Scheduling → Animation Generation
+Conflict Generation → Scheduling → Animation Generation
        ↓              ↓              ↓
 potential_conflict_data.json → routes_with_metadata.json → animation_data.json
 ```
@@ -280,7 +280,7 @@ potential_conflict_data.json → routes_with_metadata.json → animation_data.js
    - ✅ Waypoint data extracted
    - ✅ KML files generated
 
-3. **Conflict Analysis**
+3. **Conflict Generation**
    - ✅ Conflicts detected using thresholds
    - ✅ Altitude filtering applied (>5000 ft)
    - ✅ Reports generated

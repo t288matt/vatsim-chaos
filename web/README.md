@@ -1,8 +1,8 @@
-# ATC Conflict Analysis System - Web Interface
+# ATC Conflict Generation System - Web Interface
 
 ## Overview
 
-This web interface provides a browser-based user interface for the ATC Conflict Analysis System, allowing users to upload XML files, process conflicts, and view results in an interactive 3D map.
+This web interface provides a browser-based user interface for the ATC Conflict Generation System, allowing users to upload XML files, process conflicts, and view results in an interactive 3D map.
 
 ## Features
 
@@ -24,7 +24,7 @@ This web interface provides a browser-based user interface for the ATC Conflict 
 ### Prerequisites
 - Python 3.7+
 - Flask web framework
-- Existing ATC Conflict Analysis System scripts
+- Existing ATC Conflict Generation System scripts
 
 ### Setup
 1. **Install Dependencies**:
@@ -221,4 +221,4 @@ For issues or questions:
 
 ## License
 
-This web interface is part of the ATC Conflict Analysis System and follows the same licensing terms as the main project. 
+This web interface is part of the ATC Conflict Generation System and follows the same licensing terms as the main project. 

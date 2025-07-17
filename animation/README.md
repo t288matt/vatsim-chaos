@@ -1,6 +1,6 @@
 # Animation
 
-This directory contains the 3D animation visualization for the ATC Conflict Analysis System.
+This directory contains the 3D animation visualisation for the ATC Conflict Generation System.
 
 ## Cesium Flight Animation
 

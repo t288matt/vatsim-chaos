@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document summarizes the optimizations made to the ATC Conflict Analysis System web interface to improve maintainability, supportability, and shared module usage.
+This document summarises the optimisations made to the ATC Conflict Generation System web interface to improve maintainability, supportability, and shared module usage.
 
 ## Key Optimizations Implemented
 
