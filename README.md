@@ -39,7 +39,7 @@ For event designers it provides:
 
 ## Demonstration
 
-https://github.com/t288matt/vatsim-chaos/assets/123456789/demo.mp4
+https://raw.githubusercontent.com/t288matt/vatsim-chaos/main/images/demo.mp4
 
 ### The Data Flow:
 ```
