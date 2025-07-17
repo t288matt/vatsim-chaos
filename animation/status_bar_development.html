@@ -1335,6 +1335,13 @@
           }
       });
       
+      // Get all flights that have any conflicts throughout their entire flight
+      const flightsWithConflicts = new Set();
+      conflicts.forEach(conflict => {
+        flightsWithConflicts.add(conflict.flight1);
+        flightsWithConflicts.add(conflict.flight2);
+      });
+      
       // Set all aircraft to black by default
       flightEntities.forEach(entity => {
         if (entity.model) {
@@ -1350,6 +1357,13 @@
             entity.model.color = Cesium.Color.RED.withAlpha(0.8);
           }
         });
+      });
+      
+      // Set aircraft that will never have conflicts to medium green
+      flightEntities.forEach(entity => {
+        if (entity.model && !flightsWithConflicts.has(entity.id)) {
+          entity.model.color = Cesium.Color.MEDIUMGREEN.withAlpha(0.8);
+        }
       });
     }
     
