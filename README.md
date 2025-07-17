@@ -84,13 +84,13 @@ These rules prevent aircraft with identical routes from departing too close toge
 
 ## Purpose
 
-This system enables event organizers to:
-- **Parse SimBrief XML flight plans** and analyze multiple routes
-- **Intentionally generate and identify conflicts** between aircraft to maximize ATC workload and event excitement
+This system enables event organisers to:
+- **Parse SimBrief XML flight plans** and analyse multiple routes
+- **Intentionally generate and identify conflicts** between aircraft to maximise ATC workload and event excitement
 - **Focus on "First Conflicts"** - the initial point where two aircraft first meet conflict criteria, representing the moment ATC first needs to intervene
 - **Provide detailed conflict analysis** with location, timing, and phase information
 - **Detect conflicts both at waypoints and between waypoints** for comprehensive event realism
-- **Generate KML files** for Google Earth visualization with diverse color schemes
+- **Generate KML files** for Google Earth visualisation with diverse colour schemes
 - **Schedule departures accurately** based on conflict analysis results
 
 ## Quick Start
@@ -98,6 +98,124 @@ This system enables event organizers to:
 ### Prerequisites
 - Python 3.6+
 - SimBrief XML flight plan files
+
+## Docker Installation (Recommended for Remote Deployment)
+
+### Option 1: Minimal Setup (Recommended)
+
+If you only need to run the application and don't need the source code:
+
+```bash
+# Download just the docker-compose.yml
+curl -O https://raw.githubusercontent.com/t288matt/vatsim-chaos/main/docker-compose.yml
+
+# Create required directories
+mkdir -p temp xml_files logs
+
+# Edit volume paths in docker-compose.yml
+nano docker-compose.yml
+# or
+vim docker-compose.yml
+# or
+code docker-compose.yml
+```
+
+**Find this section:**
+```yaml
+volumes:
+  - /home/matt/data/vatsim-chaos/temp:/app/temp:rw  # Processing results
+  - /home/matt/data/vatsim-chaos/xml_files:/app/xml_files:rw  # XML storage
+  - /home/matt/data/vatsim-chaos/logs:/app/logs:rw  # Application logs
+```
+
+**Change it to:**
+```yaml
+volumes:
+  - ./temp:/app/temp:rw  # Processing results
+  - ./xml_files:/app/xml_files:rw  # XML storage
+  - ./logs:/app/logs:rw  # Application logs
+```
+
+**Start the application:**
+```bash
+# Start using the pre-built image (no build needed!)
+docker-compose up -d
+
+# Access the application
+# Main Web Interface: http://YOUR_IP:5000
+# Animation Server: http://YOUR_IP:8000
+```
+
+### Option 2: Full Repository Clone
+
+If you want the complete project with source code:
+
+```bash
+# Clone the entire repository
+git clone https://github.com/t288matt/vatsim-chaos.git
+cd vatsim-chaos
+
+# Update volume paths in docker-compose.yml (same as Option 1)
+
+# Create directories
+mkdir -p temp xml_files logs
+
+# Start the application
+docker-compose up -d
+```
+
+### Useful Docker Commands
+
+```bash
+# Check if containers are running
+docker-compose ps
+
+# View logs
+docker-compose logs -f
+
+# Stop the application
+docker-compose down
+
+# Restart the application
+docker-compose restart
+
+# Access container shell (for debugging)
+docker-compose exec atc-conflict bash
+```
+
+### Troubleshooting
+
+#### If ports are already in use:
+```bash
+# Check what's using the ports
+sudo netstat -tulpn | grep :5000
+sudo netstat -tulpn | grep :8000
+
+# Stop conflicting services or change ports in docker-compose.yml
+```
+
+#### If you need to change ports:
+Edit `docker-compose.yml` and change:
+```yaml
+ports:
+  - "YOUR_PORT:5000"  # Change YOUR_PORT to available port
+  - "YOUR_ANIMATION_PORT:8000"
+```
+
+#### Check resource usage:
+```bash
+docker stats
+```
+
+### Important Notes
+
+- **Animation files are generated inside the container** and are not persisted to the host
+- **Uploaded XML files are stored in the `xml_files` directory** on the host
+- **Processing results are stored in the `temp` directory** on the host
+- **Logs are stored in the `logs` directory** on the host
+- **Animation files are recreated each time** you process new flight plans
+
+The application should be fully functional once the containers are running!
 
 ### Web Interface (Recommended)
 The easiest way to use the system is through the modern web interface:
@@ -122,7 +240,7 @@ The web interface provides:
 For advanced users or automation:
 
 ```bash
-# Run complete workflow (extract → analyze → report → merge → schedule → frontend)
+# Run complete workflow (extract → analyse → report → merge → schedule → frontend)
 python execute.py
 
 # Run with custom schedule times
@@ -242,14 +360,14 @@ The scheduling algorithm now:
 The system focuses on **"First Conflicts"** - the initial point where two aircraft first meet conflict criteria during their flights. This is critical for event planning because:
 
 - **ATC Intervention Point**: Represents the moment when controllers first need to intervene between aircraft pairs
-- **Event Planning**: Helps organizers understand when conflicts will first occur
+- **Event Planning**: Helps organisers understand when conflicts will first occur
 - **Resource Allocation**: Enables better planning of ATC resources and timing
 - **Realistic Scenarios**: Focuses on the most critical conflict moment rather than tracking every subsequent conflict
 
 ### Output Formats
 - **Detailed First Conflict List**: Shows only the first conflict between each aircraft pair with location, altitudes, times, and phases
 - **JSON Export**: Structured data for further analysis (stored in temp directory)
-- **KML Visualization**: Google Earth compatible files with 40 diverse colors
+- **KML Visualisation**: Google Earth compatible files with 40 diverse colours
 - **Smart Location Format**: Shows conflicts between waypoints as "X NM [direction] of [waypoint]"
 
 ## SimBrief XML Generation Guidelines
@@ -298,9 +416,9 @@ The system cannot process multiple flights with identical origin-destination pai
 ### Modern ATC-Style Interface
 The system now features a modern web interface inspired by VATSIM Radar with:
 
-- **Dark Aviation Theme** - Professional dark color scheme with aviation blue accents
+- **Dark Aviation Theme** - Professional dark colour scheme with aviation blue accents
 - **Glass Morphism Effects** - Modern translucent panels with backdrop blur
-- **Responsive Design** - Optimized for different screen sizes
+- **Responsive Design** - Optimised for different screen sizes
 - **File Management** - Drag-and-drop upload with validation and file library
 - **Event Time Controls** - Frontend time parameter controls (08:00-11:00 default)
 - **Real-time Processing** - Live progress tracking with step-by-step status
@@ -362,7 +480,7 @@ The system now features a modern web interface inspired by VATSIM Radar with:
 ### Visualization
 - `merged_flightplans.kml` - Combined KML file for Google Earth viewing
 - `animation/animation.html` - 3D animated web visualization (CesiumJS)
-- 40 diverse colors for easy route identification
+- 40 diverse colours for easy route identification
 
 ## Web Visualization Features
 - 3D animated aircraft with scalable icons
@@ -494,9 +612,9 @@ The system parses SimBrief XML files containing:
 - **Invalid Data**: Malformed XML entries skipped
 - **First Conflict Only**: Only the earliest conflict between aircraft pairs is reported
 
-### Color Scheme
-The system uses 40 diverse colors for route visualization:
-- **Primary colors**: Red, Green, Blue, Magenta, Cyan, Yellow
+### Colour Scheme
+The system uses 40 diverse colours for route visualisation:
+- **Primary colours**: Red, Green, Blue, Magenta, Cyan, Yellow
 - **Pastel variants**: Light Blue, Pink, Lime Green, Light Red
 - **Bright variants**: Bright Green, Bright Red, Bright Lime, Bright Pink
 - **Metallic tones**: Gold, Amber, Lavender, Violet, Aqua, Rose, Orchid
@@ -534,7 +652,7 @@ Total First Conflicts: 1
 This system is designed for event scenario creation, enabling the events team to:
 
 ### Scenario Creation
-- **Maximize First Conflict Density**: Generate as many initial conflicts as possible in a given airspace
+- **Maximise First Conflict Density**: Generate as many initial conflicts as possible in a given airspace
 - **Create Chaotic Situations**: Overlap routes and phases to challenge controllers
 - **Increase Realism and Workload**: Simulate high-traffic, high-stress environments for live events
 - **Deliver Fun and Dynamic Events**: Provide pilots with engaging and unpredictable flying experiences
@@ -551,7 +669,7 @@ This system is designed for event scenario creation, enabling the events team to
 ```bash
 # Run individual components
 python extract_simbrief_xml_flightplan.py  # Extract data only
-python find_potential_conflicts.py        # Analyze first conflicts only
+python find_potential_conflicts.py        # Analyse first conflicts only
 python merge_kml_flightplans.py              # Merge KML files only
 python generate_animation.py              # Export web visualization data only
 ```

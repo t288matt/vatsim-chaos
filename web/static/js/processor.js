@@ -298,7 +298,7 @@ class Processor {
     async updateProgressDisplay(status) {
         const steps = [
             'Extract flight plan data',
-            'Analyze conflicts',
+            'Analyse conflicts',
             'Merge KML files',
             'Schedule conflicts',
             'Export animation data',
@@ -349,7 +349,7 @@ class Processor {
             // Check for key files to determine actual progress
             const fileChecks = [
                 { step: 0, files: ['/temp/FLT0001_data.json'] }, // Extract step
-                { step: 1, files: ['/temp/potential_conflict_data.json'] }, // Analyze step
+                { step: 1, files: ['/temp/potential_conflict_data.json'] }, // Analyse step
                 { step: 2, files: ['/merged_flightplans.kml'] }, // Merge step
                 { step: 3, files: ['/temp/routes_with_added_interpolated_points.json'] }, // Schedule step
                 { step: 4, files: ['/animation/animation_data.json'] }, // Export step

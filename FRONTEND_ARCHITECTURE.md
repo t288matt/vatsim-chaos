@@ -18,7 +18,7 @@ The ATC Conflict Analysis System frontend is a modern, responsive web applicatio
 - **Progressive Enhancement**: Core functionality works without JavaScript
 - **Responsive Design**: Adapts to desktop, tablet, and mobile
 - **Accessibility First**: WCAG 2.1 AA compliance
-- **Performance Optimized**: Fast loading and smooth interactions
+- **Performance Optimised**: Fast loading and smooth interactions
 
 ## System Architecture
 
@@ -180,7 +180,7 @@ class ProcessingEngine {
 
 #### **Workflow Steps**
 1. **Extract Flight Plan Data** - Parse XML files
-2. **Analyze Conflicts** - 3D spatial conflict detection
+2. **Analyse Conflicts** - 3D spatial conflict detection
 3. **Merge KML Files** - Combine for visualization
 4. **Schedule Conflicts** - Generate departure schedule
 5. **Export Animation Data** - Create 3D visualization data

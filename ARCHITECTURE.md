@@ -2,7 +2,7 @@
 
 ## System Overview
 
-The ATC Conflict Analysis System is a Python-based application designed to analyze SimBrief XML flight plans and identify potential air traffic conflicts for event scenario creation. The system helps the events team build challenging events for controllers and fun, dynamic events for pilots. It processes multiple flight plans simultaneously, detects conflicts using 3D spatial analysis, and generates both detailed reports and visual outputs.
+The ATC Conflict Analysis System is a Python-based application designed to analyse SimBrief XML flight plans and identify potential air traffic conflicts for event scenario creation. The system helps the events team build challenging events for controllers and fun, dynamic events for pilots. It processes multiple flight plans simultaneously, detects conflicts using 3D spatial analysis, and generates both detailed reports and visual outputs.
 
 **Dual Interface Support**:
 - **Command Line Interface**: Direct script execution for batch processing and automation
@@ -61,7 +61,7 @@ generate_animation.py → reads single source of truth
 - **Single Responsibility**: Each component has a focused purpose
 - **Data-Driven**: JSON-based data exchange between components
 - **Visualization-First**: KML output for Google Earth integration
-- **Event-Focused**: Optimized for event scenario workflows
+- **Event-Focused**: Optimised for event scenario workflows
 - **First Conflict Priority**: Tracks only the initial conflict between aircraft pairs for ATC intervention planning
 - **Linear Data Flow**: Eliminated circular dependencies through metadata-based approach
 - **Accurate Scheduling**: Respects conflict analysis departure times instead of "most conflicts" rule
@@ -100,15 +100,15 @@ generate_animation.py → reads single source of truth
 **Outputs**:
 - Individual KML files for each flight plan
 - JSON data files for structured analysis
-- 40-color visualization scheme for route identification
+- 40-colour visualisation scheme for route identification
 
 ### 2. Conflict Analysis Engine
 **File**: `find_potential_conflicts.py`
 
 **Responsibilities**:
 - Perform 3D spatial conflict detection
-- Analyze both waypoint and enroute conflicts
-- Optimize departure times for maximum conflicts
+- Analyse both waypoint and enroute conflicts
+- Optimise departure times for maximum conflicts
 - Generate comprehensive conflict scenarios for events
 - **Identify and track only first conflicts between aircraft pairs**
 - **Create the single source of truth foundation with interpolated routes**
@@ -185,7 +185,7 @@ The original algorithm incorrectly prioritized flights with "most conflicts" and
 
 **Dynamic Camera Positioning**:
 - **Global Coverage**: Works for any flight routes worldwide, not limited to specific regions
-- **Automatic Calculation**: Analyzes all departure and arrival airports from flight data
+- **Automatic Calculation**: Analyses all departure and arrival airports from flight data
 - **90% Coverage**: Ensures airports are well within the view with 10% padding
 - **Adaptive Zoom**: Automatically adjusts zoom level based on airport distances
 - **Minimum View Size**: Prevents excessive zoom for very close airports
