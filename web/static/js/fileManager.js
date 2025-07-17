@@ -8,6 +8,7 @@ class FileManager {
         this.selectionSummary = document.getElementById('selectionSummary');
         this.selectAllBtn = document.getElementById('selectAllBtn');
         this.selectNoneBtn = document.getElementById('selectNoneBtn');
+        this.deleteAllBtn = document.getElementById('deleteAllBtn');
         
         this.selectedFiles = new Set();
         this.files = [];
@@ -29,6 +30,7 @@ class FileManager {
         // File selection controls
         this.selectAllBtn.addEventListener('click', this.selectAll.bind(this));
         this.selectNoneBtn.addEventListener('click', this.selectNone.bind(this));
+        this.deleteAllBtn.addEventListener('click', this.deleteAll.bind(this));
     }
     
     handleDragOver(e) {
@@ -484,6 +486,38 @@ class FileManager {
     selectNone() {
         this.selectedFiles.clear();
         this.renderFileList();
+    }
+    
+    async deleteAll() {
+        if (this.files.length === 0) {
+            this.showMessage('No files to delete.', 'warning');
+            return;
+        }
+        
+        const confirmMessage = `Are you sure you want to delete ALL ${this.files.length} files? This action cannot be undone.`;
+        if (!confirm(confirmMessage)) {
+            return;
+        }
+        
+        try {
+            this.showMessage(`Deleting ${this.files.length} files...`, 'info');
+            
+            // Delete all files one by one
+            const deletePromises = this.files.map(file => this.deleteFile(file.name));
+            await Promise.all(deletePromises);
+            
+            this.showMessage(`Successfully deleted ${this.files.length} files.`, 'success');
+            
+            // Clear selected files
+            this.selectedFiles.clear();
+            
+            // Reload the flight plan library
+            await this.loadFileLibrary();
+            
+        } catch (error) {
+            console.error('[DELETE ALL] Error deleting all files:', error);
+            this.showMessage(`Error deleting files: ${error.message}`, 'error');
+        }
     }
     
     updateSelectionSummary() {
