@@ -489,13 +489,18 @@ class FileManager {
     }
     
     async deleteAll() {
+        console.log('[DELETE ALL] Method called');
+        
         if (this.files.length === 0) {
             this.showMessage('No files to delete.', 'warning');
             return;
         }
         
         const confirmMessage = `Are you sure you want to delete ALL ${this.files.length} files? This action cannot be undone.`;
+        console.log('[DELETE ALL] Showing confirmation:', confirmMessage);
+        
         if (!confirm(confirmMessage)) {
+            console.log('[DELETE ALL] User cancelled');
             return;
         }
         
