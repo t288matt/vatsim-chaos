@@ -169,6 +169,27 @@ python execute.py --start-time 14:00 --end-time 18:00
 - **Validation Status**: Indicates if files are valid for processing
 - **File Removal**: Delete individual files with trash can icons
 - **Select All/None**: Quick selection buttons for convenience
+- **Delete All**: Remove all files from the library with confirmation popup
+
+#### File Library Controls
+
+**Selection Controls:**
+- **Select All**: Check all files in the library for processing
+- **Select None**: Uncheck all files (deselect everything)
+- **Individual Selection**: Use checkboxes to select specific files
+
+**Deletion Controls:**
+- **Individual Delete**: Click the trash can icon (🗑️) next to any file to delete it individually
+- **Delete All**: Click the red "DELETE ALL" button to remove all files from the library
+
+**Delete All Functionality:**
+- **Confirmation Popup**: Shows "Are you sure you want to delete ALL X files? This action cannot be undone."
+- **Single Operation**: Deletes all XML files in one efficient backend operation
+- **Complete Cleanup**: Removes every file from the library, leaving it empty
+- **Visual Feedback**: Red button styling indicates it's a destructive action
+- **Progress Messages**: Shows "Deleting X files..." during operation
+- **Success Confirmation**: Displays exact count of files deleted
+- **Error Handling**: Provides clear error messages if deletion fails
 
 ### Event Time Configuration
 - **Start Time**: When the event begins (default: 08:00)
@@ -540,6 +561,15 @@ Phase: Both aircraft in climb phase
 #### "Map data not available"
 **Cause**: Animation data not generated or corrupted
 **Solution**: Re-run processing, check that all steps completed successfully
+
+#### "Delete All" Button Issues
+**Problem**: DELETE ALL button not working or files not deleted
+**Solutions**:
+- Ensure you have files in the library before attempting deletion
+- Check that the confirmation popup appears and you click "OK"
+- Verify the server is running and accessible
+- Check browser console for any JavaScript errors
+- If files remain after deletion, refresh the page to update the display
 
 ### Performance Issues
 
