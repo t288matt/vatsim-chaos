@@ -11,27 +11,27 @@ For event designers it provides:
 ## System Screenshots
 
 ### Web Interface
-![Flight Plan Upload Interface](https://github.com/t288matt/vatsim-chaos/raw/main/images/web-interface.png)
+![Flight Plan Upload Interface](./images/web-interface.png)
 
 *The modern web interface allows users to upload SimBrief XML files, configure event times, and manage flight plans with drag-and-drop functionality.*
 
 ### Conflict Analysis Results
-![Conflict Log](https://github.com/t288matt/vatsim-chaos/raw/main/images/conflict-log.png)
+![Conflict Log](./images/conflict-log.png)
 
 *Detailed conflict log showing detected ATC conflicts with timing, flight pairs, phases, and altitudes.*
 
 ### Pilot Briefing Report
-![Pilot Briefing](https://github.com/t288matt/vatsim-chaos/raw/main/images/pilot-briefing.png)
+![Pilot Briefing](./images/pilot-briefing.png)
 
 *Comprehensive pilot briefing with departure schedule, aircraft details, routes, and flight levels.*
 
 ### 3D Flight Visualization
-![Flight Map](https://github.com/t288matt/vatsim-chaos/raw/main/images/flight-map.png)
+![Flight Map](./images/flight-map.png)
 
 *Real-time 3D visualization showing aircraft positions, flight paths, and conflict points on an interactive map.*
 
 ### Live Conflict Detection
-![Conflict Detection Interface](https://github.com/t288matt/vatsim-chaos/raw/main/images/conflict-detection.png)
+![Conflict Detection Interface](./images/conflict-detection.png)
 
 *Live conflict detection interface with real-time flight tracking, departure alerts, and conflict warnings.*
 
