@@ -210,6 +210,55 @@ def delete_file(filename):
         logger.error(f"Unexpected error deleting file {filename}: {e}")
         return jsonify({'error': 'An unexpected error occurred'}), 500
 
+@app.route('/delete-all-files', methods=['DELETE'])
+def delete_all_files():
+    """Delete all XML files from the upload directory"""
+    logger.info("Delete all files request received")
+    
+    try:
+        # Get absolute path to xml_files directory
+        parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        upload_dir = os.path.join(parent_dir, 'xml_files')
+        
+        if not os.path.exists(upload_dir):
+            logger.warning("Upload directory does not exist")
+            return jsonify({'error': 'Upload directory not found'}), 404
+        
+        # Get all XML files in the directory
+        xml_files = []
+        for filename in os.listdir(upload_dir):
+            if filename.lower().endswith('.xml'):
+                filepath = os.path.join(upload_dir, filename)
+                if os.path.isfile(filepath):
+                    xml_files.append(filename)
+        
+        if not xml_files:
+            logger.info("No XML files found to delete")
+            return jsonify({'success': True, 'message': 'No files to delete', 'deleted_count': 0})
+        
+        # Delete all XML files
+        deleted_count = 0
+        for filename in xml_files:
+            try:
+                filepath = os.path.join(upload_dir, filename)
+                os.remove(filepath)
+                deleted_count += 1
+                logger.info(f"Deleted file: {filename}")
+            except OSError as e:
+                logger.error(f"Error deleting file {filename}: {e}")
+                # Continue with other files even if one fails
+        
+        logger.info(f"Delete all completed: {deleted_count} files deleted")
+        return jsonify({
+            'success': True, 
+            'message': f'Successfully deleted {deleted_count} files',
+            'deleted_count': deleted_count
+        })
+        
+    except Exception as e:
+        logger.error(f"Unexpected error deleting all files: {e}")
+        return jsonify({'error': 'An unexpected error occurred'}), 500
+
 @app.route('/validate/<filename>', methods=['GET'])
 def validate_file(filename):
     """Validate XML file structure using shared types"""

@@ -502,17 +502,30 @@ class FileManager {
         try {
             this.showMessage(`Deleting ${this.files.length} files...`, 'info');
             
-            // Delete all files one by one
-            const deletePromises = this.files.map(file => this.deleteFile(file.name));
-            await Promise.all(deletePromises);
+            // Delete all files in a single request
+            const response = await fetch('/delete-all-files', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             
-            this.showMessage(`Successfully deleted ${this.files.length} files.`, 'success');
-            
-            // Clear selected files
-            this.selectedFiles.clear();
-            
-            // Reload the flight plan library
-            await this.loadFileLibrary();
+            if (response.ok) {
+                const result = await response.json();
+                console.log('[DELETE ALL] Response:', result);
+                
+                this.showMessage(result.message, 'success');
+                
+                // Clear selected files
+                this.selectedFiles.clear();
+                
+                // Reload the flight plan library
+                await this.loadFileLibrary();
+                
+            } else {
+                const error = await response.json();
+                throw new Error(error.error || 'Delete all failed');
+            }
             
         } catch (error) {
             console.error('[DELETE ALL] Error deleting all files:', error);
