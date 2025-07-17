@@ -3,10 +3,11 @@
 An application for generating an event schedule that maximises ATC conflicts. The app takes in SimBrief XML flight plans in xml format and an event timeframe and calculates takeoff times for each flight to create challenging air traffic control (ATC) event scenarios. The system is designed to help the events team create situations where controllers are challenged and pilots can enjoy fun, dynamic events. 
 
 For event designers it provides:
-- a simple interface for adding simbrief flight plans (pilots dont need simbrief)
+- a simple interface for adding simbrief flight plans (pilots dont need simbrief but need to be able to accurately fly a route)
 - an animation of the conflicts allowing them to visualise what will happen during the event and add/remove routes accordingly
 - a pilot schedule including origin, route, altitude, acft type, takeoff time
 - a conflict schedule that can be used to ensure a good even distributoin of conflicts over time and controller
+
 
 ## System Screenshots
 
