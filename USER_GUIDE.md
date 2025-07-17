@@ -336,6 +336,35 @@ The system shows real-time progress through these steps:
 - **Display Options**: Toggle flight paths, labels, and conflict points
 - **Full-screen**: Expand map to full screen for detailed viewing
 
+#### Aircraft Color Coding System
+
+The 3D animation uses a color-coded system to help you quickly identify aircraft status:
+
+**🟢 Forest Green Aircraft**: **Conflict-Free Flights**
+- Aircraft that never encounter conflicts throughout their entire flight
+- These are the "safe" flights that controllers don't need to worry about
+- Example: FLT0006, FLT0011, FLT0012, FLT0026, FLT0028, FLT0029, FLT0031
+
+**⚫ Black Aircraft**: **Non-Departed Flights**
+- Aircraft that haven't departed yet (still on the ground)
+- These will become colored once they depart
+
+**🔴 Red Aircraft**: **Active Conflicts**
+- Aircraft currently involved in an active conflict
+- These are the flights controllers need to manage immediately
+- Color changes dynamically as conflicts occur and resolve
+
+**Color Logic:**
+- **Green = Safe**: No conflicts detected for this aircraft
+- **Black = Grounded**: Aircraft hasn't departed yet
+- **Red = Active**: Aircraft is currently in a conflict situation
+
+**Benefits:**
+- **Quick Visual Assessment**: Immediately see which flights need attention
+- **Conflict-Free Identification**: Green aircraft can be ignored by controllers
+- **Real-time Status**: Colors update as the animation progresses
+- **Event Planning**: Helps organizers understand which routes are conflict-free
+
 ### Pilot Briefing Modal
 
 #### Accessing the Briefing

@@ -1342,6 +1342,14 @@
         flightsWithConflicts.add(conflict.flight2);
       });
       
+      // Debug: Log the conflict analysis (only once)
+      if (!window.conflictAnalysisLogged) {
+        console.log('Total flights:', flightEntities.length);
+        console.log('Flights with conflicts:', flightsWithConflicts.size);
+        console.log('Flights that should be green:', flightEntities.length - flightsWithConflicts.size);
+        window.conflictAnalysisLogged = true;
+      }
+      
       // Set all aircraft to black by default
       flightEntities.forEach(entity => {
         if (entity.model) {
@@ -1359,12 +1367,22 @@
         });
       });
       
-      // Set aircraft that will never have conflicts to medium green
+      // Set aircraft that will never have conflicts to bright green
+      let greenCount = 0;
       flightEntities.forEach(entity => {
         if (entity.model && !flightsWithConflicts.has(entity.id)) {
-          entity.model.color = Cesium.Color.MEDIUMGREEN.withAlpha(0.8);
+          entity.model.color = Cesium.Color.FORESTGREEN.withAlpha(0.9); // Use darker forest green with high opacity
+          greenCount++;
+          if (!window.greenAircraftLogged) {
+            console.log('Set aircraft to green:', entity.id);
+          }
         }
       });
+      
+      if (!window.greenAircraftLogged) {
+        console.log('Total aircraft set to green:', greenCount);
+        window.greenAircraftLogged = true;
+      }
     }
     
     function checkForDepartures(currentMinutes, timeStr) {

@@ -216,8 +216,8 @@ class Processor {
                 } else if (status.failed) {
                     this.handleProcessingError(status.error);
                 } else {
-                    // Continue monitoring with exponential backoff
-                    const delay = Math.min(1000 * Math.pow(1.5, this.retryCount), 10000);
+                    // Continue monitoring with 3-second polling
+                    const delay = Math.min(3000 * Math.pow(1.5, this.retryCount), 15000);
                     this.statusCheckInterval = setTimeout(checkStatus, delay);
                 }
             } catch (error) {
@@ -228,8 +228,8 @@ class Processor {
                 if (this.retryCount >= this.maxRetries) {
                     await this.checkForCompletedProcessing();
                 } else {
-                    // Exponential backoff for retries
-                    const delay = Math.min(2000 * Math.pow(2, this.retryCount), 15000);
+                    // Exponential backoff for retries (3s base)
+                    const delay = Math.min(3000 * Math.pow(2, this.retryCount), 20000);
                     this.statusCheckInterval = setTimeout(checkStatus, delay);
                 }
             }
