@@ -308,27 +308,34 @@ File System → Change Events → Map & Briefing Updates
 - **`FLASK_ENV`**: Development/production environment
 - **`DEBUG`**: Enable debug logging and error details
 
+### **Configuration Files**
+- **`docker.env`**: External environment file for Docker configuration
+- **`env.py`**: Python configuration module for application settings
+- **`docker-compose.yml`**: Container orchestration with external env file
+
 ### **File Structure**
 ```
-Chaos2/
-├── web/                    # Web interface
-│   ├── app.py             # Flask application
-│   ├── config.py          # Configuration management
-│   ├── static/            # Static assets
-│   │   ├── css/main.css   # Styling (VATSIM-inspired)
-│   │   └── js/            # JavaScript modules
-│   │       ├── app.js     # Main application controller
-│   │       ├── fileManager.js  # File management
-│   │       ├── processor.js    # Processing engine
-│   │       └── mapViewer.js    # Map visualization
-│   └── templates/         # HTML templates
-│       └── index.html     # Main interface
-├── animation/             # 3D visualization
-│   ├── animation.html     # Cesium animation
-│   └── status_bar_development.html  # Enhanced animation
-├── logs/                  # Application logs
-├── temp/                  # Temporary processing files
-└── xml_files/            # Uploaded XML files
+VATSIM-Chaos/
+├── docker-compose.yml     # Container orchestration
+├── docker.env            # Environment variables
+├── env.py               # Python configuration
+├── web/                 # Web interface
+│   ├── app.py          # Flask application
+│   ├── config.py       # Configuration management
+│   ├── static/         # Static assets
+│   │   ├── css/main.css # Styling (VATSIM-inspired)
+│   │   └── js/         # JavaScript modules
+│   │       ├── app.js  # Main application controller
+│   │       ├── fileManager.js # File management
+│   │       ├── processor.js   # Processing engine
+│   │       └── mapViewer.js   # Map visualization
+│   └── templates/      # HTML templates
+│       └── index.html  # Main interface
+├── animation/          # 3D visualization
+│   ├── animation.html  # Cesium animation
+│   └── status_bar_development.html # Enhanced animation
+├── xml_files/         # Uploaded XML files (persistent)
+└── temp/              # Temporary processing files (stateless)
 ```
 
 ---
@@ -437,10 +444,11 @@ Chaos2/
 ## Deployment & Containerization
 
 ### **Docker Configuration**
-- **Multi-stage Build**: Optimized for production
-- **Python 3.13**: Latest Python version
-- **Flask Development Server**: For development
-- **Production Ready**: Gunicorn for production deployment
+- **External Environment**: Uses `docker.env` for configuration
+- **Stateless Design**: No persistent volumes except XML files
+- **Python 3.11**: Stable Python version
+- **Flask Application**: Web interface with Cesium integration
+- **Production Ready**: Optimized container with health checks
 
 ### **GitHub Actions**
 - **Automated Builds**: On every push and pull request

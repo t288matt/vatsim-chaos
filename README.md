@@ -62,32 +62,26 @@ The system now uses unique flight IDs (FLT0001, FLT0002, etc.) instead of origin
 Installation take 5 minutes in a docker environment and can be run on a Raspberry Pi through to AWS
 
 ```bash
-# Download just the docker-compose.yml
+# Download the required files
 curl -O https://raw.githubusercontent.com/t288matt/vatsim-chaos/main/docker-compose.yml
+curl -O https://raw.githubusercontent.com/t288matt/vatsim-chaos/main/docker.env
 
 # Create required directories
-mkdir -p temp xml_files logs
-
-# Edit volume paths in docker-compose.yml
-nano docker-compose.yml
+mkdir -p xml_files
 
 ```
 
-**Find this section:**
-```yaml
-volumes:
-  - /home/matt/data/vatsim-chaos/temp:/app/temp:rw  # Processing results
-  - /home/matt/data/vatsim-chaos/xml_files:/app/xml_files:rw  # XML storage
-  - /home/matt/data/vatsim-chaos/logs:/app/logs:rw  # Application logs
+**Configuration:**
+The `docker.env` file contains all environment variables. You can edit it to customize settings:
+```bash
+nano docker.env
 ```
 
-**Change it to the location where youo want these on your setup. Possibly as below:**
-```yaml
-volumes:
-  - ./temp:/app/temp:rw  # Processing results
-  - ./xml_files:/app/xml_files:rw  # XML storage
-  - ./logs:/app/logs:rw  # Application logs
-```
+**Key settings you might want to change:**
+- `LATERAL_SEPARATION_THRESHOLD=3.0` - Conflict detection distance (nautical miles)
+- `VERTICAL_SEPARATION_THRESHOLD=900` - Vertical separation (feet)
+- `MIN_ALTITUDE_THRESHOLD=5000` - Minimum altitude for conflicts (feet)
+- `WEB_PORT=5000` - Web interface port
 
 **Start the application:**
 
@@ -123,9 +117,9 @@ ports:
 
 - **Animation files are generated inside the container** and are not persisted to the host
 - **Uploaded XML files are stored in the `xml_files` directory** on the host
-- **Processing results are stored in the `temp` directory** on the host
-- **Logs are stored in the `logs` directory** on the host
-- **Animation, conflicts an pilot briefing files are recreated each time** you process new flight plans. There is no persistence
+- **Processing results are recreated each time** - no persistence for temp files
+- **Configuration is in `docker.env`** - edit this file to customize settings
+- **Animation, conflicts and pilot briefing files are recreated each time** you process new flight plans
 
 The application should be fully functional once the containers are running!
 

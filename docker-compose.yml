@@ -15,7 +15,9 @@ services:
       timeout: 10s
       retries: 3
       start_period: 120s
-    # Traefik integration
+    
+    
+    # Traefik integration below - delete all below if you dont use traefik
     security_opt:
       - no-new-privileges:true
     networks:
