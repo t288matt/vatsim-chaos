@@ -7,10 +7,6 @@ services:
     ports:
       - "5000:5000"  # Web interface
       - "8000:8000"  # Animation server
-    volumes:
-      - /home/matt/data/vatsim-chaos/temp:/app/temp:rw  # Processing results
-      - /home/matt/data/vatsim-chaos/xml_files:/app/xml_files:rw  # XML storage
-      - /home/matt/data/vatsim-chaos/logs:/app/logs:rw  # Application logs
     environment:
       # Application Settings
       - FLASK_ENV=production
