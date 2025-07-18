@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   atc-conflict:
     container_name: vatsim-chaos
@@ -16,4 +14,4 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s 
+      start_period: 120s 
