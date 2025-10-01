@@ -737,7 +737,19 @@
     setupToggleButton('toggle-labels');
     setupToggleButton('toggle-conflicts');
     setupToggleButton('toggle-paths');
-    setupToggleButton('toggle-autoplay');
+    
+    // Setup autoplay toggle with localStorage persistence
+    const autoplayButton = document.getElementById('toggle-autoplay');
+    const autoplayState = localStorage.getItem('autoplay') !== 'false'; // Default to true
+    autoplayButton.classList.toggle('active', autoplayState);
+    autoplayButton.textContent = autoplayState ? 'ON' : 'OFF';
+    autoplayButton.onclick = function() {
+      const isActive = this.classList.contains('active');
+      this.classList.toggle('active');
+      this.textContent = isActive ? 'OFF' : 'ON';
+      localStorage.setItem('autoplay', !isActive);
+    };
+    
     setupToggleButton('toggle-loop');
     
     // Pause button functionality
@@ -1053,7 +1065,17 @@
       viewer.clock.clockRange = Cesium.ClockRange.LOOP;
       viewer.clock.multiplier = 48;
       viewer.timeline.zoomTo(start, stop);
-      viewer.clock.shouldAnimate = true;
+      
+      // Respect autoplay setting from localStorage
+      const autoplayEnabled = localStorage.getItem('autoplay') !== 'false'; // Default to true
+      viewer.clock.shouldAnimate = autoplayEnabled;
+      
+      // Update pause button to reflect autoplay state
+      if (!autoplayEnabled) {
+        const pauseBtn = document.getElementById('pause-btn');
+        pauseBtn.textContent = '▶ Play';
+        isPaused = true;
+      }
       
 
       
