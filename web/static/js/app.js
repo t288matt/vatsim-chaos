@@ -49,6 +49,7 @@ class BriefingManager {
         this.downloadBtn = document.getElementById('downloadBriefingBtn');
         
         this.initializeEventListeners();
+        this.checkBriefingAvailability();
     }
     
     initializeEventListeners() {
@@ -141,6 +142,27 @@ class BriefingManager {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+    }
+    
+    async checkBriefingAvailability() {
+        try {
+            // Check if briefing file exists by making a HEAD-like request
+            const response = await fetch('/briefing');
+            
+            if (response.ok) {
+                // Briefing file exists, enable the button
+                this.briefingBtn.disabled = false;
+                console.log('[BRIEFING] Pilot briefing available - button enabled');
+            } else {
+                // Briefing file doesn't exist yet, keep button disabled
+                this.briefingBtn.disabled = true;
+                console.log('[BRIEFING] Pilot briefing not yet available - button disabled');
+            }
+        } catch (error) {
+            // On error, keep button disabled
+            console.warn('[BRIEFING] Error checking briefing availability:', error);
+            this.briefingBtn.disabled = true;
+        }
     }
 }
 
