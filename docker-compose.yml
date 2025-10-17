@@ -17,24 +17,4 @@ services:
       start_period: 120s
     
     
-    # Traefik integration below - delete all below if you dont use traefik
-    security_opt:
-      - no-new-privileges:true
-    networks:
-      - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.vatsim-chaos.entrypoints=http"
-      - "traefik.http.routers.vatsim-chaos.rule=Host(`vc.mpengor.com`)"
-      - "traefik.http.middlewares.vatsim-chaos-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.vatsim-chaos.middlewares=vatsim-chaos-https-redirect"
-      - "traefik.http.routers.vatsim-chaos-secure.entrypoints=https"
-      - "traefik.http.routers.vatsim-chaos-secure.rule=Host(`vc.mpengor.com`)"
-      - "traefik.http.routers.vatsim-chaos-secure.tls=true"
-      - "traefik.http.routers.vatsim-chaos-secure.service=vatsim-chaos"
-      - "traefik.http.services.vatsim-chaos.loadbalancer.server.port=5000"
-      - "traefik.docker.network=proxy"
-
-networks:
-  proxy:
-    external: true 
+    # Simple configuration for local development 

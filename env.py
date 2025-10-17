@@ -19,7 +19,7 @@
 
 # Lateral separation threshold for conflict detection (nautical miles)
 # Aircraft closer than this distance are considered in conflict
-LATERAL_SEPARATION_THRESHOLD = 3.0
+LATERAL_SEPARATION_THRESHOLD = 5.0
 
 # Vertical separation threshold for conflict detection (feet)
 # Aircraft with altitude difference less than this are considered in conflict
