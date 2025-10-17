@@ -27,7 +27,7 @@ VERTICAL_SEPARATION_THRESHOLD = 900
 
 # Minimum altitude threshold for conflict detection (feet)
 # Only conflicts above this altitude are reported (filters out ground conflicts)
-MIN_ALTITUDE_THRESHOLD = 5000
+MIN_ALTITUDE_THRESHOLD = 10000
 
 
 
