@@ -5,7 +5,8 @@ class FileManager {
         this.fileInput = document.getElementById('fileInput');
         this.fileList = document.getElementById('fileList');
         this.uploadStatus = document.getElementById('uploadStatus');
-        this.selectionSummary = document.getElementById('selectionSummary');
+        this.selectionCount = document.getElementById('selectionCount');
+        this.fileCountBadge = document.getElementById('fileCountBadge');
         this.selectAllBtn = document.getElementById('selectAllBtn');
         this.selectNoneBtn = document.getElementById('selectNoneBtn');
         this.deleteAllBtn = document.getElementById('deleteAllBtn');
@@ -577,19 +578,21 @@ class FileManager {
     }
     
     updateSelectionSummary() {
-        const count = this.selectedFiles.size;
-        if (count === 0) {
-            this.selectionSummary.textContent = 'No files selected';
-        } else if (count === 1) {
-            this.selectionSummary.textContent = '1 file selected';
-        } else {
-            this.selectionSummary.textContent = `${count} files selected`;
+        const selectedCount = this.selectedFiles.size;
+        const totalCount = this.files.length;
+
+        if (this.selectionCount) {
+            this.selectionCount.textContent = `${selectedCount} of ${totalCount} selected`;
         }
-        
+
+        if (this.fileCountBadge) {
+            this.fileCountBadge.textContent = totalCount;
+        }
+
         // Update Process Analysis button state
         const processBtn = document.getElementById('processBtn');
         if (processBtn) {
-            if (count === 0) {
+            if (selectedCount === 0) {
                 processBtn.disabled = true;
                 processBtn.textContent = '🚀 Generate Schedule';
                 processBtn.classList.remove('disabled-duplicates');
