@@ -256,15 +256,10 @@ class FileManager {
     }
     
     showMessage(message, type = 'info') {
-        // Safely access the global app instance
-        if (typeof app !== 'undefined' && app && app.showMessage) {
-            app.showMessage(message, type);
+        if (typeof showToast === 'function') {
+            showToast(message, type);
         } else {
-            // Fallback: use console or alert
             console.log(`[${type.toUpperCase()}] ${message}`);
-            if (type === 'error') {
-                alert(`Error: ${message}`);
-            }
         }
     }
     

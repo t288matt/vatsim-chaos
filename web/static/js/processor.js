@@ -69,7 +69,8 @@ class Processor {
         
         // Show progress section
         this.progressSection.style.display = 'block';
-        
+        showToast('Processing started', 'info');
+
         try {
             // Get time parameters from the frontend
             const startTime = document.getElementById('startTime').value || '14:00';
@@ -210,7 +211,19 @@ class Processor {
                 const status = await response.json();
                 
                 await this.updateProgressDisplay(status);
-                
+
+                // Drive the step indicator
+                const stepEls = document.querySelectorAll('.progress-step');
+                stepEls.forEach((el) => {
+                    el.classList.remove('progress-step--done', 'progress-step--active');
+                    const stepIndex = parseInt(el.dataset.step, 10);
+                    if (stepIndex < status.current_step) {
+                        el.classList.add('progress-step--done');
+                    } else if (stepIndex === status.current_step) {
+                        el.classList.add('progress-step--active');
+                    }
+                });
+
                 if (status.completed) {
                     this.handleProcessingComplete();
                 } else if (status.failed) {
@@ -416,7 +429,8 @@ class Processor {
         
         console.log(`[PROCESSOR] Processing completed successfully in ${processingTime} seconds`);
         this.resetProcessingState();
-        
+        showToast('Processing complete — pilot briefing ready', 'success');
+
         // Enable briefing button
         document.getElementById('briefingBtn').disabled = false;
         
@@ -448,6 +462,7 @@ class Processor {
     
     handleProcessingError(error) {
         this.showMessage('Processing failed: ' + error, 'error');
+        showToast(`Processing failed: ${error}`, 'error');
         this.resetProcessingState();
         
         // Show error in progress section with retry option

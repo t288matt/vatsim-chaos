@@ -211,6 +211,28 @@ class BriefingManager {
     }
 }
 
+function showToast(message, type = 'success', duration = 4000) {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'toast-container';
+        container.setAttribute('role', 'status');
+        container.setAttribute('aria-live', 'polite');
+        container.setAttribute('aria-atomic', 'false');
+        document.body.appendChild(container);
+    }
+    const toast = document.createElement('div');
+    toast.className = `toast toast--${type}`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.remove();
+        if (!container.children.length) container.remove();
+    }, duration);
+}
+window.showToast = showToast;
+
 // Initialize the application when DOM is loaded
 let app;
 document.addEventListener('DOMContentLoaded', () => {
