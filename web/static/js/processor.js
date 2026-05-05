@@ -32,41 +32,32 @@ class Processor {
             this.showMessage('Processing already in progress. Please wait.', 'warning');
             return;
         }
-        
+
         const selectedFiles = app.fileManager.getSelectedFilesWithValidation();
         if (selectedFiles.length === 0) {
             this.showMessage('Please select at least one XML file to process.', 'warning');
             return;
         }
-        
+
         // Edge case: Check for processing prerequisites
         const validationResults = await this.validateProcessingPrerequisites(selectedFiles);
         if (!validationResults.canProcess) {
             this.showMessage(validationResults.error, 'error');
             return;
         }
-        
-        // Edge case: Check if any files have no flights
-        const emptyFiles = selectedFiles.filter(file => file.flight_count === 0);
-        if (emptyFiles.length > 0) {
-            const emptyNames = emptyFiles.map(f => f.filename).join(', ');
-            const proceed = confirm(`Warning: Files with no flights detected: ${emptyNames}\n\nDo you want to continue processing?`);
-            if (!proceed) {
-                return;
-            }
-        }
-        
+
         this.isProcessing = true;
         this.processingStartTime = Date.now();
         this.retryCount = 0;
 
-        // Store original text for later restoration
-        this.processBtn.dataset.originalText = this.processBtn.textContent;
+        // Store original text as instance property (not data attribute)
+        this._processingButtonText = this.processBtn.textContent;
 
         // Add loading state to button
         this.processBtn.classList.add('btn--loading');
         this.processBtn.disabled = true;
         this.processBtn.textContent = 'Generating…';
+        this.processBtn.setAttribute('aria-busy', 'true');
 
         // Show progress section
         this.progressSection.style.display = 'block';
@@ -498,10 +489,11 @@ class Processor {
         this.processingStartTime = null;
         this.retryCount = 0;
 
-        // Restore button to original state
+        // Restore button to original state with fallback
         this.processBtn.classList.remove('btn--loading');
         this.processBtn.disabled = false;
-        this.processBtn.textContent = this.processBtn.dataset.originalText || 'Generate Schedule';
+        this.processBtn.textContent = this._processingButtonText || 'Generate Schedule';
+        this.processBtn.setAttribute('aria-busy', 'false');
 
         // Clear status check interval
         if (this.statusCheckInterval) {
