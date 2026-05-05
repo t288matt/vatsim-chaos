@@ -75,4 +75,5 @@ def test_prod_fallback_when_no_dist(monkeypatch):
     client = web_app.app.test_client()
     # Should not 500 — falls back to render_template('index.html')
     resp = client.get('/')
-    assert resp.status_code in (200, 404, 500)  # 500 expected if template missing in test env
+    # 200 if render_template succeeds, but template won't exist in test env → any non-500 is acceptable
+    assert resp.status_code != 500, f"Fallback raised an unhandled exception (got {resp.status_code})"

@@ -37,6 +37,11 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = config.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = config.MAX_FILE_SIZE
 
+# Absolute path to the repository root (parent of the web/ directory)
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# TODO Task 5.1: All routes will be updated to use these helpers.
+# Currently defined here for future use — callers migrated in Phase 5.
 def api_ok(data):
     """Standard success response envelope"""
     return jsonify({'ok': True, 'data': data})
@@ -61,10 +66,7 @@ processing_status = {
 def index():
     if os.environ.get('FLASK_ENV') == 'development':
         return 'Start Vite dev server and access http://localhost:5173', 200
-    dist_index = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        'web', 'static', 'dist', 'index.html'
-    )
+    dist_index = os.path.join(REPO_ROOT, 'web', 'static', 'dist', 'index.html')
     if os.path.exists(dist_index):
         return send_file(dist_index)
     return render_template('index.html')  # fallback during transition
@@ -484,14 +486,13 @@ def run_processing(selected_files, start_time='14:00', end_time='18:00'):
         'end_time': None
     }
     
-    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    parent_dir = REPO_ROOT
 
     try:
         # Copy selected files to parent directory for processing
         logger.info("Copying files to processing directory")
         for filename in selected_files:
             # Get absolute path to xml_files directory
-            parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             src = os.path.join(parent_dir, 'xml_files', filename)
             dst = os.path.join(parent_dir, filename)
 
