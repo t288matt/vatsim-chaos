@@ -69,9 +69,9 @@
                     Flight Plan Library
                 </h3>
                 <div class="file-controls" role="group" aria-label="File selection controls">
-                    <button id="selectAllBtn" class="control-btn">Select All</button>
-                    <button id="selectNoneBtn" class="control-btn">Select None</button>
-                    <button id="deleteAllBtn" class="control-btn delete-all-btn">Delete All</button>
+                    <button id="selectAllBtn" class="btn btn--secondary btn--sm">Select All</button>
+                    <button id="selectNoneBtn" class="btn btn--secondary btn--sm">Select None</button>
+                    <button id="deleteAllBtn" class="btn btn--danger btn--sm">Delete All</button>
                 </div>
                 <div class="file-list" id="fileList" role="list" aria-label="Uploaded flight plan files">
                     <!-- Dynamic file list with checkboxes -->
@@ -82,8 +82,8 @@
             </div>
 
             <div class="controls-section">
-                <button id="processBtn" class="process-button">Generate Schedule</button>
-                <button id="briefingBtn" class="briefing-button" disabled>Pilot Briefing</button>
+                <button id="processBtn" class="btn btn--primary">Generate Schedule</button>
+                <button id="briefingBtn" class="btn btn--secondary" disabled>Pilot Briefing</button>
             </div>
 
             <div class="progress-section" id="progressSection" aria-live="assertive" aria-atomic="false" style="display: none;">
@@ -140,8 +140,8 @@
                 <div id="briefingContent"></div>
             </div>
             <div class="modal-footer">
-                <button id="printBriefingBtn" class="modal-btn">Print</button>
-                <button id="downloadBriefingBtn" class="modal-btn">Download</button>
+                <button id="printBriefingBtn" class="btn btn--secondary">Print</button>
+                <button id="downloadBriefingBtn" class="btn btn--secondary">Download</button>
             </div>
         </div>
     </div>

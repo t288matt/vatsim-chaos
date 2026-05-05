@@ -59,9 +59,15 @@ class Processor {
         this.isProcessing = true;
         this.processingStartTime = Date.now();
         this.retryCount = 0;
+
+        // Store original text for later restoration
+        this.processBtn.dataset.originalText = this.processBtn.textContent;
+
+        // Add loading state to button
+        this.processBtn.classList.add('btn--loading');
         this.processBtn.disabled = true;
-        this.processBtn.textContent = '🔄 Generating...';
-        
+        this.processBtn.textContent = 'Generating…';
+
         // Show progress section
         this.progressSection.style.display = 'block';
         document.querySelectorAll('.progress-step').forEach(el => {
@@ -491,9 +497,12 @@ class Processor {
         this.isProcessing = false;
         this.processingStartTime = null;
         this.retryCount = 0;
+
+        // Restore button to original state
+        this.processBtn.classList.remove('btn--loading');
         this.processBtn.disabled = false;
-        this.processBtn.textContent = '🚀 Generate Schedule';
-        
+        this.processBtn.textContent = this.processBtn.dataset.originalText || 'Generate Schedule';
+
         // Clear status check interval
         if (this.statusCheckInterval) {
             clearTimeout(this.statusCheckInterval);

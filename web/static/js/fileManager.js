@@ -500,66 +500,7 @@ class FileManager {
 
         this.updateSelectionSummary();
     }
-    
-    createFileItem(file) {
-        const div = document.createElement('div');
-        div.className = 'file-item';
-        div.setAttribute('data-filename', file.name);
-        
-        const isSelected = this.selectedFiles.has(file.id);
-        const validation = this.getFileValidation(file.name);
-        
-        console.log(`[UI] Creating file item for ${file.name}:`, {
-            isSelected,
-            validation: validation,
-            valid: validation.valid,
-            error: validation.error
-        });
-        
-        // Show validation status with color coding but smaller
-        let validationIndicator = '';
-        if (validation.valid) {
-            validationIndicator = '<span class="validation-indicator valid" title="Valid XML">✓</span>';
-        } else if (validation.error && validation.error !== 'Not validated') {
-            validationIndicator = '<span class="validation-indicator invalid" title="Invalid XML">✗</span>';
-        } else {
-            validationIndicator = '<span class="validation-indicator pending" title="Not validated">?</span>';
-        }
-        
-        div.innerHTML = `
-            <input type="checkbox" id="file_${file.id}" ${isSelected ? 'checked' : ''}>
-            <label for="file_${file.id}">
-                <span class="filename">${this.escapeHtml(file.name)}</span>
-                ${validationIndicator}
-            </label>
-            <button class="delete-btn" title="Delete file" data-filename="${this.escapeHtml(file.name)}">
-                🗑️
-            </button>
-        `;
-        
-        const checkbox = div.querySelector('input[type="checkbox"]');
-        checkbox.addEventListener('change', (e) => {
-            if (e.target.checked) {
-                this.selectedFiles.add(file.id);
-            } else {
-                this.selectedFiles.delete(file.id);
-            }
-            this.updateSelectionSummary();
-        });
-        
-        // Add delete functionality
-        const deleteBtn = div.querySelector('.delete-btn');
-        deleteBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.deleteFile(file.name);
-        });
-        
-        return div;
-    }
-    
 
-    
     selectAll() {
         this.files.forEach(file => {
             this.selectedFiles.add(file.name);
