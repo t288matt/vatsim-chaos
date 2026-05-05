@@ -47,6 +47,8 @@ class BriefingManager {
         this.briefingBtn = document.getElementById('briefingBtn');
         this.printBtn = document.getElementById('printBriefingBtn');
         this.downloadBtn = document.getElementById('downloadBriefingBtn');
+        this._triggerElement = null;
+        this._focusTrapHandler = null;
         
         this.initializeEventListeners();
         this.checkBriefingAvailability();
@@ -57,14 +59,14 @@ class BriefingManager {
         this.closeBtn.addEventListener('click', this.hideBriefing.bind(this));
         this.printBtn.addEventListener('click', this.printBriefing.bind(this));
         this.downloadBtn.addEventListener('click', this.downloadBriefing.bind(this));
-        
+
         // Close modal when clicking outside
         window.addEventListener('click', (e) => {
             if (e.target === this.modal) {
                 this.hideBriefing();
             }
         });
-        
+
         // Close modal with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.modal.style.display === 'block') {
@@ -72,41 +74,79 @@ class BriefingManager {
             }
         });
     }
-    
+
     async showBriefing() {
+        // Save the element that triggered the modal so focus can be restored on close
+        this._triggerElement = document.activeElement;
+
         try {
             const response = await fetch('/briefing');
-            
+
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
-            
+
             const briefing = await response.json();
-            
+
             if (briefing.error) {
                 app.showMessage(briefing.error, 'error');
                 return;
             }
-            
+
             if (!briefing.content) {
                 app.showMessage('No briefing content received', 'error');
                 return;
             }
-            
+
             this.content.innerHTML = `
                 <div class="briefing-content">
                     <pre style="white-space: pre-wrap; font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.4;">${briefing.content}</pre>
                 </div>
             `;
-            
+
             this.modal.style.display = 'block';
+
+            // Focus trap — keep keyboard navigation inside the open modal
+            const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+            const focusable = Array.from(this.modal.querySelectorAll(focusableSelectors));
+            const firstFocusable = focusable[0];
+            const lastFocusable = focusable[focusable.length - 1];
+            firstFocusable.focus();
+
+            this._focusTrapHandler = (e) => {
+                if (e.key !== 'Tab') return;
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusable) {
+                        e.preventDefault();
+                        lastFocusable.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusable) {
+                        e.preventDefault();
+                        firstFocusable.focus();
+                    }
+                }
+            };
+            this.modal.addEventListener('keydown', this._focusTrapHandler);
         } catch (error) {
             app.showMessage('Error loading briefing: ' + error.message, 'error');
         }
     }
-    
+
     hideBriefing() {
         this.modal.style.display = 'none';
+
+        // Remove focus trap
+        if (this._focusTrapHandler) {
+            this.modal.removeEventListener('keydown', this._focusTrapHandler);
+            this._focusTrapHandler = null;
+        }
+
+        // Restore focus to the element that opened the modal
+        if (this._triggerElement) {
+            this._triggerElement.focus();
+            this._triggerElement = null;
+        }
     }
     
     printBriefing() {

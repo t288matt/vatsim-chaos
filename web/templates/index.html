@@ -11,65 +11,87 @@
     <!-- Cache bust: 2025-07-16-14:00 -->
 </head>
 <body>
-    <div class="header">
-        <h1>🎯 Flight Conflict Generation</h1>
-    </div>
-    
-    <div class="main-container">
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+    <header class="header">
+        <h1>
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            <span>Flight Conflict Generation</span>
+        </h1>
+    </header>
+
+    <main class="main-container" id="mainContent">
         <!-- Left Panel -->
         <div class="left-panel">
             <div class="file-upload-section">
-                <h3>📁 Flight Plan Upload</h3>
-                <div class="upload-area" id="uploadArea">
+                <h3>
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    Flight Plan Upload
+                </h3>
+                <div class="upload-area" id="uploadArea" role="button" tabindex="0"
+                     aria-label="Upload XML flight plan files — click or drag and drop">
                     <div class="upload-content">
-                        <p>📤 Drag & drop Simbrief XML files here</p>
+                        <p>
+                            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+                            Drag &amp; drop Simbrief XML files here
+                        </p>
                         <p>or click to browse</p>
                         <input type="file" id="fileInput" multiple accept=".xml" style="display: none;">
                     </div>
                 </div>
-                <div class="upload-status" id="uploadStatus"></div>
-                
+                <div class="upload-status" id="uploadStatus" aria-live="polite" aria-atomic="true"></div>
+
                 <div class="time-controls">
-                                            <h4>⏰ Event Time</h4>
+                    <h4>
+                        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Event Time
+                    </h4>
                     <div class="time-inputs">
                         <div class="time-input">
-                            <label for="startTime">Start Time:</label>
-                            <input type="time" id="startTime" value="08:00" class="time-field">
+                            <label for="startTime">Start Time</label>
+                            <input type="time" id="startTime" value="08:00" class="time-field"
+                                   aria-describedby="startTime-hint">
+                            <span id="startTime-hint" class="sr-only">24-hour format, e.g. 08:00</span>
                         </div>
                         <div class="time-input">
-                            <label for="endTime">End Time:</label>
-                            <input type="time" id="endTime" value="11:00" class="time-field">
+                            <label for="endTime">End Time</label>
+                            <input type="time" id="endTime" value="11:00" class="time-field"
+                                   aria-describedby="endTime-hint">
+                            <span id="endTime-hint" class="sr-only">24-hour format, e.g. 11:00</span>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="file-library-section">
-                                    <h3>📚 Flight Plan Library</h3>
-                <div class="file-controls">
+                <h3>
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    Flight Plan Library
+                </h3>
+                <div class="file-controls" role="group" aria-label="File selection controls">
                     <button id="selectAllBtn" class="control-btn">Select All</button>
                     <button id="selectNoneBtn" class="control-btn">Select None</button>
                     <button id="deleteAllBtn" class="control-btn delete-all-btn">Delete All</button>
                 </div>
-                <div class="file-list" id="fileList">
+                <div class="file-list" id="fileList" role="list" aria-label="Uploaded flight plan files">
                     <!-- Dynamic file list with checkboxes -->
                 </div>
                 <div class="selection-summary" id="selectionSummary">
                     No files selected
                 </div>
             </div>
-            
+
             <div class="controls-section">
-                <button id="processBtn" class="process-button">🚀 Generate Schedule</button>
-                <button id="briefingBtn" class="briefing-button" disabled>📋 Pilot Briefing</button>
+                <button id="processBtn" class="process-button">Generate Schedule</button>
+                <button id="briefingBtn" class="briefing-button" disabled>Pilot Briefing</button>
             </div>
-            
+
             <div class="progress-section" id="progressSection" style="display: none;">
-                <h3>🔄 Processing Status</h3>
+                <h3>Processing Status</h3>
                 <div id="progressContainer"></div>
             </div>
         </div>
-        
+
         <!-- Right Panel -->
         <div class="right-panel">
             <div class="map-container" id="mapContainer">
@@ -79,30 +101,29 @@
                 </div>
             </div>
         </div>
-    </div>
-    
+    </main>
+
     <!-- Modal for pilot briefing -->
-    <div id="briefingModal" class="modal">
+    <div id="briefingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="briefingModalTitle">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>📋 Pilot Briefing</h2>
-                <span class="close">&times;</span>
+                <h2 id="briefingModalTitle">Pilot Briefing</h2>
+                <button class="close" aria-label="Close pilot briefing">&times;</button>
             </div>
             <div class="modal-body">
                 <div id="briefingContent"></div>
             </div>
             <div class="modal-footer">
-                <button id="printBriefingBtn" class="modal-btn">🖨️ Print</button>
-                <button id="downloadBriefingBtn" class="modal-btn">📥 Download</button>
+                <button id="printBriefingBtn" class="modal-btn">Print</button>
+                <button id="downloadBriefingBtn" class="modal-btn">Download</button>
             </div>
         </div>
     </div>
-    
 
-    
+
     <script src="/static/js/app.js?v=2025-07-17-10-10"></script>
     <script src="/static/js/fileManager.js?v=2025-07-17-10-10"></script>
     <script src="/static/js/processor.js?v=2025-07-17-10-10"></script>
     <script src="/static/js/mapViewer.js?v=2025-07-17-10-10"></script>
 </body>
-</html> 
+</html>
