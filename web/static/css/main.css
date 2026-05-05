@@ -1409,3 +1409,72 @@ body {
 .empty-state__body {
     font-size: var(--font-size-sm);
 }
+
+/* ── Task 2.6: Step Timeline ─────────────────────────────────────── */
+.step-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.step-timeline__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    opacity: 0.4;
+    transition: opacity var(--duration-normal);
+}
+
+.step-timeline__item--done,
+.step-timeline__item--active {
+    opacity: 1;
+}
+
+.step-timeline__indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: background var(--duration-normal), border-color var(--duration-normal);
+}
+
+.step-timeline__item--done .step-timeline__indicator {
+    background: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.step-timeline__item--active .step-timeline__indicator {
+    border-color: var(--color-primary);
+    animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(0, 212, 255, 0); }
+}
+
+.step-timeline__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.step-timeline__label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.step-timeline__status {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    min-height: 1.2em;
+}
+
+.process-meta {
+    margin-top: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}

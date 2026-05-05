@@ -2,9 +2,8 @@
 class Processor {
     constructor() {
         this.processBtn = document.getElementById('processBtn');
-        this.progressSection = document.getElementById('progressSection');
-        this.progressContainer = document.getElementById('progressContainer');
-        
+        this.processPanel = document.getElementById('processPanel');
+
         this.isProcessing = false;
         this.statusCheckInterval = null;
         this.processingStartTime = null;
@@ -59,11 +58,15 @@ class Processor {
         this.processBtn.textContent = 'Generating…';
         this.processBtn.setAttribute('aria-busy', 'true');
 
-        // Show progress section
-        this.progressSection.style.display = 'block';
-        document.querySelectorAll('.progress-step').forEach(el => {
-            el.classList.remove('progress-step--done', 'progress-step--active');
+        // Show process panel and reset timeline
+        this.processPanel.hidden = false;
+        document.querySelectorAll('.step-timeline__item').forEach(el => {
+            el.classList.remove('step-timeline__item--done', 'step-timeline__item--active');
+            const statusEl = el.querySelector('.step-timeline__status');
+            if (statusEl) statusEl.textContent = '';
         });
+        const elapsedEl = document.getElementById('elapsedTime');
+        if (elapsedEl) elapsedEl.textContent = '0s elapsed';
         showToast('Processing started', 'info');
 
         try {
@@ -207,16 +210,21 @@ class Processor {
                 
                 await this.updateProgressDisplay(status);
 
-                // Drive the step indicator
-                const currentStep = Number.isInteger(status.current_step) ? status.current_step : -1;
-                const stepEls = document.querySelectorAll('.progress-step');
-                stepEls.forEach((el) => {
-                    el.classList.remove('progress-step--done', 'progress-step--active');
-                    const stepIndex = parseInt(el.dataset.step, 10);
-                    if (stepIndex < currentStep) {
-                        el.classList.add('progress-step--done');
-                    } else if (stepIndex === currentStep) {
-                        el.classList.add('progress-step--active');
+                // Update elapsed time
+                const elapsed = Math.round((Date.now() - this.processingStartTime) / 1000);
+                const elapsedEl = document.getElementById('elapsedTime');
+                if (elapsedEl) elapsedEl.textContent = `${elapsed}s elapsed`;
+
+                // Update step timeline indicators
+                const currentStep = status.current_step ?? 0;
+                document.querySelectorAll('.step-timeline__item').forEach((el, i) => {
+                    el.classList.toggle('step-timeline__item--done', i < currentStep);
+                    el.classList.toggle('step-timeline__item--active', i === currentStep);
+                    const statusEl = el.querySelector('.step-timeline__status');
+                    if (statusEl) {
+                        if (i < currentStep) statusEl.textContent = 'Done';
+                        else if (i === currentStep) statusEl.textContent = 'Running…';
+                        else statusEl.textContent = '';
                     }
                 });
 
@@ -350,7 +358,7 @@ class Processor {
         
 
         
-        this.progressContainer.innerHTML = progressHtml;
+        // progressContainer removed in Task 2.6 — timeline handles display
     }
     
     async determineActualProgress() {
@@ -425,10 +433,18 @@ class Processor {
         
         console.log(`[PROCESSOR] Processing completed successfully in ${processingTime} seconds`);
         this.resetProcessingState();
-        document.querySelectorAll('.progress-step').forEach(el => {
-            el.classList.remove('progress-step--active');
-            el.classList.add('progress-step--done');
+
+        // Mark all steps complete
+        document.querySelectorAll('.step-timeline__item').forEach(el => {
+            el.classList.add('step-timeline__item--done');
+            el.classList.remove('step-timeline__item--active');
+            const statusEl = el.querySelector('.step-timeline__status');
+            if (statusEl) statusEl.textContent = 'Done';
         });
+        // Update status for screen readers
+        const statusRegion = document.getElementById('processingStatus');
+        if (statusRegion) statusRegion.textContent = 'Processing complete.';
+
         showToast('Processing complete — pilot briefing ready', 'success');
 
         // Enable briefing button
@@ -454,24 +470,31 @@ class Processor {
             }
         }, 2000); // Wait 2 seconds for files to be written
         
-        // Hide progress section after a delay
+        // Hide process panel after 3 seconds
         setTimeout(() => {
-            this.progressSection.style.display = 'none';
+            this.processPanel.hidden = true;
+            if (statusRegion) statusRegion.textContent = '';
         }, 3000);
     }
     
     handleProcessingError(error) {
         this.showMessage('Processing failed: ' + error, 'error');
         this.resetProcessingState();
-        
-        // Show error in progress section with retry option
-        this.progressContainer.innerHTML = `
-            <div class="progress-error">
-                <span class="step-icon">❌</span>
-                <span class="step-text">Processing failed: ${error}</span>
-                <button onclick="processor.retryProcessing()" class="retry-btn">🔄 Retry</button>
-            </div>
-        `;
+
+        // Show error on current active step
+        document.querySelectorAll('.step-timeline__item--active').forEach(el => {
+            el.classList.remove('step-timeline__item--active');
+            const statusEl = el.querySelector('.step-timeline__status');
+            if (statusEl) statusEl.textContent = 'Failed';
+        });
+        // Update status for screen readers
+        const statusRegion = document.getElementById('processingStatus');
+        if (statusRegion) statusRegion.textContent = 'Processing failed.';
+        // Hide panel after 5 seconds
+        setTimeout(() => {
+            this.processPanel.hidden = true;
+            if (statusRegion) statusRegion.textContent = '';
+        }, 5000);
     }
     
     async retryProcessing() {
