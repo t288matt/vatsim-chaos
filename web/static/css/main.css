@@ -1172,7 +1172,7 @@ body {
     border-radius: var(--radius-md);
     font-size: var(--font-size-sm);
     opacity: 0.45;
-    transition: opacity var(--duration-normal);
+    transition: opacity var(--duration-normal), color var(--duration-normal);
     background: rgba(0, 212, 255, 0.04);
 }
 .progress-step--done   { opacity: 1; color: var(--color-success); }

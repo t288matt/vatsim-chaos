@@ -20,15 +20,10 @@ class Processor {
     }
     
     showMessage(message, type = 'info') {
-        // Safely access the global app instance
-        if (typeof app !== 'undefined' && app && app.showMessage) {
-            app.showMessage(message, type);
+        if (typeof showToast === 'function') {
+            showToast(message, type);
         } else {
-            // Fallback: use console or alert
             console.log(`[${type.toUpperCase()}] ${message}`);
-            if (type === 'error') {
-                alert(`Error: ${message}`);
-            }
         }
     }
     
@@ -69,6 +64,9 @@ class Processor {
         
         // Show progress section
         this.progressSection.style.display = 'block';
+        document.querySelectorAll('.progress-step').forEach(el => {
+            el.classList.remove('progress-step--done', 'progress-step--active');
+        });
         showToast('Processing started', 'info');
 
         try {
@@ -213,13 +211,14 @@ class Processor {
                 await this.updateProgressDisplay(status);
 
                 // Drive the step indicator
+                const currentStep = Number.isInteger(status.current_step) ? status.current_step : -1;
                 const stepEls = document.querySelectorAll('.progress-step');
                 stepEls.forEach((el) => {
                     el.classList.remove('progress-step--done', 'progress-step--active');
                     const stepIndex = parseInt(el.dataset.step, 10);
-                    if (stepIndex < status.current_step) {
+                    if (stepIndex < currentStep) {
                         el.classList.add('progress-step--done');
-                    } else if (stepIndex === status.current_step) {
+                    } else if (stepIndex === currentStep) {
                         el.classList.add('progress-step--active');
                     }
                 });
@@ -429,6 +428,10 @@ class Processor {
         
         console.log(`[PROCESSOR] Processing completed successfully in ${processingTime} seconds`);
         this.resetProcessingState();
+        document.querySelectorAll('.progress-step').forEach(el => {
+            el.classList.remove('progress-step--active');
+            el.classList.add('progress-step--done');
+        });
         showToast('Processing complete — pilot briefing ready', 'success');
 
         // Enable briefing button
@@ -462,7 +465,6 @@ class Processor {
     
     handleProcessingError(error) {
         this.showMessage('Processing failed: ' + error, 'error');
-        showToast(`Processing failed: ${error}`, 'error');
         this.resetProcessingState();
         
         // Show error in progress section with retry option
