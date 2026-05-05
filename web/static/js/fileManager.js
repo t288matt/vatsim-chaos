@@ -25,6 +25,12 @@ class FileManager {
         this.uploadArea.addEventListener('dragleave', this.handleDragLeave.bind(this));
         this.uploadArea.addEventListener('drop', this.handleDrop.bind(this));
         this.uploadArea.addEventListener('click', () => this.fileInput.click());
+        this.uploadArea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.fileInput.click();
+            }
+        });
         this.fileInput.addEventListener('change', this.handleFileSelect.bind(this));
         
         // File selection controls

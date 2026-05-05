@@ -105,10 +105,13 @@ class BriefingManager {
             `;
 
             this.modal.style.display = 'block';
+            const mainEl = document.querySelector('main');
+            if (mainEl) mainEl.inert = true;
 
             // Focus trap — keep keyboard navigation inside the open modal
             const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
             const focusable = Array.from(this.modal.querySelectorAll(focusableSelectors));
+            if (!focusable.length) return;
             const firstFocusable = focusable[0];
             const lastFocusable = focusable[focusable.length - 1];
             firstFocusable.focus();
@@ -116,12 +119,12 @@ class BriefingManager {
             this._focusTrapHandler = (e) => {
                 if (e.key !== 'Tab') return;
                 if (e.shiftKey) {
-                    if (document.activeElement === firstFocusable) {
+                    if (document.activeElement && document.activeElement === firstFocusable) {
                         e.preventDefault();
                         lastFocusable.focus();
                     }
                 } else {
-                    if (document.activeElement === lastFocusable) {
+                    if (document.activeElement && document.activeElement === lastFocusable) {
                         e.preventDefault();
                         firstFocusable.focus();
                     }
@@ -135,6 +138,8 @@ class BriefingManager {
 
     hideBriefing() {
         this.modal.style.display = 'none';
+        const mainEl = document.querySelector('main');
+        if (mainEl) mainEl.inert = false;
 
         // Remove focus trap
         if (this._focusTrapHandler) {

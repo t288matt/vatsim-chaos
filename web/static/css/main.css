@@ -25,6 +25,9 @@
     --font-size-sm:   0.875rem;
     --font-size-base: 1rem;
     --font-size-lg:   1.125rem;
+    --font-size-xl:   1.25rem;
+    --radius-sm: 4px;
+    --duration-slow:  400ms;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-bold:   700;
@@ -648,8 +651,8 @@ body {
 
 .time-field:focus {
     outline: none;
-    border-color: #ff6b35;
-    box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.3);
 }
 
 .time-field::-webkit-calendar-picker-indicator {
