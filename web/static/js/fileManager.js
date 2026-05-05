@@ -404,17 +404,100 @@ class FileManager {
     
     renderFileList() {
         this.fileList.innerHTML = '';
-        
+
         if (this.files.length === 0) {
-            this.fileList.innerHTML = '<div class="file-item"><p style="text-align: center; color: #6c757d; padding: 20px;">No files uploaded yet</p></div>';
+            this.updateSelectionSummary();
             return;
         }
-        
+
         this.files.forEach(file => {
-            const fileItem = this.createFileItem(file);
-            this.fileList.appendChild(fileItem);
+            const filename = file.name || file.id || '';
+            const isSelected = this.selectedFiles.has(filename);
+            const validation = this.getFileValidation(filename);
+            const isValid = validation && validation.valid === true;
+            const isInvalid = validation && validation.valid === false && validation.error !== 'Not validated';
+            const isPending = !isValid && !isInvalid;
+
+            // Route info — validation.flights[0] holds origin/destination
+            const firstFlight = validation && validation.flights && validation.flights[0];
+            const origin = firstFlight && firstFlight.origin ? firstFlight.origin : null;
+            const destination = firstFlight && firstFlight.destination ? firstFlight.destination : null;
+            const routeText = (origin && destination) ? `${origin} → ${destination}` : 'Route unknown';
+
+            // File size
+            const sizeKb = file.size ? `${Math.round(file.size / 1024)} KB` : '';
+
+            // Badge SVG
+            let badgeHtml = '';
+            let badgeClass = '';
+            if (isValid) {
+                badgeClass = 'file-item-v2__badge--valid';
+                badgeHtml = `<svg aria-label="Valid" role="img" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+            } else if (isInvalid) {
+                badgeClass = 'file-item-v2__badge--invalid';
+                badgeHtml = `<svg aria-label="Invalid" role="img" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+            } else {
+                badgeClass = 'file-item-v2__badge--pending';
+                badgeHtml = `<svg aria-label="Validating" role="img" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+            }
+
+            const itemClasses = ['file-item-v2'];
+            if (isSelected) itemClasses.push('file-item-v2--selected');
+            if (isInvalid) itemClasses.push('file-item-v2--invalid');
+
+            const safeFilename = filename.replace(/"/g, '&quot;');
+            const checkboxId = `file-cb-${filename.replace(/[^a-zA-Z0-9]/g, '-')}`;
+
+            const itemEl = document.createElement('div');
+            itemEl.className = itemClasses.join(' ');
+            itemEl.dataset.filename = filename;
+            itemEl.setAttribute('role', 'listitem');
+            itemEl.innerHTML = `
+                <input type="checkbox" class="file-item-v2__checkbox" id="${checkboxId}"
+                       aria-label="Select ${safeFilename}"
+                       ${isSelected ? 'checked' : ''}>
+                <div class="file-item-v2__info">
+                    <div class="file-item-v2__name" title="${safeFilename}">${this.escapeHtml(filename)}</div>
+                    <div class="file-item-v2__route">${routeText}</div>
+                    ${sizeKb ? `<div class="file-item-v2__meta">${sizeKb}</div>` : ''}
+                </div>
+                <span class="file-item-v2__badge ${badgeClass}" aria-hidden="true">${badgeHtml}</span>
+                <button class="file-item-v2__delete" aria-label="Delete ${safeFilename}" title="Delete file">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                </button>
+            `;
+
+            // Checkbox toggle
+            const checkbox = itemEl.querySelector('.file-item-v2__checkbox');
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    this.selectedFiles.add(filename);
+                    itemEl.classList.add('file-item-v2--selected');
+                } else {
+                    this.selectedFiles.delete(filename);
+                    itemEl.classList.remove('file-item-v2--selected');
+                }
+                this.updateSelectionSummary();
+                this.checkForDuplicateRoutes();
+            });
+
+            // Delete button
+            const deleteBtn = itemEl.querySelector('.file-item-v2__delete');
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.deleteFile(filename);
+            });
+
+            // Click on row toggles checkbox (but not if clicking checkbox or delete btn directly)
+            itemEl.addEventListener('click', (e) => {
+                if (e.target === checkbox || e.target === deleteBtn || deleteBtn.contains(e.target)) return;
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event('change'));
+            });
+
+            this.fileList.appendChild(itemEl);
         });
-        
+
         this.updateSelectionSummary();
     }
     
