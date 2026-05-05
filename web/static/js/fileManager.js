@@ -562,7 +562,7 @@ class FileManager {
     
     selectAll() {
         this.files.forEach(file => {
-            this.selectedFiles.add(file.id);
+            this.selectedFiles.add(file.name);
         });
         this.renderFileList();
     }
