@@ -1446,6 +1446,11 @@ body {
     border-color: var(--color-success);
 }
 
+.step-timeline__item--failed .step-timeline__indicator {
+    background: var(--color-error);
+    border-color: var(--color-error);
+}
+
 .step-timeline__item--active .step-timeline__indicator {
     border-color: var(--color-primary);
     animation: pulse 1s ease infinite;

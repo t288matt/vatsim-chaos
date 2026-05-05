@@ -10,6 +10,8 @@ class Processor {
         this.maxProcessingTime = 300000; // 5 minutes
         this.retryCount = 0;
         this.maxRetries = 3;
+        this.hideTimeout = null;
+        this.mapRefreshTimeout = null;
         
         this.initializeEventListeners();
     }
@@ -207,8 +209,6 @@ class Processor {
                 }
                 
                 const status = await response.json();
-                
-                await this.updateProgressDisplay(status);
 
                 // Update elapsed time
                 const elapsed = Math.round((Date.now() - this.processingStartTime) / 1000);
@@ -216,7 +216,7 @@ class Processor {
                 if (elapsedEl) elapsedEl.textContent = `${elapsed}s elapsed`;
 
                 // Update step timeline indicators
-                const currentStep = status.current_step ?? 0;
+                const currentStep = status.current_step ?? -1;
                 document.querySelectorAll('.step-timeline__item').forEach((el, i) => {
                     el.classList.toggle('step-timeline__item--done', i < currentStep);
                     el.classList.toggle('step-timeline__item--active', i === currentStep);
@@ -451,7 +451,7 @@ class Processor {
         document.getElementById('briefingBtn').disabled = false;
         
         // Add delay to allow data files to be written before refreshing map
-        setTimeout(async () => {
+        this.mapRefreshTimeout = setTimeout(async () => {
             // Check if data files exist
             const dataFilesExist = await this.checkDataFilesExist();
             
@@ -471,7 +471,7 @@ class Processor {
         }, 2000); // Wait 2 seconds for files to be written
         
         // Hide process panel after 3 seconds
-        setTimeout(() => {
+        this.hideTimeout = setTimeout(() => {
             this.processPanel.hidden = true;
             if (statusRegion) statusRegion.textContent = '';
         }, 3000);
@@ -484,6 +484,7 @@ class Processor {
         // Show error on current active step
         document.querySelectorAll('.step-timeline__item--active').forEach(el => {
             el.classList.remove('step-timeline__item--active');
+            el.classList.add('step-timeline__item--failed');
             const statusEl = el.querySelector('.step-timeline__status');
             if (statusEl) statusEl.textContent = 'Failed';
         });
@@ -523,6 +524,11 @@ class Processor {
             clearTimeout(this.statusCheckInterval);
             this.statusCheckInterval = null;
         }
+
+        clearTimeout(this.hideTimeout);
+        clearTimeout(this.mapRefreshTimeout);
+        this.hideTimeout = null;
+        this.mapRefreshTimeout = null;
     }
     
     // Method to get current processing status
