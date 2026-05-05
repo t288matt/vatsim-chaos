@@ -37,6 +37,14 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = config.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = config.MAX_FILE_SIZE
 
+def api_ok(data):
+    """Standard success response envelope"""
+    return jsonify({'ok': True, 'data': data})
+
+def api_error(message, status=400):
+    """Standard error response envelope"""
+    return jsonify({'ok': False, 'error': message}), status
+
 # Global processing state
 processing_status = {
     'is_processing': False,
@@ -51,7 +59,15 @@ processing_status = {
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if os.environ.get('FLASK_ENV') == 'development':
+        return 'Start Vite dev server and access http://localhost:5173', 200
+    dist_index = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        'web', 'static', 'dist', 'index.html'
+    )
+    if os.path.exists(dist_index):
+        return send_file(dist_index)
+    return render_template('index.html')  # fallback during transition
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -127,8 +143,8 @@ def upload_file():
 def check_disk_space(min_space_gb=1):
     """Check if there's sufficient disk space"""
     try:
-        stat = os.statvfs(app.config['UPLOAD_FOLDER'])
-        free_space_gb = (stat.f_frsize * stat.f_bavail) / (1024**3)
+        usage = shutil.disk_usage(app.config['UPLOAD_FOLDER'])
+        free_space_gb = usage.free / (1024**3)
         return free_space_gb >= min_space_gb
     except Exception as e:
         logger.warning(f"Could not check disk space: {e}")
@@ -469,8 +485,7 @@ def run_processing(selected_files, start_time='14:00', end_time='18:00'):
     }
     
     parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    original_dir = os.getcwd()
-    
+
     try:
         # Copy selected files to parent directory for processing
         logger.info("Copying files to processing directory")
@@ -479,55 +494,51 @@ def run_processing(selected_files, start_time='14:00', end_time='18:00'):
             parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             src = os.path.join(parent_dir, 'xml_files', filename)
             dst = os.path.join(parent_dir, filename)
-            
+
             # Edge case: Check if source file exists
             if not os.path.exists(src):
                 raise FileNotFoundError(f"Source file not found: {filename}")
-            
+
             shutil.copy2(src, dst)
             logger.info(f"Copied {filename} to processing directory")
-        
-        # Change to parent directory for processing
-        os.chdir(parent_dir)
-        logger.info(f"Changed to processing directory: {parent_dir}")
-        
+
         # Step 1: Extract flight plan data
         logger.info("Step 1: Extracting flight plan data")
         processing_status['current_step'] = 0
-        
+
         # Build command with selected files
         extract_cmd = ['python', 'extract_simbrief_xml_flightplan.py', '--files'] + selected_files
-        result = subprocess.run(extract_cmd, check=True, timeout=300, capture_output=True, text=True)
+        result = subprocess.run(extract_cmd, check=True, timeout=300, capture_output=True, text=True, cwd=parent_dir)
         logger.info(f"Step 1 completed: {result.returncode}")
-        
+
         # Step 2: Analyze conflicts
         logger.info("Step 2: Analyzing conflicts")
         processing_status['current_step'] = 1
-        result = subprocess.run(['python', 'find_potential_conflicts.py'], check=True, timeout=600, capture_output=True, text=True)
+        result = subprocess.run(['python', 'find_potential_conflicts.py'], check=True, timeout=600, capture_output=True, text=True, cwd=parent_dir)
         logger.info(f"Step 2 completed: {result.returncode}")
-        
+
         # Step 3: Merge KML files
         logger.info("Step 3: Merging KML files")
         processing_status['current_step'] = 2
-        result = subprocess.run(['python', 'merge_kml_flightplans.py'], check=True, timeout=300, capture_output=True, text=True)
+        result = subprocess.run(['python', 'merge_kml_flightplans.py'], check=True, timeout=300, capture_output=True, text=True, cwd=parent_dir)
         logger.info(f"Step 3 completed: {result.returncode}")
-        
+
         # Step 4: Schedule conflicts
         logger.info("Step 4: Scheduling conflicts")
         processing_status['current_step'] = 3
-        result = subprocess.run(['python', 'generate_schedule_conflicts.py', '--start', start_time, '--end', end_time], check=True, timeout=300, capture_output=True, text=True)
+        result = subprocess.run(['python', 'generate_schedule_conflicts.py', '--start', start_time, '--end', end_time], check=True, timeout=300, capture_output=True, text=True, cwd=parent_dir)
         logger.info(f"Step 4 completed: {result.returncode}")
-        
+
         # Step 5: Export animation data
         logger.info("Step 5: Exporting animation data")
         processing_status['current_step'] = 4
-        result = subprocess.run(['python', 'generate_animation.py'], check=True, timeout=300, capture_output=True, text=True)
+        result = subprocess.run(['python', 'generate_animation.py'], check=True, timeout=300, capture_output=True, text=True, cwd=parent_dir)
         logger.info(f"Step 5 completed: {result.returncode}")
-        
+
         # Step 6: Audit conflict data
         logger.info("Step 6: Auditing conflict data")
         processing_status['current_step'] = 5
-        result = subprocess.run(['python', 'audit_conflict.py'], check=True, timeout=300, capture_output=True, text=True)
+        result = subprocess.run(['python', 'audit_conflict.py'], check=True, timeout=300, capture_output=True, text=True, cwd=parent_dir)
         logger.info(f"Step 6 completed: {result.returncode}")
         
         processing_status['completed'] = True
@@ -571,7 +582,6 @@ def run_processing(selected_files, start_time='14:00', end_time='18:00'):
             cleanup_processing_files(selected_files, parent_dir)
     finally:
         processing_status['is_processing'] = False
-        os.chdir(original_dir)  # Restore original directory
 
 def cleanup_processing_files(selected_files, parent_dir):
     """Clean up files copied to processing directory on failure"""

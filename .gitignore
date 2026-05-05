@@ -51,3 +51,10 @@ prompts.txt
 
 # Git worktrees
 .worktrees/
+
+# Frontend build artefacts
+node_modules/
+web/static/dist/
+coverage/
+playwright-report/
+test-results/
