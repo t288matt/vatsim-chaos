@@ -1,9 +1,21 @@
 # =============================================================================
+# Stage 1: Build frontend assets
+# =============================================================================
+FROM node:18-alpine AS frontend-builder
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts
+COPY vite.config.ts tsconfig.json ./
+COPY src/ ./src/
+RUN npm run build
+# Output: /app/web/static/dist/
+
+# =============================================================================
 # ATC Conflict Analysis System - Dockerfile
 # =============================================================================
 
 # Base image with Python 3.11
-FROM python:3.11-slim
+FROM python:3.11-slim AS app
 
 # Set working directory
 WORKDIR /app
@@ -42,5 +54,8 @@ EXPOSE 5000 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:5000/ || exit 1
 
+# Copy built frontend assets from Stage 1
+COPY --from=frontend-builder /app/web/static/dist/ /app/web/static/dist/
+
 # Start command
-CMD ["python", "web/app.py"] 
+CMD ["python", "web/app.py"]
