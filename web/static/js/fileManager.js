@@ -403,12 +403,25 @@ class FileManager {
     }
     
     renderFileList() {
-        this.fileList.innerHTML = '';
+        const emptyState = document.getElementById('emptyState');
+        const fileListContainer = document.getElementById('fileList');
+        const selectionBar = document.getElementById('selectionBar');
 
         if (this.files.length === 0) {
+            // Show empty state, hide file list and selection bar
+            emptyState.hidden = false;
+            fileListContainer.hidden = true;
+            selectionBar.hidden = true;
             this.updateSelectionSummary();
             return;
         }
+
+        // Hide empty state, show file list and selection bar
+        emptyState.hidden = true;
+        fileListContainer.hidden = false;
+        selectionBar.hidden = false;
+
+        fileListContainer.innerHTML = '';
 
         this.files.forEach(file => {
             const filename = file.name || file.id || '';
@@ -495,7 +508,7 @@ class FileManager {
                 checkbox.dispatchEvent(new Event('change'));
             });
 
-            this.fileList.appendChild(itemEl);
+            fileListContainer.appendChild(itemEl);
         });
 
         this.updateSelectionSummary();

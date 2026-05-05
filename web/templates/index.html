@@ -23,11 +23,9 @@
     <main class="main-container" id="mainContent">
         <!-- Left Panel -->
         <div class="left-panel">
-            <div class="file-upload-section">
-                <h3>
-                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-                    Flight Plan Upload
-                </h3>
+            <!-- Upload Section -->
+            <div class="panel-section">
+                <h2 class="panel-section__title">Upload</h2>
                 <div class="upload-zone" id="uploadArea" role="button" tabindex="0"
                      aria-label="Upload XML flight plan files — click or drag and drop">
                     <svg class="upload-zone__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -40,12 +38,12 @@
                     <input type="file" id="fileInput" multiple accept=".xml" style="display: none;">
                 </div>
                 <div class="upload-status" id="uploadStatus" aria-live="polite" aria-atomic="true"></div>
+            </div>
 
+            <!-- Event Time Section -->
+            <div class="panel-section">
+                <h2 class="panel-section__title">Event Time</h2>
                 <div class="time-controls">
-                    <h4>
-                        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        Event Time
-                    </h4>
                     <div class="time-inputs">
                         <div class="time-input">
                             <label for="startTime">Start Time</label>
@@ -63,25 +61,38 @@
                 </div>
             </div>
 
-            <div class="file-library-section">
-                <h3>
-                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                    Flight Plan Library
-                </h3>
+            <!-- Flight Plans Section -->
+            <div class="panel-section">
+                <h2 class="panel-section__title">Flight Plans</h2>
+                <div id="emptyState" class="empty-state">
+                    <svg aria-hidden="true" class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+                    </svg>
+                    <p class="empty-state__title">No flight plans yet</p>
+                    <p class="empty-state__body">Upload SimBrief XML files to get started</p>
+                </div>
+                <div id="fileList" class="file-list" role="list" aria-label="Uploaded flight plan files" hidden>
+                    <!-- Dynamic file list with checkboxes -->
+                </div>
+                <div id="selectionBar" class="selection-bar" hidden>
+                    <span id="selectionCount">0 of 0 selected</span>
+                    <span id="fileCountBadge" class="file-count-badge">0</span>
+                </div>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="panel-section">
+                <h2 class="panel-section__title">Actions</h2>
                 <div class="file-controls" role="group" aria-label="File selection controls">
                     <button id="selectAllBtn" class="btn btn--secondary btn--sm">Select All</button>
                     <button id="selectNoneBtn" class="btn btn--secondary btn--sm">Select None</button>
                     <button id="deleteAllBtn" class="btn btn--danger btn--sm">Delete All</button>
                 </div>
-                <div class="file-list" id="fileList" role="list" aria-label="Uploaded flight plan files">
-                    <!-- Dynamic file list with checkboxes -->
-                </div>
-                <div class="selection-summary" id="selectionSummary">
-                    No files selected
-                </div>
             </div>
 
-            <div class="controls-section">
+            <!-- Controls Section -->
+            <div class="panel-section">
                 <button id="processBtn" class="btn btn--primary">Generate Schedule</button>
                 <button id="briefingBtn" class="btn btn--secondary" disabled>Pilot Briefing</button>
             </div>
