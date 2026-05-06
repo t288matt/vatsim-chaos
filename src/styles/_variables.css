@@ -35,19 +35,19 @@
     --font-size-base: 1rem;
     --font-size-lg:   1.125rem;
     --font-size-xl:   1.25rem;
-    --radius-sm: 4px;
-    --duration-slow:  400ms;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-bold:   700;
 
     /* Radius */
+    --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 12px;
 
     /* Animation */
     --duration-fast:   150ms;
     --duration-normal: 250ms;
+    --duration-slow:   400ms;
     --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
 
     /* Touch targets */
