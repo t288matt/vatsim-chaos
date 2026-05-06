@@ -43,11 +43,17 @@ class FileManager {
             }
         });
         this.fileInput.addEventListener('change', this.handleFileSelect.bind(this));
-        
+
         // File selection controls
         this.selectAllBtn.addEventListener('click', this.selectAll.bind(this));
         this.selectNoneBtn.addEventListener('click', this.selectNone.bind(this));
         this.deleteAllBtn.addEventListener('click', this.deleteAll.bind(this));
+
+        // Clear selection button
+        const clearSelectionBtn = document.getElementById('clearSelectionBtn');
+        if (clearSelectionBtn) {
+            clearSelectionBtn.addEventListener('click', this.selectNone.bind(this));
+        }
     }
     
     handleDragOver(e) {
@@ -590,6 +596,7 @@ class FileManager {
     updateSelectionSummary() {
         const selectedCount = this.selectedFiles.size;
         const totalCount = this.files.length;
+        const selectionBar = document.getElementById('selectionBar');
 
         if (this.selectionCount) {
             this.selectionCount.textContent = `${selectedCount} of ${totalCount} selected`;
@@ -597,6 +604,11 @@ class FileManager {
 
         if (this.fileCountBadge) {
             this.fileCountBadge.textContent = totalCount;
+        }
+
+        // Show/hide selection bar based on whether any files are selected
+        if (selectionBar) {
+            selectionBar.hidden = selectedCount === 0 || totalCount === 0;
         }
 
         // Update Process Analysis button state
