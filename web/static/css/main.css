@@ -1144,7 +1144,7 @@ body {
     }
     
     .right-panel {
-        height: 50vh;
+        display: none;
     }
     
     .header h1 {
