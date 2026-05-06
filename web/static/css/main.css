@@ -44,6 +44,53 @@
 
     /* Touch targets */
     --touch-target: 44px;
+
+    /* Extended colour palette */
+    --color-primary-dark:         #0099cc;
+    --color-success-light:        #4ade80;
+    --color-success-light-rgb:    74, 222, 128;
+    --color-error-light:          #f87171;
+    --color-error-light-rgb:      248, 113, 113;
+    --color-error-dark:           #dc2626;
+    --color-error-dark-rgb:       220, 38, 38;
+    --color-warning-light:        #fbbf24;
+    --color-warning-light-rgb:    251, 191, 36;
+    --color-accent:               #ff6b35;
+    --color-accent-rgb:           255, 107, 53;
+    --color-accent-light:         #ff8c42;
+
+    /* Deep surface */
+    --color-deep:                 #0f3460;
+    --color-deep-rgb:             15, 52, 96;
+
+    /* Disabled state */
+    --color-disabled:             #6c757d;
+
+    /* Modal (light-mode component) */
+    --color-modal-bg:             #ffffff;
+    --color-modal-text:           #333333;
+    --color-modal-footer:         #f8f9fa;
+    --color-modal-border:         #dee2e6;
+    --color-modal-btn:            #007bff;
+    --color-modal-btn-hover:      #0056b3;
+    --color-modal-header-start:   #667eea;
+    --color-modal-header-end:     #764ba2;
+
+    /* Scrollbar */
+    --color-scrollbar-track:      #f1f1f1;
+    --color-scrollbar-thumb:      #c1c1c1;
+    --color-scrollbar-thumb-hover:#a8a8a8;
+
+    /* Legacy Bootstrap-style alert colours */
+    --color-alert-warning-bg:     #fff3cd;
+    --color-alert-warning-border: #ffeaa7;
+    --color-alert-warning-text:   #856404;
+    --color-alert-error-bg:       #f8d7da;
+    --color-alert-error-border:   #f5c6cb;
+    --color-alert-error-text:     #721c24;
+    --color-alert-neutral-bg:     #e2e3e5;
+    --color-alert-neutral-border: #d6d8db;
+    --color-alert-neutral-text:   #383d41;
 }
 
 /* Screen-reader-only utility */
@@ -83,8 +130,8 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #0a0a0f;
-    color: #ffffff;
+    background: var(--color-bg);
+    color: var(--color-text);
     line-height: 1.4;
     font-weight: 400;
     font-size: 13px;  /* VATSIM Radar base font size */
@@ -93,12 +140,12 @@ body {
 
 /* Header */
 .header {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-2) 50%, var(--color-deep) 100%);
+    color: var(--color-text);
     padding: 20px;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    border-bottom: 2px solid #00d4ff;
+    border-bottom: 2px solid var(--color-primary);
     position: relative;
     overflow: hidden;
 }
@@ -118,7 +165,7 @@ body {
 .header p {
     font-size: 14px;  /* VATSIM Radar subtitle size */
     opacity: 0.9;
-    color: #00d4ff;
+    color: var(--color-primary);
     font-weight: 400;
     position: relative;
     z-index: 1;
@@ -130,15 +177,15 @@ body {
     height: calc(100vh - 100px);
     margin: 0;
     padding: 0;
-    background: #0a0a0f;
+    background: var(--color-bg);
     gap: 0;
 }
 
 /* Left Panel */
 .left-panel {
     width: 400px;  /* VATSIM Radar panel width */
-    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-    border-right: 2px solid #00d4ff;
+    background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-2) 100%);
+    border-right: 2px solid var(--color-primary);
     padding: 16px;  /* VATSIM Radar padding */
     overflow-y: auto;
     box-shadow: 4px 0 20px rgba(0,0,0,0.5);
@@ -152,21 +199,21 @@ body {
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
 }
 
 /* File Upload Section */
 .file-upload-section {
     margin-bottom: 20px;  /* VATSIM Radar spacing */
-    background: rgba(15, 52, 96, 0.3);
+    background: rgba(var(--color-deep-rgb), 0.3);
     border-radius: 8px;  /* VATSIM Radar border radius */
     padding: 16px;
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.3);
     backdrop-filter: blur(10px);
 }
 
 .file-upload-section h3 {
-    color: #00d4ff;
+    color: var(--color-primary);
     margin-bottom: 12px;
     font-size: 14px;  /* VATSIM Radar section title */
     font-weight: 600;
@@ -176,11 +223,11 @@ body {
 }
 
 .upload-area {
-    border: 2px dashed #00d4ff;
+    border: 2px dashed var(--color-primary);
     border-radius: 8px;
     padding: 6px 16px;
     text-align: center;
-    background: rgba(15, 52, 96, 0.2);
+    background: rgba(var(--color-deep-rgb), 0.2);
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -188,30 +235,30 @@ body {
 }
 
 .upload-area:hover {
-    border-color: #ff6b35;
-    background: rgba(255, 107, 53, 0.1);
+    border-color: var(--color-accent);
+    background: rgba(var(--color-accent-rgb), 0.1);
     transform: scale(1.01);
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 4px 15px rgba(var(--color-accent-rgb), 0.3);
 }
 
 .upload-area.dragover {
-    border-color: #4ade80;
-    background: rgba(74, 222, 128, 0.1);
+    border-color: var(--color-success-light);
+    background: rgba(var(--color-success-light-rgb), 0.1);
     transform: scale(1.01);
-    box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
+    box-shadow: 0 4px 15px rgba(var(--color-success-light-rgb), 0.3);
 }
 
 .upload-content p {
     margin: 4px 0;
-    color: #ffffff;
+    color: var(--color-text);
     font-size: 12px;  /* VATSIM Radar text size */
     font-weight: 400;
 }
 
 /* Add retry button styles */
 .retry-btn {
-    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
-    color: #16213e;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-surface-2);
     border: none;
     padding: 8px 16px;
     border-radius: 6px;
@@ -222,26 +269,26 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(var(--color-primary-rgb), 0.3);
 }
 
 .retry-btn:hover {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+    color: var(--color-text);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+    box-shadow: 0 4px 12px rgba(var(--color-accent-rgb), 0.4);
 }
 
 /* Processing time display */
 .processing-time {
     text-align: center;
-    color: #00d4ff;
+    color: var(--color-primary);
     font-size: 11px;  /* VATSIM Radar small text */
     margin-top: 12px;
     padding: 8px;
-    background: rgba(15, 52, 96, 0.4);
+    background: rgba(var(--color-deep-rgb), 0.4);
     border-radius: 6px;
-    border: 1px solid #00d4ff;
+    border: 1px solid var(--color-primary);
     font-weight: 500;
     backdrop-filter: blur(5px);
 }
@@ -259,41 +306,41 @@ body {
 }
 
 .upload-status.info {
-    background: rgba(15, 52, 96, 0.4);
-    color: #00d4ff;
-    border-color: #00d4ff;
+    background: rgba(var(--color-deep-rgb), 0.4);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
 }
 
 .upload-status.success {
     background: rgba(26, 46, 26, 0.4);
-    color: #4ade80;
-    border-color: #4ade80;
+    color: var(--color-success-light);
+    border-color: var(--color-success-light);
 }
 
 .upload-status.error {
     background: rgba(46, 26, 26, 0.4);
-    color: #f87171;
-    border-color: #f87171;
+    color: var(--color-error-light);
+    border-color: var(--color-error-light);
 }
 
 .upload-status.warning {
     background: rgba(46, 42, 26, 0.4);
-    color: #fbbf24;
-    border-color: #fbbf24;
+    color: var(--color-warning-light);
+    border-color: var(--color-warning-light);
 }
 
 /* File Library Section */
 .file-library-section {
     margin-bottom: 20px;
-    background: rgba(15, 52, 96, 0.3);
+    background: rgba(var(--color-deep-rgb), 0.3);
     border-radius: 8px;
     padding: 16px;
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.3);
     backdrop-filter: blur(10px);
 }
 
 .file-library-section h3 {
-    color: #00d4ff;
+    color: var(--color-primary);
     margin-bottom: 12px;
     font-size: 14px;  /* VATSIM Radar section title */
     font-weight: 600;
@@ -310,9 +357,9 @@ body {
 
 .control-btn {
     padding: 6px 12px;
-    background: rgba(15, 52, 96, 0.6);
-    color: #00d4ff;
-    border: 1px solid #00d4ff;
+    background: rgba(var(--color-deep-rgb), 0.6);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
     border-radius: 6px;
     cursor: pointer;
     font-size: 11px;  /* VATSIM Radar button text */
@@ -324,31 +371,31 @@ body {
 }
 
 .control-btn:hover {
-    background: #00d4ff;
-    color: #16213e;
+    background: var(--color-primary);
+    color: var(--color-surface-2);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(var(--color-primary-rgb), 0.3);
 }
 
 .delete-all-btn {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    color: white;
-    border: 1px solid #dc2626;
+    background: linear-gradient(135deg, var(--color-error-dark) 0%, var(--color-error-dark) 100%);
+    color: var(--color-text);
+    border: 1px solid var(--color-error-dark);
 }
 
 .delete-all-btn:hover {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-error) 0%, var(--color-error-dark) 100%);
+    color: var(--color-text);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+    box-shadow: 0 4px 12px rgba(var(--color-error-dark-rgb), 0.4);
 }
 
 .file-list {
     max-height: 280px;  /* VATSIM Radar list height */
     overflow-y: auto;
-    border: 1px solid #00d4ff;
+    border: 1px solid var(--color-primary);
     border-radius: 8px;
-    background: rgba(15, 52, 96, 0.2);
+    background: rgba(var(--color-deep-rgb), 0.2);
     margin-bottom: 12px;
     backdrop-filter: blur(5px);
 }
@@ -358,7 +405,7 @@ body {
     align-items: center;
     padding: 6px 10px;
     border-bottom: 1px solid rgba(26, 26, 46, 0.5);
-    background: rgba(15, 52, 96, 0.1);
+    background: rgba(var(--color-deep-rgb), 0.1);
     transition: all 0.3s ease;
 }
 
@@ -374,7 +421,7 @@ body {
 .file-item input[type="checkbox"] {
     margin-right: 10px;
     transform: scale(1.1);
-    accent-color: #00d4ff;
+    accent-color: var(--color-primary);
 }
 
 /* Add validation status styles */
@@ -389,21 +436,21 @@ body {
 }
 
 .validation-status.valid {
-    color: #4ade80;
+    color: var(--color-success-light);
     background: rgba(26, 46, 26, 0.4);
-    border: 1px solid #4ade80;
+    border: 1px solid var(--color-success-light);
 }
 
 .validation-status.invalid {
-    color: #f87171;
+    color: var(--color-error-light);
     background: rgba(46, 26, 26, 0.4);
-    border: 1px solid #f87171;
+    border: 1px solid var(--color-error-light);
 }
 
 .validation-status.pending {
-    color: #fbbf24;
+    color: var(--color-warning-light);
     background: rgba(46, 42, 26, 0.4);
-    border: 1px solid #fbbf24;
+    border: 1px solid var(--color-warning-light);
 }
 
 /* New validation indicators (smaller) */
@@ -421,27 +468,27 @@ body {
 
 .validation-indicator.valid {
     background: rgba(26, 46, 26, 0.4);
-    color: #4ade80;
-    border: 1px solid #4ade80;
+    color: var(--color-success-light);
+    border: 1px solid var(--color-success-light);
 }
 
 .validation-indicator.invalid {
     background: rgba(46, 26, 26, 0.4);
-    color: #f87171;
-    border: 1px solid #f87171;
+    color: var(--color-error-light);
+    border: 1px solid var(--color-error-light);
 }
 
 .validation-indicator.pending {
     background: rgba(46, 42, 26, 0.4);
-    color: #fbbf24;
-    border: 1px solid #fbbf24;
+    color: var(--color-warning-light);
+    border: 1px solid var(--color-warning-light);
 }
 
 /* Delete button styles */
 .delete-btn {
     background: none;
     border: none;
-    color: #f87171;
+    color: var(--color-error-light);
     font-size: 12px;
     cursor: pointer;
     padding: 2px 4px;
@@ -454,8 +501,8 @@ body {
 }
 
 .delete-btn:hover {
-    background: rgba(248, 113, 113, 0.2);
-    color: #f87171;
+    background: rgba(var(--color-error-light-rgb), 0.2);
+    color: var(--color-error-light);
     opacity: 1;
     transform: scale(1.1);
 }
@@ -473,38 +520,38 @@ body {
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.3s ease;
-    color: #ffffff;
+    color: var(--color-text);
     font-weight: 400;
     flex: 1;
     font-size: 12px;  /* VATSIM Radar text size */
 }
 
 .file-item label:hover {
-    background-color: rgba(0, 212, 255, 0.1);
+    background-color: rgba(var(--color-primary-rgb), 0.1);
 }
 
 .file-item input[type="checkbox"]:checked + label {
-    background-color: rgba(0, 212, 255, 0.2);
-    border-left: 3px solid #00d4ff;
+    background-color: rgba(var(--color-primary-rgb), 0.2);
+    border-left: 3px solid var(--color-primary);
     padding-left: 12px;
 }
 
 .file-item .filename {
     flex: 1;
     font-weight: 500;
-    color: #ffffff;
+    color: var(--color-text);
     font-size: 12px;  /* VATSIM Radar text size */
 }
 
 .file-item .filesize {
-    color: #00d4ff;
+    color: var(--color-primary);
     font-size: 10px;  /* VATSIM Radar small text */
     margin: 0 8px;
     font-weight: 400;
 }
 
 .file-item .upload-date {
-    color: #00d4ff;
+    color: var(--color-primary);
     font-size: 10px;  /* VATSIM Radar small text */
     margin: 0 8px;
     font-weight: 400;
@@ -516,17 +563,17 @@ body {
 }
 
 .file-item.error {
-    border-left: 3px solid #f87171;
+    border-left: 3px solid var(--color-error-light);
     background: rgba(46, 26, 26, 0.3);
 }
 
 .file-item.warning {
-    border-left: 3px solid #fbbf24;
+    border-left: 3px solid var(--color-warning-light);
     background: rgba(46, 42, 26, 0.3);
 }
 
 .file-item.duplicate-route {
-    border-left: 3px solid #fbbf24;
+    border-left: 3px solid var(--color-warning-light);
     background: rgba(46, 42, 26, 0.3);
 }
 
@@ -537,18 +584,18 @@ body {
 }
 
 .file-item.duplicate-route label {
-    color: #fbbf24;
+    color: var(--color-warning-light);
 }
 
 .file-item.duplicate-route .filename {
-    color: #fbbf24;
+    color: var(--color-warning-light);
 }
 
 /* System limitation warning */
 .system-limitation-warning {
     background: rgba(46, 42, 26, 0.4);
-    border: 1px solid #fbbf24;
-    color: #fbbf24;
+    border: 1px solid var(--color-warning-light);
+    color: var(--color-warning-light);
     padding: 12px;
     border-radius: 6px;
     margin: 12px 0;
@@ -558,7 +605,7 @@ body {
 
 .system-limitation-warning h4 {
     margin: 0 0 8px 0;
-    color: #fbbf24;
+    color: var(--color-warning-light);
     font-weight: 600;
     font-size: 12px;  /* VATSIM Radar warning title */
     text-transform: uppercase;
@@ -588,28 +635,28 @@ body {
 
 .route-validation-status.duplicate {
     background: rgba(46, 42, 26, 0.4);
-    color: #fbbf24;
-    border: 1px solid #fbbf24;
+    color: var(--color-warning-light);
+    border: 1px solid var(--color-warning-light);
 }
 
 .route-validation-status.unique {
     background: rgba(26, 46, 26, 0.4);
-    color: #4ade80;
-    border: 1px solid #4ade80;
+    color: var(--color-success-light);
+    border: 1px solid var(--color-success-light);
 }
 
 /* Time Controls */
 .time-controls {
     margin-top: 12px;
     padding: 12px;
-    background: rgba(15, 52, 96, 0.2);
+    background: rgba(var(--color-deep-rgb), 0.2);
     border-radius: 6px;
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.3);
     backdrop-filter: blur(5px);
 }
 
 .time-controls h4 {
-    color: #00d4ff;
+    color: var(--color-primary);
     margin: 0 0 8px 0;
     font-size: 12px;  /* VATSIM Radar small text */
     font-weight: 600;
@@ -631,7 +678,7 @@ body {
 }
 
 .time-input label {
-    color: #00d4ff;
+    color: var(--color-primary);
     font-size: 10px;  /* VATSIM Radar small text */
     font-weight: 500;
     text-transform: uppercase;
@@ -639,10 +686,10 @@ body {
 }
 
 .time-field {
-    background: rgba(15, 52, 96, 0.4);
-    border: 1px solid #00d4ff;
+    background: rgba(var(--color-deep-rgb), 0.4);
+    border: 1px solid var(--color-primary);
     border-radius: 4px;
-    color: #ffffff;
+    color: var(--color-text);
     padding: 4px 8px;
     font-size: 11px;  /* VATSIM Radar button text */
     font-family: 'Inter', sans-serif;
@@ -653,7 +700,7 @@ body {
 .time-field:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.3);
 }
 
 .time-field::-webkit-calendar-picker-indicator {
@@ -677,13 +724,13 @@ body {
 
 .selection-summary {
     padding: 10px;
-    background: rgba(15, 52, 96, 0.4);
+    background: rgba(var(--color-deep-rgb), 0.4);
     border-radius: 6px;
     font-size: 11px;  /* VATSIM Radar small text */
-    color: #ffffff;
+    color: var(--color-text);
     text-align: center;
     font-weight: 500;
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.3);
     backdrop-filter: blur(5px);
     margin-bottom: 12px;
 }
@@ -691,83 +738,83 @@ body {
 /* Controls Section */
 .controls-section {
     margin-bottom: 20px;
-    background: rgba(15, 52, 96, 0.3);
+    background: rgba(var(--color-deep-rgb), 0.3);
     border-radius: 8px;
     padding: 16px;
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.3);
     backdrop-filter: blur(10px);
 }
 
 .process-button {
     width: 100%;
     padding: 10px;
-    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
-    color: #16213e;
-    border: 1px solid #00d4ff;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-surface-2);
+    border: 1px solid var(--color-primary);
     border-radius: 6px;
     font-size: 11px;  /* VATSIM Radar button text */
     font-weight: 600;
     cursor: pointer;
     margin-bottom: 12px;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0,212,255,0.3);
+    box-shadow: 0 2px 8px rgba(var(--color-primary-rgb),0.3);
     text-transform: uppercase;
     letter-spacing: 0.02em;
 }
 
 .process-button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,212,255,0.4);
-    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-    color: white;
+    box-shadow: 0 4px 12px rgba(var(--color-primary-rgb),0.4);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+    color: var(--color-text);
 }
 
 .process-button:disabled {
-    background: #0f3460;
-    color: #6c757d;
+    background: var(--color-deep);
+    color: var(--color-disabled);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
-    border-color: #6c757d;
+    border-color: var(--color-disabled);
 }
 
 .process-button.disabled-duplicates {
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-    color: #16213e;
+    background: linear-gradient(135deg, var(--color-warning-light) 0%, var(--color-warning) 100%);
+    color: var(--color-surface-2);
     cursor: not-allowed;
     opacity: 0.8;
-    box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
-    border-color: #fbbf24;
+    box-shadow: 0 2px 8px rgba(var(--color-warning-light-rgb), 0.3);
+    border-color: var(--color-warning-light);
 }
 
 .process-button.disabled-duplicates:hover {
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    background: linear-gradient(135deg, var(--color-warning-light) 0%, var(--color-warning) 100%);
     transform: none;
-    box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+    box-shadow: 0 2px 8px rgba(var(--color-warning-light-rgb), 0.3);
 }
 
 /* Processing button states */
 .process-button.processing {
-    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent) 100%);
+    color: var(--color-text);
 }
 
 .process-button.error {
-    background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-error-light) 0%, var(--color-error) 100%);
+    color: var(--color-text);
 }
 
 .process-button.success {
-    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-    color: #16213e;
+    background: linear-gradient(135deg, var(--color-success-light) 0%, var(--color-success-light) 100%);
+    color: var(--color-surface-2);
 }
 
 .briefing-button {
     width: 100%;
     padding: 8px;
-    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
-    color: #16213e;
-    border: 1px solid #00d4ff;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-surface-2);
+    border: 1px solid var(--color-primary);
     border-radius: 6px;
     font-size: 11px;  /* VATSIM Radar button text */
     font-weight: 600;
@@ -775,37 +822,37 @@ body {
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    box-shadow: 0 2px 8px rgba(0,212,255,0.3);
+    box-shadow: 0 2px 8px rgba(var(--color-primary-rgb),0.3);
 }
 
 .briefing-button:hover:not(:disabled) {
-    background: #00d4ff;
-    color: #16213e;
+    background: var(--color-primary);
+    color: var(--color-surface-2);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,212,255,0.4);
+    box-shadow: 0 4px 12px rgba(var(--color-primary-rgb),0.4);
 }
 
 .briefing-button:disabled {
-    background: #0f3460;
-    color: #6c757d;
+    background: var(--color-deep);
+    color: var(--color-disabled);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
-    border-color: #6c757d;
+    border-color: var(--color-disabled);
 }
 
 /* Progress Section */
 .progress-section {
     margin-top: 16px;
     padding: 16px;
-    background: rgba(15, 52, 96, 0.4);
+    background: rgba(var(--color-deep-rgb), 0.4);
     border-radius: 8px;
-    border: 1px solid #00d4ff;
+    border: 1px solid var(--color-primary);
     backdrop-filter: blur(10px);
 }
 
 .progress-section h3 {
-    color: #00d4ff;
+    color: var(--color-primary);
     margin-bottom: 12px;
     font-size: 14px;  /* VATSIM Radar section title */
     font-weight: 600;
@@ -823,7 +870,7 @@ body {
 }
 
 .progress-step:hover {
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(var(--color-primary-rgb), 0.05);
     border-radius: 4px;
     padding-left: 8px;
 }
@@ -837,34 +884,34 @@ body {
     font-size: 1.1rem;
     width: 20px;
     text-align: center;
-    color: #00d4ff;
+    color: var(--color-primary);
 }
 
 .step-text {
     flex: 1;
     font-size: 12px;  /* VATSIM Radar text size */
-    color: #ffffff;
+    color: var(--color-text);
     font-weight: 400;
 }
 
 .progress-step.completed .step-text {
-    color: #4ade80;
+    color: var(--color-success-light);
     font-weight: 600;
 }
 
 .progress-step.current .step-text {
-    color: #00d4ff;
+    color: var(--color-primary);
     font-weight: 600;
 }
 
 /* Enhanced error states */
 .progress-error {
     background: rgba(46, 26, 26, 0.4);
-    border: 1px solid #f87171;
+    border: 1px solid var(--color-error-light);
     border-radius: 6px;
     padding: 12px;
     margin: 12px 0;
-    color: #f87171;
+    color: var(--color-error-light);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -875,7 +922,7 @@ body {
 
 .progress-error .step-icon {
     font-size: 1.3rem;
-    color: #f87171;
+    color: var(--color-error-light);
 }
 
 .progress-error .step-text {
@@ -888,8 +935,8 @@ body {
 .right-panel {
     flex: 1;
     position: relative;
-    background: #0a0a0f;
-    border-left: 3px solid #00d4ff;
+    background: var(--color-bg);
+    border-left: 3px solid var(--color-primary);
 }
 
 .map-container {
@@ -904,7 +951,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: #00d4ff;
+    color: var(--color-primary);
     font-size: 1.3rem;
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     font-weight: 600;
@@ -932,7 +979,7 @@ body {
 }
 
 .modal-content {
-    background-color: white;
+    background-color: var(--color-modal-bg);
     margin: 5% auto;
     border-radius: 12px;
     width: 90%;
@@ -943,8 +990,8 @@ body {
 }
 
 .modal-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-modal-header-start) 0%, var(--color-modal-header-end) 100%);
+    color: var(--color-text);
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -960,7 +1007,7 @@ body {
 .close {
     background: none;
     border: none;
-    color: white;
+    color: var(--color-text);
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
@@ -977,18 +1024,18 @@ body {
     padding: 20px;
     max-height: 60vh;
     overflow-y: auto;
-    color: #333333;
-    background-color: #ffffff;
+    color: var(--color-modal-text);
+    background-color: var(--color-modal-bg);
 }
 
 .briefing-content {
-    color: #333333;
-    background-color: #ffffff;
+    color: var(--color-modal-text);
+    background-color: var(--color-modal-bg);
 }
 
 .briefing-content pre {
-    color: #333333 !important;
-    background-color: #ffffff !important;
+    color: var(--color-modal-text) !important;
+    background-color: var(--color-modal-bg) !important;
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
     line-height: 1.4;
@@ -999,8 +1046,8 @@ body {
 
 .modal-footer {
     padding: 15px 20px;
-    background: #f8f9fa;
-    border-top: 1px solid #dee2e6;
+    background: var(--color-modal-footer);
+    border-top: 1px solid var(--color-modal-border);
     display: flex;
     gap: 10px;
     justify-content: flex-end;
@@ -1008,8 +1055,8 @@ body {
 
 .modal-btn {
     padding: 10px 20px;
-    background: #007bff;
-    color: white;
+    background: var(--color-modal-btn);
+    color: var(--color-text);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -1018,7 +1065,7 @@ body {
 }
 
 .modal-btn:hover {
-    background: #0056b3;
+    background: var(--color-modal-btn-hover);
 }
 
 
@@ -1028,8 +1075,8 @@ body {
     display: inline-block;
     width: 16px;
     height: 16px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #007bff;
+    border: 2px solid var(--color-scrollbar-track);
+    border-top: 2px solid var(--color-modal-btn);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-right: 8px;
@@ -1042,9 +1089,9 @@ body {
 
 /* Timeout warning */
 .timeout-warning {
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
-    color: #856404;
+    background: var(--color-alert-warning-bg);
+    border: 1px solid var(--color-alert-warning-border);
+    color: var(--color-alert-warning-text);
     padding: 10px;
     border-radius: 6px;
     margin: 10px 0;
@@ -1053,9 +1100,9 @@ body {
 
 /* Network error states */
 .network-error {
-    background: #f8d7da;
-    border: 1px solid #f5c6cb;
-    color: #721c24;
+    background: var(--color-alert-error-bg);
+    border: 1px solid var(--color-alert-error-border);
+    color: var(--color-alert-error-text);
     padding: 10px;
     border-radius: 6px;
     margin: 10px 0;
@@ -1064,9 +1111,9 @@ body {
 
 /* File size warnings */
 .file-size-warning {
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
-    color: #856404;
+    background: var(--color-alert-warning-bg);
+    border: 1px solid var(--color-alert-warning-border);
+    color: var(--color-alert-warning-text);
     padding: 8px 12px;
     border-radius: 4px;
     margin: 5px 0;
@@ -1075,9 +1122,9 @@ body {
 
 /* Duplicate file warnings */
 .duplicate-warning {
-    background: #e2e3e5;
-    border: 1px solid #d6d8db;
-    color: #383d41;
+    background: var(--color-alert-neutral-bg);
+    border: 1px solid var(--color-alert-neutral-border);
+    color: var(--color-alert-neutral-text);
     padding: 8px 12px;
     border-radius: 4px;
     margin: 5px 0;
@@ -1116,17 +1163,17 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--color-scrollbar-track);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
+    background: var(--color-scrollbar-thumb);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: var(--color-scrollbar-thumb-hover);
 } 
 
 /* ── Toast Notifications ──────────────────────────────────────── */
@@ -1143,7 +1190,7 @@ body {
 .toast {
     padding: 0.75rem 1rem;
     border-radius: var(--radius-md);
-    color: #fff;
+    color: var(--color-text);
     font-size: var(--font-size-sm);
     max-width: 320px;
     pointer-events: auto;
@@ -1151,7 +1198,7 @@ body {
 }
 .toast--success { background: var(--color-success); }
 .toast--error   { background: var(--color-error); }
-.toast--warning { background: var(--color-warning); color: #1a1a1a; }
+.toast--warning { background: var(--color-warning); color: var(--color-modal-text); }
 .toast--info    { background: var(--color-surface-2); border: 1px solid var(--color-border); }
 @keyframes toastSlideIn {
     from { transform: translateX(110%); opacity: 0; }
@@ -1174,7 +1221,7 @@ body {
     font-size: var(--font-size-sm);
     opacity: 0.45;
     transition: opacity var(--duration-normal), color var(--duration-normal);
-    background: rgba(0, 212, 255, 0.04);
+    background: rgba(var(--color-primary-rgb), 0.04);
 }
 .progress-step--done   { opacity: 1; color: var(--color-success); }
 .progress-step--active { opacity: 1; color: var(--color-primary); }
@@ -1197,7 +1244,7 @@ body {
 .upload-zone:hover,
 .upload-zone.dragover {
     border-color: var(--color-primary);
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(var(--color-primary-rgb), 0.05);
 }
 .upload-zone:focus-visible {
     outline: 2px solid var(--color-primary);
@@ -1244,7 +1291,7 @@ body {
 .file-item-v2:hover { background: rgba(255,255,255,0.04); }
 .file-item-v2--selected {
     border-color: var(--color-primary);
-    background: rgba(0, 212, 255, 0.06);
+    background: rgba(var(--color-primary-rgb), 0.06);
 }
 .file-item-v2--invalid {
     border-color: var(--color-error);
@@ -1484,4 +1531,15 @@ body {
     margin-top: var(--space-4);
     color: var(--color-text-muted);
     font-size: var(--font-size-sm);
+}
+
+/* ── Responsive Breakpoints ──────────────────────────────────────── */
+
+/* Ensure all interactive elements meet minimum touch target */
+button, .clickable { min-height: var(--touch-target); }
+
+/* Mobile: 375px — full-column stack */
+@media (max-width: 375px) {
+    .main-container { flex-direction: column; }
+    .left-panel, .right-panel { width: 100%; }
 }

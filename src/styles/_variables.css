@@ -1,0 +1,102 @@
+/* VATSIM-Chaos Design Tokens — canonical source (Phase 3)
+ *
+ * This file is the canonical reference for all CSS design tokens.
+ * Until Phase 5 (Vite build pipeline), the :root block also lives in
+ * web/static/css/main.css which is served directly by Flask.
+ * When Phase 5 lands, this file will be imported by the Vite entry point
+ * and the duplicate in main.css removed.
+ */
+
+:root {
+    /* Colours */
+    --color-primary:     #00d4ff;
+    --color-primary-rgb: 0, 212, 255;
+    --color-success:    #10b981;
+    --color-error:      #ef4444;
+    --color-warning:    #f59e0b;
+    --color-bg:         #0a0a0f;
+    --color-surface:    #1a1a2e;
+    --color-surface-2:  #16213e;
+    --color-text:       #ffffff;
+    --color-text-muted: #94a3b8;
+    --color-border:     rgba(0, 212, 255, 0.3);
+
+    /* Spacing */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-size-sm:   0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg:   1.125rem;
+    --font-size-xl:   1.25rem;
+    --radius-sm: 4px;
+    --duration-slow:  400ms;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold:   700;
+
+    /* Radius */
+    --radius-md: 8px;
+    --radius-lg: 12px;
+
+    /* Animation */
+    --duration-fast:   150ms;
+    --duration-normal: 250ms;
+    --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+
+    /* Touch targets */
+    --touch-target: 44px;
+
+    /* Extended colour palette */
+    --color-primary-dark:         #0099cc;
+    --color-success-light:        #4ade80;
+    --color-success-light-rgb:    74, 222, 128;
+    --color-error-light:          #f87171;
+    --color-error-light-rgb:      248, 113, 113;
+    --color-error-dark:           #dc2626;
+    --color-error-dark-rgb:       220, 38, 38;
+    --color-warning-light:        #fbbf24;
+    --color-warning-light-rgb:    251, 191, 36;
+    --color-accent:               #ff6b35;
+    --color-accent-rgb:           255, 107, 53;
+    --color-accent-light:         #ff8c42;
+
+    /* Deep surface */
+    --color-deep:                 #0f3460;
+    --color-deep-rgb:             15, 52, 96;
+
+    /* Disabled state */
+    --color-disabled:             #6c757d;
+
+    /* Modal (light-mode component) */
+    --color-modal-bg:             #ffffff;
+    --color-modal-text:           #333333;
+    --color-modal-footer:         #f8f9fa;
+    --color-modal-border:         #dee2e6;
+    --color-modal-btn:            #007bff;
+    --color-modal-btn-hover:      #0056b3;
+    --color-modal-header-start:   #667eea;
+    --color-modal-header-end:     #764ba2;
+
+    /* Scrollbar */
+    --color-scrollbar-track:      #f1f1f1;
+    --color-scrollbar-thumb:      #c1c1c1;
+    --color-scrollbar-thumb-hover:#a8a8a8;
+
+    /* Legacy Bootstrap-style alert colours */
+    --color-alert-warning-bg:     #fff3cd;
+    --color-alert-warning-border: #ffeaa7;
+    --color-alert-warning-text:   #856404;
+    --color-alert-error-bg:       #f8d7da;
+    --color-alert-error-border:   #f5c6cb;
+    --color-alert-error-text:     #721c24;
+    --color-alert-neutral-bg:     #e2e3e5;
+    --color-alert-neutral-border: #d6d8db;
+    --color-alert-neutral-text:   #383d41;
+}
