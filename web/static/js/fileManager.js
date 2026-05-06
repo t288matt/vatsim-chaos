@@ -688,7 +688,10 @@ class FileManager {
                 
                 // Remove from selected files if it was selected
                 this.selectedFiles.delete(filename);
-                
+
+                // Clear validation cache for this file
+                this.fileValidationCache.delete(filename);
+
                 // Reload the flight plan library to update the list
                 await this.loadFileLibrary();
                 

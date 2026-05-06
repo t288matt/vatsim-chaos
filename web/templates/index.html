@@ -65,20 +65,20 @@
             <div class="panel-section">
                 <h2 class="panel-section__title">
                     Flight Plans
-                    <span class="file-count-badge" id="fileCountBadge">0</span>
+                    <span class="file-count-badge" id="fileCountBadge" aria-label="Number of uploaded files">0</span>
                 </h2>
                 <div id="emptyState" class="empty-state">
                     <svg aria-hidden="true" class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
                         <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
                     </svg>
-                    <p class="empty-state__title">No flight plans yet</p>
+                    <h3 class="empty-state__title">No flight plans yet</h3>
                     <p class="empty-state__body">Upload SimBrief XML files to get started</p>
                 </div>
                 <div id="fileList" class="file-list" role="list" aria-label="Uploaded flight plan files" hidden>
                     <!-- Dynamic file list with checkboxes -->
                 </div>
-                <div id="selectionBar" class="selection-bar" hidden>
+                <div id="selectionBar" class="selection-bar" hidden aria-live="polite" aria-atomic="true">
                     <span id="selectionCount">0 of 0 selected</span>
                     <button class="btn btn--secondary btn--sm" id="clearSelectionBtn">Clear selection</button>
                 </div>
