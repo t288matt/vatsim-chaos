@@ -90,14 +90,12 @@ class Processor {
                 })
             });
             
-            if (response.ok) {
-                const result = await response.json();
-                this.showMessage('Processing started successfully!', 'success');
-                this.monitorProgress();
-            } else {
-                const error = await response.json();
-                throw new Error(error.error || 'Processing failed');
+            const body = await response.json();
+            if (!body.ok) {
+                throw new Error(body.error || 'Processing failed');
             }
+            this.showMessage('Processing started successfully!', 'success');
+            this.monitorProgress();
         } catch (error) {
             this.handleProcessingError(error.message);
         }
@@ -147,12 +145,12 @@ class Processor {
                 })
             });
             
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            const routeBody = await response.json();
+            if (!routeBody.ok) {
+                throw new Error(routeBody.error || 'Route validation failed');
             }
-            
-            const routeValidation = await response.json();
-            
+            const routeValidation = routeBody.data;
+
             if (routeValidation.has_duplicates) {
                 const duplicateDetails = routeValidation.duplicate_routes.map(route => 
                     `${route.origin}-${route.destination} (${route.count} files: ${route.files.join(', ')})`
@@ -205,12 +203,11 @@ class Processor {
                 }
                 
                 const response = await fetch('/status');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const statusBody = await response.json();
+                if (!statusBody.ok) {
+                    throw new Error(statusBody.error || `HTTP ${response.status}`);
                 }
-                
-                const status = await response.json();
+                const status = statusBody.data;
 
                 // Update elapsed time
                 const elapsed = Math.round((Date.now() - this.processingStartTime) / 1000);

@@ -40,8 +40,6 @@ app.config['MAX_CONTENT_LENGTH'] = config.MAX_FILE_SIZE
 # Absolute path to the repository root (parent of the web/ directory)
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# TODO Task 5.1: All routes will be updated to use these helpers.
-# Currently defined here for future use — callers migrated in Phase 5.
 def api_ok(data):
     """Standard success response envelope"""
     return jsonify({'ok': True, 'data': data})
@@ -75,31 +73,31 @@ def index():
 def upload_file():
     if 'files' not in request.files:
         logger.warning("Upload attempt with no files")
-        return jsonify({'error': 'No files provided'}), 400
-    
+        return api_error('No files provided')
+
     files = request.files.getlist('files')
     uploaded_files = []
-    
+
     # Edge case: Check disk space before upload
     if not check_disk_space():
         logger.error("Insufficient disk space for upload")
-        return jsonify({'error': 'Insufficient disk space on server'}), 507
-    
+        return api_error('Insufficient disk space on server', 507)
+
     # Edge case: Check memory usage
     if not check_memory_usage():
         logger.error("High memory usage detected")
-        return jsonify({'error': 'Server is under high load. Please try again later.'}), 503
-    
+        return api_error('Server is under high load. Please try again later.', 503)
+
     for file in files:
         if file and file.filename:
             # Validate file extension
             if not file.filename.lower().endswith('.xml'):
                 logger.warning(f"Invalid file type attempted: {file.filename}")
                 continue
-                
+
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            
+
             # Edge case: Check for filename conflicts
             if os.path.exists(filepath):
                 base, ext = os.path.splitext(filename)
@@ -109,24 +107,24 @@ def upload_file():
                     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     counter += 1
                 logger.info(f"Renamed duplicate file to: {filename}")
-            
+
             # Ensure upload directory exists
             os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            
+
             # Validate file size
             file.seek(0, 2)  # Seek to end
             file_size = file.tell()
             file.seek(0)  # Reset to beginning
-            
+
             if file_size > config.MAX_FILE_SIZE:
                 logger.error(f"File {filename} exceeds size limit: {file_size} bytes")
-                return jsonify({'error': f'File {filename} exceeds maximum size limit'}), 413
-            
+                return api_error(f'File {filename} exceeds maximum size limit', 413)
+
             # Edge case: Check if file is empty
             if file_size == 0:
                 logger.warning(f"Empty file skipped: {filename}")
                 continue
-            
+
             try:
                 file.save(filepath)
                 logger.info(f"File uploaded successfully: {filename} ({file_size} bytes)")
@@ -137,10 +135,10 @@ def upload_file():
                 })
             except Exception as e:
                 logger.error(f"Failed to save file {filename}: {str(e)}")
-                return jsonify({'error': f'Failed to save file {filename}'}), 500
-    
+                return api_error(f'Failed to save file {filename}', 500)
+
     logger.info(f"Upload completed: {len(uploaded_files)} files")
-    return jsonify({'uploaded': uploaded_files})
+    return api_ok({'uploaded': uploaded_files})
 
 def check_disk_space(min_space_gb=1):
     """Check if there's sufficient disk space"""
@@ -185,9 +183,9 @@ def list_files():
                         continue
         except OSError as e:
             logger.error(f"Error reading upload directory: {e}")
-            return jsonify({'error': 'Could not read file directory'}), 500
-    
-    return jsonify(files)
+            return api_error('Could not read file directory', 500)
+
+    return api_ok(files)
 
 @app.route('/delete-file/<filename>', methods=['DELETE'])
 def delete_file(filename):
@@ -203,30 +201,30 @@ def delete_file(filename):
         upload_dir = os.path.join(parent_dir, 'xml_files')
         if not os.path.abspath(filepath).startswith(os.path.abspath(upload_dir)):
             logger.error(f"Security violation: Attempt to delete file outside upload directory: {filename}")
-            return jsonify({'error': 'Invalid file path'}), 403
-        
+            return api_error('Invalid file path', 403)
+
         # Check if file exists
         if not os.path.exists(filepath):
             logger.warning(f"Delete requested for non-existent file: {filename}")
-            return jsonify({'error': 'File not found'}), 404
-        
+            return api_error('File not found', 404)
+
         # Check if file is actually an XML file
         if not filename.lower().endswith('.xml'):
             logger.warning(f"Delete requested for non-XML file: {filename}")
-            return jsonify({'error': 'Only XML files can be deleted'}), 400
-        
+            return api_error('Only XML files can be deleted')
+
         # Delete the file
         os.remove(filepath)
         logger.info(f"File deleted successfully: {filename}")
-        
-        return jsonify({'success': True, 'message': f'File {filename} deleted successfully'})
-        
+
+        return api_ok({'message': f'File {filename} deleted successfully'})
+
     except OSError as e:
         logger.error(f"Error deleting file {filename}: {e}")
-        return jsonify({'error': f'Failed to delete file: {str(e)}'}), 500
+        return api_error(f'Failed to delete file: {str(e)}', 500)
     except Exception as e:
         logger.error(f"Unexpected error deleting file {filename}: {e}")
-        return jsonify({'error': 'An unexpected error occurred'}), 500
+        return api_error('An unexpected error occurred', 500)
 
 @app.route('/delete-all-files', methods=['DELETE'])
 def delete_all_files():
@@ -240,8 +238,8 @@ def delete_all_files():
         
         if not os.path.exists(upload_dir):
             logger.warning("Upload directory does not exist")
-            return jsonify({'error': 'Upload directory not found'}), 404
-        
+            return api_error('Upload directory not found', 404)
+
         # Get all XML files in the directory
         xml_files = []
         for filename in os.listdir(upload_dir):
@@ -249,11 +247,11 @@ def delete_all_files():
                 filepath = os.path.join(upload_dir, filename)
                 if os.path.isfile(filepath):
                     xml_files.append(filename)
-        
+
         if not xml_files:
             logger.info("No XML files found to delete")
-            return jsonify({'success': True, 'message': 'No files to delete', 'deleted_count': 0})
-        
+            return api_ok({'message': 'No files to delete', 'deleted_count': 0})
+
         # Delete all XML files
         deleted_count = 0
         for filename in xml_files:
@@ -265,17 +263,16 @@ def delete_all_files():
             except OSError as e:
                 logger.error(f"Error deleting file {filename}: {e}")
                 # Continue with other files even if one fails
-        
+
         logger.info(f"Delete all completed: {deleted_count} files deleted")
-        return jsonify({
-            'success': True, 
+        return api_ok({
             'message': f'Successfully deleted {deleted_count} files',
             'deleted_count': deleted_count
         })
-        
+
     except Exception as e:
         logger.error(f"Unexpected error deleting all files: {e}")
-        return jsonify({'error': 'An unexpected error occurred'}), 500
+        return api_error('An unexpected error occurred', 500)
 
 @app.route('/validate/<filename>', methods=['GET'])
 def validate_file(filename):
@@ -289,51 +286,42 @@ def validate_file(filename):
         
         if not os.path.exists(filepath):
             logger.warning(f"Validation requested for non-existent file: {filename}")
-            return jsonify({'error': 'File not found'}), 404
-        
+            return api_error('File not found', 404)
+
         # Edge case: Check file size for validation
         file_size = os.path.getsize(filepath)
         logger.debug(f"[VALIDATE] File size: {file_size} bytes")
         if file_size > 50 * 1024 * 1024:  # 50MB limit for validation
             logger.warning(f"File too large for validation: {filename} ({file_size} bytes)")
-            return jsonify({
-                'valid': False,
-                'error': 'File too large for validation (max 50MB)'
-            }), 413
-            
+            return api_error('File too large for validation (max 50MB)', 413)
+
         # Import the extraction module to validate
         from extract_simbrief_xml_flightplan import extract_flight_plan_from_xml
-        
+
         with open(filepath, 'r', encoding='utf-8') as f:
             xml_content = f.read()
         logger.debug(f"[VALIDATE] Read XML content length: {len(xml_content)}")
-        
+
         # Edge case: Check for malformed XML
         if not xml_content.strip():
             logger.warning(f"[VALIDATE] File is empty: {filename}")
-            return jsonify({
-                'valid': False,
-                'error': 'File is empty'
-            }), 400
-        
+            return api_error('File is empty')
+
         # Try to parse with shared types
         try:
             flight_plan = extract_flight_plan_from_xml(filepath)
             logger.debug(f"[VALIDATE] extract_flight_plan_from_xml returned: {flight_plan}")
         except Exception as parse_exc:
             logger.error(f"[VALIDATE] Exception in extract_flight_plan_from_xml: {parse_exc}")
-            return jsonify({
-                'valid': False,
-                'error': f'Parse error: {parse_exc}'
-            }), 400
+            return api_error(f'Parse error: {parse_exc}')
         flight_plans = [flight_plan] if flight_plan else []
-        
+
         validation_result = {
             'valid': True,
             'flight_count': len(flight_plans),
             'flights': []
         }
-        
+
         for fp in flight_plans:
             validation_result['flights'].append({
                 'origin': fp.origin,
@@ -341,22 +329,16 @@ def validate_file(filename):
                 'aircraft_type': fp.aircraft_type,
                 'waypoint_count': len(fp.waypoints)
             })
-        
+
         logger.info(f"File validation successful: {filename} - {len(flight_plans)} flights")
-        return jsonify(validation_result)
-        
+        return api_ok(validation_result)
+
     except UnicodeDecodeError as e:
         logger.error(f"Unicode decode error for {filename}: {e}")
-        return jsonify({
-            'valid': False,
-            'error': 'File contains invalid characters'
-        }), 400
+        return api_error('File contains invalid characters')
     except Exception as e:
         logger.error(f"File validation failed: {filename} - {str(e)}", exc_info=True)
-        return jsonify({
-            'valid': False,
-            'error': str(e)
-        }), 400
+        return api_error(str(e))
 
 @app.route('/validate-same-routes', methods=['POST'])
 def validate_same_routes():
@@ -366,8 +348,8 @@ def validate_same_routes():
         selected_files = data.get('files', [])
         
         if not selected_files:
-            return jsonify({'error': 'No files selected'}), 400
-        
+            return api_error('No files selected')
+
         # Collect all routes from selected files
         all_routes = []
         route_details = {}
@@ -429,48 +411,46 @@ def validate_same_routes():
             })
         
         logger.info(f"Route validation completed: {len(duplicate_routes)} duplicate routes found")
-        return jsonify(validation_result)
-        
+        return api_ok(validation_result)
+
     except Exception as e:
         logger.error(f"Route validation failed: {str(e)}")
-        return jsonify({
-            'error': f'Route validation failed: {str(e)}'
-        }), 500
+        return api_error(f'Route validation failed: {str(e)}', 500)
 
 @app.route('/process', methods=['POST'])
 def process_files():
     if processing_status['is_processing']:
         logger.warning("Processing already in progress")
-        return jsonify({'error': 'Processing already in progress'}), 409
-    
-    data = request.get_json()
+        return api_error('Processing already in progress', 409)
+
+    data = request.get_json() or {}
     selected_files = data.get('files', [])
     start_time = data.get('startTime', '14:00')
     end_time = data.get('endTime', '18:00')
-    
+
     if not selected_files:
         logger.warning("Processing requested with no files selected")
-        return jsonify({'error': 'No files selected'}), 400
-    
+        return api_error('No files selected')
+
     # Edge case: Check if too many files selected
     if len(selected_files) > 100:
         logger.warning(f"Too many files selected for processing: {len(selected_files)}")
-        return jsonify({'error': 'Too many files selected (max 100)'}), 400
-    
+        return api_error('Too many files selected (max 100)')
+
     # Edge case: Check disk space before processing
     if not check_disk_space(min_space_gb=2):
         logger.error("Insufficient disk space for processing")
-        return jsonify({'error': 'Insufficient disk space for processing'}), 507
-    
+        return api_error('Insufficient disk space for processing', 507)
+
     logger.info(f"Starting processing for {len(selected_files)} files: {selected_files}")
     logger.info(f"Time window: {start_time} - {end_time}")
-    
+
     # Start processing in background thread
     thread = threading.Thread(target=run_processing, args=(selected_files, start_time, end_time))
     thread.daemon = True
     thread.start()
-    
-    return jsonify({'message': 'Processing started'})
+
+    return api_ok({'message': 'Processing started'})
 
 def run_processing(selected_files, start_time='14:00', end_time='18:00'):
     global processing_status
@@ -597,7 +577,7 @@ def cleanup_processing_files(selected_files, parent_dir):
 
 @app.route('/status', methods=['GET'])
 def get_status():
-    return jsonify(processing_status)
+    return api_ok(processing_status)
 
 @app.route('/briefing', methods=['GET'])
 def get_briefing():
@@ -607,21 +587,21 @@ def get_briefing():
         
         if not os.path.exists(briefing_path):
             logger.warning("Pilot briefing file not found")
-            return jsonify({'error': 'Pilot briefing not found'}), 404
-        
+            return api_error('Pilot briefing not found', 404)
+
         with open(briefing_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        
+
         if not content.strip():
-            return jsonify({'error': 'Pilot briefing file is empty'}), 404
-            
-        return jsonify({'content': content})
+            return api_error('Pilot briefing file is empty', 404)
+
+        return api_ok({'content': content})
     except UnicodeDecodeError as e:
         logger.error(f"Unicode decode error reading briefing: {e}")
-        return jsonify({'error': 'Pilot briefing file contains invalid characters'}), 500
+        return api_error('Pilot briefing file contains invalid characters', 500)
     except Exception as e:
         logger.error(f"Error reading briefing: {e}")
-        return jsonify({'error': 'Error reading pilot briefing'}), 500
+        return api_error('Error reading pilot briefing', 500)
 
 @app.route('/animation/<path:filename>')
 def serve_animation(filename):
@@ -631,12 +611,12 @@ def serve_animation(filename):
         
         if not os.path.exists(animation_path):
             logger.warning(f"Animation file not found: {filename}")
-            return jsonify({'error': 'Animation file not found'}), 404
-            
+            return api_error('Animation file not found', 404)
+
         return send_file(animation_path)
     except Exception as e:
         logger.error(f"Error serving animation file {filename}: {e}")
-        return jsonify({'error': 'Error serving animation file'}), 500
+        return api_error('Error serving animation file', 500)
 
 @app.route('/temp/<path:filename>')
 def serve_temp(filename):
@@ -646,12 +626,12 @@ def serve_temp(filename):
         
         if not os.path.exists(temp_path):
             logger.warning(f"Temp file not found: {filename}")
-            return jsonify({'error': 'File not found'}), 404
-            
+            return api_error('File not found', 404)
+
         return send_file(temp_path)
     except Exception as e:
         logger.error(f"Error serving temp file {filename}: {e}")
-        return jsonify({'error': 'Error serving file'}), 500
+        return api_error('Error serving file', 500)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000) 

@@ -82,16 +82,14 @@ class BriefingManager {
         try {
             const response = await fetch('/briefing');
 
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
+            const body = await response.json();
 
-            const briefing = await response.json();
-
-            if (briefing.error) {
-                app.showMessage(briefing.error, 'error');
+            if (!body.ok) {
+                app.showMessage(body.error || 'Error loading briefing', 'error');
                 return;
             }
+
+            const briefing = body.data;
 
             if (!briefing.content) {
                 app.showMessage('No briefing content received', 'error');
@@ -193,8 +191,9 @@ class BriefingManager {
         try {
             // Check if briefing file exists by making a HEAD-like request
             const response = await fetch('/briefing');
-            
-            if (response.ok) {
+            const body = await response.json();
+
+            if (body.ok) {
                 // Briefing file exists, enable the button
                 this.briefingBtn.disabled = false;
                 console.log('[BRIEFING] Pilot briefing available - button enabled');

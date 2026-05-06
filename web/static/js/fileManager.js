@@ -153,21 +153,21 @@ class FileManager {
             
             clearTimeout(timeoutId);
             
-            if (response.ok) {
-                const result = await response.json();
-                this.showUploadStatus(`${result.uploaded.length} files uploaded successfully!`, 'success');
-                this.showMessage(`${result.uploaded.length} files uploaded successfully!`, 'success');
-                
+            const body = await response.json();
+            if (!body.ok) {
+                throw new Error(body.error || 'Upload failed');
+            } else {
+                const uploaded = body.data.uploaded;
+                this.showUploadStatus(`${uploaded.length} files uploaded successfully!`, 'success');
+                this.showMessage(`${uploaded.length} files uploaded successfully!`, 'success');
+
                 // Reload flight plan library
                 await this.loadFileLibrary();
-                
+
                 // Validate uploaded files with retry logic
-                for (const uploadedFile of result.uploaded) {
+                for (const uploadedFile of uploaded) {
                     await this.validateFileWithRetry(uploadedFile.name);
                 }
-            } else {
-                const error = await response.json();
-                throw new Error(error.error || 'Upload failed');
             }
         } catch (error) {
             // Edge case: Handle different types of upload errors
@@ -239,25 +239,32 @@ class FileManager {
         try {
             console.log(`[VALIDATE] Frontend requesting validation for: ${filename}`);
             const response = await fetch(`/validate/${filename}`);
-            
+
             console.log(`[VALIDATE] Response status: ${response.status}`);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+            const body = await response.json();
+            console.log(`[VALIDATE] Validation response:`, body);
+
+            if (!body.ok) {
+                // Non-200 responses arrive as {ok: false, error: '...'}
+                const errMsg = body.error || 'Validation failed';
+                console.warn(`[VALIDATE] File ${filename} marked as invalid: ${errMsg}`);
+                this.showMessage(`File ${filename} validation failed: ${errMsg}`, 'warning');
+                const result = { valid: false, error: errMsg };
+                this.fileValidationCache.set(filename, result);
+                return result;
             }
-            
-            const validation = await response.json();
-            console.log(`[VALIDATE] Validation response:`, validation);
-            
+
+            const validation = body.data;
             this.fileValidationCache.set(filename, validation);
-            
+
             if (!validation.valid) {
                 console.warn(`[VALIDATE] File ${filename} marked as invalid: ${validation.error}`);
                 this.showMessage(`File ${filename} validation failed: ${validation.error}`, 'warning');
             } else {
                 console.log(`[VALIDATE] File ${filename} validated successfully: ${validation.flight_count} flights found`);
             }
-            
+
             return validation;
         } catch (error) {
             console.error(`[VALIDATE] Validation error for ${filename}:`, error);
@@ -296,12 +303,13 @@ class FileManager {
     async loadFileLibrary() {
         try {
             const response = await fetch('/files');
-            
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            const body = await response.json();
+
+            if (!body.ok) {
+                throw new Error(body.error || `HTTP ${response.status}`);
             }
-            
-            this.files = await response.json();
+
+            this.files = body.data;
             this.renderFileList();
             
             // Validate all files that haven't been validated yet
@@ -350,15 +358,15 @@ class FileManager {
                 })
             });
             
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            const routeBody = await response.json();
+            if (!routeBody.ok) {
+                throw new Error(routeBody.error || 'Route validation failed');
             }
-            
-            const routeValidation = await response.json();
-            
+            const routeValidation = routeBody.data;
+
             if (routeValidation.has_duplicates) {
                 // Show warning about duplicate routes
-                const duplicateDetails = routeValidation.duplicate_routes.map(route => 
+                const duplicateDetails = routeValidation.duplicate_routes.map(route =>
                     `${route.origin}-${route.destination} (${route.count} files)`
                 ).join(', ');
                 
@@ -570,22 +578,19 @@ class FileManager {
                 }
             });
             
-            if (response.ok) {
-                const result = await response.json();
-                console.log('[DELETE ALL] Response:', result);
-                
-                this.showMessage(result.message, 'success');
-                
-                // Clear selected files
-                this.selectedFiles.clear();
-                
-                // Reload the flight plan library
-                await this.loadFileLibrary();
-                
-            } else {
-                const error = await response.json();
-                throw new Error(error.error || 'Delete all failed');
+            const body = await response.json();
+            console.log('[DELETE ALL] Response:', body);
+            if (!body.ok) {
+                throw new Error(body.error || 'Delete all failed');
             }
+
+            this.showMessage(body.data.message, 'success');
+
+            // Clear selected files
+            this.selectedFiles.clear();
+
+            // Reload the flight plan library
+            await this.loadFileLibrary();
             
         } catch (error) {
             console.error('[DELETE ALL] Error deleting all files:', error);
@@ -681,26 +686,24 @@ class FileManager {
                 }
             });
             
-            if (response.ok) {
-                const result = await response.json();
-                console.log(`[DELETE] File deleted successfully: ${filename}`);
-                this.showMessage(`File "${filename}" deleted successfully`, 'success');
-                
-                // Remove from selected files if it was selected
-                this.selectedFiles.delete(filename);
-
-                // Clear validation cache for this file
-                this.fileValidationCache.delete(filename);
-
-                // Reload the flight plan library to update the list
-                await this.loadFileLibrary();
-                
-                // Re-check for duplicate routes after deletion
-                await this.checkForDuplicateRoutes();
-            } else {
-                const error = await response.json();
-                throw new Error(error.error || 'Delete failed');
+            const body = await response.json();
+            if (!body.ok) {
+                throw new Error(body.error || 'Delete failed');
             }
+            console.log(`[DELETE] File deleted successfully: ${filename}`);
+            this.showMessage(`File "${filename}" deleted successfully`, 'success');
+
+            // Remove from selected files if it was selected
+            this.selectedFiles.delete(filename);
+
+            // Clear validation cache for this file
+            this.fileValidationCache.delete(filename);
+
+            // Reload the flight plan library to update the list
+            await this.loadFileLibrary();
+
+            // Re-check for duplicate routes after deletion
+            await this.checkForDuplicateRoutes();
         } catch (error) {
             console.error(`[DELETE] Error deleting file ${filename}:`, error);
             this.showMessage(`Failed to delete file "${filename}": ${error.message}`, 'error');
