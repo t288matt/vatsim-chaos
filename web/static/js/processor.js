@@ -59,6 +59,8 @@ class Processor {
         this.processBtn.disabled = true;
         this.processBtn.textContent = 'Generating…';
         this.processBtn.setAttribute('aria-busy', 'true');
+        // Ensure disabled attribute is set (visual state + pointer-events: none both required)
+        console.assert(this.processBtn.disabled, 'processBtn.disabled must be true when btn--loading class is added');
 
         // Show process panel and reset timeline
         this.processPanel.hidden = false;
@@ -518,6 +520,8 @@ class Processor {
         this.processBtn.disabled = false;
         this.processBtn.textContent = this._processingButtonText || 'Generate Schedule';
         this.processBtn.setAttribute('aria-busy', 'false');
+        // Ensure disabled attribute is cleared (visual state + pointer-events: none both required)
+        console.assert(!this.processBtn.disabled, 'processBtn.disabled must be false when btn--loading class is removed');
 
         // Clear status check interval
         if (this.statusCheckInterval) {
