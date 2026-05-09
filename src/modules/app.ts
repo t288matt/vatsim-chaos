@@ -230,17 +230,3 @@ export class BriefingManager {
     }
 }
 
-// ---------------------------------------------------------------------------
-// App — top-level orchestrator (kept for completeness; modules are decoupled)
-// ---------------------------------------------------------------------------
-
-export class App {
-    showMessage(message: string, type = 'info'): void {
-        // Simple console logging — overlay was removed in Phase 2
-        console.log(`[${type.toUpperCase()}] ${message}`);
-    }
-
-    hideMessage(): void {
-        // No-op: overlay was removed in Phase 2
-    }
-}

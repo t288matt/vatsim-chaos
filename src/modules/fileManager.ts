@@ -3,7 +3,7 @@
 // NOTE: web/static/js/fileManager.js is intentionally preserved; it is still
 // loaded by web/templates/index.html until the HTML migration occurs.
 
-import { EventBus } from './eventBus';
+import { EventBus, bus } from './eventBus';
 import type { ApiResponse, FileInfo, ValidationResult } from '../types/api';
 
 // ---------------------------------------------------------------------------
@@ -588,6 +588,8 @@ export class FileManager {
                 this.checkForDuplicateRoutes();
 
                 typedBus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
+                // Cross-module: Processor subscribes on the shared bus singleton
+                bus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
             });
 
             const deleteBtn = itemEl.querySelector('.file-item-v2__delete') as HTMLButtonElement;
@@ -613,12 +615,16 @@ export class FileManager {
         this.files.forEach(file => this.selectedFiles.add(file.name));
         this.renderFileList();
         typedBus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
+        // Cross-module: Processor subscribes on the shared bus singleton
+        bus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
     }
 
     selectNone(): void {
         this.selectedFiles.clear();
         this.renderFileList();
         typedBus.emit('files:selected', { files: [] });
+        // Cross-module: Processor subscribes on the shared bus singleton
+        bus.emit('files:selected', { files: [] });
     }
 
     async deleteAll(): Promise<void> {

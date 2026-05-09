@@ -3,7 +3,7 @@
 // NOTE: web/static/js/processor.js is intentionally preserved; it is still
 // loaded by web/templates/index.html until the HTML migration occurs.
 
-import { EventBus, bus } from './eventBus';
+import { bus } from './eventBus';
 import type { ApiResponse, ProcessingStatus } from '../types/api';
 
 // ---------------------------------------------------------------------------
@@ -16,19 +16,6 @@ export interface SelectedFile {
     flight_count: number;
     error?: string;
 }
-
-// ---------------------------------------------------------------------------
-// Typed EventBus payload map for Processor events
-// ---------------------------------------------------------------------------
-
-interface ProcessorEvents {
-    'processing:started':   { files: SelectedFile[] };
-    'processing:progress':  { step: number; total: number };
-    'processing:completed': { processingTime: number };
-    'processing:failed':    { error: string };
-}
-
-const processorBus = new EventBus<ProcessorEvents>();
 
 // ---------------------------------------------------------------------------
 // Exported utility functions (tested by Vitest)
@@ -76,6 +63,7 @@ export class Processor {
 
     // Cache of the latest files:selected payload from FileManager
     private selectedFiles: SelectedFile[] = [];
+    private _unsubscribeFilesSelected: (() => void) | null = null;
 
     constructor() {
         this.processBtn    = document.getElementById('processBtn') as HTMLButtonElement | null;
@@ -88,8 +76,9 @@ export class Processor {
         this.hideTimeout         = null;
         this.mapRefreshTimeout   = null;
 
-        // Subscribe to file selection changes from FileManager via the shared bus
-        bus.on('files:selected', (payload: { files: SelectedFile[] }) => {
+        // Subscribe to file selection changes from FileManager via the shared bus;
+        // store the unsubscribe token so repeated instantiations don't accumulate listeners
+        this._unsubscribeFilesSelected = bus.on('files:selected', (payload: { files: SelectedFile[] }) => {
             this.selectedFiles = payload.files;
         });
 
@@ -178,7 +167,6 @@ export class Processor {
             }
 
             this.showMessage('Processing started successfully!', 'success');
-            processorBus.emit('processing:started', { files: selectedFiles });
             this.monitorProgress();
         } catch (error) {
             this.handleProcessingError((error as Error).message);
@@ -299,11 +287,6 @@ export class Processor {
                         else if (i === currentStep) statusEl.textContent = 'Running…';
                         else                       statusEl.textContent = '';
                     }
-                });
-
-                processorBus.emit('processing:progress', {
-                    step:  currentStep,
-                    total: stepItems.length,
                 });
 
                 if (status.completed) {
@@ -467,7 +450,6 @@ export class Processor {
 
         // Emit on shared bus so MapViewer can respond
         bus.emit('processing:completed', { processingTime });
-        processorBus.emit('processing:completed', { processingTime });
 
         // Hide process panel after 3 seconds
         this.hideTimeout = setTimeout(() => {
@@ -491,10 +473,8 @@ export class Processor {
         const statusRegion = document.getElementById('processingStatus');
         if (statusRegion) statusRegion.textContent = 'Processing failed.';
 
-        processorBus.emit('processing:failed', { error });
-
-        // Hide panel after 5 seconds
-        setTimeout(() => {
+        // Hide panel after 5 seconds; store token so a retry can cancel it first
+        this.hideTimeout = window.setTimeout(() => {
             if (this.processPanel) this.processPanel.hidden = true;
             if (statusRegion) statusRegion.textContent = '';
         }, 5000);
@@ -536,6 +516,17 @@ export class Processor {
         if (this.mapRefreshTimeout) {
             clearTimeout(this.mapRefreshTimeout);
             this.mapRefreshTimeout = null;
+        }
+    }
+
+    /** Unsubscribe from all bus events and clear pending timers. Call when the instance is no longer needed. */
+    destroy(): void {
+        if (this._unsubscribeFilesSelected) {
+            this._unsubscribeFilesSelected();
+            this._unsubscribeFilesSelected = null;
+        }
+        if (this.statusCheckInterval) {
+            clearTimeout(this.statusCheckInterval);
         }
     }
 

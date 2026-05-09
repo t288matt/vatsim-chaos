@@ -9,6 +9,7 @@ export class MapViewer {
     private mapContainer: HTMLElement | null;
     private mapLoading: HTMLElement | null;
     private cesiumIframe: HTMLIFrameElement | null;
+    private _unsubscribeProcessingCompleted: (() => void) | null = null;
 
     constructor() {
         this.mapContainer  = document.getElementById('mapContainer');
@@ -17,8 +18,8 @@ export class MapViewer {
 
         this.initializeMap();
 
-        // Refresh the map automatically when processing completes
-        bus.on('processing:completed', () => {
+        // Refresh the map automatically when processing completes; store token for cleanup
+        this._unsubscribeProcessingCompleted = bus.on('processing:completed', () => {
             this.refreshMap();
         });
     }
@@ -65,19 +66,27 @@ export class MapViewer {
     showMapError(message: string): void {
         if (!this.mapLoading) return;
 
-        this.mapLoading.innerHTML = `
-            <div style="color: #dc3545; text-align: center;">
-                <p>❌ ${message}</p>
-                <button id="mapRetryBtn" style="margin-top: 10px; padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                    Retry
-                </button>
-            </div>
-        `;
-        this.mapLoading.style.display = 'block';
+        // Clear existing content safely — avoids innerHTML XSS risk
+        while (this.mapLoading.firstChild) {
+            this.mapLoading.removeChild(this.mapLoading.firstChild);
+        }
 
-        // Use a proper event listener rather than an inline onclick
-        const retryBtn = this.mapLoading.querySelector('#mapRetryBtn');
-        retryBtn?.addEventListener('click', () => this.refreshMap());
+        const wrapper = document.createElement('div');
+        wrapper.style.color = '#dc3545';
+        wrapper.style.textAlign = 'center';
+
+        const p = document.createElement('p');
+        p.textContent = '❌ ' + message;
+        wrapper.appendChild(p);
+
+        const retryBtn = document.createElement('button');
+        retryBtn.textContent = 'Retry';
+        retryBtn.style.cssText = 'margin-top: 10px; padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;';
+        retryBtn.addEventListener('click', () => this.refreshMap());
+        wrapper.appendChild(retryBtn);
+
+        this.mapLoading.appendChild(wrapper);
+        this.mapLoading.style.display = 'block';
     }
 
     /** Send a postMessage to the embedded Cesium viewer. */
@@ -96,5 +105,13 @@ export class MapViewer {
     getMapDimensions(): { width: number; height: number } {
         const rect = this.mapContainer?.getBoundingClientRect() ?? { width: 0, height: 0 };
         return { width: rect.width, height: rect.height };
+    }
+
+    /** Unsubscribe from all bus events. Call when the instance is no longer needed. */
+    destroy(): void {
+        if (this._unsubscribeProcessingCompleted) {
+            this._unsubscribeProcessingCompleted();
+            this._unsubscribeProcessingCompleted = null;
+        }
     }
 }
