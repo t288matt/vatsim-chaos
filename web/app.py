@@ -312,8 +312,8 @@ def validate_file(filename):
             flight_plan = extract_flight_plan_from_xml(filepath)
             logger.debug(f"[VALIDATE] extract_flight_plan_from_xml returned: {flight_plan}")
         except Exception as parse_exc:
-            logger.error(f"[VALIDATE] Exception in extract_flight_plan_from_xml: {parse_exc}")
-            return api_error(f'Parse error: {parse_exc}')
+            logger.error(f"[VALIDATE] Exception in extract_flight_plan_from_xml: {parse_exc}", exc_info=True)
+            return api_error('Validation failed')
         flight_plans = [flight_plan] if flight_plan else []
 
         validation_result = {
@@ -338,7 +338,7 @@ def validate_file(filename):
         return api_error('File contains invalid characters')
     except Exception as e:
         logger.error(f"File validation failed: {filename} - {str(e)}", exc_info=True)
-        return api_error(str(e))
+        return api_error('Validation failed')
 
 @app.route('/validate-same-routes', methods=['POST'])
 def validate_same_routes():

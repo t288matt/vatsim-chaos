@@ -24,6 +24,26 @@ def client():
         yield c
 
 
+@pytest.fixture
+def client_no_briefing(client):
+    """Test client with briefing file temporarily removed."""
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    briefing_path = os.path.join(parent_dir, 'pilot_briefing.txt')
+    briefing_exists = os.path.exists(briefing_path)
+    briefing_backup = None
+
+    try:
+        if briefing_exists:
+            import shutil
+            briefing_backup = briefing_path + '.backup'
+            shutil.move(briefing_path, briefing_backup)
+        yield client
+    finally:
+        if briefing_backup and os.path.exists(briefing_backup):
+            import shutil
+            shutil.move(briefing_backup, briefing_path)
+
+
 # ---------------------------------------------------------------------------
 # POST /upload
 # ---------------------------------------------------------------------------
@@ -167,12 +187,11 @@ def test_validate_same_routes_no_files_returns_error_envelope(client):
 # GET /briefing — error path (file will not exist in test env)
 # ---------------------------------------------------------------------------
 
-def test_briefing_not_found_returns_error_envelope(client):
+def test_briefing_not_found_returns_error_envelope(client_no_briefing):
     """GET /briefing when no briefing file exists should return ok=false."""
-    resp = client.get('/briefing')
+    resp = client_no_briefing.get('/briefing')
     body = json.loads(resp.data)
-    # Briefing file won't exist in the test environment
-    if resp.status_code != 200:
-        assert 'ok' in body
-        assert body['ok'] is False
-        assert 'error' in body
+    assert resp.status_code == 404
+    assert 'ok' in body
+    assert body['ok'] is False
+    assert 'error' in body
