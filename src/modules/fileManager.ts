@@ -16,7 +16,7 @@ interface FileManagerEvents {
     // CachedValidation is used here because validated data may have partial fields
     // (e.g. flight_count absent when the file is invalid and was never parsed).
     'validation:changed': { filename: string; result: CachedValidation };
-    'files:selected': { filenames: string[] };
+    'files:selected': { files: Array<{ filename: string; valid: boolean; flight_count: number; error?: string }> };
 }
 
 const typedBus = new EventBus<FileManagerEvents>();
@@ -587,7 +587,7 @@ export class FileManager {
                 this.updateSelectionSummary();
                 this.checkForDuplicateRoutes();
 
-                typedBus.emit('files:selected', { filenames: Array.from(this.selectedFiles) });
+                typedBus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
             });
 
             const deleteBtn = itemEl.querySelector('.file-item-v2__delete') as HTMLButtonElement;
@@ -612,13 +612,13 @@ export class FileManager {
     selectAll(): void {
         this.files.forEach(file => this.selectedFiles.add(file.name));
         this.renderFileList();
-        typedBus.emit('files:selected', { filenames: Array.from(this.selectedFiles) });
+        typedBus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
     }
 
     selectNone(): void {
         this.selectedFiles.clear();
         this.renderFileList();
-        typedBus.emit('files:selected', { filenames: [] });
+        typedBus.emit('files:selected', { files: [] });
     }
 
     async deleteAll(): Promise<void> {
