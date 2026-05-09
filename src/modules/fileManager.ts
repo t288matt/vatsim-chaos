@@ -3,8 +3,23 @@
 // NOTE: web/static/js/fileManager.js is intentionally preserved; it is still
 // loaded by web/templates/index.html until the HTML migration occurs.
 
-import { bus } from './eventBus';
+import { EventBus } from './eventBus';
 import type { ApiResponse, FileInfo, ValidationResult } from '../types/api';
+
+// ---------------------------------------------------------------------------
+// Typed EventBus payload map for FileManager events
+// ---------------------------------------------------------------------------
+
+interface FileManagerEvents {
+    'files:uploaded': { count: number };
+    'files:loaded': { files: FileInfo[] };
+    // CachedValidation is used here because validated data may have partial fields
+    // (e.g. flight_count absent when the file is invalid and was never parsed).
+    'validation:changed': { filename: string; result: CachedValidation };
+    'files:selected': { filenames: string[] };
+}
+
+const typedBus = new EventBus<FileManagerEvents>();
 
 // ---------------------------------------------------------------------------
 // Exported utility functions (tested by Vitest)
@@ -49,8 +64,8 @@ function formatDate(timestamp: number): string {
  * (e.g. during tests or when the legacy JS has not been loaded).
  */
 function showToast(message: string, type = 'info'): void {
-    if (typeof (window as any).showToast === 'function') {
-        (window as any).showToast(message, type);
+    if (typeof window !== 'undefined' && typeof window.showToast === 'function') {
+        window.showToast(message, type);
     } else {
         console.log(`[${type.toUpperCase()}] ${message}`);
     }
@@ -78,6 +93,8 @@ export class FileManager {
     private selectAllBtn: HTMLElement | null;
     private selectNoneBtn: HTMLElement | null;
     private deleteAllBtn: HTMLElement | null;
+
+    private isUploading = false;
 
     private selectedFiles: Set<string>;
     private files: FileInfo[];
@@ -157,6 +174,11 @@ export class FileManager {
     }
 
     async uploadFiles(files: File[]): Promise<void> {
+        if (this.isUploading) {
+            showToast('Upload already in progress. Please wait.', 'warning');
+            return;
+        }
+
         if (!files || files.length === 0) {
             showToast('No files selected for upload.', 'warning');
             return;
@@ -203,6 +225,7 @@ export class FileManager {
         const formData = new FormData();
         xmlFiles.forEach(file => formData.append('files', file));
 
+        this.isUploading = true;
         try {
             this.showUploadStatus(`Uploading ${xmlFiles.length} files...`, 'info');
 
@@ -228,7 +251,7 @@ export class FileManager {
             showToast(`${uploaded.length} files uploaded successfully!`, 'success');
 
             // Emit EventBus notification
-            bus.emit('files:uploaded', { count: uploaded.length });
+            typedBus.emit('files:uploaded', { count: uploaded.length });
 
             await this.loadFileLibrary();
 
@@ -251,6 +274,8 @@ export class FileManager {
 
             this.showUploadStatus(errorMessage, 'error');
             showToast(errorMessage, 'error');
+        } finally {
+            this.isUploading = false;
         }
     }
 
@@ -314,7 +339,7 @@ export class FileManager {
                 showToast(`File ${filename} validation failed: ${errMsg}`, 'warning');
                 const result: CachedValidation = { valid: false, error: errMsg };
                 this.fileValidationCache.set(filename, result);
-                bus.emit('validation:changed', { filename, result });
+                typedBus.emit('validation:changed', { filename, result });
                 return result;
             }
 
@@ -323,13 +348,13 @@ export class FileManager {
             this.fileValidationCache.set(filename, cached);
 
             if (!validation.valid) {
-                console.warn(`[VALIDATE] File ${filename} marked as invalid: ${(validation as any).error}`);
-                showToast(`File ${filename} validation failed: ${(validation as any).error}`, 'warning');
+                console.warn(`[VALIDATE] File ${filename} marked as invalid: ${validation.error}`);
+                showToast(`File ${filename} validation failed: ${validation.error}`, 'warning');
             } else {
                 console.log(`[VALIDATE] File ${filename} validated successfully: ${validation.flight_count} flights found`);
             }
 
-            bus.emit('validation:changed', { filename, result: cached });
+            typedBus.emit('validation:changed', { filename, result: cached });
             return cached;
         } catch (error) {
             const err = error as Error;
@@ -383,7 +408,7 @@ export class FileManager {
             this.selectAll();
             await this.checkForDuplicateRoutes();
 
-            bus.emit('files:loaded', { files: this.files });
+            typedBus.emit('files:loaded', { files: this.files });
         } catch (error) {
             const err = error as Error;
             console.error('Error loading flight plan library:', err);
@@ -562,7 +587,7 @@ export class FileManager {
                 this.updateSelectionSummary();
                 this.checkForDuplicateRoutes();
 
-                bus.emit('files:selected', { filenames: Array.from(this.selectedFiles) });
+                typedBus.emit('files:selected', { filenames: Array.from(this.selectedFiles) });
             });
 
             const deleteBtn = itemEl.querySelector('.file-item-v2__delete') as HTMLButtonElement;
@@ -587,13 +612,13 @@ export class FileManager {
     selectAll(): void {
         this.files.forEach(file => this.selectedFiles.add(file.name));
         this.renderFileList();
-        bus.emit('files:selected', { filenames: Array.from(this.selectedFiles) });
+        typedBus.emit('files:selected', { filenames: Array.from(this.selectedFiles) });
     }
 
     selectNone(): void {
         this.selectedFiles.clear();
         this.renderFileList();
-        bus.emit('files:selected', { filenames: [] });
+        typedBus.emit('files:selected', { filenames: [] });
     }
 
     async deleteAll(): Promise<void> {

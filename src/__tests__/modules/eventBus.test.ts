@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { EventBus, bus } from '../../modules/eventBus'
+import { EventBus } from '../../modules/eventBus'
 
 describe('EventBus', () => {
   describe('basic on() and emit()', () => {

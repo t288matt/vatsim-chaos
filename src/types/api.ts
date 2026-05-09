@@ -12,6 +12,7 @@ export interface FileInfo {
 export interface ValidationResult {
     valid: boolean;
     flight_count: number;
+    error?: string;
     flights: Array<{
         origin: string;
         destination: string;

@@ -6,5 +6,5 @@ console.log('VATSIM-Chaos initialising');
 document.addEventListener('DOMContentLoaded', () => {
     const fileManager = new FileManager();
     fileManager.loadFileLibrary();
-    (window as any).fileManager = fileManager; // temporary global for Phase 5 transition
+    window.fileManager = fileManager; // temporary global for Phase 5 transition
 });
