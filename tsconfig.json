@@ -11,7 +11,8 @@
     "outDir": "./web/static/dist",
     "rootDir": "./src",
     "declaration": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "web/static/dist"]
