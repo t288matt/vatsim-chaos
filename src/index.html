@@ -1,11 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VATSIM Chaos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATC Conflict Analysis System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="module" src="/index.ts"></script>
 </head>
 <body>
-  <script type="module" src="/index.ts"></script>
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+    <header class="header">
+        <h1>
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            <span>Flight Conflict Generation</span>
+        </h1>
+    </header>
+
+    <main class="main-container" id="mainContent">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <!-- Upload Section -->
+            <div class="panel-section">
+                <h2 class="panel-section__title">Upload</h2>
+                <div class="upload-zone" id="uploadArea" role="button" tabindex="0"
+                     aria-label="Upload XML flight plan files — click or drag and drop">
+                    <svg class="upload-zone__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+                    </svg>
+                    <p class="upload-zone__title">Drop XML files here</p>
+                    <p class="upload-zone__subtitle">or <span class="upload-zone__link">browse</span></p>
+                    <p class="upload-zone__hint">SimBrief XML · max 16 MB · up to 50 files</p>
+                    <input type="file" id="fileInput" multiple accept=".xml" style="display: none;">
+                </div>
+                <div class="upload-status" id="uploadStatus" aria-live="polite" aria-atomic="true"></div>
+            </div>
+
+            <!-- Event Time Section -->
+            <div class="panel-section">
+                <h2 class="panel-section__title">Event Time</h2>
+                <div class="time-controls">
+                    <div class="time-inputs">
+                        <div class="time-input">
+                            <label for="startTime">Start Time</label>
+                            <input type="time" id="startTime" value="08:00" class="time-field"
+                                   aria-describedby="startTime-hint">
+                            <span id="startTime-hint" class="sr-only">24-hour format, e.g. 08:00</span>
+                        </div>
+                        <div class="time-input">
+                            <label for="endTime">End Time</label>
+                            <input type="time" id="endTime" value="11:00" class="time-field"
+                                   aria-describedby="endTime-hint">
+                            <span id="endTime-hint" class="sr-only">24-hour format, e.g. 11:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flight Plans Section -->
+            <div class="panel-section">
+                <h2 class="panel-section__title">
+                    Flight Plans
+                    <span class="file-count-badge" id="fileCountBadge" aria-label="Number of uploaded files">0</span>
+                </h2>
+                <div id="emptyState" class="empty-state">
+                    <svg aria-hidden="true" class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+                    </svg>
+                    <h3 class="empty-state__title">No flight plans yet</h3>
+                    <p class="empty-state__body">Upload SimBrief XML files to get started</p>
+                </div>
+                <div id="fileList" class="file-list" role="list" aria-label="Uploaded flight plan files" hidden>
+                    <!-- Dynamic file list with checkboxes -->
+                </div>
+                <div id="selectionBar" class="selection-bar" hidden aria-live="polite" aria-atomic="true">
+                    <span id="selectionCount">0 of 0 selected</span>
+                    <button class="btn btn--secondary btn--sm" id="clearSelectionBtn">Clear selection</button>
+                </div>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="panel-section">
+                <h2 class="panel-section__title">Actions</h2>
+                <div class="file-controls" role="group" aria-label="File selection controls">
+                    <button id="selectAllBtn" class="btn btn--secondary btn--sm">Select All</button>
+                    <button id="selectNoneBtn" class="btn btn--secondary btn--sm">Select None</button>
+                    <button id="deleteAllBtn" class="btn btn--danger btn--sm">Delete All</button>
+                </div>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="panel-section">
+                <button id="processBtn" class="btn btn--primary btn--full">Generate Schedule</button>
+                <button id="briefingBtn" class="btn btn--secondary btn--full" disabled style="margin-top:8px;">Pilot Briefing</button>
+            </div>
+
+            <div id="processPanel" class="panel-section" hidden>
+                <h2 class="panel-section__title">Processing</h2>
+                <div class="step-timeline" aria-label="Processing steps" role="list">
+                    <div class="step-timeline__item" data-step="0" role="listitem">
+                        <div class="step-timeline__indicator" aria-hidden="true"></div>
+                        <div class="step-timeline__content">
+                            <span class="step-timeline__label">Extract flight plans</span>
+                            <span class="step-timeline__status"></span>
+                        </div>
+                    </div>
+                    <div class="step-timeline__item" data-step="1" role="listitem">
+                        <div class="step-timeline__indicator" aria-hidden="true"></div>
+                        <div class="step-timeline__content">
+                            <span class="step-timeline__label">Analyse conflicts</span>
+                            <span class="step-timeline__status"></span>
+                        </div>
+                    </div>
+                    <div class="step-timeline__item" data-step="2" role="listitem">
+                        <div class="step-timeline__indicator" aria-hidden="true"></div>
+                        <div class="step-timeline__content">
+                            <span class="step-timeline__label">Merge KML files</span>
+                            <span class="step-timeline__status"></span>
+                        </div>
+                    </div>
+                    <div class="step-timeline__item" data-step="3" role="listitem">
+                        <div class="step-timeline__indicator" aria-hidden="true"></div>
+                        <div class="step-timeline__content">
+                            <span class="step-timeline__label">Schedule conflicts</span>
+                            <span class="step-timeline__status"></span>
+                        </div>
+                    </div>
+                    <div class="step-timeline__item" data-step="4" role="listitem">
+                        <div class="step-timeline__indicator" aria-hidden="true"></div>
+                        <div class="step-timeline__content">
+                            <span class="step-timeline__label">Generate animation</span>
+                            <span class="step-timeline__status"></span>
+                        </div>
+                    </div>
+                    <div class="step-timeline__item" data-step="5" role="listitem">
+                        <div class="step-timeline__indicator" aria-hidden="true"></div>
+                        <div class="step-timeline__content">
+                            <span class="step-timeline__label">Audit data</span>
+                            <span class="step-timeline__status"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="process-meta">
+                    <span id="elapsedTime">0s elapsed</span>
+                </div>
+            </div>
+            <div id="processingStatus" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="map-container" id="mapContainer">
+                <!-- Cesium map will be embedded here -->
+                <div class="map-loading" id="mapLoading">
+                    <p>Loading 3D map...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for pilot briefing -->
+    <div id="briefingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="briefingModalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="briefingModalTitle">Pilot Briefing</h2>
+                <button class="close" aria-label="Close pilot briefing">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="briefingContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="printBriefingBtn" class="btn btn--secondary">Print</button>
+                <button id="downloadBriefingBtn" class="btn btn--secondary">Download</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

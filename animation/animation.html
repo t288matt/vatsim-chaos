@@ -7,19 +7,18 @@
   <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    html, body, #cesiumContainer { 
-      width: 100%; 
-      height: 100%; 
-      margin: 0; 
-      padding: 0; 
-      overflow: hidden; 
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0a0a0f;
-      font-size: 13px;  /* VATSIM Radar base font size */
-      line-height: 1.4;
-      letter-spacing: 0.01em;
+    html, body, #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0c111b;
+      font-size: 13px;
+      line-height: 1.5;
     }
     
     #cesiumContainer { 
@@ -85,97 +84,120 @@
     
 
     
-    /* VATSIM Radar-style commentary boxes */
-    #commentary-box { 
-      position: absolute; 
-      bottom: 16px; 
-      right: 16px; 
-      background: rgba(15, 52, 96, 0.9); 
-      color: #ffffff; 
-      padding: 16px; 
-      border-radius: 8px; 
-      z-index: 10; 
-      font-family: 'Inter', sans-serif; 
-      max-width: 400px; 
-      max-height: 400px; 
-      height: 400px;
+    /* Commentary boxes */
+    #commentary-box {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50%;
+      height: 140px;
+      background: #131c2b;
+      color: #e8edf5;
+      padding: 12px 16px;
+      z-index: 10;
+      font-family: 'Montserrat', sans-serif;
       overflow-y: auto;
-      border: 1px solid #00d4ff;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      border-top: 1px solid #243047;
+      border-right: 1px solid #243047;
     }
-    
-    #conflict-commentary-box { 
-      position: absolute; 
-      bottom: 16px; 
-      left: 16px; 
-      background: rgba(15, 52, 96, 0.9); 
-      color: #ffffff; 
-      padding: 16px; 
-      border-radius: 8px; 
-      z-index: 10; 
-      font-family: 'Inter', sans-serif; 
-      max-width: 400px; 
-      max-height: 400px; 
-      height: 400px;
+
+    #conflict-commentary-box {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50%;
+      height: 140px;
+      background: #131c2b;
+      color: #e8edf5;
+      padding: 12px 16px;
+      z-index: 10;
+      font-family: 'Montserrat', sans-serif;
       overflow-y: auto;
-      border: 1px solid #f87171;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      border-top: 1px solid #243047;
     }
-    
-    #commentary-box h4, #conflict-commentary-box h4 { 
-      margin: 0 0 12px 0; 
-      color: #00d4ff; 
-      font-size: 14px;  /* VATSIM Radar section title */
-      font-weight: 600;
-      letter-spacing: 0.02em;
+
+    #commentary-box h4, #conflict-commentary-box h4 {
+      margin: 0 0 10px 0;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      color: #3b82f6;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    
+
     #conflict-commentary-box h4 {
-      color: #f87171;
+      color: #f59e0b;
     }
-    
-    .departure-log { 
-      font-size: 12px;  /* VATSIM Radar text size */
-      margin: 4px 0; 
-      padding: 6px 0; 
-      border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-      font-weight: 400;
-    }
-    
-    .departure-time { 
-      color: #fbbf24; 
-      font-weight: 600; 
-    }
-    
-    .flight-id { 
-      color: #00d4ff; 
+
+    .departure-log {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
       font-weight: 500;
+      margin: 0;
+      padding: 4px 0;
+      border-bottom: 1px solid #243047;
+      color: #e8edf5;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
     }
-    
-    .conflict-log { 
-      font-size: 12px;  /* VATSIM Radar text size */
-      margin: 4px 0; 
-      padding: 6px 0; 
-      border-bottom: 1px solid rgba(248, 113, 113, 0.3);
-      font-weight: 400;
+    .departure-log:last-child { border-bottom: none; }
+
+    .departure-time {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: #3b82f6;
+      flex-shrink: 0;
+      min-width: 38px;
     }
-    
-    .conflict-time { 
-      color: #fbbf24; 
-      font-weight: 600; 
+
+    .flight-id {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: #3b82f6;
     }
-    
-    .conflict-flights { 
-      color: #f87171; 
+
+    .conflict-log {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
       font-weight: 500;
+      margin: 0;
+      padding: 4px 0;
+      border-bottom: 1px solid #243047;
+      color: #e8edf5;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
     }
-    
-    .conflict-distance { 
-      color: #fbbf24; 
+    .conflict-log:last-child { border-bottom: none; }
+
+    .conflict-time {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: #f59e0b;
+      flex-shrink: 0;
+      min-width: 38px;
+    }
+
+    .conflict-flights {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: #3b82f6;
+    }
+
+    .conflict-distance {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
       font-weight: 500;
+      color: #f59e0b;
     }
     
     /* VATSIM Radar-style controls */
@@ -400,11 +422,22 @@
     </div>
   </div>
   <div id="commentary-box">
-    <h4>📢 Flight Commentary</h4>
+    <h4>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 21 4s-2 0-3.5 1.5L14 9 5.8 7.2l-1.9 1.9 7 3-2.3 2.3-2.8-.9-1.6 1.6 2.5 1.2 1.2 2.5 1.6-1.6-.9-2.8 2.3-2.3 3 7 1.9-1.9z"/>
+      </svg>
+      Flight Departures
+    </h4>
     <div id="departure-logs"></div>
   </div>
   <div id="conflict-commentary-box">
-    <h4>⚠️ Conflict Commentary</h4>
+    <h4>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      Conflict Alerts
+    </h4>
     <div id="conflict-logs"></div>
   </div>
 
