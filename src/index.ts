@@ -1,6 +1,8 @@
 // VATSIM-Chaos entry point — Phase 5 TypeScript bundle
 // Instantiates all modules and wires up global references.
 
+import '../web/static/css/main.css';
+
 import { FileManager } from './modules/fileManager';
 import { Processor }   from './modules/processor';
 import { MapViewer }   from './modules/mapViewer';

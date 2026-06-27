@@ -3,23 +3,9 @@
 // NOTE: web/static/js/fileManager.js is intentionally preserved; it is still
 // loaded by web/templates/index.html until the HTML migration occurs.
 
-import { EventBus, bus } from './eventBus';
+import { bus } from './eventBus';
+import { showToast } from './app';
 import type { ApiResponse, FileInfo, ValidationResult } from '../types/api';
-
-// ---------------------------------------------------------------------------
-// Typed EventBus payload map for FileManager events
-// ---------------------------------------------------------------------------
-
-interface FileManagerEvents {
-    'files:uploaded': { count: number };
-    'files:loaded': { files: FileInfo[] };
-    // CachedValidation is used here because validated data may have partial fields
-    // (e.g. flight_count absent when the file is invalid and was never parsed).
-    'validation:changed': { filename: string; result: CachedValidation };
-    'files:selected': { files: Array<{ filename: string; valid: boolean; flight_count: number; error?: string }> };
-}
-
-const typedBus = new EventBus<FileManagerEvents>();
 
 // ---------------------------------------------------------------------------
 // Exported utility functions (tested by Vitest)
@@ -58,18 +44,6 @@ function formatDate(timestamp: number): string {
     return `${day}-${month}-${year}`;
 }
 
-/**
- * Display a toast notification.
- * Falls back to console output when window.showToast is not available
- * (e.g. during tests or when the legacy JS has not been loaded).
- */
-function showToast(message: string, type = 'info'): void {
-    if (typeof window !== 'undefined' && typeof window.showToast === 'function') {
-        window.showToast(message, type);
-    } else {
-        console.log(`[${type.toUpperCase()}] ${message}`);
-    }
-}
 
 // ---------------------------------------------------------------------------
 // Cached validation shape used internally
@@ -99,7 +73,6 @@ export class FileManager {
     private selectedFiles: Set<string>;
     private files: FileInfo[];
     private fileValidationCache: Map<string, CachedValidation>;
-    private duplicateRoutes: Array<{ origin: string; destination: string; count: number; files: string[] }> | null;
 
     constructor() {
         this.uploadArea        = document.getElementById('uploadArea');
@@ -114,7 +87,6 @@ export class FileManager {
         this.selectedFiles        = new Set();
         this.files                = [];
         this.fileValidationCache  = new Map();
-        this.duplicateRoutes      = null;
 
         this.initializeEventListeners();
     }
@@ -250,8 +222,7 @@ export class FileManager {
             this.showUploadStatus(`${uploaded.length} files uploaded successfully!`, 'success');
             showToast(`${uploaded.length} files uploaded successfully!`, 'success');
 
-            // Emit EventBus notification
-            typedBus.emit('files:uploaded', { count: uploaded.length });
+            bus.emit('files:uploaded', { count: uploaded.length });
 
             await this.loadFileLibrary();
 
@@ -339,7 +310,7 @@ export class FileManager {
                 showToast(`File ${filename} validation failed: ${errMsg}`, 'warning');
                 const result: CachedValidation = { valid: false, error: errMsg };
                 this.fileValidationCache.set(filename, result);
-                typedBus.emit('validation:changed', { filename, result });
+                bus.emit('validation:changed', { filename, result });
                 return result;
             }
 
@@ -354,7 +325,7 @@ export class FileManager {
                 console.log(`[VALIDATE] File ${filename} validated successfully: ${validation.flight_count} flights found`);
             }
 
-            typedBus.emit('validation:changed', { filename, result: cached });
+            bus.emit('validation:changed', { filename, result: cached });
             return cached;
         } catch (error) {
             const err = error as Error;
@@ -408,7 +379,7 @@ export class FileManager {
             this.selectAll();
             await this.checkForDuplicateRoutes();
 
-            typedBus.emit('files:loaded', { files: this.files });
+            bus.emit('files:loaded', { files: this.files });
         } catch (error) {
             const err = error as Error;
             console.error('Error loading flight plan library:', err);
@@ -454,37 +425,15 @@ export class FileManager {
                 );
 
                 this.markDuplicateFiles(routeValidation.duplicate_routes);
-                this.disableGenerateScheduleButton(routeValidation.duplicate_routes);
-            } else {
-                this.enableGenerateScheduleButton();
             }
+
+            bus.emit('duplicates:detected', {
+                hasDuplicates: routeValidation.has_duplicates,
+                routes: routeValidation.duplicate_routes,
+            });
         } catch (error) {
             console.error('Error checking for duplicate routes:', error);
         }
-    }
-
-    private disableGenerateScheduleButton(
-        duplicateRoutes: Array<{ origin: string; destination: string; count: number; files: string[] }>,
-    ): void {
-        const processBtn = document.getElementById('processBtn') as HTMLButtonElement | null;
-        if (processBtn) {
-            processBtn.disabled = true;
-            processBtn.textContent = 'Generate Schedule (Duplicates Detected)';
-            processBtn.title = 'Please delete duplicate files before generating schedule';
-            processBtn.classList.add('disabled-duplicates');
-        }
-        this.duplicateRoutes = duplicateRoutes;
-    }
-
-    private enableGenerateScheduleButton(): void {
-        const processBtn = document.getElementById('processBtn') as HTMLButtonElement | null;
-        if (processBtn) {
-            processBtn.disabled = false;
-            processBtn.textContent = 'Generate Schedule';
-            processBtn.title = '';
-            processBtn.classList.remove('disabled-duplicates');
-        }
-        this.duplicateRoutes = null;
     }
 
     private markDuplicateFiles(
@@ -587,8 +536,6 @@ export class FileManager {
                 this.updateSelectionSummary();
                 this.checkForDuplicateRoutes();
 
-                typedBus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
-                // Cross-module: Processor subscribes on the shared bus singleton
                 bus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
             });
 
@@ -614,16 +561,12 @@ export class FileManager {
     selectAll(): void {
         this.files.forEach(file => this.selectedFiles.add(file.name));
         this.renderFileList();
-        typedBus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
-        // Cross-module: Processor subscribes on the shared bus singleton
         bus.emit('files:selected', { files: this.getSelectedFilesWithValidation() });
     }
 
     selectNone(): void {
         this.selectedFiles.clear();
         this.renderFileList();
-        typedBus.emit('files:selected', { files: [] });
-        // Cross-module: Processor subscribes on the shared bus singleton
         bus.emit('files:selected', { files: [] });
     }
 
@@ -683,24 +626,6 @@ export class FileManager {
             selectionBar.hidden = selectedCount === 0 || totalCount === 0;
         }
 
-        const processBtn = document.getElementById('processBtn') as HTMLButtonElement | null;
-        if (processBtn) {
-            if (selectedCount === 0) {
-                processBtn.disabled = true;
-                processBtn.textContent = 'Generate Schedule';
-                processBtn.classList.remove('disabled-duplicates');
-            } else if (this.duplicateRoutes && this.duplicateRoutes.length > 0) {
-                processBtn.disabled = true;
-                processBtn.textContent = 'Generate Schedule (Duplicates Detected)';
-                processBtn.title = 'Please delete duplicate files before generating schedule';
-                processBtn.classList.add('disabled-duplicates');
-            } else {
-                processBtn.disabled = false;
-                processBtn.textContent = 'Generate Schedule';
-                processBtn.title = '';
-                processBtn.classList.remove('disabled-duplicates');
-            }
-        }
     }
 
     getSelectedFiles(): string[] {

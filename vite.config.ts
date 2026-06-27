@@ -18,8 +18,10 @@ export default defineConfig({
       '/validate-same-routes': 'http://localhost:5000',
       '/process': 'http://localhost:5000',
       '/status': 'http://localhost:5000',
+      '/status-stream': { target: 'http://localhost:5000', changeOrigin: true },
       '/briefing': 'http://localhost:5000',
       '/animation': 'http://localhost:5000',
+      '/temp': 'http://localhost:5000',
     },
   },
 });

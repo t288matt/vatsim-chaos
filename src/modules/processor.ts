@@ -4,6 +4,7 @@
 // loaded by web/templates/index.html until the HTML migration occurs.
 
 import { bus } from './eventBus';
+import { showToast } from './app';
 import type { ApiResponse, ProcessingStatus } from '../types/api';
 
 // ---------------------------------------------------------------------------
@@ -55,15 +56,16 @@ export class Processor {
     private statusCheckInterval: ReturnType<typeof setTimeout> | null;
     private processingStartTime: number | null;
     private readonly maxProcessingTime = 300_000; // 5 minutes
-    private retryCount: number;
-    private readonly maxRetries = 3;
     private hideTimeout: ReturnType<typeof setTimeout> | null;
     private mapRefreshTimeout: ReturnType<typeof setTimeout> | null;
     private _processingButtonText = 'Generate Schedule';
 
     // Cache of the latest files:selected payload from FileManager
     private selectedFiles: SelectedFile[] = [];
+    private _hasDuplicates = false;
+    private _eventSource: EventSource | null = null;
     private _unsubscribeFilesSelected: (() => void) | null = null;
+    private _unsubscribeDuplicatesDetected: (() => void) | null = null;
 
     constructor() {
         this.processBtn    = document.getElementById('processBtn') as HTMLButtonElement | null;
@@ -72,7 +74,7 @@ export class Processor {
         this.isProcessing        = false;
         this.statusCheckInterval = null;
         this.processingStartTime = null;
-        this.retryCount          = 0;
+
         this.hideTimeout         = null;
         this.mapRefreshTimeout   = null;
 
@@ -80,6 +82,12 @@ export class Processor {
         // store the unsubscribe token so repeated instantiations don't accumulate listeners
         this._unsubscribeFilesSelected = bus.on('files:selected', (payload: { files: SelectedFile[] }) => {
             this.selectedFiles = payload.files;
+            this.updateButtonState();
+        });
+
+        this._unsubscribeDuplicatesDetected = bus.on('duplicates:detected', ({ hasDuplicates }) => {
+            this._hasDuplicates = hasDuplicates;
+            this.updateButtonState();
         });
 
         this.initializeEventListeners();
@@ -90,11 +98,7 @@ export class Processor {
     }
 
     private showMessage(message: string, type = 'info'): void {
-        if (typeof window !== 'undefined' && typeof window.showToast === 'function') {
-            window.showToast(message, type);
-        } else {
-            console.log(`[${type.toUpperCase()}] ${message}`);
-        }
+        showToast(message, type);
     }
 
     async startProcessing(): Promise<void> {
@@ -118,7 +122,7 @@ export class Processor {
 
         this.isProcessing        = true;
         this.processingStartTime = Date.now();
-        this.retryCount          = 0;
+
 
         // Store original button text as instance property
         this._processingButtonText = this.processBtn?.textContent ?? 'Generate Schedule';
@@ -251,108 +255,59 @@ export class Processor {
         return { canProcess: true };
     }
 
-    async monitorProgress(): Promise<void> {
-        const checkStatus = async (): Promise<void> => {
+    monitorProgress(): void {
+        const es = new EventSource('/status-stream');
+        this._eventSource = es;
+
+        es.onmessage = (e: MessageEvent) => {
             try {
-                // Edge case: check for processing timeout
+                const status: ProcessingStatus = JSON.parse(e.data as string);
+
                 if (
                     this.processingStartTime !== null &&
                     Date.now() - this.processingStartTime > this.maxProcessingTime
                 ) {
+                    es.close();
+                    this._eventSource = null;
                     this.handleProcessingTimeout();
                     return;
                 }
 
-                const response = await fetch('/status');
-                const statusBody: ApiResponse<ProcessingStatus> = await response.json();
-                if (!statusBody.ok) {
-                    throw new Error(statusBody.error || `HTTP ${response.status}`);
-                }
-                const status = statusBody.data;
-
-                // Update elapsed time display
                 const elapsed = calculateElapsedSeconds(this.processingStartTime);
                 const elapsedEl = document.getElementById('elapsedTime');
                 if (elapsedEl) elapsedEl.textContent = `${elapsed}s elapsed`;
 
-                // Update step timeline indicators
                 const currentStep = status.current_step ?? -1;
-                const stepItems = document.querySelectorAll('.step-timeline__item');
-                stepItems.forEach((el, i) => {
+                document.querySelectorAll('.step-timeline__item').forEach((el, i) => {
                     el.classList.toggle('step-timeline__item--done',   i < currentStep);
                     el.classList.toggle('step-timeline__item--active', i === currentStep);
                     const statusEl = el.querySelector('.step-timeline__status');
                     if (statusEl) {
-                        if (i < currentStep)      statusEl.textContent = 'Done';
+                        if (i < currentStep)        statusEl.textContent = 'Done';
                         else if (i === currentStep) statusEl.textContent = 'Running…';
-                        else                       statusEl.textContent = '';
+                        else                        statusEl.textContent = '';
                     }
                 });
 
                 if (status.completed) {
+                    es.close();
+                    this._eventSource = null;
                     this.handleProcessingComplete();
                 } else if (status.failed) {
+                    es.close();
+                    this._eventSource = null;
                     this.handleProcessingError(status.error ?? 'Unknown error');
-                } else {
-                    // Continue monitoring — exponential backoff up to 15 s
-                    const delay = Math.min(3000 * Math.pow(1.5, this.retryCount), 15_000);
-                    this.statusCheckInterval = setTimeout(checkStatus, delay);
                 }
-            } catch (error) {
-                console.error('Status check error:', error);
-                this.retryCount++;
-
-                if (this.retryCount >= this.maxRetries) {
-                    await this.checkForCompletedProcessing();
-                } else {
-                    // Exponential backoff for retries (3 s base)
-                    const delay = Math.min(3000 * Math.pow(2, this.retryCount), 20_000);
-                    this.statusCheckInterval = setTimeout(checkStatus, delay);
-                }
+            } catch (err) {
+                console.error('[PROCESSOR] Error parsing SSE message:', err);
             }
         };
 
-        checkStatus();
-    }
-
-    async checkForCompletedProcessing(): Promise<void> {
-        console.log('[PROCESSING] Status tracking failed, checking for completed processing…');
-
-        try {
-            const filesToCheck = [
-                '/temp/potential_conflict_data.json',
-                '/animation/animation_data.json',
-                '/animation/conflict_points.json',
-                '/merged_flightplans.kml',
-                '/pilot_briefing.txt',
-            ];
-
-            let completedFiles = 0;
-            const totalFiles = filesToCheck.length;
-
-            for (const file of filesToCheck) {
-                try {
-                    const response = await fetch(file);
-                    if (response.ok) completedFiles++;
-                } catch (e) {
-                    console.warn(`File check failed for ${file}:`, e);
-                }
-            }
-
-            const completionRatio = completedFiles / totalFiles;
-            console.log(
-                `[PROCESSING] Found ${completedFiles}/${totalFiles} output files (${Math.round(completionRatio * 100)}% completion)`,
-            );
-
-            if (completionRatio >= 0.3) {
-                console.log('[PROCESSING] Sufficient output files found — processing complete');
-                this.handleProcessingComplete();
-            } else {
-                console.log('[PROCESSING] Insufficient output files — processing may have failed');
-            }
-        } catch (error) {
-            console.error('[PROCESSING] Error checking for completed processing:', error);
-        }
+        es.onerror = () => {
+            es.close();
+            this._eventSource = null;
+            this.handleProcessingError('Lost connection to server during processing');
+        };
     }
 
     handleProcessingTimeout(): void {
@@ -362,67 +317,6 @@ export class Processor {
             'Check the server logs for more details. You can try processing again with fewer files.',
             'warning',
         );
-    }
-
-    async determineActualProgress(): Promise<number | null> {
-        try {
-            const fileChecks = [
-                { step: 0, files: ['/temp/FLT0001_data.json'] },
-                { step: 1, files: ['/temp/potential_conflict_data.json'] },
-                { step: 2, files: ['/merged_flightplans.kml'] },
-                { step: 3, files: ['/temp/routes_with_added_interpolated_points.json'] },
-                { step: 4, files: ['/animation/animation_data.json'] },
-                { step: 5, files: ['/pilot_briefing.txt'] },
-            ];
-
-            let lastCompletedStep = -1;
-
-            for (const check of fileChecks) {
-                let stepCompleted = true;
-                for (const file of check.files) {
-                    try {
-                        const response = await fetch(file);
-                        if (!response.ok) { stepCompleted = false; break; }
-                    } catch (e) {
-                        stepCompleted = false;
-                        break;
-                    }
-                }
-
-                if (stepCompleted) {
-                    lastCompletedStep = check.step;
-                } else {
-                    break; // Stop at first incomplete step
-                }
-            }
-
-            return lastCompletedStep >= 0 ? lastCompletedStep + 1 : null;
-        } catch (error) {
-            console.error('[PROGRESS] Error determining actual progress:', error);
-            return null;
-        }
-    }
-
-    async checkDataFilesExist(): Promise<boolean> {
-        try {
-            const filesToCheck = [
-                '/temp/routes_with_added_interpolated_points.json',
-                '/animation/animation_data.json',
-                '/animation/conflict_points.json',
-            ];
-
-            for (const file of filesToCheck) {
-                const response = await fetch(file);
-                if (!response.ok) {
-                    console.warn(`Data file not found: ${file}`);
-                    return false;
-                }
-            }
-            return true;
-        } catch (error) {
-            console.error('Error checking data files:', error);
-            return false;
-        }
     }
 
     handleProcessingComplete(): void {
@@ -486,14 +380,13 @@ export class Processor {
             return;
         }
 
-        this.retryCount = 0;
         await this.startProcessing();
     }
 
     resetProcessingState(): void {
         this.isProcessing        = false;
         this.processingStartTime = null;
-        this.retryCount          = 0;
+
 
         // Restore button to original state
         if (this.processBtn) {
@@ -505,6 +398,10 @@ export class Processor {
         }
 
         // Clear all pending timeouts
+        if (this._eventSource) {
+            this._eventSource.close();
+            this._eventSource = null;
+        }
         if (this.statusCheckInterval) {
             clearTimeout(this.statusCheckInterval);
             this.statusCheckInterval = null;
@@ -519,11 +416,35 @@ export class Processor {
         }
     }
 
+    private updateButtonState(): void {
+        if (!this.processBtn || this.isProcessing) return;
+        if (this.selectedFiles.length === 0) {
+            this.processBtn.disabled = true;
+            this.processBtn.textContent = 'Generate Schedule';
+            this.processBtn.title = '';
+            this.processBtn.classList.remove('disabled-duplicates');
+        } else if (this._hasDuplicates) {
+            this.processBtn.disabled = true;
+            this.processBtn.textContent = 'Generate Schedule (Duplicates Detected)';
+            this.processBtn.title = 'Please delete duplicate files before generating schedule';
+            this.processBtn.classList.add('disabled-duplicates');
+        } else {
+            this.processBtn.disabled = false;
+            this.processBtn.textContent = 'Generate Schedule';
+            this.processBtn.title = '';
+            this.processBtn.classList.remove('disabled-duplicates');
+        }
+    }
+
     /** Unsubscribe from all bus events and clear pending timers. Call when the instance is no longer needed. */
     destroy(): void {
         if (this._unsubscribeFilesSelected) {
             this._unsubscribeFilesSelected();
             this._unsubscribeFilesSelected = null;
+        }
+        if (this._unsubscribeDuplicatesDetected) {
+            this._unsubscribeDuplicatesDetected();
+            this._unsubscribeDuplicatesDetected = null;
         }
         if (this.statusCheckInterval) {
             clearTimeout(this.statusCheckInterval);
@@ -535,13 +456,11 @@ export class Processor {
         isProcessing: boolean;
         selectedFiles: SelectedFile[];
         processingTime: number;
-        retryCount: number;
     } {
         return {
             isProcessing:   this.isProcessing,
             selectedFiles:  this.selectedFiles,
             processingTime: calculateElapsedSeconds(this.processingStartTime),
-            retryCount:     this.retryCount,
         };
     }
 }

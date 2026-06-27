@@ -32,5 +32,14 @@ class EventBus<Events extends EventMap = EventMap> {
   }
 }
 
-export const bus = new EventBus()
+export interface AppEvents {
+  'files:uploaded':        { count: number };
+  'files:loaded':          { files: Array<{ id: string; name: string; size: number; upload_date: number }> };
+  'validation:changed':    { filename: string; result: { valid: boolean; error?: string; flight_count?: number; flights?: Array<{ origin: string; destination: string; aircraft_type: string; waypoint_count: number }> } };
+  'files:selected':        { files: Array<{ filename: string; valid: boolean; flight_count: number; error?: string }> };
+  'processing:completed':  { processingTime: number };
+  'duplicates:detected':   { hasDuplicates: boolean; routes: Array<{ origin: string; destination: string; count: number; files: string[] }> };
+}
+
+export const bus = new EventBus<AppEvents>()
 export { EventBus }

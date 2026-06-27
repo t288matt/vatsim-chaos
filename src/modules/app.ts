@@ -211,18 +211,9 @@ export class BriefingManager {
 
     async checkBriefingAvailability(): Promise<void> {
         try {
-            // Check whether the briefing is available by attempting a full fetch
-            // (double-fetch pattern preserved from legacy JS — flagged for future optimisation)
-            const response = await fetch('/briefing');
-            const body: ApiResponse<unknown> = await response.json();
-
-            if (body.ok) {
-                if (this.briefingBtn) this.briefingBtn.disabled = false;
-                console.log('[BRIEFING] Pilot briefing available — button enabled');
-            } else {
-                if (this.briefingBtn) this.briefingBtn.disabled = true;
-                console.log('[BRIEFING] Pilot briefing not yet available — button disabled');
-            }
+            const response = await fetch('/briefing', { method: 'HEAD' });
+            if (this.briefingBtn) this.briefingBtn.disabled = !response.ok;
+            console.log(`[BRIEFING] Pilot briefing ${response.ok ? 'available — button enabled' : 'not yet available — button disabled'}`);
         } catch (error) {
             console.warn('[BRIEFING] Error checking briefing availability:', error);
             if (this.briefingBtn) this.briefingBtn.disabled = true;

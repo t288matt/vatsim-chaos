@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_file
+from flask import Flask, render_template, request, jsonify, send_file, Response, stream_with_context
 import os
 import subprocess
 import json
@@ -578,6 +578,20 @@ def cleanup_processing_files(selected_files, parent_dir):
 @app.route('/status', methods=['GET'])
 def get_status():
     return api_ok(processing_status)
+
+@app.route('/status-stream')
+def status_stream():
+    def generate():
+        while True:
+            yield f"data: {json.dumps(processing_status)}\n\n"
+            if processing_status['completed'] or processing_status['failed']:
+                break
+            time.sleep(1)
+    return Response(
+        stream_with_context(generate()),
+        mimetype='text/event-stream',
+        headers={'Cache-Control': 'no-cache', 'X-Accel-Buffering': 'no'},
+    )
 
 @app.route('/briefing', methods=['GET'])
 def get_briefing():
