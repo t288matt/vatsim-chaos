@@ -396,8 +396,8 @@
   <div id="controls">
     <div class="control-group">
       <label>Aircraft Size:
-        <input id="acft-size" type="range" min="64" max="1024" value="250" step="16">
-        <span id="acft-size-val">250</span>
+        <input id="acft-size" type="range" min="16" max="256" value="48" step="8">
+        <span id="acft-size-val">48</span>
       </label>
       <label>Font Size:
         <input id="font-size" type="range" min="3" max="32" value="16" step="1">
@@ -477,15 +477,14 @@
         e.label.show = labelVisible;
       });
     };
-    let acftSize = 512;
+    let acftSize = 48;
     let fontSize = 16;
     document.getElementById('acft-size').oninput = function() {
       acftSize = parseInt(this.value);
       document.getElementById('acft-size-val').textContent = acftSize;
       flightEntities.forEach(e => {
         if (e.model) {
-          e.model.minimumPixelSize = acftSize;
-          e.model.maximumScale = acftSize * 3;
+          // acftSize slider now controls TARGET_PIXELS via postRender hook
         }
       });
     };
@@ -717,8 +716,7 @@
           orientation: new Cesium.VelocityOrientationProperty(property),
           model: {
             uri: 'https://cesium.com/downloads/cesiumjs/releases/1.115/Apps/SampleData/models/CesiumAir/Cesium_Air.glb',
-            minimumPixelSize: acftSize,
-            maximumScale: acftSize * 3,
+            scale: 1,
             color: Cesium.Color.BLACK.withAlpha(0.8),
             colorBlendMode: Cesium.ColorBlendMode.MIX
           },
@@ -749,7 +747,15 @@
         flightEntities.push(entity);
       });
 
-      
+      // Keep aircraft a fixed screen size regardless of zoom level
+      const TARGET_PIXELS = 16;
+      viewer.scene.postRender.addEventListener(function () {
+        const height = viewer.camera.positionCartographic.height;
+        const scale = height * (TARGET_PIXELS / viewer.scene.canvas.clientHeight) * 0.05;
+        flightEntities.forEach(e => {
+          if (e.model) e.model.scale = scale;
+        });
+      });
     }
     function createConflictMarkers(conflictPoints) {
       conflictPoints.forEach((conflict, index) => {
