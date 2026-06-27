@@ -784,7 +784,8 @@
     async function loadAnimationData() {
       try {
         // Read from interpolated data (same as animation.html)
-        const response = await fetch('/temp/routes_with_added_interpolated_points.json');
+        const cacheBust = `?v=${Date.now()}`;
+        const response = await fetch(`/temp/routes_with_added_interpolated_points.json${cacheBust}`);
         if (!response.ok) throw new Error('Interpolated data not found: ' + response.status + ' ' + response.statusText);
         const text = await response.text();
         let data;
@@ -866,7 +867,7 @@
         
         // Load conflicts from dedicated conflict points file
         try {
-          const conflictResponse = await fetch('conflict_points.json');
+          const conflictResponse = await fetch(`conflict_points.json${cacheBust}`);
           if (conflictResponse.ok) {
             const conflictData = await conflictResponse.json();
             conflicts = conflictData;

@@ -1,0 +1,47 @@
+PROPOSED NEW ROUTES — VATSIM Chaos Scenario
+============================================
+Generated: 27-06-2026
+Constraint: No airport north of YWLM (-32.80S)
+
+REPLACEMENTS (16)
+-----------------
+ROUTE           ACFT    REPLACES            NOTES
+YGTH->YMML      PC12    YGTHYMAY            C208 was below detection floor (5,000ft)
+YMCO->YORG      PC12    YMCOYMAY            S22T was below detection floor (8,000ft)
+YMRY->YSCB      B350    YMRYYYMAY (DC3)     DC3 had no geometric crossings at 10,000ft
+YSBK->YORG      BE20    YSBKYSCB (PA44)     PA44 was below detection floor (6,000ft)
+YSCN->YMEN      PC12    YSCNYGTH            C172 was below detection floor (6,500ft)
+YSWG->YSCB      B350    YSWGYJIN            SR22 was below detection floor (9,000ft)
+YSCB->YMAY      C510    YGLBYMER            YGLB-YMER ran parallel to coast, isolated
+YGTH->YMAY      E50P    YGTHYBDG            YGTH-YBDG ran parallel to FLT0004, no crossings
+YSSY->YMEN      SF34    YSSYYMER            Coastal track, missed all crossing routes
+YWLM->YMML      B350    YARMYSSY            YARM north of YWLM; new route crosses all E-W inland routes
+YWLM->YORG      C510    YARMYWLM            YARM north of YWLM; new route into conflict-dense area
+YWLM->YSCB      SF34    YBHIYSDU            YBHI north of YWLM; SE diagonal crosses busiest zone
+YGTH->YMML      BE20    YGTHYSCB            Low geometry — only 1 crossing; Melbourne diagonal fixes this
+YMCO->YMAY      DH8D    YMCOYSHT            YMCO-YSHT was isolated; NW cut crosses multiple routes
+YMEN->YSCB      PC12    YMENYYMAY           Duplicate of FLT0015 in reverse; Essendon-Canberra adds new crossings
+YSBK->YMAY      TBM8    YSBKYBHI            Keep TBM8, change route — due-west track had only 1 potential conflict
+
+NEW SLOTS (6)
+-------------
+ROUTE           ACFT    NOTES
+YSSY->YMEN      F100    Sydney-Essendon inland, conflicts on climb/descent through FL150-FL200
+YMML->YSCB      F70     Melbourne-Canberra regional RPT, short cycle keeps it in conflict zone
+YSCB->YWLM      F70     Canberra-Newcastle, long diagonal north (was YSCB-YBBN, YBBN removed)
+YSSY->YSCB      F100    Sydney-Canberra busy corridor, rapid climb/descent in conflict zone
+YWLM->YMEN      F100    Newcastle-Essendon, crosses inland NSW routes on climb (was YBBN-YMEN)
+YMAY->YSSY      F70     Albury-Sydney climbs through YMAY conflict cluster
+
+AIRPORTS TO REMOVE FROM EXISTING ROUTES
+----------------------------------------
+YCFS (-30.32S) — north of YWLM
+  Affects: FLT0007 YCFS-YGTH, FLT0008 YCFS-YSWG
+  Suggested replacements: YWLM->YGTH, YWLM->YSWG
+
+CONFLICT DETECTION PARAMETERS (for reference)
+---------------------------------------------
+Lateral separation threshold:  5.0 nm
+Vertical separation threshold: 900 ft
+Minimum altitude:              10,000 ft
+Sweet spot:                    FL150-FL200 (21 of 35 current conflicts)

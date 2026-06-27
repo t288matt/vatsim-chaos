@@ -298,7 +298,12 @@ class AnimationDataGenerator:
     def generate_conflict_points(self) -> List[Dict]:
         """Generate conflict points for animation using enhanced routes file (single source of truth)
         Deduplicate by unordered flight pair only (not by time), matching pilot briefing logic.
+        Phantom conflicts (outside either aircraft's airborne window) are skipped.
         """
+        def hhmm_to_mins(t: str) -> int:
+            t = str(t).zfill(4)
+            return int(t[:2]) * 60 + int(t[2:])
+
         conflict_points = []
         processed_pairs = set()  # Track processed aircraft pairs to avoid duplicates (unordered pair)
         # Load enhanced routes file (single source of truth)
@@ -308,6 +313,34 @@ class AnimationDataGenerator:
         except FileNotFoundError:
             logger.error("Enhanced routes file not found")
             return conflict_points
+
+        import math as _math
+
+        def _dist_nm(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+            dlat = (lat2 - lat1) * _math.pi / 180
+            dlon = (lon2 - lon1) * _math.pi / 180
+            a = (_math.sin(dlat / 2) ** 2 +
+                 _math.cos(lat1 * _math.pi / 180) * _math.cos(lat2 * _math.pi / 180) *
+                 _math.sin(dlon / 2) ** 2)
+            return 2 * _math.atan2(_math.sqrt(a), _math.sqrt(1 - a)) * 3440.065
+
+        # Build flight windows and route lookup: flight_id -> (first_mins, last_mins, route)
+        flight_windows: Dict[str, tuple] = {}
+        flight_routes: Dict[str, list] = {}
+        for fid, fd in enhanced_routes.items():
+            if fid == '_metadata' or not isinstance(fd, dict):
+                continue
+            route = fd.get('route', [])
+            if route:
+                times = [hhmm_to_mins(str(w['time'])) for w in route]
+                flight_windows[fid] = (min(times), max(times))
+                flight_routes[fid] = route
+
+        # Max distance an aircraft can be from the conflict point and still be valid (nm).
+        # Conflicts are detected at <=5nm separation; 20nm allows for interpolation gaps.
+        SPATIAL_THRESHOLD_NM = 20.0
+
+        phantom_count = 0
         # Extract conflicts from enhanced routes data
         for flight_id, flight_data in enhanced_routes.items():
             if flight_id == '_metadata':
@@ -324,6 +357,42 @@ class AnimationDataGenerator:
                 if pair_key in processed_pairs:
                     continue
                 processed_pairs.add(pair_key)
+
+                conflict_time_mins = hhmm_to_mins(str(conflict['conflict_time_utc']))
+                w1 = flight_windows.get(flight_id)
+                w2 = flight_windows.get(other_flight)
+
+                # Temporal check: both aircraft must be airborne at conflict time
+                if (w1 and not (w1[0] <= conflict_time_mins <= w1[1])) or \
+                   (w2 and not (w2[0] <= conflict_time_mins <= w2[1])):
+                    logger.warning(
+                        f"Phantom conflict skipped (temporal): {flight_id}/{other_flight} at "
+                        f"{conflict['conflict_time_utc']} — outside airborne window(s) "
+                        f"({flight_id}: {w1}, {other_flight}: {w2})"
+                    )
+                    phantom_count += 1
+                    continue
+
+                # Spatial check: both aircraft must be near the conflict location at conflict time
+                clat, clon = conflict['lat'], conflict['lon']
+                spatial_ok = True
+                for fid in (flight_id, other_flight):
+                    route = flight_routes.get(fid, [])
+                    if not route:
+                        continue
+                    nearest = min(route, key=lambda w: abs(hhmm_to_mins(str(w['time'])) - conflict_time_mins))
+                    d = _dist_nm(clat, clon, nearest['lat'], nearest['lon'])
+                    if d > SPATIAL_THRESHOLD_NM:
+                        logger.warning(
+                            f"Phantom conflict skipped (spatial): {flight_id}/{other_flight} at "
+                            f"{conflict['conflict_time_utc']} — {fid} is {d:.0f}nm from conflict point"
+                        )
+                        spatial_ok = False
+                        phantom_count += 1
+                        break
+                if not spatial_ok:
+                    continue
+
                 conflict_point = {
                     'id': f"conflict_{flight_id}_{other_flight}",
                     'location': f"{flight_id}-{other_flight}",
@@ -340,7 +409,10 @@ class AnimationDataGenerator:
                     'conflict_type': 'scheduled_conflict'
                 }
                 conflict_points.append(conflict_point)
-        logger.info(f"Generated {len(conflict_points)} unique conflict points from enhanced routes data (deduped by unordered pair)")
+        logger.info(
+            f"Generated {len(conflict_points)} unique conflict points from enhanced routes data "
+            f"(deduped by unordered pair, {phantom_count} phantom conflicts removed)"
+        )
         return conflict_points
     
     def generate_timeline(self) -> List[Dict]:
